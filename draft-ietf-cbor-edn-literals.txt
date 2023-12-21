@@ -4,8 +4,8 @@
 
 Network Working Group                                         C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Intended status: Informational                          14 December 2023
-Expires: 16 June 2024
+Intended status: Informational                          21 December 2023
+Expires: 23 June 2024
 
 
 CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals,
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 1]
+Bormann                   Expires 23 June 2024                  [Page 1]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -68,7 +68,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 June 2024.
+   This Internet-Draft will expire on 23 June 2024.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 2]
+Bormann                   Expires 23 June 2024                  [Page 2]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -165,7 +165,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 3]
+Bormann                   Expires 23 June 2024                  [Page 3]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -221,7 +221,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 4]
+Bormann                   Expires 23 June 2024                  [Page 4]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -277,7 +277,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 5]
+Bormann                   Expires 23 June 2024                  [Page 5]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -333,7 +333,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 6]
+Bormann                   Expires 23 June 2024                  [Page 6]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -389,7 +389,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 7]
+Bormann                   Expires 23 June 2024                  [Page 7]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -445,7 +445,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 8]
+Bormann                   Expires 23 June 2024                  [Page 8]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -501,7 +501,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                  [Page 9]
+Bormann                   Expires 23 June 2024                  [Page 9]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -557,7 +557,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 10]
+Bormann                   Expires 23 June 2024                 [Page 10]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -613,7 +613,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 11]
+Bormann                   Expires 23 June 2024                 [Page 11]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -669,7 +669,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 12]
+Bormann                   Expires 23 June 2024                 [Page 12]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -725,7 +725,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 13]
+Bormann                   Expires 23 June 2024                 [Page 13]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -781,7 +781,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 14]
+Bormann                   Expires 23 June 2024                 [Page 14]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -837,7 +837,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 15]
+Bormann                   Expires 23 June 2024                 [Page 15]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -893,7 +893,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 16]
+Bormann                   Expires 23 June 2024                 [Page 16]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -949,7 +949,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 17]
+Bormann                   Expires 23 June 2024                 [Page 17]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1005,7 +1005,7 @@ A.1.  Overall ABNF Definition for Extended Diagnostic Notation
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 18]
+Bormann                   Expires 23 June 2024                 [Page 18]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 19]
+Bormann                   Expires 23 June 2024                 [Page 19]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 20]
+Bormann                   Expires 23 June 2024                 [Page 20]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1173,7 +1173,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 21]
+Bormann                   Expires 23 June 2024                 [Page 21]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1229,7 +1229,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 22]
+Bormann                   Expires 23 June 2024                 [Page 22]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1285,7 +1285,7 @@ A.2.2.  b64: ABNF Definition of Base64 representation of a byte string
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 23]
+Bormann                   Expires 23 June 2024                 [Page 23]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1341,7 +1341,7 @@ A.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 24]
+Bormann                   Expires 23 June 2024                 [Page 24]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1397,7 +1397,7 @@ Appendix B.  EDN and CDDL
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 25]
+Bormann                   Expires 23 June 2024                 [Page 25]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1453,7 +1453,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 26]
+Bormann                   Expires 23 June 2024                 [Page 26]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
@@ -1509,4 +1509,4 @@ Author's Address
 
 
 
-Bormann                   Expires 16 June 2024                 [Page 27]
+Bormann                   Expires 23 June 2024                 [Page 27]
