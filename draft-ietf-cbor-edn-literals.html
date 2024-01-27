@@ -2280,9 +2280,11 @@ string          = string1e *(S string1e)
 
 number          = (basenumber / decnumber / infin) spec
 sign            = "+" / "-"
-decnumber       = [sign] 1*DIGIT ["." 1*DIGIT] ["e" [sign] 1*DIGIT]
+decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
+                         ["e" [sign] 1*DIGIT]
 basenumber      = [sign] "0" ("x" 1*HEXDIG
-                              [["." 1*HEXDIG] "p" [sign] 1*DIGIT]
+                              [["." *HEXDIG] "p" [sign] 1*DIGIT]
+                            / "x" "." 1*HEXDIG "p" [sign] 1*DIGIT
                             / "o" 1*ODIGIT
                             / "b" 1*BDIGIT)
 infin           = %s"Infinity"
@@ -2392,7 +2394,8 @@ obvious.<a href="#appendix-A.1-5" class="pilcrow">¶</a></p>
             <p id="appendix-A.1-7.1.1"><code>decnumber</code> stands for an integer in the usual decimal notation, unless at
 least one of the optional parts starting with "." and "e" are
 present, in which case it stands for a floating point value in the
-usual decimal notation.<a href="#appendix-A.1-7.1.1" class="pilcrow">¶</a></p>
+usual decimal notation.  Note that the grammar now allows <code>3.</code> for
+<code>3.0</code> and <code>.3</code> for <code>0.3</code> (also for hexadecimal floating point below).<a href="#appendix-A.1-7.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-7.2">
             <p id="appendix-A.1-7.2.1"><code>basenumber</code> stands for an integer in the usual base 16/hexadecimal

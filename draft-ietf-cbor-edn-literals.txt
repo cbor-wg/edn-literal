@@ -118,13 +118,13 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    Appendix A.  ABNF Definitions . . . . . . . . . . . . . . . . . .  19
      A.1.  Overall ABNF Definition for Extended Diagnostic
            Notation  . . . . . . . . . . . . . . . . . . . . . . . .  19
-     A.2.  ABNF Definitions for app-string Content . . . . . . . . .  23
+     A.2.  ABNF Definitions for app-string Content . . . . . . . . .  24
        A.2.1.  h: ABNF Definition of Hexadecimal representation of a
-               byte string . . . . . . . . . . . . . . . . . . . . .  23
+               byte string . . . . . . . . . . . . . . . . . . . . .  24
        A.2.2.  b64: ABNF Definition of Base64 representation of a byte
                string  . . . . . . . . . . . . . . . . . . . . . . .  24
        A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a
-               Date/Time . . . . . . . . . . . . . . . . . . . . . .  24
+               Date/Time . . . . . . . . . . . . . . . . . . . . . .  25
        A.2.4.  ip: ABNF Definition of Textual Representation of an IP
                Address . . . . . . . . . . . . . . . . . . . . . . .  25
    Appendix B.  EDN and CDDL . . . . . . . . . . . . . . . . . . . .  26
@@ -1066,9 +1066,11 @@ Bormann                   Expires 23 June 2024                 [Page 19]
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
-   decnumber       = [sign] 1*DIGIT ["." 1*DIGIT] ["e" [sign] 1*DIGIT]
+   decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
+                            ["e" [sign] 1*DIGIT]
    basenumber      = [sign] "0" ("x" 1*HEXDIG
-                                 [["." 1*HEXDIG] "p" [sign] 1*DIGIT]
+                                 [["." *HEXDIG] "p" [sign] 1*DIGIT]
+                               / "x" "." 1*HEXDIG "p" [sign] 1*DIGIT
                                / "o" 1*ODIGIT
                                / "b" 1*BDIGIT)
    infin           = %s"Infinity"
@@ -1112,8 +1114,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    spec            = ["_" *wordchar]
 
    double-quoted   = unescaped
-                   / "'"
-                   / "\" DQUOTE
 
 
 
@@ -1122,6 +1122,8 @@ Bormann                   Expires 23 June 2024                 [Page 20]
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
+                   / "'"
+                   / "\" DQUOTE
                    / "\" escapable
 
    single-quoted   = unescaped
@@ -1168,8 +1170,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    HEXDIG1         = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
    ; Note: double-quoted strings as in "A" are case-insensitive in ABNF
    lcalpha         = %x61-7A ; a-z
-   lcalnum         = lcalpha / DIGIT
-   ucalpha         = %x41-5A ; A-Z
 
 
 
@@ -1178,6 +1178,8 @@ Bormann                   Expires 23 June 2024                 [Page 21]
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
+   lcalnum         = lcalpha / DIGIT
+   ucalpha         = %x41-5A ; A-Z
    ucalnum         = ucalpha / DIGIT
    wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
 
@@ -1193,7 +1195,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    *  decnumber stands for an integer in the usual decimal notation,
       unless at least one of the optional parts starting with "." and
       "e" are present, in which case it stands for a floating point
-      value in the usual decimal notation.
+      value in the usual decimal notation.  Note that the grammar now
+      allows 3. for 3.0 and .3 for 0.3 (also for hexadecimal floating
+      point below).
 
    *  basenumber stands for an integer in the usual base 16/hexadecimal
       ("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation,
@@ -1216,6 +1220,20 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
       -  _0 to _3 stand for ai=24 to ai=27, respectively.
 
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 23 June 2024                 [Page 22]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+
+
       Surprisingly, Section 8.1 of RFC 8949 [STD94] does not address
       ai=0 to ai=23 — the assumption seems to be that preferred
       serialization (Section 4.1 of RFC 8949 [STD94]) will be used when
@@ -1226,13 +1244,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
       explicit:
 
       -  _i ("immediate") stands for encoding with ai=0 to ai=23.
-
-
-
-Bormann                   Expires 23 June 2024                 [Page 22]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
-
 
       While no pressing use for further values for encoding indicators
       comes to mind, this is an extension point for EDN; Section 4.2
@@ -1264,6 +1275,21 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
          occurrence of more than one app-string or an app-string
          together with a directly notated string cannot be processed.
 
+
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 23 June 2024                 [Page 23]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+
+
 A.2.  ABNF Definitions for app-string Content
 
    This appendix provides ABNF definitions for application-oriented
@@ -1281,14 +1307,6 @@ A.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
    representation of << "foo" >>), is described by the ABNF in Figure 2.
    This syntax accommodates both lower case and upper case hex digits,
    as well as blank space (including comments) around each hex digit.
-
-
-
-
-Bormann                   Expires 23 June 2024                 [Page 23]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
-
 
    app-string-h    = S *(HEXDIG S HEXDIG S / ellipsis S)
                      ["#" *non-lf]
@@ -1316,6 +1334,18 @@ A.2.2.  b64: ABNF Definition of Base64 representation of a byte string
    inclusion of classic base64 makes it impossible to have in-line
    comments in b64, as "/" is valid base64-classic.
 
+
+
+
+
+
+
+
+Bormann                   Expires 23 June 2024                 [Page 24]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+
+
    app-string-b64  = B *(4(b64dig B))
                      [b64dig B b64dig B ["=" B "=" / b64dig B ["="]] B]
                      ["#" *inon-lf]
@@ -1333,18 +1363,6 @@ A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
 
    The syntax of the content of dt literals can be described by the ABNF
    for date-time from [RFC3339] as summarized in Section 3 of [RFC9165]:
-
-
-
-
-
-
-
-
-Bormann                   Expires 23 June 2024                 [Page 24]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
-
 
    app-string-dt   = date-time
 
@@ -1375,24 +1393,6 @@ A.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
    The syntax of the content of ip literals can be described by the ABNF
    for IPv4address and IPv6address in Section 3.2.2 of [RFC3986], as
    included in slightly updated form in Figure 5.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
