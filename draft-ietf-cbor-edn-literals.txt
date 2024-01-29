@@ -118,7 +118,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    Appendix A.  ABNF Definitions . . . . . . . . . . . . . . . . . .  19
      A.1.  Overall ABNF Definition for Extended Diagnostic
            Notation  . . . . . . . . . . . . . . . . . . . . . . . .  19
-     A.2.  ABNF Definitions for app-string Content . . . . . . . . .  24
+     A.2.  ABNF Definitions for app-string Content . . . . . . . . .  23
        A.2.1.  h: ABNF Definition of Hexadecimal representation of a
                byte string . . . . . . . . . . . . . . . . . . . . .  24
        A.2.2.  b64: ABNF Definition of Base64 representation of a byte
@@ -1197,7 +1197,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
       "e" are present, in which case it stands for a floating point
       value in the usual decimal notation.  Note that the grammar now
       allows 3. for 3.0 and .3 for 0.3 (also for hexadecimal floating
-      point below).
+      point below); implementers are advised that some platform numeric
+      parsers accept only a subset of the floating point syntax in this
+      document and may require some preprocessing to use here.
 
    *  basenumber stands for an integer in the usual base 16/hexadecimal
       ("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation,
@@ -1220,12 +1222,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
       -  _0 to _3 stand for ai=24 to ai=27, respectively.
 
-
-
-
-
-
-
+      Surprisingly, Section 8.1 of RFC 8949 [STD94] does not address
+      ai=0 to ai=23 — the assumption seems to be that preferred
+      serialization (Section 4.1 of RFC 8949 [STD94]) will be used when
+      converting CBOR diagnostic notation to an encoded CBOR data item,
 
 
 
@@ -1234,10 +1234,6 @@ Bormann                   Expires 23 June 2024                 [Page 22]
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
-      Surprisingly, Section 8.1 of RFC 8949 [STD94] does not address
-      ai=0 to ai=23 — the assumption seems to be that preferred
-      serialization (Section 4.1 of RFC 8949 [STD94]) will be used when
-      converting CBOR diagnostic notation to an encoded CBOR data item,
       so leaving out the encoding indicator for a data item with a
       preferred serialization will implicitly use ai=0 to ai=23 if that
       is possible.  The present specification allows to make this
@@ -1275,10 +1271,14 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
          occurrence of more than one app-string or an app-string
          together with a directly notated string cannot be processed.
 
+A.2.  ABNF Definitions for app-string Content
 
-
-
-
+   This appendix provides ABNF definitions for application-oriented
+   extension literals defined in [STD94] and in this specification.
+   These grammars describe the _decoded_ content of the sqstr components
+   that combine with the application-extension identifiers to form
+   application-oriented extension literals.  Each of these may make use
+   of rules defined in Figure 1.
 
 
 
@@ -1289,15 +1289,6 @@ Bormann                   Expires 23 June 2024                 [Page 23]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
-
-A.2.  ABNF Definitions for app-string Content
-
-   This appendix provides ABNF definitions for application-oriented
-   extension literals defined in [STD94] and in this specification.
-   These grammars describe the _decoded_ content of the sqstr components
-   that combine with the application-extension identifiers to form
-   application-oriented extension literals.  Each of these may make use
-   of rules defined in Figure 1.
 
 A.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
         string
@@ -1334,18 +1325,6 @@ A.2.2.  b64: ABNF Definition of Base64 representation of a byte string
    inclusion of classic base64 makes it impossible to have in-line
    comments in b64, as "/" is valid base64-classic.
 
-
-
-
-
-
-
-
-Bormann                   Expires 23 June 2024                 [Page 24]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
-
-
    app-string-b64  = B *(4(b64dig B))
                      [b64dig B b64dig B ["=" B "=" / b64dig B ["="]] B]
                      ["#" *inon-lf]
@@ -1358,6 +1337,14 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    DIGIT           = %x30-39
 
     Figure 3: ABNF definition of Base64 Representation of a Byte String
+
+
+
+
+Bormann                   Expires 23 June 2024                 [Page 24]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+
 
 A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
 
@@ -1393,6 +1380,19 @@ A.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
    The syntax of the content of ip literals can be described by the ABNF
    for IPv4address and IPv6address in Section 3.2.2 of [RFC3986], as
    included in slightly updated form in Figure 5.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
