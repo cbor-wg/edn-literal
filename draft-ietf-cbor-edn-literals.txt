@@ -4,8 +4,8 @@
 
 Network Working Group                                         C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Intended status: Informational                          21 December 2023
-Expires: 23 June 2024
+Intended status: Informational                           1 February 2024
+Expires: 4 August 2024
 
 
 CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals,
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 1]
+Bormann                   Expires 4 August 2024                 [Page 1]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    Internet-Drafts are working documents of the Internet Engineering
@@ -68,11 +68,11 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 June 2024.
+   This Internet-Draft will expire on 4 August 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 2]
+Bormann                   Expires 4 August 2024                 [Page 2]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
      6.2.  Informative References  . . . . . . . . . . . . . . . . .  18
@@ -165,9 +165,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 3]
+Bormann                   Expires 4 August 2024                 [Page 3]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
 1.1.  Terminology
@@ -221,9 +221,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 4]
+Bormann                   Expires 4 August 2024                 [Page 4]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    One important application of EDN is the notation of CBOR data for
@@ -277,9 +277,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 5]
+Bormann                   Expires 4 August 2024                 [Page 5]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    Additional features such as ensuring deterministic map ordering
@@ -333,9 +333,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 6]
+Bormann                   Expires 4 August 2024                 [Page 6]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    As a convention for such definitions, using the all-uppercase variant
@@ -389,9 +389,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 7]
+Bormann                   Expires 4 August 2024                 [Page 7]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    With the lower-case app-string ip, the value of the literal is a byte
@@ -445,9 +445,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 8]
+Bormann                   Expires 4 August 2024                 [Page 8]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    *  The EDN consumer does not know (or does not implement) an
@@ -501,9 +501,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                  [Page 9]
+Bormann                   Expires 4 August 2024                 [Page 9]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    To facilitate this, this specification supports the use of an
@@ -557,9 +557,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 10]
+Bormann                   Expires 4 August 2024                [Page 10]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    Elisions also can be used as part of a (text or byte) string:
@@ -613,9 +613,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 11]
+Bormann                   Expires 4 August 2024                [Page 11]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    The experts are instructed to be frugal in the allocation of
@@ -669,9 +669,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 12]
+Bormann                   Expires 4 August 2024                [Page 12]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    +==================================+===================+===========+
@@ -725,9 +725,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 13]
+Bormann                   Expires 4 August 2024                [Page 13]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    Reference:
@@ -781,9 +781,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 14]
+Bormann                   Expires 4 August 2024                [Page 14]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    Optional parameters:  N/A
@@ -837,9 +837,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 15]
+Bormann                   Expires 4 August 2024                [Page 15]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    TBD1 is to be assigned from the space 256..999.
@@ -893,9 +893,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 16]
+Bormann                   Expires 4 August 2024                [Page 16]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
               <https://www.iso.org/standard/74528.html>.  The text of
@@ -949,9 +949,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 17]
+Bormann                   Expires 4 August 2024                [Page 17]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
@@ -993,9 +993,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    [I-D.ietf-cbor-update-8610-grammar]
               Bormann, C., "Updates to the CDDL grammar of RFC 8610",
               Work in Progress, Internet-Draft, draft-ietf-cbor-update-
-              8610-grammar-02, 15 December 2023,
+              8610-grammar-03, 29 January 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              update-8610-grammar-02>.
+              update-8610-grammar-03>.
 
    [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
               Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
@@ -1005,9 +1005,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 18]
+Bormann                   Expires 4 August 2024                [Page 18]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    [RFC9165]  Bormann, C., "Additional Control Operators for the Concise
@@ -1061,9 +1061,9 @@ A.1.  Overall ABNF Definition for Extended Diagnostic Notation
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 19]
+Bormann                   Expires 4 August 2024                [Page 19]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
@@ -1117,9 +1117,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 20]
+Bormann                   Expires 4 August 2024                [Page 20]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
                    / "'"
@@ -1147,7 +1147,8 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
                    / ("D" ODIGIT 2HEXDIG )
    high-surrogate  = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate   = "D" ("C"/"D"/"E"/"F") 2HEXDIG
-   hexscalar       = "10" 4HEXDIG / HEXDIG1 4HEXDIG / non-surrogate / 1*3HEXDIG
+   hexscalar       = "10" 4HEXDIG / HEXDIG1 4HEXDIG
+                   / non-surrogate / 1*3HEXDIG
 
    ; Note that no other C0 characters are allowed, including %x09 HT
    unescaped       = %x0A ; new line
@@ -1169,15 +1170,15 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
    HEXDIG          = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
    HEXDIG1         = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
    ; Note: double-quoted strings as in "A" are case-insensitive in ABNF
-   lcalpha         = %x61-7A ; a-z
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 21]
+Bormann                   Expires 4 August 2024                [Page 21]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+   lcalpha         = %x61-7A ; a-z
    lcalnum         = lcalpha / DIGIT
    ucalpha         = %x41-5A ; A-Z
    ucalnum         = ucalpha / DIGIT
@@ -1225,15 +1226,15 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
       Surprisingly, Section 8.1 of RFC 8949 [STD94] does not address
       ai=0 to ai=23 — the assumption seems to be that preferred
       serialization (Section 4.1 of RFC 8949 [STD94]) will be used when
-      converting CBOR diagnostic notation to an encoded CBOR data item,
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 22]
+Bormann                   Expires 4 August 2024                [Page 22]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+      converting CBOR diagnostic notation to an encoded CBOR data item,
       so leaving out the encoding indicator for a data item with a
       preferred serialization will implicitly use ai=0 to ai=23 if that
       is possible.  The present specification allows to make this
@@ -1284,10 +1285,9 @@ A.2.  ABNF Definitions for app-string Content
 
 
 
-
-Bormann                   Expires 23 June 2024                 [Page 23]
+Bormann                   Expires 4 August 2024                [Page 23]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
 A.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
@@ -1341,9 +1341,9 @@ A.2.2.  b64: ABNF Definition of Base64 representation of a byte string
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 24]
+Bormann                   Expires 4 August 2024                [Page 24]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
 A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
@@ -1397,9 +1397,9 @@ A.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 25]
+Bormann                   Expires 4 August 2024                [Page 25]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    app-string-ip = IPaddress ["/" uint]
@@ -1453,9 +1453,9 @@ Appendix B.  EDN and CDDL
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 26]
+Bormann                   Expires 4 August 2024                [Page 26]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
    *  CDDL syntax is inspired by ABNF's syntax [STD68].
@@ -1509,9 +1509,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 27]
+Bormann                   Expires 4 August 2024                [Page 27]
 
-Internet-Draft         CBOR EDN: Literals and ABNF         December 2023
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
       CDDL:  serialized_map = bytes .cbor header_map
@@ -1565,4 +1565,4 @@ Author's Address
 
 
 
-Bormann                   Expires 23 June 2024                 [Page 28]
+Bormann                   Expires 4 August 2024                [Page 28]
