@@ -194,10 +194,14 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
    In a similar vein, the term "ABNF" in this document refers to the
    language defined in [STD68] as extended in [RFC7405], where the
    "characters" of Section 2.3 of RFC 5234 [STD68] are Unicode scalar
-   values.  The term "CDDL" (Concise Data Definition Language) refers to
-   the data definition language defined in [RFC8610] and its registered
+   values.
+
+   The term "CDDL" (Concise Data Definition Language) refers to the data
+   definition language defined in [RFC8610] and its registered
    extensions (such as those in [RFC9165]), as well as
-   [I-D.ietf-cbor-update-8610-grammar].
+   [I-D.ietf-cbor-update-8610-grammar].  Additional information about
+   the relationship between the two languages EDN and CDDL is captured
+   in the informative Appendix B.
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -212,10 +216,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
    states:
 
    |  All actual interchange always happens in the binary format.
-
-
-
-
 
 
 
@@ -1493,6 +1493,8 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 Appendix B.  EDN and CDDL
 
+   This appendix is informative.
+
    EDN was designed as a language to provide a human-readable
    representation of an instance, i.e., a single CBOR data item or CBOR
    sequence.  CDDL was designed as a language to describe an (often
@@ -1504,8 +1506,6 @@ Appendix B.  EDN and CDDL
    have mutually inspired each other.  But they have very different
    roots:
 
-   *  EDN syntax is an extension to JSON syntax [STD90].  (Any
-      (interoperable) JSON text is also valid EDN.)
 
 
 
@@ -1513,6 +1513,9 @@ Bormann                   Expires 4 August 2024                [Page 27]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   *  EDN syntax is an extension to JSON syntax [STD90].  (Any
+      (interoperable) JSON text is also valid EDN.)
 
    *  CDDL syntax is inspired by ABNF's syntax [STD68].
 
@@ -1544,9 +1547,28 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       the actual tag number separately, while EDN's tag syntax is a
       simple decimal number and a pair of parentheses.
 
-      EDN:  98(['', {}, /rest elided here: …/])
+      EDN:
+         98([h'', # empty encoded protected header
+             {},  # empty unprotected header
+             ...  # rest elided here
+            ])
 
       CDDL:  COSE_Sign_Tagged = #6.98(COSE_Sign)
+
+
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 4 August 2024                [Page 28]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
+
 
    *  Separator character.  Like JSON, EDN requires commas as separators
       between array elements and map members (EDN also allows, but does
@@ -1561,14 +1583,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       of byte strings that are encoded CBOR data items.  CDDL can
       specify these with a control operator, which looks very different.
 
-      EDN:  98([/h'a10126'/ << {/alg/ 1: -7 /ECDSA 256/ } >>, /…/])
-
-
-
-Bormann                   Expires 4 August 2024                [Page 28]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
-
+      EDN:
+         98([<< {/alg/ 1: -7 /ECDSA 256/} >>, # == h'a10126'
+             ...                              # rest elided here
+            ])
 
       CDDL:  serialized_map = bytes .cbor header_map
 
@@ -1587,24 +1605,6 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
