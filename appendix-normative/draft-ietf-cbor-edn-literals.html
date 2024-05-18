@@ -1,0 +1,2810 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type</title>
+<meta content="Carsten Bormann" name="author">
+<meta content='
+       The Concise Binary Object Representation, CBOR (STD 94, RFC 8949), defines a "diagnostic notation" in order to
+be able to converse about CBOR data items without having to resort to
+binary data. 
+       ​This document specifies how to add application-oriented extensions to
+the diagnostic notation.  It then defines two such extensions for
+text representations of epoch-based date/times and of IP addresses
+and prefixes (RFC 9164). 
+       A few further additions close some gaps in usability.
+ To facilitate tool interoperation, this document
+ specifies a formal ABNF definition for extended diagnostic notation (EDN)
+ that accommodates application-oriented literals. 
+    ' name="description">
+<meta content="xml2rfc 3.21.0" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-ietf-cbor-edn-literals-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.21.0
+    Python 3.11.9
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.0
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.3
+    platformdirs 4.2.1
+    pycountry 22.3.5
+    PyYAML 6.0.1
+    requests 2.31.0
+    setuptools 68.2.2
+    six 1.16.0
+    wcwidth 0.2.13
+-->
+<link href="draft-ietf-cbor-edn-literals.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  margin-right: 1ch;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 2px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 10ch;
+  margin-right: 1.5ch;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 12ch !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">CBOR EDN: Literals and ABNF</td>
+<td class="right">February 2024</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Bormann</td>
+<td class="center">Expires 4 August 2024</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-ietf-cbor-edn-literals-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2024-02-01" class="published">1 February 2024</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2024-08-04">4 August 2024</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">C. Bormann</div>
+<div class="org">Universität Bremen TZI</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">The Concise Binary Object Representation, CBOR (STD 94, RFC 8949), defines a "diagnostic notation" in order to
+be able to converse about CBOR data items without having to resort to
+binary data.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">​This document specifies how to add application-oriented extensions to
+the diagnostic notation.  It then defines two such extensions for
+text representations of epoch-based date/times and of IP addresses
+and prefixes (RFC 9164).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">A few further additions close some gaps in usability.
+ To facilitate tool interoperation, this document
+ specifies a formal ABNF definition for extended diagnostic notation (EDN)
+ that accommodates application-oriented literals.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://cbor-wg.github.io/edn-literal/">https://cbor-wg.github.io/edn-literal/</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-cbor-edn-literals/">https://datatracker.ietf.org/doc/draft-ietf-cbor-edn-literals/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        cbor Working Group mailing list (<span><a href="mailto:cbor@ietf.org">mailto:cbor@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/cbor/">https://mailarchive.ietf.org/arch/browse/cbor/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/cbor/">https://www.ietf.org/mailman/listinfo/cbor/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/cbor-wg/edn-literal">https://github.com/cbor-wg/edn-literal</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 4 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2024 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-non-objectives-of-this-docu" class="internal xref">(Non-)Objectives of this Document</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-application-oriented-extens" class="internal xref">Application-Oriented Extension Literals</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-the-dt-extension" class="internal xref">The "dt" Extension</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-the-ip-extension" class="internal xref">The "ip" Extension</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-stand-in-representations-in" class="internal xref">Stand-in Representations in Binary CBOR</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-handling-unknown-applicatio" class="internal xref">Handling unknown application-extension identifiers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-handling-information-delibe" class="internal xref">Handling information deliberately elided from an EDN document</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-cbor-diagnostic-notation-ap" class="internal xref">CBOR Diagnostic Notation Application-extension Identifiers Registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-encoding-indicators" class="internal xref">Encoding Indicators</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-media-type" class="internal xref">Media Type</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-content-format" class="internal xref">Content-Format</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-stand-in-tags" class="internal xref">Stand-in Tags</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-abnf-definitions" class="internal xref">ABNF Definitions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-overall-abnf-definition-for" class="internal xref">Overall ABNF Definition for Extended Diagnostic Notation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-abnf-definitions-for-app-st" class="internal xref">ABNF Definitions for app-string Content</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
+                    <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#appendix-A.2.1" class="auto internal xref">A.2.1</a>.  <a href="#name-h-abnf-definition-of-hexade" class="internal xref">h: ABNF Definition of Hexadecimal representation of a byte string</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.2">
+                    <p id="section-toc.1-1.7.2.2.2.2.1"><a href="#appendix-A.2.2" class="auto internal xref">A.2.2</a>.  <a href="#name-b64-abnf-definition-of-base" class="internal xref">b64: ABNF Definition of Base64 representation of a byte string</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.3">
+                    <p id="section-toc.1-1.7.2.2.2.3.1"><a href="#appendix-A.2.3" class="auto internal xref">A.2.3</a>.  <a href="#name-dt-abnf-definition-of-rfc-3" class="internal xref">dt: ABNF Definition of RFC 3339 Representation of a Date/Time</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.4">
+                    <p id="section-toc.1-1.7.2.2.2.4.1"><a href="#appendix-A.2.4" class="auto internal xref">A.2.4</a>.  <a href="#name-ip-abnf-definition-of-textu" class="internal xref">ip: ABNF Definition of Textual Representation of an IP Address</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-edn-and-cddl" class="internal xref">EDN and CDDL</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="intro">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">For the Concise Binary Object Representation, CBOR,
+Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> in conjunction with <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>
+defines a "diagnostic notation" in order to
+be able to converse about CBOR data items without having to resort to
+binary data.
+Diagnostic notation syntax is based on JSON, with extensions
+for representing CBOR constructs such as binary data and tags.
+(Standardizing this together with the actual interchange format does
+not serve to create another interchange format, but enables the use of
+a shared diagnostic notation in tools for and in documents about CBOR.)<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">This document specifies how to add application-oriented extensions to
+the diagnostic notation.  It then defines two such extensions for
+text representations of epoch-based date/times and of IP addresses
+and prefixes <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">A few further additions close some gaps in usability.
+ To facilitate tool interoperation, this document
+ specifies a formal ABNF definition for extended diagnostic notation (EDN)
+ that accommodates application-oriented literals. (See <a href="#grammar" class="auto internal xref">Appendix A.1</a> for an overall ABNF grammar as well as the
+ABNF definitions in <a href="#app-grammars" class="auto internal xref">Appendix A.2</a> for grammars for both the
+byte string presentations predefined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and the application-extensions).<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">In addition, this document finally registers a media type identifier
+and a content-format for CBOR diagnostic notation.  This does not
+elevate its status as an interchange format, but recognizes that
+interaction between tools is often smoother if media types can be used.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<div id="terminology">
+<section id="section-1.1">
+        <h3 id="name-terminology">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-1.1-1">Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> defines the original CBOR diagnostic notation,
+and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> supplies a number of extensions to the
+diagnostic notation that result in the Extended Diagnostic Notation
+(EDN).
+The diagnostic notation extensions include popular features such as
+embedded CBOR (encoded CBOR data items in byte strings) and comments.
+A simple diagnostic notation extension that enables representing CBOR
+sequences was added in <span><a href="https://rfc-editor.org/rfc/rfc8742#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC8742" class="cite xref">RFC8742</a>]</span>.
+As diagnostic notation is not used in the kind of interchange
+situations where backward compatibility would pose a significant
+obstacle, there is little point in not using these extensions.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Therefore, when we refer to "<em>diagnostic notation</em>", we mean to
+include the original notation from Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> as well as the
+extensions from <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, <span><a href="https://rfc-editor.org/rfc/rfc8742#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC8742" class="cite xref">RFC8742</a>]</span>, and the
+present document.
+However, we stick to the abbreviation "<em>EDN</em>" as it has become quite
+popular and is more sharply distinguishable from other meanings than
+"DN" would be.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">In a similar vein, the term "ABNF" in this document refers to the
+language defined in <span>[<a href="#STD68" class="cite xref">STD68</a>]</span> as extended in <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>, where the
+"characters" of Section <a href="https://rfc-editor.org/rfc/rfc5234#section-2.3" class="relref">2.3</a> of RFC 5234 <span>[<a href="#STD68" class="cite xref">STD68</a>]</span> are Unicode scalar values.
+The term "CDDL" refers to the data definition language defined in
+<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and its registered extensions (such as those in <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>), as
+well as <span>[<a href="#I-D.ietf-cbor-update-8610-grammar" class="cite xref">I-D.ietf-cbor-update-8610-grammar</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="non-objectives-of-this-document">
+<section id="section-1.2">
+        <h3 id="name-non-objectives-of-this-docu">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-non-objectives-of-this-docu" class="section-name selfRef">(Non-)Objectives of this Document</a>
+        </h3>
+<p id="section-1.2-1">Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> states the objective of defining a
+human-readable diagnostic notation with CBOR.
+In particular, it states:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<blockquote id="section-1.2-2">
+          <p id="section-1.2-2.1">All actual interchange always happens in the binary format.<a href="#section-1.2-2.1" class="pilcrow">¶</a></p>
+</blockquote>
+<p id="section-1.2-3">One important application of EDN is the notation of CBOR data for
+humans: in specifications, on whiteboards, and for entering test data.
+A number of features, such as comments in string literals, are mainly
+useful for people-to-people communication via EDN.
+Programs also often output EDN for diagnostic purposes, such as in
+error messages or to enable comparison (including generation of diffs
+via tools) with test data.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">For comparison with test data, it is often useful if different
+implementations generate the same (or similar) output for the same
+CBOR data items.
+This is comparable to the objectives of deterministic serialization
+for CBOR data items themselves (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">4.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>).
+However, there are even more representation variants in EDN than in
+binary CBOR, and there is little point in specifically endorsing a
+single variant as "deterministic" when other variants may be more
+useful for human understanding, e.g., the <code>&lt;&lt; &gt;&gt;</code> notation as
+opposed to <code>h''</code>; an EDN generator may have quite a few options
+that control what presentation variant is most desirable for the
+application that it is being used for.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">Because of this, a deterministic representation is not defined for
+EDN, and there is no expectation for "roundtripping" from EDN to
+CBOR and back, i.e., for an ability
+to convert EDN to binary CBOR and back to EDN while achieving exactly
+the same result as the original input EDN — the original EDN possibly
+was created by humans or by a different EDN generator.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">However, there is a certain expectation that EDN generators can be
+configured to some basic output format, which:<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.2-7.1">
+            <p id="section-1.2-7.1.1">looks like JSON where that is possible;<a href="#section-1.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-7.2">
+            <p id="section-1.2-7.2.1">inserts encoding indicators only where the binary form differs from
+preferred encoding;<a href="#section-1.2-7.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-7.3">
+            <p id="section-1.2-7.3.1">uses hexadecimal representation (<code>h''</code>) for byte strings, not
+<code>b64''</code> or embedded CBOR (<code>&lt;&lt;&gt;&gt;</code>);<a href="#section-1.2-7.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-7.4">
+            <p id="section-1.2-7.4.1">does not generate elaborate blank space (newlines, indentation) for
+pretty-printing, but does use common blank spaces such as after <code>,</code>
+and <code>:</code>.<a href="#section-1.2-7.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.2-8">Additional features such as ensuring deterministic map ordering
+(Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">4.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) on output, or even deviating from the basic
+configuration in some systematic way, can further assist in comparing
+test data.
+Information obtained from a CDDL model can help in choosing
+application-oriented literals or specific string representations such
+as embedded CBOR or <code>b64''</code> in the appropriate places.<a href="#section-1.2-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="application-oriented-extension-literals">
+<section id="section-2">
+      <h2 id="name-application-oriented-extens">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-application-oriented-extens" class="section-name selfRef">Application-Oriented Extension Literals</a>
+      </h2>
+<p id="section-2-1">This document extends the syntax used in diagnostic notation for byte
+string literals to also be available for application-oriented extensions.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, the diagnostic notation can notate byte
+strings in a number of <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span> base encodings, where the encoded text
+is enclosed in single quotes, prefixed by an identifier (»h« for
+base16, »b32« for base32, »h32« for base32hex, »b64« for base64 or
+base64url).<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">This syntax can be thought to establish a name space, with the names
+"h", "b32", "h32", and "b64" taken, but other names being unallocated.
+The present specification defines additional names for this namespace,
+which we call <em>application-extension identifiers</em>.
+For the quoted string, the same rules apply as for byte strings.
+In particular, the escaping rules that were adapted from JSON strings
+are applied
+equivalently for application-oriented extensions, e.g., within the
+quoted string <code>\\</code> stands
+for a single backslash and <code>\'</code> stands for a single quote.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">An application-extension identifier is a name consisting of a
+lower-case ASCII letter (a-z) and zero or more additional ASCII
+characters that are either lower-case letters or digits (a-z0-9).<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">Application-extension identifiers are registered in a registry
+(<a href="#appext-iana" class="auto internal xref">Section 4.1</a>).<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">Prefixing a single-quoted string, an application-extension identifier
+is used to build an application-oriented extension literal, which
+stands for a CBOR data item the value of which is derived from the
+text given in the single-quoted string using a procedure defined in
+the specification for an application-extension identifier.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">An application-extension (such as <code>dt</code>) <span class="bcp14">MAY</span> also define the meaning of
+a variant of the application-extension identifier where each
+lower-case character is replaced by its upper-case counterpart (such
+as <code>DT</code>), for building an application-oriented extension literal using
+that all-uppercase variant as the prefix of a single-quoted string.<a href="#section-2-7" class="pilcrow">¶</a></p>
+<p id="section-2-8">As a convention for such definitions, using the all-uppercase variant
+implies making use of a tag appropriate for this application-oriented
+extension (such as tag number 1 for <code>DT</code>).<a href="#section-2-8" class="pilcrow">¶</a></p>
+<p id="section-2-9">Examples for application-oriented extensions to CBOR diagnostic
+notation can be found in the following sections.<a href="#section-2-9" class="pilcrow">¶</a></p>
+<div id="dt">
+<section id="section-2.1">
+        <h3 id="name-the-dt-extension">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-the-dt-extension" class="section-name selfRef">The "dt" Extension</a>
+        </h3>
+<p id="section-2.1-1">The application-extension identifier "dt" is used to notate a
+date/time literal that can be used as an Epoch-Based Date/Time as per
+Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.2" class="relref">3.4.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The text of the literal is a Standard Date/Time String as per
+Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.1" class="relref">3.4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">The value of the literal is a number representing the result of a
+conversion of the given Standard Date/Time String to an Epoch-Based
+Date/Time.
+If fractional seconds are given in the text (production
+<code>time-secfrac</code> in <a href="#abnf-grammar-dt" class="auto internal xref">Figure 4</a>), the value is a
+floating-point number; the value is an integer number otherwise.
+In the all-upper-case variant of the app-prefix, the value is enclosed
+in a tag number 1.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">As an example, the CBOR diagnostic notation<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.1-5">
+<pre>
+dt'1969-07-21T02:56:16Z',
+dt'1969-07-21T02:56:16.5Z',
+DT'1969-07-21T02:56:16Z'
+</pre><a href="#section-2.1-5" class="pilcrow">¶</a>
+</div>
+<p id="section-2.1-6">is equivalent to<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.1-7">
+<pre>
+-14159024,
+-14159023.5,
+1(-14159024)
+</pre><a href="#section-2.1-7" class="pilcrow">¶</a>
+</div>
+<p id="section-2.1-8">See <a href="#dt-grammar" class="auto internal xref">Appendix A.2.3</a> for an ABNF definition for the content of <code>dt</code> literals.<a href="#section-2.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="ip">
+<section id="section-2.2">
+        <h3 id="name-the-ip-extension">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-the-ip-extension" class="section-name selfRef">The "ip" Extension</a>
+        </h3>
+<p id="section-2.2-1">The application-extension identifier "ip" is used to notate an IP
+address literal that can be used as an IP address as per <span><a href="https://rfc-editor.org/rfc/rfc9164#section-3" class="relref">Section 3</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">The text of the literal is an IPv4address or IPv6address as per
+<span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">Section 3.2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">With the lower-case app-string <code>ip</code>, the value of the literal is a
+byte string representing the binary IP address.
+With the upper-case app-string <code>IP</code>, the literal is such a byte string
+tagged with tag number 54, if an IPv6address is used, or tag number
+52, if an IPv4address is used.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">As an additional case, the upper-case app-string <code>IP''</code> can be used
+with a prefix such as <code>2001:db8::/56</code> or <code>192.0.2.0/24</code>, with the equivalent tag as its value.
+(Note that <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span> representations of address prefixes need to
+implement the truncation of the address byte string as described in
+<span><a href="https://rfc-editor.org/rfc/rfc9164#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>; see example below.)
+For completeness, the lower-case variant <code>ip'2001:db8::/56'</code> or  <code>ip'192.0.2.0/24'</code> stands for
+an unwrapped <code>[56,h'20010db8']</code> or <code>[24,h'c00002']</code>; however, in this case the information
+on whether an address is IPv4 or IPv6 often needs to come from the context.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">Note that there is no direct representation of an address combined
+with a prefix length; this can be represented as
+<code>52([ip'192.0.2.42',24])</code>, if needed.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">Examples: the CBOR diagnostic notation<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.2-7">
+<pre>
+ip'192.0.2.42',
+IP'192.0.2.42',
+IP'192.0.2.0/24',
+ip'2001:db8::42',
+IP'2001:db8::42',
+IP'2001:db8::/64'
+</pre><a href="#section-2.2-7" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2-8">is equivalent to<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.2-9">
+<pre>
+h'c000022a',
+52(h'c000022a'),
+52([24,h'c00002']),
+h'20010db8000000000000000000000042',
+54(h'20010db8000000000000000000000042'),
+54([64,h'20010db8'])
+</pre><a href="#section-2.2-9" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2-10">See <a href="#ip-grammar" class="auto internal xref">Appendix A.2.4</a> for an ABNF definition for the content of <code>ip</code> literals.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="stand-in">
+<section id="section-3">
+      <h2 id="name-stand-in-representations-in">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-stand-in-representations-in" class="section-name selfRef">Stand-in Representations in Binary CBOR</a>
+      </h2>
+<p id="section-3-1">In some cases, an EDN consumer cannot construct actual CBOR items that
+represent the CBOR data intended for eventual interchange.
+This document defines stand-in representation for two such cases:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-2.1">
+          <p id="section-3-2.1.1">The EDN consumer does not know (or does not implement) an
+application-extension identifier used in the EDN document
+(<a href="#unknown" class="auto internal xref">Section 3.1</a>) but wants to preserve the information for a later
+processor.<a href="#section-3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-2.2">
+          <p id="section-3-2.2.1">The generator of some EDN intended for human consumption (such as in
+a specification document) may not want to include parts of the final
+data item, destructively replacing complete subtrees or possibly
+just parts of a lengthy string by <em>elisions</em> (<a href="#elision" class="auto internal xref">Section 3.2</a>).<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<div id="unknown">
+<section id="section-3.1">
+        <h3 id="name-handling-unknown-applicatio">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-handling-unknown-applicatio" class="section-name selfRef">Handling unknown application-extension identifiers</a>
+        </h3>
+<p id="section-3.1-1">When ingesting CBOR diagnostic notation, any
+application-oriented extension literals are usually decoded and
+transformed into the corresponding data item during ingestion.
+If an application-extension is not known or not implemented by the
+ingesting process, this is usually an error and processing has to
+stop.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">However, in certain cases, it can be desirable to exceptionally carry an
+uninterpreted application-oriented extension literal in an ingested
+data item, allowing to postpone its decoding to a specific later
+stage of ingestion.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">This specification defines a CBOR Tag for this purpose:
+The Diagnostic Notation Unresolved Application-Extension Tag, tag
+number CPA999 (<a href="#iana-standin" class="auto internal xref">Section 4.5</a>).
+The content of this tag is an array of two text strings: The
+application-extension identifier, and the (escape-processed) content
+of the single-quoted string.
+For example, <code>dt'1969-07-21T02:56:16Z'</code> can be provisionally represented as
+<code>/CPA/ 999(["dt", "1969-07-21T02:56:16Z"])</code>.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4"><span class="cref" id="cpa">RFC-Editor: This document uses the CPA (code point allocation)
+  convention described in [I-D.bormann-cbor-draft-numbers].  For
+  each usage of the term "CPA", please remove the prefix "CPA"
+  from the indicated value and replace the residue with the value
+  assigned by IANA; perform an analogous substitution for all other
+  occurrences of the prefix "CPA" in the document.  Finally,
+  please remove this note.</span><a href="#section-3.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="elision">
+<section id="section-3.2">
+        <h3 id="name-handling-information-delibe">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-handling-information-delibe" class="section-name selfRef">Handling information deliberately elided from an EDN document</a>
+        </h3>
+<p id="section-3.2-1">When using EDN for exposition in a document or on a whiteboard, it is
+often useful to be able to leave out parts of an EDN document that are
+not of interest at that point of the exposition.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">To facilitate this, this specification
+supports the use of an <em>ellipsis</em> (notated as three or more dots
+in a row, as in <code>...</code>) to indicate parts of an EDN document that have
+been elided (and therefore cannot be reconstructed).<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">Upon ingesting EDN as a representation of a CBOR data item for further
+processing, the occurrence of an ellipsis usually is an error and
+processing has to stop.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">However, it is useful to be able to process EDN documents with
+ellipses in the automation scripts for the documents using them.
+This specification defines a CBOR Tag that can be used in the ingestion
+for this purpose:
+The Diagnostic Notation Ellipsis Tag, tag number CPA888 (<a href="#iana-standin" class="auto internal xref">Section 4.5</a>).
+The content of this tag either is<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.2-5">
+<li id="section-3.2-5.1">
+            <p id="section-3.2-5.1.1">null (indicating a data item entirely replaced by an ellipsis), or it is<a href="#section-3.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.2-5.2">
+            <p id="section-3.2-5.2.1">an array, the elements of which are alternating between fragments
+of a string and the actual elisions, represented as ellipses
+carrying a null as content.<a href="#section-3.2-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-3.2-6">Elisions can stand in for entire subtrees, e.g. in:<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.2-7">
+<pre>
+[1, 2, ..., 3]
+,
+{ "a": 1,
+  "b": ...,
+  ...: ...
+}
+</pre><a href="#section-3.2-7" class="pilcrow">¶</a>
+</div>
+<p id="section-3.2-8">A single ellipsis (or key/value pair of ellipses) can imply eliding
+multiple elements in an array (members in a map); if more detailed
+control is required, a data definition language such as CDDL can be
+employed.
+(Note that the stand-in form defined here does not allow multiple
+key/value pairs with an ellipsis as a key: the CBOR data item would
+not be valid.)<a href="#section-3.2-8" class="pilcrow">¶</a></p>
+<p id="section-3.2-9">Subtree elisions can be represented in a CBOR data item by using
+<code>/CPA/888(null)</code> as the stand-in:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.2-10">
+<pre>
+[1, 2, 888(null), 3]
+,
+{ "a": 1,
+  "b": 888(null),
+  888(null): 888(null)
+}
+</pre><a href="#section-3.2-10" class="pilcrow">¶</a>
+</div>
+<p id="section-3.2-11">Elisions also can be used as part of a (text or byte) string:<a href="#section-3.2-11" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.2-12">
+<pre>
+{ "contract": "Herewith I buy" ... "gned: Alice &amp; Bob",
+  "signature": h'4711...0815',
+}
+</pre><a href="#section-3.2-12" class="pilcrow">¶</a>
+</div>
+<p id="section-3.2-13">The example "contract" uses string concatenation as per <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, extending that by allowing ellipses; while the example
+"signature" uses special syntax that allows the use of ellipses
+between the bytes notated <em>inside</em> <code>h''</code> literals.<a href="#section-3.2-13" class="pilcrow">¶</a></p>
+<p id="section-3.2-14">String elisions can be represented in a CBOR data item by a stand-in
+that wraps an array of string fragments alternating with ellipsis
+indicators:<a href="#section-3.2-14" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.2-15">
+<pre>
+{ "contract": /CPA/888(["Herewith I buy", 888(null),
+                        "gned: Alice &amp; Bob"]),
+  "signature": 888([h'4711', 888(null), h'0815']),
+}
+</pre><a href="#section-3.2-15" class="pilcrow">¶</a>
+</div>
+<p id="section-3.2-16">Note that the use of elisions is different from "commenting out" EDN
+text, e.g.<a href="#section-3.2-16" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.2-17">
+<pre>
+{ "contract": "Herewith I buy" /.../ "gned: Alice &amp; Bob",
+  "signature": h'4711/.../0815',
+  # ...: ...
+}
+</pre><a href="#section-3.2-17" class="pilcrow">¶</a>
+</div>
+<p id="section-3.2-18">The consumer of this EDN will ignore the comments and therefore will
+have no idea after ingestion that some information has been elided;
+validation steps may then simply fail instead of being informed about
+the elisions.<a href="#section-3.2-18" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-iana">
+<section id="section-4">
+      <h2 id="name-iana-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-4-1"><span class="cref" id="to-be-removed">RFC Editor: please replace RFC-XXXX with the RFC
+number of this RFC, [IANA.cbor-diagnostic-notation] with a
+reference to the new registry group, and remove this note.</span><a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="appext-iana">
+<section id="section-4.1">
+        <h3 id="name-cbor-diagnostic-notation-ap">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-cbor-diagnostic-notation-ap" class="section-name selfRef">CBOR Diagnostic Notation Application-extension Identifiers Registry</a>
+        </h3>
+<p id="section-4.1-1">IANA is requested to create an "Application-Extension Identifiers"
+registry in a new "CBOR Diagnostic Notation" registry group
+[IANA.cbor-diagnostic-notation], with the policy "expert review"
+(Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">4.5</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>).<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<div id="de-instructions">
+<p id="section-4.1-2">The experts are instructed to be frugal in the allocation of
+application-extension identifiers that are suggestive of generally applicable semantics,
+keeping them in reserve for application-extensions that are likely to enjoy wide
+use and can make good use of their conciseness.
+The expert is also instructed to direct the registrant to provide a
+specification (Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.6" class="relref">4.6</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>), but can make exceptions,
+for instance when a specification is not available at the time of
+registration but is likely forthcoming.
+If the expert becomes aware of application-extension identifiers that are deployed and
+in use, they may also initiate a registration on their own if
+they deem such a registration can avert potential future collisions.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+</div>
+<p id="section-4.1-3">Each entry in the registry must include:<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-4.1-4">
+          <dt id="section-4.1-4.1">Application-Extension Identifier:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.2">
+            <p id="section-4.1-4.2.1">a lower case ASCII <span>[<a href="#STD80" class="cite xref">STD80</a>]</span> string that starts with a letter and can
+contain letters and digits after that (<code>[a-z][a-z0-9]*</code>). No other
+entry in the registry can have the same application-extension identifier.<a href="#section-4.1-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-4.3">Description:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.4">
+            <p id="section-4.1-4.4.1">a brief description<a href="#section-4.1-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-4.5">Change Controller:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.6">
+            <p id="section-4.1-4.6.1">(see Section <a href="https://rfc-editor.org/rfc/rfc8126#section-2.3" class="relref">2.3</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>)<a href="#section-4.1-4.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-4.7">Reference:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.8">
+            <p id="section-4.1-4.8.1">a reference document that provides a description of the
+application-extension identifier<a href="#section-4.1-4.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-4.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 1</a>; all
+initial entries have the Change Controller "IETF".<a href="#section-4.1-5" class="pilcrow">¶</a></p>
+<span id="name-initial-content-of-applicat"></span><div id="tab-iana">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-initial-content-of-applicat" class="selfRef">Initial Content of Application-extension Identifier Registry</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Application-extension Identifier</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">h</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">b32</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">h32</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">b64</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dt</td>
+              <td class="text-left" rowspan="1" colspan="1">Date/Time</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ip</td>
+              <td class="text-left" rowspan="1" colspan="1">IP Address/Prefix</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+</section>
+</div>
+<div id="reg-ei">
+<section id="section-4.2">
+        <h3 id="name-encoding-indicators">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-encoding-indicators" class="section-name selfRef">Encoding Indicators</a>
+        </h3>
+<p id="section-4.2-1">IANA is requested to create an "Encoding Indicators"
+registry in the newly created "CBOR Diagnostic Notation" registry group
+[IANA.cbor-diagnostic-notation], with the policy "specification required"
+(Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.6" class="relref">4.6</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>).<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<div id="de-instructions-ei">
+<p id="section-4.2-2">The experts are instructed to be frugal in the allocation of
+encoding indicators that are suggestive of generally applicable semantics,
+keeping them in reserve for encoding indicator registrations that are likely to enjoy wide
+use and can make good use of their conciseness.
+If the expert becomes aware of encoding indicators that are deployed and
+in use, they may also solicit a specification and initiate a registration on their own if
+they deem such a registration can avert potential future collisions.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+</div>
+<p id="section-4.2-3">Each entry in the registry must include:<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-4.2-4">
+          <dt id="section-4.2-4.1">Encoding Indicator:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-4.2">
+            <p id="section-4.2-4.2.1">an ASCII <span>[<a href="#STD80" class="cite xref">STD80</a>]</span> string that starts with an underscore letter and
+can contain zero or more underscores, letters and digits after that
+(<code>_[_A-Za-z0-9]*</code>). No other entry in the registry can have the same
+Encoding Indicator.<a href="#section-4.2-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.2-4.3">Description:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-4.4">
+            <p id="section-4.2-4.4.1">a brief description<a href="#section-4.2-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.2-4.5">Change Controller:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-4.6">
+            <p id="section-4.2-4.6.1">(see Section <a href="https://rfc-editor.org/rfc/rfc8126#section-2.3" class="relref">2.3</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>)<a href="#section-4.2-4.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.2-4.7">Reference:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-4.8">
+            <p id="section-4.2-4.8.1">a reference document that provides a description of the
+application-extension identifier<a href="#section-4.2-4.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-4.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 2</a>; all
+initial entries have the Change Controller "IETF".<a href="#section-4.2-5" class="pilcrow">¶</a></p>
+<span id="name-initial-content-of-encoding"></span><div id="tab-iana-ei">
+<table class="center" id="table-2">
+          <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-initial-content-of-encoding" class="selfRef">Initial Content of Encoding Indicator Registry</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Encoding Indicator</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_</td>
+              <td class="text-left" rowspan="1" colspan="1">Indefinite Length Encoding (ai=31)</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_i</td>
+              <td class="text-left" rowspan="1" colspan="1">ai=0 to ai=23</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_0</td>
+              <td class="text-left" rowspan="1" colspan="1">ai=24</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_1</td>
+              <td class="text-left" rowspan="1" colspan="1">ai=25</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_2</td>
+              <td class="text-left" rowspan="1" colspan="1">ai=26</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_3</td>
+              <td class="text-left" rowspan="1" colspan="1">ai=27</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+</section>
+</div>
+<div id="media-type">
+<section id="section-4.3">
+        <h3 id="name-media-type">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-media-type" class="section-name selfRef">Media Type</a>
+        </h3>
+<p id="section-4.3-1">IANA is requested to add the following Media-Type to the "Media Types"
+registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<span id="name-new-media-type-application-"></span><div id="new-media-type">
+<table class="left" id="table-3">
+          <caption>
+<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-new-media-type-application-" class="selfRef">New Media Type application/cbor-diagnostic</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Template</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">cbor-diagnostic</td>
+              <td class="text-left" rowspan="1" colspan="1">application/cbor-diagnostic</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX, <a href="#media-type" class="auto internal xref">Section 4.3</a>
+</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-4.3-3">
+          <dt id="section-4.3-3.1">Type name:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.2">
+            <p id="section-4.3-3.2.1">application<a href="#section-4.3-3.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.3">Subtype name:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.4">
+            <p id="section-4.3-3.4.1">cbor-diagnostic<a href="#section-4.3-3.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.5">Required parameters:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.6">
+            <p id="section-4.3-3.6.1">N/A<a href="#section-4.3-3.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.7">Optional parameters:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.8">
+            <p id="section-4.3-3.8.1">N/A<a href="#section-4.3-3.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.9">Encoding considerations:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.10">
+            <p id="section-4.3-3.10.1">binary (UTF-8)<a href="#section-4.3-3.10.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.11">Security considerations:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.12">
+            <p id="section-4.3-3.12.1"><a href="#seccons" class="auto internal xref">Section 5</a> of RFC XXXX<a href="#section-4.3-3.12.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.13">Interoperability considerations:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.14">
+            <p id="section-4.3-3.14.1">none<a href="#section-4.3-3.14.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.15">Published specification:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.16">
+            <p id="section-4.3-3.16.1"><a href="#media-type" class="auto internal xref">Section 4.3</a> of RFC XXXX<a href="#section-4.3-3.16.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.17">Applications that use this media type:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.18">
+            <p id="section-4.3-3.18.1">Tools interchanging a human-readable form of CBOR<a href="#section-4.3-3.18.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.19">Fragment identifier considerations:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.20">
+            <p id="section-4.3-3.20.1">The syntax and semantics of fragment identifiers is as specified for
+"application/cbor".  (At publication of RFC XXXX, there is no
+fragment identification syntax defined for "application/cbor".)<a href="#section-4.3-3.20.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.21">Additional information:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.22">
+            <p id="section-4.3-3.22.1"><br></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.3-3.22.2">
+              <dt id="section-4.3-3.22.2.1">Deprecated alias names for this type:</dt>
+              <dd style="margin-left: 1.5em" id="section-4.3-3.22.2.2">
+                <p id="section-4.3-3.22.2.2.1">N/A<a href="#section-4.3-3.22.2.2.1" class="pilcrow">¶</a></p>
+</dd>
+              <dd class="break"></dd>
+<dt id="section-4.3-3.22.2.3">Magic number(s):</dt>
+              <dd style="margin-left: 1.5em" id="section-4.3-3.22.2.4">
+                <p id="section-4.3-3.22.2.4.1">N/A<a href="#section-4.3-3.22.2.4.1" class="pilcrow">¶</a></p>
+</dd>
+              <dd class="break"></dd>
+<dt id="section-4.3-3.22.2.5">File extension(s):</dt>
+              <dd style="margin-left: 1.5em" id="section-4.3-3.22.2.6">
+                <p id="section-4.3-3.22.2.6.1">.diag<a href="#section-4.3-3.22.2.6.1" class="pilcrow">¶</a></p>
+</dd>
+              <dd class="break"></dd>
+<dt id="section-4.3-3.22.2.7">Macintosh file type code(s):</dt>
+              <dd style="margin-left: 1.5em" id="section-4.3-3.22.2.8">
+                <p id="section-4.3-3.22.2.8.1">N/A<a href="#section-4.3-3.22.2.8.1" class="pilcrow">¶</a></p>
+</dd>
+            <dd class="break"></dd>
+</dl>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.23">Person &amp; email address to contact for further information:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.24">
+            <p id="section-4.3-3.24.1">CBOR WG mailing list (cbor@ietf.org),
+or IETF Applications and Real-Time Area (art@ietf.org)<a href="#section-4.3-3.24.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.25">Intended usage:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.26">
+            <p id="section-4.3-3.26.1">LIMITED USE<a href="#section-4.3-3.26.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.27">Restrictions on usage:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.28">
+            <p id="section-4.3-3.28.1">CBOR diagnostic notation represents CBOR data items, which are the
+format intended for actual interchange.
+The media type application/cbor-diagnostic is intended to be used
+within documents about CBOR data items, in diagnostics for human
+consumption, and in other representations of CBOR data items that
+are necessarily text-based such as in configuration files or other
+data edited by humans, often under source-code control.<a href="#section-4.3-3.28.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.29">Author/Change controller:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.30">
+            <p id="section-4.3-3.30.1">IETF<a href="#section-4.3-3.30.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.31">Provisional registration:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.32">
+            <p id="section-4.3-3.32.1">no<a href="#section-4.3-3.32.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="content-format">
+<section id="section-4.4">
+        <h3 id="name-content-format">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-content-format" class="section-name selfRef">Content-Format</a>
+        </h3>
+<p id="section-4.4-1">IANA is requested to register a Content-Format number in the
+<a href="http://www.iana.org/assignments/core-parameters#content-formats" class="relref">"CoAP Content-Formats"</a>
+sub-registry, within the "Constrained RESTful Environments (CoRE)
+Parameters" Registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<span id="name-new-content-format"></span><table class="left" id="table-4">
+          <caption>
+<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#name-new-content-format" class="selfRef">New Content-Format</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Content-Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Content Coding</th>
+              <th class="text-left" rowspan="1" colspan="1">ID</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">application/cbor-diagnostic</td>
+              <td class="text-left" rowspan="1" colspan="1">-</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD1</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+<p id="section-4.4-3">TBD1 is to be assigned from the space 256..999.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-standin">
+<section id="section-4.5">
+        <h3 id="name-stand-in-tags">
+<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-stand-in-tags" class="section-name selfRef">Stand-in Tags</a>
+        </h3>
+<p id="section-4.5-1"><span class="cref" id="cpa_1">RFC-Editor: This document uses the CPA (code point allocation)
+  convention described in [I-D.bormann-cbor-draft-numbers].  For
+  each usage of the term "CPA", please remove the prefix "CPA"
+  from the indicated value and replace the residue with the value
+  assigned by IANA; perform an analogous substitution for all other
+  occurrences of the prefix "CPA" in the document.  Finally,
+  please remove this note.</span><a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-2">In the "CBOR Tags" registry <span>[<a href="#IANA.cbor-tags" class="cite xref">IANA.cbor-tags</a>]</span>, IANA is requested to assign the
+tags in <a href="#tab-tag-values" class="auto internal xref">Table 5</a> from the "specification required" space
+(suggested assignments: 888 and 999), with the present document as the
+specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
+<span id="name-values-for-tags"></span><div id="tab-tag-values">
+<table class="center" id="table-5">
+          <caption>
+<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#name-values-for-tags" class="selfRef">Values for Tags</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-right" rowspan="1" colspan="1">Tag</th>
+              <th class="text-left" rowspan="1" colspan="1">Data Item</th>
+              <th class="text-left" rowspan="1" colspan="1">Semantics</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-right" rowspan="1" colspan="1">CPA888</td>
+              <td class="text-left" rowspan="1" colspan="1">null or array</td>
+              <td class="text-left" rowspan="1" colspan="1">Diagnostic Notation Ellipsis</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-right" rowspan="1" colspan="1">CPA999</td>
+              <td class="text-left" rowspan="1" colspan="1">array</td>
+              <td class="text-left" rowspan="1" colspan="1">Diagnostic Notation<br>Unresolved Application-Extension</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="seccons">
+<section id="section-5">
+      <h2 id="name-security-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
+      </h2>
+<p id="section-5-1">The security considerations of <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> apply.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-6">
+      <h2 id="name-references">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-6.1">
+        <h3 id="name-normative-references">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="BCP26">[BCP26]</dt>
+        <dd>
+<div class="refInstance">Best Current Practice 26, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp26">https://www.rfc-editor.org/info/bcp26</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC8126">
+            <span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8126">https://www.rfc-editor.org/info/rfc8126</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
+<dt id="C">[C]</dt>
+        <dd>
+<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Information technology — Programming languages — C"</span>, <span class="refContent">Fourth Edition</span>, <span class="seriesInfo">ISO/IEC 9899:2018</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.iso.org/standard/74528.html">https://www.iso.org/standard/74528.html</a>&gt;</span>. <span class="annotation">The text of the standard is also available via https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2310.pdf</span>
+          </dd>
+<dd class="break"></dd>
+<dt id="Cplusplus">[Cplusplus]</dt>
+        <dd>
+<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Programming languages — C++"</span>, <span class="refContent">Sixth Edition</span>, <span class="seriesInfo">ISO/IEC 14882:2020</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.iso.org/standard/79358.html">https://www.iso.org/standard/79358.html</a>&gt;</span>. <span class="annotation">The text of the standard is also available via https://isocpp.org/files/papers/N4860.pdf</span>
+          </dd>
+<dd class="break"></dd>
+<dt id="IANA.cbor-tags">[IANA.cbor-tags]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Tags"</span>, <span>&lt;<a href="http://www.iana.org/assignments/cbor-tags">http://www.iana.org/assignments/cbor-tags</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Constrained RESTful Environments (CoRE) Parameters"</span>, <span>&lt;<a href="http://www.iana.org/assignments/core-parameters">http://www.iana.org/assignments/core-parameters</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.media-types">[IANA.media-types]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Media Types"</span>, <span>&lt;<a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IEEE754">[IEEE754]</dt>
+        <dd>
+<span class="refAuthor">IEEE</span>, <span class="refTitle">"IEEE Standard for Floating-Point Arithmetic"</span>, <span class="seriesInfo">IEEE Std 754-2019</span>, <span class="seriesInfo">DOI 10.1109/IEEESTD.2019.8766229</span>, <span>&lt;<a href="https://ieeexplore.ieee.org/document/8766229">https://ieeexplore.ieee.org/document/8766229</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3339">[RFC3339]</dt>
+        <dd>
+<span class="refAuthor">Klyne, G.</span> and <span class="refAuthor">C. Newman</span>, <span class="refTitle">"Date and Time on the Internet: Timestamps"</span>, <span class="seriesInfo">RFC 3339</span>, <span class="seriesInfo">DOI 10.17487/RFC3339</span>, <time datetime="2002-07" class="refDate">July 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3339">https://www.rfc-editor.org/rfc/rfc3339</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7405">[RFC7405]</dt>
+        <dd>
+<span class="refAuthor">Kyzivat, P.</span>, <span class="refTitle">"Case-Sensitive String Support in ABNF"</span>, <span class="seriesInfo">RFC 7405</span>, <span class="seriesInfo">DOI 10.17487/RFC7405</span>, <time datetime="2014-12" class="refDate">December 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7405">https://www.rfc-editor.org/rfc/rfc7405</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8610">[RFC8610]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8742">[RFC8742]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Sequences"</span>, <span class="seriesInfo">RFC 8742</span>, <span class="seriesInfo">DOI 10.17487/RFC8742</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8742">https://www.rfc-editor.org/rfc/rfc8742</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9164">[RFC9164]</dt>
+        <dd>
+<span class="refAuthor">Richardson, M.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Tags for IPv4 and IPv6 Addresses and Prefixes"</span>, <span class="seriesInfo">RFC 9164</span>, <span class="seriesInfo">DOI 10.17487/RFC9164</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9164">https://www.rfc-editor.org/rfc/rfc9164</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD68">[STD68]</dt>
+        <dd>
+<div class="refInstance">Internet Standard 68, <span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC5234">
+            <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5234">https://www.rfc-editor.org/info/rfc5234</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
+<dt id="STD80">[STD80]</dt>
+        <dd>
+<div class="refInstance">Internet Standard 80, <span>&lt;<a href="https://www.rfc-editor.org/info/std80">https://www.rfc-editor.org/info/std80</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC0020">
+            <span class="refAuthor">Cerf, V.</span>, <span class="refTitle">"ASCII format for network interchange"</span>, <span class="seriesInfo">STD 80</span>, <span class="seriesInfo">RFC 20</span>, <span class="seriesInfo">DOI 10.17487/RFC0020</span>, <time datetime="1969-10" class="refDate">October 1969</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc20">https://www.rfc-editor.org/info/rfc20</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
+<dt id="STD94">[STD94]</dt>
+      <dd>
+<div class="refInstance">Internet Standard 94, <span>&lt;<a href="https://www.rfc-editor.org/info/std94">https://www.rfc-editor.org/info/std94</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC8949">
+            <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-6.2">
+        <h3 id="name-informative-references">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-cbor-update-8610-grammar">[I-D.ietf-cbor-update-8610-grammar]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the CDDL grammar of RFC 8610"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-update-8610-grammar-04</span>, <time datetime="2024-03-02" class="refDate">2 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-04">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-04</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4648">[RFC4648]</dt>
+        <dd>
+<span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4648">https://www.rfc-editor.org/rfc/rfc4648</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9165">[RFC9165]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD90">[STD90]</dt>
+      <dd>
+<div class="refInstance">Internet Standard 90, <span>&lt;<a href="https://www.rfc-editor.org/info/std90">https://www.rfc-editor.org/info/std90</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC8259">
+            <span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8259">https://www.rfc-editor.org/info/rfc8259</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+<div id="grammars">
+<section id="appendix-A">
+      <h2 id="name-abnf-definitions">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-abnf-definitions" class="section-name selfRef">ABNF Definitions</a>
+      </h2>
+<p id="appendix-A-1">This appendix is normative.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">It collects grammars in ABNF form (<span>[<a href="#STD68" class="cite xref">STD68</a>]</span> as extended in
+<span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) that serve to define the syntax of EDN and some
+application-oriented literals.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">Implementation note: The ABNF definitions in this appendix are
+intended to be useful in a PEG parser interpretation (see <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-A" class="relref">Appendix A</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for an introduction into PEG).<a href="#appendix-A-3" class="pilcrow">¶</a></p>
+<div id="grammar">
+<section id="appendix-A.1">
+        <h3 id="name-overall-abnf-definition-for">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-overall-abnf-definition-for" class="section-name selfRef">Overall ABNF Definition for Extended Diagnostic Notation</a>
+        </h3>
+<p id="appendix-A.1-1">This appendix provides an overall ABNF definition for the syntax of
+CBOR extended diagnostic notation.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-2">To complete the parsing of an <code>app-string</code> with prefix, say, <code>p</code>, the
+processed <code>sqstr</code> inside it is further parsed using the ABNF definition specified
+for the production <code>app-string-p</code> in <a href="#app-grammars" class="auto internal xref">Appendix A.2</a>.<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-3">For simplicity, the internal parsing for the built-in EDN prefixes is
+specified in the same way.
+ABNF definitions for <code>h''</code> and <code>b64''</code> are provided in <a href="#h-grammar" class="auto internal xref">Appendix A.2.1</a> and
+<a href="#b64-grammar" class="auto internal xref">Appendix A.2.2</a>.
+However, the prefixes <code>b32''</code> and <code>h32''</code> are not in wide use and an
+ABNF definition in this document could therefore not be based on
+implementation experience.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<div id="abnf-grammar">
+<figure id="figure-1">
+          <div class="breakable lang-abnf sourcecode" id="appendix-A.1-4.1">
+<pre>
+seq             = S [item S *("," S item S) OC] S
+one-item        = S item S
+item            = map / array / tagged
+                / number / simple
+                / string / streamstring
+
+string1         = (tstr / bstr) spec
+string1e        = string1 / ellipsis
+ellipsis        = 3*"." ; "..." or more dots
+string          = string1e *(S string1e)
+
+number          = (basenumber / decnumber / infin) spec
+sign            = "+" / "-"
+decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
+                         ["e" [sign] 1*DIGIT]
+basenumber      = [sign] "0" ("x" 1*HEXDIG
+                              [["." *HEXDIG] "p" [sign] 1*DIGIT]
+                            / "x" "." 1*HEXDIG "p" [sign] 1*DIGIT
+                            / "o" 1*ODIGIT
+                            / "b" 1*BDIGIT)
+infin           = %s"Infinity"
+                / %s"-Infinity"
+                / %s"NaN"
+simple          = %s"false"
+                / %s"true"
+                / %s"null"
+                / %s"undefined"
+                / %s"simple(" S item S ")"
+uint            = "0" / DIGIT1 *DIGIT
+tagged          = uint spec "(" S item S ")"
+
+app-prefix      = lcalpha *lcalnum ; including h and b64
+                / ucalpha *ucalnum ; tagged variant, if defined
+app-string      = app-prefix sqstr
+sqstr           = "'" *single-quoted "'"
+bstr            = app-string / sqstr / embedded
+                  ; app-string could be any type
+tstr            = DQUOTE *double-quoted DQUOTE
+embedded        = "&lt;&lt;" seq "&gt;&gt;"
+
+array           = "[" spec S [item S *("," S item S) OC] "]"
+map             = "{" spec S [kp S *("," S kp S) OC] "}"
+kp              = item S ":" S item
+
+; We allow %x09 HT in prose, but not in strings
+blank           = %x09 / %x0A / %x0D / %x20
+non-slash       = blank / %x21-2e / %x30-D7FF / %xE000-10FFFF
+non-lf          = %x09 / %x0D / %x20-D7FF / %xE000-10FFFF
+S               = *blank *(comment *blank)
+comment         = "/" *non-slash "/"
+                / "#" *non-lf %x0A
+
+; optional trailing comma (ignored)
+OC              = ["," S]
+
+; check semantically that strings are either all text or all bytes
+; note that there must be at least one string to distinguish
+streamstring    = "(_" S string S *("," S string S) OC ")"
+spec            = ["_" *wordchar]
+
+double-quoted   = unescaped
+                / "'"
+                / "\" DQUOTE
+                / "\" escapable
+
+single-quoted   = unescaped
+                / DQUOTE
+                / "\" "'"
+                / "\" escapable
+
+escapable       = %s"b" ; BS backspace U+0008
+                / %s"f" ; FF form feed U+000C
+                / %s"n" ; LF line feed U+000A
+                / %s"r" ; CR carriage return U+000D
+                / %s"t" ; HT horizontal tab U+0009
+                / "/"   ; / slash (solidus) U+002F (JSON!)
+                / "\"   ; \ backslash (reverse solidus) U+005C
+                / (%s"u" hexchar) ;  uXXXX      U+XXXX
+
+hexchar         = "{" (1*"0" [ hexscalar ] / hexscalar) "}"
+                / non-surrogate
+                / (high-surrogate "\" %s"u" low-surrogate)
+non-surrogate   = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG)
+                / ("D" ODIGIT 2HEXDIG )
+high-surrogate  = "D" ("8"/"9"/"A"/"B") 2HEXDIG
+low-surrogate   = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+hexscalar       = "10" 4HEXDIG / HEXDIG1 4HEXDIG
+                / non-surrogate / 1*3HEXDIG
+
+; Note that no other C0 characters are allowed, including %x09 HT
+unescaped       = %x0A ; new line
+                / %x0D ; carriage return -- ignored on input
+                / %x20-21
+                     ; omit 0x22 "
+                / %x23-26
+                     ; omit 0x27 '
+                / %x28-5B
+                     ; omit 0x5C \
+                / %x5D-D7FF ; skip surrogate code points
+                / %xE000-10FFFF
+
+DQUOTE          = %x22    ; " double quote
+DIGIT           = %x30-39 ; 0-9
+DIGIT1          = %x31-39 ; 1-9
+ODIGIT          = %x30-37 ; 0-7
+BDIGIT          = %x30-31 ; 0-1
+HEXDIG          = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+HEXDIG1         = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
+; Note: double-quoted strings as in "A" are case-insensitive in ABNF
+lcalpha         = %x61-7A ; a-z
+lcalnum         = lcalpha / DIGIT
+ucalpha         = %x41-5A ; A-Z
+ucalnum         = ucalpha / DIGIT
+wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a></figcaption></figure>
+</div>
+<p id="appendix-A.1-5">While an ABNF grammar defines the set of character strings that are
+considered to be valid EDN by this ABNF, the mapping of these
+character strings into the generic data model of CBOR is not always
+obvious.<a href="#appendix-A.1-5" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-6">The following additional items should help in the interpretation:<a href="#appendix-A.1-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.1-7.1">
+            <p id="appendix-A.1-7.1.1"><code>decnumber</code> stands for an integer in the usual decimal notation, unless at
+least one of the optional parts starting with "." and "e" are
+present, in which case it stands for a floating point value in the
+usual decimal notation.  Note that the grammar now allows <code>3.</code> for
+<code>3.0</code> and <code>.3</code> for <code>0.3</code> (also for hexadecimal floating point
+below); implementers are advised that some platform numeric parsers
+accept only a subset of the floating point syntax in this document
+and may require some preprocessing to use here.<a href="#appendix-A.1-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-7.2">
+            <p id="appendix-A.1-7.2.1"><code>basenumber</code> stands for an integer in the usual base 16/hexadecimal
+("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation, unless the
+optional part containing a "p" is present, in which case it stands
+for a floating point number in the usual hexadecimal notation (which
+uses a mantissa in hexadecimal and an exponent in decimal notation,
+see Section 5.12.3 of <span>[<a href="#IEEE754" class="cite xref">IEEE754</a>]</span>, Section 6.4.4.2 of <span>[<a href="#C" class="cite xref">C</a>]</span>, or Section
+5.13.4 of <span>[<a href="#Cplusplus" class="cite xref">Cplusplus</a>]</span>; floating-suffix/floating-point-suffix from
+the latter two is not used here).<a href="#appendix-A.1-7.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-7.3">
+            <p id="appendix-A.1-7.3.1"><code>spec</code> stands for an encoding indicator.
+As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>:<a href="#appendix-A.1-7.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.1-7.3.2.1">
+                <p id="appendix-A.1-7.3.2.1.1">an underscore <code>_</code> on its own stands
+for indefinite length encoding (<code>ai=31</code>, only available behind the
+opening brace/bracket for <code>map</code> and <code>array</code>: strings have a special
+syntax <code>streamstring</code> for indefinite length encoding except for the
+special cases ''_ and ""_), and<a href="#appendix-A.1-7.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.1-7.3.2.2">
+                <p id="appendix-A.1-7.3.2.2.1"><code>_0</code> to <code>_3</code> stand for <code>ai=24</code> to <code>ai=27</code>, respectively.<a href="#appendix-A.1-7.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="appendix-A.1-7.3.3">
+Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
+<code>ai=23</code> — the assumption seems to be that preferred serialization
+(Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
+diagnostic notation to an encoded CBOR data item, so leaving out the
+encoding indicator for a data item with a preferred serialization
+will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
+The present specification allows to make this explicit:<a href="#appendix-A.1-7.3.3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.1-7.3.4.1">
+                <p id="appendix-A.1-7.3.4.1.1"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#appendix-A.1-7.3.4.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="appendix-A.1-7.3.5">
+While no pressing use for further values for encoding indicators
+comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 4.2</a> defines
+a registry for additional values.<a href="#appendix-A.1-7.3.5" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-7.4">
+            <p id="appendix-A.1-7.4.1"><code>string</code> and the rules preceding it in the same block realize both
+the representation of strings that are split up into multiple chunks
+(Section <a href="https://rfc-editor.org/rfc/rfc8949#appendix-G.4" class="relref">G.4</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) and the use of ellipses to represent elisions
+(<a href="#elision" class="auto internal xref">Section 3.2</a>).  The semantic processing of these rules is relatively
+complex:<a href="#appendix-A.1-7.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.1-7.4.2.1">
+                <p id="appendix-A.1-7.4.2.1.1">A single <code>...</code> is a general ellipsis, which can stand for any data
+item.<a href="#appendix-A.1-7.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.1-7.4.2.2">
+                <p id="appendix-A.1-7.4.2.2.1">An ellipsis can be surrounded (on one or both sides) by string
+chunks, the result is a CBOR tag number CPA888 that contains an
+array with joined together spans of such chunks plus the ellipses
+represented by <code>888(null)</code>.<a href="#appendix-A.1-7.4.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.1-7.4.2.3">
+                <p id="appendix-A.1-7.4.2.3.1">A simple sequence of string chunks is simply joined together.
+In both cases of joining strings, the rules of Section <a href="https://rfc-editor.org/rfc/rfc8949#appendix-G.4" class="relref">G.4</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> need to be followed; in particular, if a text string
+results from the joining operation, that result needs to be valid
+UTF-8.<a href="#appendix-A.1-7.4.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.1-7.4.2.4">
+                <p id="appendix-A.1-7.4.2.4.1">Some of the strings may be app-strings.
+If the type of the app-string is an actual string, joining of
+chunked strings occurs as with directly notated strings; otherwise
+the occurrence of more than one app-string or an app-string
+together with a directly notated string cannot be processed.<a href="#appendix-A.1-7.4.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
+</section>
+</div>
+<div id="app-grammars">
+<section id="appendix-A.2">
+        <h3 id="name-abnf-definitions-for-app-st">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-abnf-definitions-for-app-st" class="section-name selfRef">ABNF Definitions for app-string Content</a>
+        </h3>
+<p id="appendix-A.2-1">This appendix provides ABNF definitions for application-oriented extension
+literals defined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and in this specification.
+These grammars describe the <em>decoded</em> content of the <code>sqstr</code> components that
+combine with the application-extension identifiers to form
+application-oriented extension literals.
+Each of these may make use of rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<div id="h-grammar">
+<section id="appendix-A.2.1">
+          <h4 id="name-h-abnf-definition-of-hexade">
+<a href="#appendix-A.2.1" class="section-number selfRef">A.2.1. </a><a href="#name-h-abnf-definition-of-hexade" class="section-name selfRef">h: ABNF Definition of Hexadecimal representation of a byte string</a>
+          </h4>
+<p id="appendix-A.2.1-1">The syntax of the content of byte strings represented in hex,
+such as <code>h''</code>, <code>h'0815'</code>, or <code>h'/head/ 63 /contents/ 66 6f 6f'</code>
+(another representation of <code>&lt;&lt; "foo" &gt;&gt;</code>), is described by the ABNF in <a href="#abnf-grammar-h" class="auto internal xref">Figure 2</a>.
+This syntax accommodates both lower case and upper case hex digits, as
+well as blank space (including comments) around each hex digit.<a href="#appendix-A.2.1-1" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-hexadeci"></span><div id="abnf-grammar-h">
+<figure id="figure-2">
+            <div class="lang-abnf sourcecode" id="appendix-A.2.1-2.1">
+<pre>
+app-string-h    = S *(HEXDIG S HEXDIG S / ellipsis S)
+                  ["#" *non-lf]
+ellipsis        = 3*"."
+HEXDIG          = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+DIGIT           = %x30-39 ; 0-9
+blank           = %x09 / %x0A / %x0D / %x20
+non-slash       = blank / %x21-2e / %x30-10FFFF
+non-lf          = %x09 / %x0D / %x20-D7FF / %xE000-10FFFF
+S               = *blank *(comment *blank )
+comment         = "/" *non-slash "/"
+                / "#" *non-lf %x0A
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-abnf-definition-of-hexadeci" class="selfRef">ABNF Definition of Hexadecimal Representation of a Byte String</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="b64-grammar">
+<section id="appendix-A.2.2">
+          <h4 id="name-b64-abnf-definition-of-base">
+<a href="#appendix-A.2.2" class="section-number selfRef">A.2.2. </a><a href="#name-b64-abnf-definition-of-base" class="section-name selfRef">b64: ABNF Definition of Base64 representation of a byte string</a>
+          </h4>
+<p id="appendix-A.2.2-1">The syntax of the content of byte strings represented in base64 is
+described by the ABNF in <a href="#abnf-grammar-h" class="auto internal xref">Figure 2</a>.<a href="#appendix-A.2.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2.2-2">This syntax allows both the classic (<span><a href="https://rfc-editor.org/rfc/rfc4648#section-4" class="relref">Section 4</a> of [<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>) and the
+URL-safe (<span><a href="https://rfc-editor.org/rfc/rfc4648#section-5" class="relref">Section 5</a> of [<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>) alphabet to be used.
+It accommodates, but does not require base64 padding.
+Note that inclusion of classic base64 makes it impossible to have
+in-line comments in b64, as "/" is valid base64-classic.<a href="#appendix-A.2.2-2" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-base64-r"></span><div id="abnf-grammar-b64">
+<figure id="figure-3">
+            <div class="lang-abnf sourcecode" id="appendix-A.2.2-3.1">
+<pre>
+app-string-b64  = B *(4(b64dig B))
+                  [b64dig B b64dig B ["=" B "=" / b64dig B ["="]] B]
+                  ["#" *inon-lf]
+b64dig          = ALPHA / DIGIT / "-" / "_" / "+" / "/"
+B               = *iblank *(icomment *iblank)
+iblank          = %x0A / %x20  ; Not HT or CR (gone)
+icomment        = "#" *inon-lf %x0A
+inon-lf         = %x20-D7FF / %xE000-10FFFF
+ALPHA           = %x41-5a / %x61-7a
+DIGIT           = %x30-39
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-abnf-definition-of-base64-r" class="selfRef">ABNF definition of Base64 Representation of a Byte String</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="dt-grammar">
+<section id="appendix-A.2.3">
+          <h4 id="name-dt-abnf-definition-of-rfc-3">
+<a href="#appendix-A.2.3" class="section-number selfRef">A.2.3. </a><a href="#name-dt-abnf-definition-of-rfc-3" class="section-name selfRef">dt: ABNF Definition of RFC 3339 Representation of a Date/Time</a>
+          </h4>
+<p id="appendix-A.2.3-1">The syntax of the content of <code>dt</code> literals can be described by the
+ABNF for <code>date-time</code> from <span>[<a href="#RFC3339" class="cite xref">RFC3339</a>]</span> as summarized in <span><a href="https://rfc-editor.org/rfc/rfc9165#section-3" class="relref">Section 3</a> of [<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>:<a href="#appendix-A.2.3-1" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-rfc3339-"></span><div id="abnf-grammar-dt">
+<figure id="figure-4">
+            <div class="lang-abnf sourcecode" id="appendix-A.2.3-2.1">
+<pre>
+app-string-dt   = date-time
+
+date-fullyear   = 4DIGIT
+date-month      = 2DIGIT  ; 01-12
+date-mday       = 2DIGIT  ; 01-28, 01-29, 01-30, 01-31 based on
+                          ; month/year
+time-hour       = 2DIGIT  ; 00-23
+time-minute     = 2DIGIT  ; 00-59
+time-second     = 2DIGIT  ; 00-58, 00-59, 00-60 based on leap sec
+                          ; rules
+time-secfrac    = "." 1*DIGIT
+time-numoffset  = ("+" / "-") time-hour ":" time-minute
+time-offset     = "Z" / time-numoffset
+
+partial-time    = time-hour ":" time-minute ":" time-second
+                  [time-secfrac]
+full-date       = date-fullyear "-" date-month "-" date-mday
+full-time       = partial-time time-offset
+
+date-time       = full-date "T" full-time
+DIGIT           =  %x30-39 ; 0-9
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-abnf-definition-of-rfc3339-" class="selfRef">ABNF Definition of RFC3339 Representation of a Date/Time</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="ip-grammar">
+<section id="appendix-A.2.4">
+          <h4 id="name-ip-abnf-definition-of-textu">
+<a href="#appendix-A.2.4" class="section-number selfRef">A.2.4. </a><a href="#name-ip-abnf-definition-of-textu" class="section-name selfRef">ip: ABNF Definition of Textual Representation of an IP Address</a>
+          </h4>
+<p id="appendix-A.2.4-1">The syntax of the content of <code>ip</code> literals can be described by the
+ABNF for <code>IPv4address</code> and <code>IPv6address</code> in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">Section 3.2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>,
+as included in slightly updated form in <a href="#abnf-grammar-ip" class="auto internal xref">Figure 5</a>.<a href="#appendix-A.2.4-1" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-textual-"></span><div id="abnf-grammar-ip">
+<figure id="figure-5">
+            <div class="lang-abnf sourcecode" id="appendix-A.2.4-2.1">
+<pre>
+app-string-ip = IPaddress ["/" uint]
+
+IPaddress     = IPv4address
+              / IPv6address
+
+; ABNF from RFC 3986, re-arranged for PEG compatibility:
+
+IPv6address   =                            6( h16 ":" ) ls32
+              /                       "::" 5( h16 ":" ) ls32
+              / [ h16               ] "::" 4( h16 ":" ) ls32
+              / [ h16 *1( ":" h16 ) ] "::" 3( h16 ":" ) ls32
+              / [ h16 *2( ":" h16 ) ] "::" 2( h16 ":" ) ls32
+              / [ h16 *3( ":" h16 ) ] "::"    h16 ":"   ls32
+              / [ h16 *4( ":" h16 ) ] "::"              ls32
+              / [ h16 *5( ":" h16 ) ] "::"              h16
+              / [ h16 *6( ":" h16 ) ] "::"
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 ":" h16 ) / IPv4address
+IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+dec-octet     = "25" %x30-35         ; 250-255
+              / "2" %x30-34 DIGIT    ; 200-249
+              / "1" 2DIGIT           ; 100-199
+              / %x31-39 DIGIT        ; 10-99
+              / DIGIT                ; 0-9
+
+HEXDIG        = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+DIGIT         = %x30-39 ; 0-9
+DIGIT1        = %x31-39 ; 1-9
+uint          = "0" / DIGIT1 *DIGIT
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-abnf-definition-of-textual-" class="selfRef">ABNF Definition of Textual Representation of an IP Address</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="edn-and-cddl">
+<section id="appendix-B">
+      <h2 id="name-edn-and-cddl">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-edn-and-cddl" class="section-name selfRef">EDN and CDDL</a>
+      </h2>
+<p id="appendix-B-1">EDN was designed as a language to provide a human-readable
+representation of an instance, i.e., a single CBOR data item or CBOR
+sequence.
+CDDL was designed as a language to describe an (often large) set of
+such instances (which itself constitutes a language), in the form of a
+<em>data definition</em> or <em>grammar</em> (or sometimes called <em>schema</em>).<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">The two languages share some similarities, not the least because they
+have mutually inspired each other.
+But they have very different roots:<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-3.1">
+          <p id="appendix-B-3.1.1">EDN syntax is an extension to JSON syntax <span>[<a href="#STD90" class="cite xref">STD90</a>]</span>.
+(Any (interoperable) JSON text is also valid EDN.)<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-3.2">
+          <p id="appendix-B-3.2.1">CDDL syntax is inspired by ABNF's syntax <span>[<a href="#STD68" class="cite xref">STD68</a>]</span>.<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-4">For engineers that are using both EDN and CDDL, it is easy to write
+"CDDLisms" or "EDNisms" into their drafts that are meant to be in the
+other language.
+(This is one more of the many motivations to always validate formal
+language instances with tools.)<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<p id="appendix-B-5">Important differences include:<a href="#appendix-B-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-6.1">
+          <p id="appendix-B-6.1.1">Comment syntax.  CDDL inherits ABNF's semicolon-delimited end of
+line characters, while EDN finds nothing in JSON that could be inherited here.
+Inspired by JavaScript, EDN simplifies JavaScript's copy of the
+original C comment syntax to be delimited by single slashes (where
+line ends are not of interest); it also adds end-of-line comments
+starting with <code>#</code>.<a href="#appendix-B-6.1.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="appendix-B-6.1.2">
+            <dt id="appendix-B-6.1.2.1">EDN:</dt>
+            <dd style="margin-left: 1.5em" id="appendix-B-6.1.2.2">
+              <div class="lang-cbor-diag sourcecode" id="appendix-B-6.1.2.2.1">
+<pre>
+{ / alg / 1: -7 / ECDSA 256 / }
+,
+{ 1:   # alg
+    -7 # ECDSA 256
+}
+</pre><a href="#appendix-B-6.1.2.2.1" class="pilcrow">¶</a>
+</div>
+</dd>
+            <dd class="break"></dd>
+<dt id="appendix-B-6.1.2.3">CDDL:</dt>
+            <dd style="margin-left: 1.5em" id="appendix-B-6.1.2.4">
+              <p id="appendix-B-6.1.2.4.1"><code>? 1 =&gt; int / tstr,  ; algorithm identifier</code><a href="#appendix-B-6.1.2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+</dl>
+</li>
+        <li class="normal" id="appendix-B-6.2">
+          <p id="appendix-B-6.2.1">Syntax for tags.  CDDL's tag syntax is part of the system for
+referring to CBOR's fundamentals (the major type 6, in this case)
+and (with <span>[<a href="#I-D.ietf-cbor-update-8610-grammar" class="cite xref">I-D.ietf-cbor-update-8610-grammar</a>]</span>) allows specifying the actual tag number
+separately, while EDN's tag syntax is a simple decimal number and a
+pair of parentheses.<a href="#appendix-B-6.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="appendix-B-6.2.2">
+            <dt id="appendix-B-6.2.2.1">EDN:</dt>
+            <dd style="margin-left: 1.5em" id="appendix-B-6.2.2.2">
+              <p id="appendix-B-6.2.2.2.1"><code>98(['', {}, /rest elided here: …/])</code><a href="#appendix-B-6.2.2.2.1" class="pilcrow">¶</a></p>
+</dd>
+            <dd class="break"></dd>
+<dt id="appendix-B-6.2.2.3">CDDL:</dt>
+            <dd style="margin-left: 1.5em" id="appendix-B-6.2.2.4">
+              <p id="appendix-B-6.2.2.4.1"><code>COSE_Sign_Tagged = #6.98(COSE_Sign)</code><a href="#appendix-B-6.2.2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+</dl>
+</li>
+        <li class="normal" id="appendix-B-6.3">
+          <p id="appendix-B-6.3.1">Separator character.  Like JSON, EDN requires commas as separators
+between array elements and map members (EDN also allows, but does
+not require, a trailing comma before the closing bracket/brace,
+enabling an easier to maintain "terminator" style of their use).
+CDDL's comma separators in these contexts (CDDL groups) are entirely
+optional
+(and actually are terminators, which together with their optionality
+allows them to be used like separators as well, or even not at all).<a href="#appendix-B-6.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-6.4">
+          <p id="appendix-B-6.4.1">Embedded CBOR.  EDN has a special syntax to describe the content of
+byte strings that are encoded CBOR data items.  CDDL can specify
+these with a control operator, which looks very different.<a href="#appendix-B-6.4.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="appendix-B-6.4.2">
+            <dt id="appendix-B-6.4.2.1">EDN:</dt>
+            <dd style="margin-left: 1.5em" id="appendix-B-6.4.2.2">
+              <p id="appendix-B-6.4.2.2.1"><code>98([/h'a10126'/ &lt;&lt; {/alg/ 1: -7 /ECDSA 256/ } &gt;&gt;, /…/])</code><a href="#appendix-B-6.4.2.2.1" class="pilcrow">¶</a></p>
+</dd>
+            <dd class="break"></dd>
+<dt id="appendix-B-6.4.2.3">CDDL:</dt>
+            <dd style="margin-left: 1.5em" id="appendix-B-6.4.2.4">
+              <p id="appendix-B-6.4.2.4.1"><code>serialized_map = bytes .cbor header_map</code><a href="#appendix-B-6.4.2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+</dl>
+</li>
+      </ul>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-C">
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="appendix-C-1">The concept of application-oriented extensions to diagnostic notation,
+as well as the definition for the "dt" extension, were inspired by the
+CoRAL work by Klaus Hartke.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-D">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Carsten Bormann</span></div>
+<div dir="auto" class="left"><span class="org">Universität Bremen TZI</span></div>
+<div dir="auto" class="left"><span class="street-address">Postfach 330440</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">D-28359</span> <span class="locality">Bremen</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div class="tel">
+<span>Phone:</span>
+<a href="tel:+49-421-218-63921" class="tel">+49-421-218-63921</a>
+</div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:cabo@tzi.org" class="email">cabo@tzi.org</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
