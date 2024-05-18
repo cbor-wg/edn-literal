@@ -1276,8 +1276,8 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
    *  string and the rules preceding it in the same block realize both
       the representation of strings that are split up into multiple
-      chunks (Section G.4 of RFC 8949 [STD94]) and the use of ellipses
-      to represent elisions (Section 3.2).  The semantic processing of
+      chunks (Appendix G.4 of [RFC8610]) and the use of ellipses to
+      represent elisions (Section 3.2).  The semantic processing of
       these rules is relatively complex:
 
       -  A single ... is a general ellipsis, which can stand for any
@@ -1296,10 +1296,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
          ellipses represented by 888(null).
 
       -  A simple sequence of string chunks is simply joined together.
-         In both cases of joining strings, the rules of Section G.4 of
-         RFC 8949 [STD94] need to be followed; in particular, if a text
-         string results from the joining operation, that result needs to
-         be valid UTF-8.
+         In both cases of joining strings, the rules of Appendix G.4 of
+         [RFC8610] need to be followed; in particular, if a text string
+         results from the joining operation, that result needs to be
+         valid UTF-8.
 
       -  Some of the strings may be app-strings.  If the type of the
          app-string is an actual string, joining of chunked strings
