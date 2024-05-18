@@ -1053,11 +1053,11 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 Appendix A.  ABNF Definitions
 
-   This appendix collects grammars in ABNF form ([STD68] as extended in
-   [RFC7405]) that serve to define the syntax of EDN and some
-   application-oriented literals.
+   This appendix is normative.
 
-
+   It collects grammars in ABNF form ([STD68] as extended in [RFC7405])
+   that serve to define the syntax of EDN and some application-oriented
+   literals.
 
 
 
