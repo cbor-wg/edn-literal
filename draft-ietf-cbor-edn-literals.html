@@ -1836,7 +1836,10 @@ Encoding Indicator.<a href="#section-4.2-4.2.1" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 <dt id="section-4.2-4.3">Description:</dt>
           <dd style="margin-left: 1.5em" id="section-4.2-4.4">
-            <p id="section-4.2-4.4.1">a brief description<a href="#section-4.2-4.4.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-4.4.1">a brief description.
+This description may employ an abbreviation of the form <code>ai=</code>nn,
+where nn is the numeric value of the field <em>additional information</em>, the
+low-order 5 bits of the initial byte (see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>).<a href="#section-4.2-4.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-4.2-4.5">Change Controller:</dt>
@@ -2455,37 +2458,42 @@ see Section 5.12.3 of <span>[<a href="#IEEE754" class="cite xref">IEEE754</a>]</
 the latter two is not used here).<a href="#appendix-A.1-7.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-7.3">
-            <p id="appendix-A.1-7.3.1"><code>spec</code> stands for an encoding indicator.
-As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>:<a href="#appendix-A.1-7.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-7.3.1"><code>spec</code> stands for an encoding indicator.<a href="#appendix-A.1-7.3.1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-7.3.2">
+(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
+the numeric value of the field <em>additional information</em>, the low-order 5
+bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#appendix-A.1-7.3.2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-7.3.3">
+As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>:<a href="#appendix-A.1-7.3.3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1-7.3.2.1">
-                <p id="appendix-A.1-7.3.2.1.1">an underscore <code>_</code> on its own stands
+<li class="normal" id="appendix-A.1-7.3.4.1">
+                <p id="appendix-A.1-7.3.4.1.1">an underscore <code>_</code> on its own stands
 for indefinite length encoding (<code>ai=31</code>, only available behind the
 opening brace/bracket for <code>map</code> and <code>array</code>: strings have a special
 syntax <code>streamstring</code> for indefinite length encoding except for the
-special cases ''_ and ""_), and<a href="#appendix-A.1-7.3.2.1.1" class="pilcrow">¶</a></p>
+special cases ''_ and ""_), and<a href="#appendix-A.1-7.3.4.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1-7.3.2.2">
-                <p id="appendix-A.1-7.3.2.2.1"><code>_0</code> to <code>_3</code> stand for <code>ai=24</code> to <code>ai=27</code>, respectively.<a href="#appendix-A.1-7.3.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="appendix-A.1-7.3.4.2">
+                <p id="appendix-A.1-7.3.4.2.1"><code>_0</code> to <code>_3</code> stand for <code>ai=24</code> to <code>ai=27</code>, respectively.<a href="#appendix-A.1-7.3.4.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="appendix-A.1-7.3.3">
+<p id="appendix-A.1-7.3.5">
 Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
 <code>ai=23</code> — the assumption seems to be that preferred serialization
 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
 diagnostic notation to an encoded CBOR data item, so leaving out the
 encoding indicator for a data item with a preferred serialization
 will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
-The present specification allows to make this explicit:<a href="#appendix-A.1-7.3.3" class="pilcrow">¶</a></p>
+The present specification allows to make this explicit:<a href="#appendix-A.1-7.3.5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1-7.3.4.1">
-                <p id="appendix-A.1-7.3.4.1.1"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#appendix-A.1-7.3.4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.1-7.3.6.1">
+                <p id="appendix-A.1-7.3.6.1.1"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#appendix-A.1-7.3.6.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="appendix-A.1-7.3.5">
+<p id="appendix-A.1-7.3.7">
 While no pressing use for further values for encoding indicators
 comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 4.2</a> defines
-a registry for additional values.<a href="#appendix-A.1-7.3.5" class="pilcrow">¶</a></p>
+a registry for additional values.<a href="#appendix-A.1-7.3.7" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-7.4">
             <p id="appendix-A.1-7.4.1"><code>string</code> and the rules preceding it in the same block realize both

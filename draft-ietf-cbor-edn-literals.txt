@@ -718,10 +718,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       the same Encoding Indicator.
 
    Description:
-      a brief description
-
-   Change Controller:
-      (see Section 2.3 of RFC 8126 [BCP26])
+      a brief description.  This description may employ an abbreviation
+      of the form ai=nn, where nn is the numeric value of the field
+      _additional information_, the low-order 5 bits of the initial byte
+      (see Section 3 of RFC 8949 [STD94]).
 
 
 
@@ -729,6 +729,9 @@ Bormann                   Expires 4 August 2024                [Page 13]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   Change Controller:
+      (see Section 2.3 of RFC 8126 [BCP26])
 
    Reference:
       a reference document that provides a description of the
@@ -775,9 +778,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
          Table 3: New Media Type application/cbor-diagnostic
 
-   Type name:  application
-   Subtype name:  cbor-diagnostic
-   Required parameters:  N/A
 
 
 
@@ -786,6 +786,9 @@ Bormann                   Expires 4 August 2024                [Page 14]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+   Type name:  application
+   Subtype name:  cbor-diagnostic
+   Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  binary (UTF-8)
    Security considerations:  Section 5 of RFC XXXX
@@ -826,13 +829,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
    Environments (CoRE) Parameters" Registry [IANA.core-parameters], as
    follows:
 
-   +=============================+================+======+===========+
-   | Content-Type                | Content Coding | ID   | Reference |
-   +=============================+================+======+===========+
-   | application/cbor-diagnostic | -              | TBD1 | RFC-XXXX  |
-   +-----------------------------+----------------+------+-----------+
 
-                       Table 4: New Content-Format
+
+
+
 
 
 
@@ -841,6 +841,14 @@ Bormann                   Expires 4 August 2024                [Page 15]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   +=============================+================+======+===========+
+   | Content-Type                | Content Coding | ID   | Reference |
+   +=============================+================+======+===========+
+   | application/cbor-diagnostic | -              | TBD1 | RFC-XXXX  |
+   +-----------------------------+----------------+------+-----------+
+
+                       Table 4: New Content-Format
 
    TBD1 is to be assigned from the space 256..9999, according to the
    procedure "IETF Review or IESG Approval", preferably a number less
@@ -883,20 +891,16 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 6.1.  Normative References
 
-   [BCP26]    Best Current Practice 26,
-              <https://www.rfc-editor.org/info/bcp26>.
-              At the time of writing, this BCP comprises the following:
-
-
-
-
-
 
 
 Bormann                   Expires 4 August 2024                [Page 16]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   [BCP26]    Best Current Practice 26,
+              <https://www.rfc-editor.org/info/bcp26>.
+              At the time of writing, this BCP comprises the following:
 
               Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -940,10 +944,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
-              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
-              <https://www.rfc-editor.org/rfc/rfc3339>.
-
 
 
 
@@ -953,6 +953,10 @@ Bormann                   Expires 4 August 2024                [Page 17]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
+              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
+              <https://www.rfc-editor.org/rfc/rfc3339>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -999,16 +1003,16 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
               RFC 20, DOI 10.17487/RFC0020, October 1969,
               <https://www.rfc-editor.org/info/rfc20>.
 
-   [STD94]    Internet Standard 94,
-              <https://www.rfc-editor.org/info/std94>.
-              At the time of writing, this STD comprises the following:
-
 
 
 Bormann                   Expires 4 August 2024                [Page 18]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   [STD94]    Internet Standard 94,
+              <https://www.rfc-editor.org/info/std94>.
+              At the time of writing, this STD comprises the following:
 
               Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", STD 94, RFC 8949,
@@ -1053,10 +1057,6 @@ Appendix A.  ABNF Definitions
    [RFC7405]) that serve to define the syntax of EDN and some
    application-oriented literals.
 
-   Implementation note: The ABNF definitions in this appendix are
-   intended to be useful in a Parsing Expression Grammar (PEG) parser
-   interpretation (see Appendix A of [RFC8610] for an introduction into
-   PEG).
 
 
 
@@ -1065,6 +1065,11 @@ Bormann                   Expires 4 August 2024                [Page 19]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   Implementation note: The ABNF definitions in this appendix are
+   intended to be useful in a Parsing Expression Grammar (PEG) parser
+   interpretation (see Appendix A of [RFC8610] for an introduction into
+   PEG).
 
 A.1.  Overall ABNF Definition for Extended Diagnostic Notation
 
@@ -1109,11 +1114,6 @@ A.1.  Overall ABNF Definition for Extended Diagnostic Notation
                    / %s"null"
                    / %s"undefined"
                    / %s"simple(" S item S ")"
-   uint            = "0" / DIGIT1 *DIGIT
-   tagged          = uint spec "(" S item S ")"
-
-   app-prefix      = lcalpha *lcalnum ; including h and b64
-                   / ucalpha *ucalnum ; tagged variant, if defined
 
 
 
@@ -1122,6 +1122,11 @@ Bormann                   Expires 4 August 2024                [Page 20]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+   uint            = "0" / DIGIT1 *DIGIT
+   tagged          = uint spec "(" S item S ")"
+
+   app-prefix      = lcalpha *lcalnum ; including h and b64
+                   / ucalpha *ucalnum ; tagged variant, if defined
    app-string      = app-prefix sqstr
    sqstr           = "'" *single-quoted "'"
    bstr            = app-string / sqstr / embedded
@@ -1165,11 +1170,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
                    / %s"r" ; CR carriage return U+000D
                    / %s"t" ; HT horizontal tab U+0009
                    / "/"   ; / slash (solidus) U+002F (JSON!)
-                   / "\"   ; \ backslash (reverse solidus) U+005C
-                   / (%s"u" hexchar) ;  uXXXX      U+XXXX
-
-   hexchar         = "{" (1*"0" [ hexscalar ] / hexscalar) "}"
-                   / non-surrogate
 
 
 
@@ -1178,6 +1178,11 @@ Bormann                   Expires 4 August 2024                [Page 21]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+                   / "\"   ; \ backslash (reverse solidus) U+005C
+                   / (%s"u" hexchar) ;  uXXXX      U+XXXX
+
+   hexchar         = "{" (1*"0" [ hexscalar ] / hexscalar) "}"
+                   / non-surrogate
                    / (high-surrogate "\" %s"u" low-surrogate)
    non-surrogate   = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG)
                    / ("D" ODIGIT 2HEXDIG )
@@ -1221,11 +1226,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
    The following additional items should help in the interpretation:
 
-   *  decnumber stands for an integer in the usual decimal notation,
-      unless at least one of the optional parts starting with "." and
-      "e" are present, in which case it stands for a floating point
-      value in the usual decimal notation.  Note that the grammar now
-      allows 3. for 3.0 and .3 for 0.3 (also for hexadecimal floating
 
 
 
@@ -1234,6 +1234,11 @@ Bormann                   Expires 4 August 2024                [Page 22]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+   *  decnumber stands for an integer in the usual decimal notation,
+      unless at least one of the optional parts starting with "." and
+      "e" are present, in which case it stands for a floating point
+      value in the usual decimal notation.  Note that the grammar now
+      allows 3. for 3.0 and .3 for 0.3 (also for hexadecimal floating
       point below); implementers are advised that some platform numeric
       parsers accept only a subset of the floating point syntax in this
       document and may require some preprocessing to use here.
@@ -1248,8 +1253,14 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       floating-suffix/floating-point-suffix from the latter two is not
       used here).
 
-   *  spec stands for an encoding indicator.  As per Section 8.1 of RFC
-      8949 [STD94]:
+   *  spec stands for an encoding indicator.
+
+      (In the following, an abbreviation of the form ai=nn gives nn as
+      the numeric value of the field _additional information_, the low-
+      order 5 bits of the initial byte: see Section 3 of RFC 8949
+      [STD94].)
+
+      As per Section 8.1 of RFC 8949 [STD94]:
 
       -  an underscore _ on its own stands for indefinite length
          encoding (ai=31, only available behind the opening brace/
@@ -1270,6 +1281,15 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
       -  _i ("immediate") stands for encoding with ai=0 to ai=23.
 
+
+
+
+
+Bormann                   Expires 4 August 2024                [Page 23]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
+
+
       While no pressing use for further values for encoding indicators
       comes to mind, this is an extension point for EDN; Section 4.2
       defines a registry for additional values.
@@ -1282,13 +1302,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
       -  A single ... is a general ellipsis, which can stand for any
          data item.
-
-
-
-Bormann                   Expires 4 August 2024                [Page 23]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
-
 
       -  An ellipsis can be surrounded (on one or both sides) by string
          chunks, the result is a CBOR tag number CPA888 that contains an
@@ -1325,6 +1338,14 @@ A.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
    This syntax accommodates both lower case and upper case hex digits,
    as well as blank space (including comments) around each hex digit.
 
+
+
+
+Bormann                   Expires 4 August 2024                [Page 24]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
+
+
    app-string-h    = S *(HEXDIG S HEXDIG S / ellipsis S)
                      ["#" *non-lf]
    ellipsis        = 3*"."
@@ -1336,15 +1357,6 @@ A.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
    S               = *blank *(comment *blank )
    comment         = "/" *non-slash "/"
                    / "#" *non-lf %x0A
-
-
-
-
-
-Bormann                   Expires 4 August 2024                [Page 24]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
-
 
      Figure 2: ABNF Definition of Hexadecimal Representation of a Byte
                                    String
@@ -1377,18 +1389,6 @@ A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
 
    The syntax of the content of dt literals can be described by the ABNF
    for date-time from [RFC3339] as summarized in Section 3 of [RFC9165]:
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
