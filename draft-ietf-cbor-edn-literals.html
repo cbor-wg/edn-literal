@@ -19,18 +19,18 @@ and prefixes (RFC 9164).
  specifies a formal ABNF definition for extended diagnostic notation (EDN)
  that accommodates application-oriented literals. 
     ' name="description">
-<meta content="xml2rfc 3.19.1" name="generator">
+<meta content="xml2rfc 3.21.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-cbor-edn-literals-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.1
-    Python 3.11.6
+  xml2rfc 3.21.0
+    Python 3.11.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.1.0
+    platformdirs 4.2.1
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1280,6 +1280,34 @@ byte string presentations predefined in <span>[<a href="#STD94" class="cite xref
 and a content-format for CBOR diagnostic notation.  This does not
 elevate its status as an interchange format, but recognizes that
 interaction between tools is often smoother if media types can be used.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<aside id="section-1-5">
+        <p id="section-1-5.1">Examples in RFCs often do not use media type identifiers, but
+special sourcecode type names that are allocated
+in <a href="https://www.rfc-editor.org/materials/sourcecode-types.txt">https://www.rfc-editor.org/materials/sourcecode-types.txt</a>.
+At the time of writing, this resource lists four sourcecode type
+names that can be used in RFCs for including CBOR data items and
+CBOR-related languages:<a href="#section-1-5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-5.2.1">
+            <p id="section-1-5.2.1.1"><code>cbor</code> (which is actually not useful, as CBOR is a binary format
+and cannot be used in textual examples in an RFC),<a href="#section-1-5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1-5.2.2">
+            <p id="section-1-5.2.2.1"><code>cbor-diag</code> (which is another name for EDN, as defined in the
+present document),<a href="#section-1-5.2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1-5.2.3">
+            <p id="section-1-5.2.3.1"><code>cbor-pretty</code> (which is a possibly annotated and pretty-printed
+hexdump of an encoded CBOR data item, along the lines of the
+grammar of <a href="#h-grammar" class="auto internal xref">Appendix A.2.1</a>, as used for instance for some the examples
+in <span><a href="https://rfc-editor.org/rfc/rfc9290#appendix-A.3" class="relref">Appendix A.3</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>), and<a href="#section-1-5.2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1-5.2.4">
+            <p id="section-1-5.2.4.1"><code>cddl</code> (which is used for the Concise Data Definition Language,
+CDDL, see <a href="#terminology" class="auto internal xref">Section 1.1</a> below).<a href="#section-1-5.2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</aside>
 <div id="terminology">
 <section id="section-1.1">
         <h3 id="name-terminology">
@@ -2120,9 +2148,10 @@ specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
 <dl class="references">
 <dt id="BCP26">[BCP26]</dt>
         <dd>
+<div class="refInstance">Best Current Practice 26, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp26">https://www.rfc-editor.org/info/bcp26</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC8126">
-            <span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/bcp26">https://www.rfc-editor.org/info/bcp26</a>&gt;</span>
+            <span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8126">https://www.rfc-editor.org/info/rfc8126</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 <dt id="C">[C]</dt>
@@ -2185,23 +2214,26 @@ specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="STD68">[STD68]</dt>
         <dd>
+<div class="refInstance">Internet Standard 68, <span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC5234">
-            <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>
+            <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5234">https://www.rfc-editor.org/info/rfc5234</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 <dt id="STD80">[STD80]</dt>
         <dd>
+<div class="refInstance">Internet Standard 80, <span>&lt;<a href="https://www.rfc-editor.org/info/std80">https://www.rfc-editor.org/info/std80</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC0020">
-            <span class="refAuthor">Cerf, V.</span>, <span class="refTitle">"ASCII format for network interchange"</span>, <span class="seriesInfo">STD 80</span>, <span class="seriesInfo">RFC 20</span>, <time datetime="1969-10" class="refDate">October 1969</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/std80">https://www.rfc-editor.org/info/std80</a>&gt;</span>
+            <span class="refAuthor">Cerf, V.</span>, <span class="refTitle">"ASCII format for network interchange"</span>, <span class="seriesInfo">STD 80</span>, <span class="seriesInfo">RFC 20</span>, <span class="seriesInfo">DOI 10.17487/RFC0020</span>, <time datetime="1969-10" class="refDate">October 1969</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc20">https://www.rfc-editor.org/info/rfc20</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 <dt id="STD94">[STD94]</dt>
       <dd>
+<div class="refInstance">Internet Standard 94, <span>&lt;<a href="https://www.rfc-editor.org/info/std94">https://www.rfc-editor.org/info/std94</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC8949">
-            <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/std94">https://www.rfc-editor.org/info/std94</a>&gt;</span>
+            <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 </dl>
@@ -2215,7 +2247,7 @@ specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
 <dl class="references">
 <dt id="I-D.ietf-cbor-update-8610-grammar">[I-D.ietf-cbor-update-8610-grammar]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the CDDL grammar of RFC 8610"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-update-8610-grammar-03</span>, <time datetime="2024-01-29" class="refDate">29 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-03">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the CDDL grammar of RFC 8610"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-update-8610-grammar-05</span>, <time datetime="2024-05-17" class="refDate">17 May 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-05">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4648">[RFC4648]</dt>
         <dd>
@@ -2225,11 +2257,16 @@ specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9290">[RFC9290]</dt>
+        <dd>
+<span class="refAuthor">Fossati, T.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Problem Details for Constrained Application Protocol (CoAP) APIs"</span>, <span class="seriesInfo">RFC 9290</span>, <span class="seriesInfo">DOI 10.17487/RFC9290</span>, <time datetime="2022-10" class="refDate">October 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9290">https://www.rfc-editor.org/rfc/rfc9290</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="STD90">[STD90]</dt>
       <dd>
+<div class="refInstance">Internet Standard 90, <span>&lt;<a href="https://www.rfc-editor.org/info/std90">https://www.rfc-editor.org/info/std90</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC8259">
-            <span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/std90">https://www.rfc-editor.org/info/std90</a>&gt;</span>
+            <span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8259">https://www.rfc-editor.org/info/rfc8259</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 </dl>
