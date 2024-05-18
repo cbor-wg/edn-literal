@@ -117,7 +117,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
      6.2.  Informative References  . . . . . . . . . . . . . . . . .  19
    Appendix A.  ABNF Definitions . . . . . . . . . . . . . . . . . .  19
      A.1.  Overall ABNF Definition for Extended Diagnostic
-           Notation  . . . . . . . . . . . . . . . . . . . . . . . .  19
+           Notation  . . . . . . . . . . . . . . . . . . . . . . . .  20
      A.2.  ABNF Definitions for app-string Content . . . . . . . . .  24
        A.2.1.  h: ABNF Definition of Hexadecimal representation of a
                byte string . . . . . . . . . . . . . . . . . . . . .  24
@@ -214,10 +214,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
    abbreviation "_EDN_" as it has become quite popular and is more
    sharply distinguishable from other meanings than "DN" would be.
 
-
-
-
-
+   In a similar vein, the term "ABNF" in this document refers to the
+   language defined in [STD68] as extended in [RFC7405], where the
+   "characters" of Section 2.3 of RFC 5234 [STD68] are Unicode scalar
+   values.
 
 
 
@@ -226,12 +226,12 @@ Bormann                   Expires 4 August 2024                 [Page 4]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
-   In a similar vein, the term "ABNF" in this document refers to the
-   language defined in [STD68] as extended in [RFC7405], where the
-   "characters" of Section 2.3 of RFC 5234 [STD68] are Unicode scalar
-   values.  The term "CDDL" refers to the data definition language
-   defined in [RFC8610] and its registered extensions (such as those in
-   [RFC9165]), as well as [I-D.ietf-cbor-update-8610-grammar].
+   The term "CDDL" (Concise Data Definition Language) refers to the data
+   definition language defined in [RFC8610] and its registered
+   extensions (such as those in [RFC9165]), as well as
+   [I-D.ietf-cbor-update-8610-grammar].  Additional information about
+   the relationship between the two languages EDN and CDDL is captured
+   in the informative Appendix B.
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -842,7 +842,9 @@ Bormann                   Expires 4 August 2024                [Page 15]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
-   TBD1 is to be assigned from the space 256..999.
+   TBD1 is to be assigned from the space 256..9999, according to the
+   procedure "IETF Review or IESG Approval", preferably a number less
+   than 1000.
 
 4.5.  Stand-in Tags
 
@@ -885,10 +887,8 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
               <https://www.rfc-editor.org/info/bcp26>.
               At the time of writing, this BCP comprises the following:
 
-              Cotton, M., Leiba, B., and T. Narten, "Guidelines for
-              Writing an IANA Considerations Section in RFCs", BCP 26,
-              RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/info/rfc8126>.
+
+
 
 
 
@@ -897,6 +897,11 @@ Bormann                   Expires 4 August 2024                [Page 16]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+              Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/info/rfc8126>.
 
    [C]        International Organization for Standardization,
               "Information technology — Programming languages — C",
@@ -939,11 +944,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
               <https://www.rfc-editor.org/rfc/rfc3339>.
 
-   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
-              Resource Identifier (URI): Generic Syntax", STD 66,
-              RFC 3986, DOI 10.17487/RFC3986, January 2005,
-              <https://www.rfc-editor.org/rfc/rfc3986>.
-
 
 
 
@@ -953,6 +953,11 @@ Bormann                   Expires 4 August 2024                [Page 17]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
 
    [RFC7405]  Kyzivat, P., "Case-Sensitive String Support in ABNF",
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
@@ -998,17 +1003,17 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
               <https://www.rfc-editor.org/info/std94>.
               At the time of writing, this STD comprises the following:
 
-              Bormann, C. and P. Hoffman, "Concise Binary Object
-              Representation (CBOR)", STD 94, RFC 8949,
-              DOI 10.17487/RFC8949, December 2020,
-              <https://www.rfc-editor.org/info/rfc8949>.
-
 
 
 Bormann                   Expires 4 August 2024                [Page 18]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+              Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/info/rfc8949>.
 
 6.2.  Informative References
 
@@ -1049,14 +1054,9 @@ Appendix A.  ABNF Definitions
    application-oriented literals.
 
    Implementation note: The ABNF definitions in this appendix are
-   intended to be useful in a PEG parser interpretation (see Appendix A
-   of [RFC8610] for an introduction into PEG).
-
-A.1.  Overall ABNF Definition for Extended Diagnostic Notation
-
-   This appendix provides an overall ABNF definition for the syntax of
-   CBOR extended diagnostic notation.
-
+   intended to be useful in a Parsing Expression Grammar (PEG) parser
+   interpretation (see Appendix A of [RFC8610] for an introduction into
+   PEG).
 
 
 
@@ -1065,6 +1065,11 @@ Bormann                   Expires 4 August 2024                [Page 19]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+A.1.  Overall ABNF Definition for Extended Diagnostic Notation
+
+   This appendix provides an overall ABNF definition for the syntax of
+   CBOR extended diagnostic notation.
 
    To complete the parsing of an app-string with prefix, say, p, the
    processed sqstr inside it is further parsed using the ABNF definition
@@ -1109,11 +1114,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
    app-prefix      = lcalpha *lcalnum ; including h and b64
                    / ucalpha *ucalnum ; tagged variant, if defined
-   app-string      = app-prefix sqstr
-   sqstr           = "'" *single-quoted "'"
-   bstr            = app-string / sqstr / embedded
-                     ; app-string could be any type
-   tstr            = DQUOTE *double-quoted DQUOTE
 
 
 
@@ -1122,6 +1122,11 @@ Bormann                   Expires 4 August 2024                [Page 20]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+   app-string      = app-prefix sqstr
+   sqstr           = "'" *single-quoted "'"
+   bstr            = app-string / sqstr / embedded
+                     ; app-string could be any type
+   tstr            = DQUOTE *double-quoted DQUOTE
    embedded        = "<<" seq ">>"
 
    array           = "[" spec S [item S *("," S item S) OC] "]"
@@ -1165,11 +1170,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
    hexchar         = "{" (1*"0" [ hexscalar ] / hexscalar) "}"
                    / non-surrogate
-                   / (high-surrogate "\" %s"u" low-surrogate)
-   non-surrogate   = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG)
-                   / ("D" ODIGIT 2HEXDIG )
-   high-surrogate  = "D" ("8"/"9"/"A"/"B") 2HEXDIG
-   low-surrogate   = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 
 
 
@@ -1178,6 +1178,11 @@ Bormann                   Expires 4 August 2024                [Page 21]
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 
+                   / (high-surrogate "\" %s"u" low-surrogate)
+   non-surrogate   = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG)
+                   / ("D" ODIGIT 2HEXDIG )
+   high-surrogate  = "D" ("8"/"9"/"A"/"B") 2HEXDIG
+   low-surrogate   = "D" ("C"/"D"/"E"/"F") 2HEXDIG
    hexscalar       = "10" 4HEXDIG / HEXDIG1 4HEXDIG
                    / non-surrogate / 1*3HEXDIG
 
@@ -1221,11 +1226,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       "e" are present, in which case it stands for a floating point
       value in the usual decimal notation.  Note that the grammar now
       allows 3. for 3.0 and .3 for 0.3 (also for hexadecimal floating
-      point below); implementers are advised that some platform numeric
-      parsers accept only a subset of the floating point syntax in this
-      document and may require some preprocessing to use here.
-
-
 
 
 
@@ -1233,6 +1233,10 @@ Bormann                   Expires 4 August 2024                [Page 22]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+      point below); implementers are advised that some platform numeric
+      parsers accept only a subset of the floating point syntax in this
+      document and may require some preprocessing to use here.
 
    *  basenumber stands for an integer in the usual base 16/hexadecimal
       ("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation,
@@ -1278,10 +1282,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
       -  A single ... is a general ellipsis, which can stand for any
          data item.
-
-
-
-
 
 
 
@@ -1493,6 +1493,8 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
 Appendix B.  EDN and CDDL
 
+   This appendix is informative.
+
    EDN was designed as a language to provide a human-readable
    representation of an instance, i.e., a single CBOR data item or CBOR
    sequence.  CDDL was designed as a language to describe an (often
@@ -1504,8 +1506,6 @@ Appendix B.  EDN and CDDL
    have mutually inspired each other.  But they have very different
    roots:
 
-   *  EDN syntax is an extension to JSON syntax [STD90].  (Any
-      (interoperable) JSON text is also valid EDN.)
 
 
 
@@ -1513,6 +1513,9 @@ Bormann                   Expires 4 August 2024                [Page 27]
 
 Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
 
+
+   *  EDN syntax is an extension to JSON syntax [STD90].  (Any
+      (interoperable) JSON text is also valid EDN.)
 
    *  CDDL syntax is inspired by ABNF's syntax [STD68].
 
@@ -1544,9 +1547,28 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       the actual tag number separately, while EDN's tag syntax is a
       simple decimal number and a pair of parentheses.
 
-      EDN:  98(['', {}, /rest elided here: …/])
+      EDN:
+         98([h'', # empty encoded protected header
+             {},  # empty unprotected header
+             ...  # rest elided here
+            ])
 
       CDDL:  COSE_Sign_Tagged = #6.98(COSE_Sign)
+
+
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 4 August 2024                [Page 28]
+
+Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
+
 
    *  Separator character.  Like JSON, EDN requires commas as separators
       between array elements and map members (EDN also allows, but does
@@ -1561,14 +1583,10 @@ Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
       of byte strings that are encoded CBOR data items.  CDDL can
       specify these with a control operator, which looks very different.
 
-      EDN:  98([/h'a10126'/ << {/alg/ 1: -7 /ECDSA 256/ } >>, /…/])
-
-
-
-Bormann                   Expires 4 August 2024                [Page 28]
-
-Internet-Draft         CBOR EDN: Literals and ABNF         February 2024
-
+      EDN:
+         98([<< {/alg/ 1: -7 /ECDSA 256/} >>, # == h'a10126'
+             ...                              # rest elided here
+            ])
 
       CDDL:  serialized_map = bytes .cbor header_map
 
@@ -1587,24 +1605,6 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
