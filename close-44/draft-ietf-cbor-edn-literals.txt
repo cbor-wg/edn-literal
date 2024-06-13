@@ -907,9 +907,9 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
    their use of dereferenceable identifiers (Section 6 of
    [I-D.bormann-t2trg-deref-id]).  For instance, tools might require
    explicitly enabling the use of each extension that is not on a pre-
-   approved list; this can possibly be made less onerous by combining
-   this with a mechanism for supplying any parameters controlling such
-   an extension.
+   approved list.  This task can possibly be made less onerous by
+   combining it with a mechanism for supplying any parameters
+   controlling such an extension.
 
 6.  References
 
