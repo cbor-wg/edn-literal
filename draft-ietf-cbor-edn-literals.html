@@ -2459,72 +2459,99 @@ see Section 5.12.3 of <span>[<a href="#IEEE754" class="cite xref">IEEE754</a>]</
 the latter two is not used here).<a href="#appendix-A.1-7.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-7.3">
-            <p id="appendix-A.1-7.3.1"><code>spec</code> stands for an encoding indicator.<a href="#appendix-A.1-7.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-7.3.1">When <code>decnumber</code> or <code>basenumber</code> stands for an integer, the
+corresponding CBOR data item is represented using major type 0 or 1
+if possible, or using tag 2 or 3 if not.
+In the latter case, this specification does not define any encoding
+indicators that apply.
+If fine control over encoding is desired, this can be expressed by
+being explicit about the representation as a tag:
+E.g., <code>987654321098765432310</code>, which is equivalent to <code>2(h'35 8a 75
+04 38 f3 80 f5 f6')</code> in its preferred serialization, might be
+written as <code>2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1)</code> if
+leading zeros need to be added during serialization to obtain
+specific sizes for tag head, byte string head, and the overall byte
+string.<a href="#appendix-A.1-7.3.1" class="pilcrow">¶</a></p>
 <p id="appendix-A.1-7.3.2">
+Otherwise, and for <code>infin</code>, a floating point data item with major
+type 7 is used in preferred serialization (unless modified by an
+encoding indicator, which then needs to be <code>_1</code>, <code>_2</code>, or <code>_3</code>).
+For this, the number range needs to fit into a binary64 (or the size
+corresponding to the encoding indicator), and the precision will be
+adjusted to binary64 before further applying preferred serialization
+(or to the size corresponding to the encoding indicator).
+Tag 4/5 representations are not generated in these cases.
+Future app-prefixes could be defined to allow more control for
+obtaining a tag 4/5 representation directly from a hex or decimal
+floating point literal.<a href="#appendix-A.1-7.3.2" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-7.4">
+            <p id="appendix-A.1-7.4.1"><code>spec</code> stands for an encoding indicator.<a href="#appendix-A.1-7.4.1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-7.4.2">
 (In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
 the numeric value of the field <em>additional information</em>, the low-order 5
-bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#appendix-A.1-7.3.2" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-7.3.3">
-As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>:<a href="#appendix-A.1-7.3.3" class="pilcrow">¶</a></p>
+bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#appendix-A.1-7.4.2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-7.4.3">
+As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>:<a href="#appendix-A.1-7.4.3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1-7.3.4.1">
-                <p id="appendix-A.1-7.3.4.1.1">an underscore <code>_</code> on its own stands
+<li class="normal" id="appendix-A.1-7.4.4.1">
+                <p id="appendix-A.1-7.4.4.1.1">an underscore <code>_</code> on its own stands
 for indefinite length encoding (<code>ai=31</code>, only available behind the
 opening brace/bracket for <code>map</code> and <code>array</code>: strings have a special
 syntax <code>streamstring</code> for indefinite length encoding except for the
-special cases ''_ and ""_), and<a href="#appendix-A.1-7.3.4.1.1" class="pilcrow">¶</a></p>
+special cases ''_ and ""_), and<a href="#appendix-A.1-7.4.4.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1-7.3.4.2">
-                <p id="appendix-A.1-7.3.4.2.1"><code>_0</code> to <code>_3</code> stand for <code>ai=24</code> to <code>ai=27</code>, respectively.<a href="#appendix-A.1-7.3.4.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="appendix-A.1-7.4.4.2">
+                <p id="appendix-A.1-7.4.4.2.1"><code>_0</code> to <code>_3</code> stand for <code>ai=24</code> to <code>ai=27</code>, respectively.<a href="#appendix-A.1-7.4.4.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="appendix-A.1-7.3.5">
+<p id="appendix-A.1-7.4.5">
 Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
 <code>ai=23</code> — the assumption seems to be that preferred serialization
 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
 diagnostic notation to an encoded CBOR data item, so leaving out the
 encoding indicator for a data item with a preferred serialization
 will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
-The present specification allows to make this explicit:<a href="#appendix-A.1-7.3.5" class="pilcrow">¶</a></p>
+The present specification allows to make this explicit:<a href="#appendix-A.1-7.4.5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1-7.3.6.1">
-                <p id="appendix-A.1-7.3.6.1.1"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#appendix-A.1-7.3.6.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.1-7.4.6.1">
+                <p id="appendix-A.1-7.4.6.1.1"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#appendix-A.1-7.4.6.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="appendix-A.1-7.3.7">
+<p id="appendix-A.1-7.4.7">
 While no pressing use for further values for encoding indicators
 comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 4.2</a> defines
-a registry for additional values.<a href="#appendix-A.1-7.3.7" class="pilcrow">¶</a></p>
+a registry for additional values.<a href="#appendix-A.1-7.4.7" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.1-7.4">
-            <p id="appendix-A.1-7.4.1"><code>string</code> and the rules preceding it in the same block realize both
+          <li class="normal" id="appendix-A.1-7.5">
+            <p id="appendix-A.1-7.5.1"><code>string</code> and the rules preceding it in the same block realize both
 the representation of strings that are split up into multiple chunks
 (<span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>) and the use of ellipses to represent elisions
 (<a href="#elision" class="auto internal xref">Section 3.2</a>).  The semantic processing of these rules is relatively
-complex:<a href="#appendix-A.1-7.4.1" class="pilcrow">¶</a></p>
+complex:<a href="#appendix-A.1-7.5.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1-7.4.2.1">
-                <p id="appendix-A.1-7.4.2.1.1">A single <code>...</code> is a general ellipsis, which can stand for any data
-item.<a href="#appendix-A.1-7.4.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.1-7.5.2.1">
+                <p id="appendix-A.1-7.5.2.1.1">A single <code>...</code> is a general ellipsis, which can stand for any data
+item.<a href="#appendix-A.1-7.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1-7.4.2.2">
-                <p id="appendix-A.1-7.4.2.2.1">An ellipsis can be surrounded (on one or both sides) by string
+              <li class="normal" id="appendix-A.1-7.5.2.2">
+                <p id="appendix-A.1-7.5.2.2.1">An ellipsis can be surrounded (on one or both sides) by string
 chunks, the result is a CBOR tag number CPA888 that contains an
 array with joined together spans of such chunks plus the ellipses
-represented by <code>888(null)</code>.<a href="#appendix-A.1-7.4.2.2.1" class="pilcrow">¶</a></p>
+represented by <code>888(null)</code>.<a href="#appendix-A.1-7.5.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1-7.4.2.3">
-                <p id="appendix-A.1-7.4.2.3.1">A simple sequence of string chunks is simply joined together.
+              <li class="normal" id="appendix-A.1-7.5.2.3">
+                <p id="appendix-A.1-7.5.2.3.1">A simple sequence of string chunks is simply joined together.
 In both cases of joining strings, the rules of <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> need to be followed; in particular, if a text string
 results from the joining operation, that result needs to be valid
-UTF-8.<a href="#appendix-A.1-7.4.2.3.1" class="pilcrow">¶</a></p>
+UTF-8.<a href="#appendix-A.1-7.5.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1-7.4.2.4">
-                <p id="appendix-A.1-7.4.2.4.1">Some of the strings may be app-strings.
+              <li class="normal" id="appendix-A.1-7.5.2.4">
+                <p id="appendix-A.1-7.5.2.4.1">Some of the strings may be app-strings.
 If the type of the app-string is an actual string, joining of
 chunked strings occurs as with directly notated strings; otherwise
 the occurrence of more than one app-string or an app-string
-together with a directly notated string cannot be processed.<a href="#appendix-A.1-7.4.2.4.1" class="pilcrow">¶</a></p>
+together with a directly notated string cannot be processed.<a href="#appendix-A.1-7.5.2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
