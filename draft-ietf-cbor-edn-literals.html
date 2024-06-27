@@ -2155,6 +2155,22 @@ specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
       </h2>
 <p id="section-5-1">The security considerations of <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> apply.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The EDN specification provides two explicit extension points,
+application-extension identifiers (<a href="#appext-iana" class="auto internal xref">Section 4.1</a>) and encoding
+indicators (<a href="#reg-ei" class="auto internal xref">Section 4.2</a>).
+Extensions introduced this way can have their own security
+considerations (see, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-e-ref-00#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-e-ref" class="cite xref">I-D.bormann-cbor-e-ref</a>]</span>).
+When implementing tools that support the use of EDN extensions, the
+implementer needs to be careful not to inadvertently introduce a
+vector for an attacker to invoke extensions not planned for by the
+tool operator, who might not have considered security considerations
+of specific extensions such as those posed by their use of
+dereferenceable identifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-03#section-6" class="relref">Section 6</a> of [<a href="#I-D.bormann-t2trg-deref-id" class="cite xref">I-D.bormann-t2trg-deref-id</a>]</span>).
+For instance, tools might require explicitly enabling the use of each
+extension that is not on an allowlist.
+This task can possibly be
+made less onerous by combining it with a mechanism for supplying any
+parameters controlling such an extension.<a href="#section-5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-6">
@@ -2266,6 +2282,14 @@ specification reference.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.bormann-cbor-e-ref">[I-D.bormann-cbor-e-ref]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-e-ref-00</span>, <time datetime="2024-02-29" class="refDate">29 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-e-ref-00">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-e-ref-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.bormann-t2trg-deref-id">[I-D.bormann-t2trg-deref-id]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">C. Amsüss</span>, <span class="refTitle">"The "dereferenceable identifier" pattern"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-t2trg-deref-id-03</span>, <time datetime="2024-03-02" class="refDate">2 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-03">https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-cbor-update-8610-grammar">[I-D.ietf-cbor-update-8610-grammar]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the CDDL grammar of RFC 8610"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-update-8610-grammar-06</span>, <time datetime="2024-06-24" class="refDate">24 June 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-06">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-06</a>&gt;</span>. </dd>
