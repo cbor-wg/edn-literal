@@ -1566,6 +1566,14 @@ data item, destructively replacing complete subtrees or possibly
 just parts of a lengthy string by <em>elisions</em> (<a href="#elision" class="auto internal xref">Section 3.2</a>).<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
+<p id="section-3-3">Implementation note:
+Typically, the ultimate applications will fail if they encounter tags
+unknown to them, which the ones defined in this section likely are.
+Where chains of tools are involved in processing EDN, it may be useful
+to fail earlier than at the ultimate receiver in the chain unless
+specific processing options (e.g., command line flags) are given that
+indicate which of these stand-ins are expected at this stage in the
+chain.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <div id="unknown">
 <section id="section-3.1">
         <h3 id="name-handling-unknown-applicatio">
