@@ -118,18 +118,18 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
    Appendix A.  ABNF Definitions . . . . . . . . . . . . . . . . . .  19
      A.1.  Overall ABNF Definition for Extended Diagnostic
            Notation  . . . . . . . . . . . . . . . . . . . . . . . .  20
-     A.2.  ABNF Definitions for app-string Content . . . . . . . . .  24
+     A.2.  ABNF Definitions for app-string Content . . . . . . . . .  25
        A.2.1.  h: ABNF Definition of Hexadecimal representation of a
-               byte string . . . . . . . . . . . . . . . . . . . . .  24
+               byte string . . . . . . . . . . . . . . . . . . . . .  25
        A.2.2.  b64: ABNF Definition of Base64 representation of a byte
-               string  . . . . . . . . . . . . . . . . . . . . . . .  25
+               string  . . . . . . . . . . . . . . . . . . . . . . .  26
        A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a
-               Date/Time . . . . . . . . . . . . . . . . . . . . . .  25
+               Date/Time . . . . . . . . . . . . . . . . . . . . . .  26
        A.2.4.  ip: ABNF Definition of Textual Representation of an IP
-               Address . . . . . . . . . . . . . . . . . . . . . . .  26
-   Appendix B.  EDN and CDDL . . . . . . . . . . . . . . . . . . . .  27
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  29
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  29
+               Address . . . . . . . . . . . . . . . . . . . . . . .  27
+   Appendix B.  EDN and CDDL . . . . . . . . . . . . . . . . . . . .  28
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  30
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  30
 
 1.  Introduction
 
@@ -1253,7 +1253,42 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
       floating-suffix/floating-point-suffix from the latter two is not
       used here).
 
+   *  When decnumber or basenumber stands for an integer, the
+      corresponding CBOR data item is represented using major type 0 or
+      1 if possible, or using tag 2 or 3 if not.  In the latter case,
+      this specification does not define any encoding indicators that
+      apply.  If fine control over encoding is desired, this can be
+      expressed by being explicit about the representation as a tag:
+      E.g., 987654321098765432310, which is equivalent to 2(h'35 8a 75
+      04 38 f3 80 f5 f6') in its preferred serialization, might be
+      written as 2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1) if
+      leading zeros need to be added during serialization to obtain
+      specific sizes for tag head, byte string head, and the overall
+      byte string.
+
+      Otherwise, and for infin, a floating point data item with major
+      type 7 is used in preferred serialization (unless modified by an
+      encoding indicator, which then needs to be _1, _2, or _3).  For
+      this, the number range needs to fit into a binary64 (or the size
+      corresponding to the encoding indicator), and the precision will
+      be adjusted to binary64 before further applying preferred
+      serialization (or to the size corresponding to the encoding
+      indicator).  Tag 4/5 representations are not generated in these
+      cases.  Future app-prefixes could be defined to allow more control
+      for obtaining a tag 4/5 representation directly from a hex or
+      decimal floating point literal.
+
    *  spec stands for an encoding indicator.
+
+
+
+
+
+
+Bormann                 Expires 29 December 2024               [Page 23]
+
+Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
+
 
       (In the following, an abbreviation of the form ai=nn gives nn as
       the numeric value of the field _additional information_, the low-
@@ -1281,15 +1316,6 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
       -  _i ("immediate") stands for encoding with ai=0 to ai=23.
 
-
-
-
-
-Bormann                 Expires 29 December 2024               [Page 23]
-
-Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
-
-
       While no pressing use for further values for encoding indicators
       comes to mind, this is an extension point for EDN; Section 4.2
       defines a registry for additional values.
@@ -1307,6 +1333,18 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
          chunks, the result is a CBOR tag number CPA888 that contains an
          array with joined together spans of such chunks plus the
          ellipses represented by 888(null).
+
+
+
+
+
+
+
+
+Bormann                 Expires 29 December 2024               [Page 24]
+
+Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
+
 
       -  A simple sequence of string chunks is simply joined together.
          In both cases of joining strings, the rules of Appendix G.4 of
@@ -1338,14 +1376,6 @@ A.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
    This syntax accommodates both lower case and upper case hex digits,
    as well as blank space (including comments) around each hex digit.
 
-
-
-
-Bormann                 Expires 29 December 2024               [Page 24]
-
-Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
-
-
    app-string-h    = S *(HEXDIG S HEXDIG S / ellipsis S)
                      ["#" *non-lf]
    ellipsis        = 3*"."
@@ -1360,6 +1390,17 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
      Figure 2: ABNF Definition of Hexadecimal Representation of a Byte
                                    String
+
+
+
+
+
+
+
+Bormann                 Expires 29 December 2024               [Page 25]
+
+Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
+
 
 A.2.2.  b64: ABNF Definition of Base64 representation of a byte string
 
@@ -1397,7 +1438,22 @@ A.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
 
 
 
-Bormann                 Expires 29 December 2024               [Page 25]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann                 Expires 29 December 2024               [Page 26]
 
 Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
@@ -1453,7 +1509,7 @@ A.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
 
 
 
-Bormann                 Expires 29 December 2024               [Page 26]
+Bormann                 Expires 29 December 2024               [Page 27]
 
 Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
@@ -1509,7 +1565,7 @@ Appendix B.  EDN and CDDL
 
 
 
-Bormann                 Expires 29 December 2024               [Page 27]
+Bormann                 Expires 29 December 2024               [Page 28]
 
 Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
@@ -1565,7 +1621,7 @@ Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
 
 
-Bormann                 Expires 29 December 2024               [Page 28]
+Bormann                 Expires 29 December 2024               [Page 29]
 
 Internet-Draft         CBOR EDN: Literals and ABNF             June 2024
 
@@ -1621,4 +1677,4 @@ Author's Address
 
 
 
-Bormann                 Expires 29 December 2024               [Page 29]
+Bormann                 Expires 29 December 2024               [Page 30]
