@@ -4,20 +4,25 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type</title>
+<title>CBOR Extended Diagnostic Notation (EDN)</title>
 <meta content="Carsten Bormann" name="author">
 <meta content='
        The Concise Binary Object Representation, CBOR (STD 94, RFC 8949), defines a "diagnostic notation" in order to
 be able to converse about CBOR data items without having to resort to
-binary data. 
-       ​This document specifies how to add application-oriented extensions to
+binary data.
+RFC 8610 extends this into what is known as Extended Diagnostic Notation (EDN). 
+       ​This document sets forth a further step of evolution of EDN,
+and it is intended to serve as a single reference target in
+specifications that use EDN. 
+       It specifies how to add application-oriented extensions to
 the diagnostic notation.  It then defines two such extensions for
 text representations of epoch-based date/times and of IP addresses
 and prefixes (RFC 9164). 
        A few further additions close some gaps in usability.
+ It modifies one extension specified in Appendix G.4 of RFC 8610
+ to enable further increasing usability.
  To facilitate tool interoperation, this document
- specifies a formal ABNF definition for extended diagnostic notation (EDN)
- that accommodates application-oriented literals. 
+ specifies a formal ABNF definition for EDN as defined today, and it adds media types. 
     ' name="description">
 <meta content="xml2rfc 3.22.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1033,7 +1038,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">CBOR EDN: Literals and ABNF</td>
+<td class="center">CBOR Extended Diagnostic Notation (EDN)</td>
 <td class="right">July 2024</td>
 </tr></thead>
 <tfoot><tr>
@@ -1066,20 +1071,25 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type</h1>
+<h1 id="title">CBOR Extended Diagnostic Notation (EDN)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The Concise Binary Object Representation, CBOR (STD 94, RFC 8949), defines a "diagnostic notation" in order to
 be able to converse about CBOR data items without having to resort to
-binary data.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">​This document specifies how to add application-oriented extensions to
+binary data.
+RFC 8610 extends this into what is known as Extended Diagnostic Notation (EDN).<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">​This document sets forth a further step of evolution of EDN,
+and it is intended to serve as a single reference target in
+specifications that use EDN.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">It specifies how to add application-oriented extensions to
 the diagnostic notation.  It then defines two such extensions for
 text representations of epoch-based date/times and of IP addresses
-and prefixes (RFC 9164).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3">A few further additions close some gaps in usability.
+and prefixes (RFC 9164).<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-4">A few further additions close some gaps in usability.
+ It modifies one extension specified in Appendix G.4 of RFC 8610
+ to enable further increasing usability.
  To facilitate tool interoperation, this document
- specifies a formal ABNF definition for extended diagnostic notation (EDN)
- that accommodates application-oriented literals.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+ specifies a formal ABNF definition for EDN as defined today, and it adds media types.<a href="#section-abstract-4" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1255,7 +1265,7 @@ and prefixes (RFC 9164).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">For the Concise Binary Object Representation, CBOR,
+<p id="section-1-1">For the Concise Binary Object Representation (CBOR)
 Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> in conjunction with <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>
 defines a "diagnostic notation" in order to
 be able to converse about CBOR data items without having to resort to
@@ -1265,45 +1275,51 @@ for representing CBOR constructs such as binary data and tags.
 (Standardizing this together with the actual interchange format does
 not serve to create another interchange format, but enables the use of
 a shared diagnostic notation in tools for and in documents about CBOR.)<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This document specifies how to add application-oriented extensions to
+<p id="section-1-2">This document sets forth a further step of evolution of EDN,
+and it is intended to serve as a single reference target in
+specifications that use EDN.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">It specifies how to add application-oriented extensions to
 the diagnostic notation.  It then defines two such extensions for
 text representations of epoch-based date/times and of IP addresses
-and prefixes <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">A few further additions close some gaps in usability.
+and prefixes <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">A few further additions close some gaps in usability.
+ It modifies one extension specified in Appendix G.4 of RFC 8610
+ to enable further increasing usability.
  To facilitate tool interoperation, this document
- specifies a formal ABNF definition for extended diagnostic notation (EDN)
- that accommodates application-oriented literals. (See <a href="#grammar" class="auto internal xref">Appendix A.1</a> for an overall ABNF grammar as well as the
-ABNF definitions in <a href="#app-grammars" class="auto internal xref">Appendix A.2</a> for grammars for both the
-byte string presentations predefined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and the application-extensions).<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">In addition, this document finally registers a media type identifier
+ specifies a formal ABNF definition for EDN as defined today.
+    (See <a href="#grammar" class="auto internal xref">Appendix A.1</a> for an overall ABNF grammar as well as the
+    ABNF definitions in <a href="#app-grammars" class="auto internal xref">Appendix A.2</a> for grammars for both the
+    byte string presentations predefined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and the
+    application-extensions defined here.)<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">In addition, this document finally registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
 elevate its status as an interchange format, but recognizes that
-interaction between tools is often smoother if media types can be used.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<aside id="section-1-5">
-        <p id="section-1-5.1">Examples in RFCs often do not use media type identifiers, but
+interaction between tools is often smoother if media types can be used.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<aside id="section-1-6">
+        <p id="section-1-6.1">Examples in RFCs often do not use media type identifiers, but
 special sourcecode type names that are allocated
 in <a href="https://www.rfc-editor.org/materials/sourcecode-types.txt">https://www.rfc-editor.org/materials/sourcecode-types.txt</a>.
 At the time of writing, this resource lists four sourcecode type
 names that can be used in RFCs for including CBOR data items and
-CBOR-related languages:<a href="#section-1-5.1" class="pilcrow">¶</a></p>
+CBOR-related languages:<a href="#section-1-6.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-5.2.1">
-            <p id="section-1-5.2.1.1"><code>cbor</code> (which is actually not useful, as CBOR is a binary format
-and cannot be used in textual examples in an RFC),<a href="#section-1-5.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-1-6.2.1">
+            <p id="section-1-6.2.1.1"><code>cbor</code> (which is actually not useful, as CBOR is a binary format
+and cannot be used in textual examples in an RFC),<a href="#section-1-6.2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1-5.2.2">
-            <p id="section-1-5.2.2.1"><code>cbor-diag</code> (which is another name for EDN, as defined in the
-present document),<a href="#section-1-5.2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-1-6.2.2">
+            <p id="section-1-6.2.2.1"><code>cbor-diag</code> (which is another name for EDN, as defined in the
+present document),<a href="#section-1-6.2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1-5.2.3">
-            <p id="section-1-5.2.3.1"><code>cbor-pretty</code> (which is a possibly annotated and pretty-printed
+          <li class="normal" id="section-1-6.2.3">
+            <p id="section-1-6.2.3.1"><code>cbor-pretty</code> (which is a possibly annotated and pretty-printed
 hexdump of an encoded CBOR data item, along the lines of the
 grammar of <a href="#h-grammar" class="auto internal xref">Appendix A.2.1</a>, as used for instance for some the examples
-in <span><a href="https://rfc-editor.org/rfc/rfc9290#appendix-A.3" class="relref">Appendix A.3</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>), and<a href="#section-1-5.2.3.1" class="pilcrow">¶</a></p>
+in <span><a href="https://rfc-editor.org/rfc/rfc9290#appendix-A.3" class="relref">Appendix A.3</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>), and<a href="#section-1-6.2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1-5.2.4">
-            <p id="section-1-5.2.4.1"><code>cddl</code> (which is used for the Concise Data Definition Language,
-CDDL, see <a href="#terminology" class="auto internal xref">Section 1.1</a> below).<a href="#section-1-5.2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-1-6.2.4">
+            <p id="section-1-6.2.4.1"><code>cddl</code> (which is used for the Concise Data Definition Language,
+CDDL, see <a href="#terminology" class="auto internal xref">Section 1.1</a> below).<a href="#section-1-6.2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </aside>
