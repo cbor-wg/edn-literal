@@ -4,8 +4,8 @@
 
 Network Working Group                                         C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Intended status: Informational                               3 July 2024
-Expires: 4 January 2025
+Intended status: Informational                               4 July 2024
+Expires: 5 January 2025
 
 
                 CBOR Extended Diagnostic Notation (EDN)
@@ -53,7 +53,7 @@ About This Document
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 1]
+Bormann                  Expires 5 January 2025                 [Page 1]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -73,7 +73,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2025.
+   This Internet-Draft will expire on 5 January 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 2]
+Bormann                  Expires 5 January 2025                 [Page 2]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -165,7 +165,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 3]
+Bormann                  Expires 5 January 2025                 [Page 3]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -221,7 +221,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 4]
+Bormann                  Expires 5 January 2025                 [Page 4]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -277,7 +277,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 5]
+Bormann                  Expires 5 January 2025                 [Page 5]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -333,7 +333,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 6]
+Bormann                  Expires 5 January 2025                 [Page 6]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -389,7 +389,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 7]
+Bormann                  Expires 5 January 2025                 [Page 7]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -445,7 +445,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 8]
+Bormann                  Expires 5 January 2025                 [Page 8]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -501,7 +501,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                 [Page 9]
+Bormann                  Expires 5 January 2025                 [Page 9]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -546,21 +546,27 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
    dt'1969-07-21T02:56:16Z' can be provisionally represented as /CPA/
    999(["dt", "1969-07-21T02:56:16Z"]).
 
+   If a stage of ingestion is not prepared to handle the Unresolved
+   Application-Extension Tag, this is an error and processing has to
+   stop, as if this stage had been ingesting an unknown or unimplemented
+   application-extension literal itself.
+
 
    // RFC-Editor: This document uses the CPA (code point allocation)
    // convention described in [I-D.bormann-cbor-draft-numbers].  For
+
+
+
+Bormann                  Expires 5 January 2025                [Page 10]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
+
+
    // each usage of the term "CPA", please remove the prefix "CPA" from
    // the indicated value and replace the residue with the value
    // assigned by IANA; perform an analogous substitution for all other
    // occurrences of the prefix "CPA" in the document.  Finally, please
    // remove this note.
-
-
-
-Bormann                  Expires 4 January 2025                [Page 10]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
-
 
 3.2.  Handling information deliberately elided from an EDN document
 
@@ -605,18 +611,15 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
    multiple key/value pairs with an ellipsis as a key: the CBOR data
    item would not be valid.)
 
-   Subtree elisions can be represented in a CBOR data item by using
-   /CPA/888(null) as the stand-in:
 
 
-
-
-
-
-Bormann                  Expires 4 January 2025                [Page 11]
+Bormann                  Expires 5 January 2025                [Page 11]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
+
+   Subtree elisions can be represented in a CBOR data item by using
+   /CPA/888(null) as the stand-in:
 
    [1, 2, 888(null), 3]
    { "a": 1,
@@ -666,10 +669,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-
-
-
-Bormann                  Expires 4 January 2025                [Page 12]
+Bormann                  Expires 5 January 2025                [Page 12]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -725,7 +725,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 13]
+Bormann                  Expires 5 January 2025                [Page 13]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -781,7 +781,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 14]
+Bormann                  Expires 5 January 2025                [Page 14]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -837,7 +837,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 15]
+Bormann                  Expires 5 January 2025                [Page 15]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -893,7 +893,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 16]
+Bormann                  Expires 5 January 2025                [Page 16]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -949,7 +949,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 17]
+Bormann                  Expires 5 January 2025                [Page 17]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 18]
+Bormann                  Expires 5 January 2025                [Page 18]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 19]
+Bormann                  Expires 5 January 2025                [Page 19]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 20]
+Bormann                  Expires 5 January 2025                [Page 20]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 21]
+Bormann                  Expires 5 January 2025                [Page 21]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 22]
+Bormann                  Expires 5 January 2025                [Page 22]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 23]
+Bormann                  Expires 5 January 2025                [Page 23]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 24]
+Bormann                  Expires 5 January 2025                [Page 24]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 25]
+Bormann                  Expires 5 January 2025                [Page 25]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 26]
+Bormann                  Expires 5 January 2025                [Page 26]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 27]
+Bormann                  Expires 5 January 2025                [Page 27]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 28]
+Bormann                  Expires 5 January 2025                [Page 28]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 29]
+Bormann                  Expires 5 January 2025                [Page 29]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1677,7 +1677,7 @@ Appendix A.  EDN and CDDL
 
 
 
-Bormann                  Expires 4 January 2025                [Page 30]
+Bormann                  Expires 5 January 2025                [Page 30]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
 
 
-Bormann                  Expires 4 January 2025                [Page 31]
+Bormann                  Expires 5 January 2025                [Page 31]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       July 2024
 
@@ -1789,4 +1789,4 @@ Author's Address
 
 
 
-Bormann                  Expires 4 January 2025                [Page 32]
+Bormann                  Expires 5 January 2025                [Page 32]
