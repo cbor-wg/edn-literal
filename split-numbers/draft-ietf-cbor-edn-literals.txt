@@ -705,7 +705,8 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
    ellipsis        = 3*"." ; "..." or more dots
    string          = string1e *(S "+" S string1e)
 
-   number          = (hexnumber / octnumber / binnumber / decnumber / infin) spec
+   number          = (hexnumber / octnumber / binnumber
+                      / decnumber / nonfin) spec
    sign            = "+" / "-"
    decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
                             ["e" [sign] 1*DIGIT]
@@ -714,14 +715,13 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
                                   / "." 1*HEXDIG "p" [sign] 1*DIGIT)
    octnumber       = [sign] "0o" 1*ODIGIT
    binnumber       = [sign] "0b" 1*BDIGIT
-   infin           = %s"Infinity"
+   nonfin          = %s"Infinity"
                    / %s"-Infinity"
                    / %s"NaN"
    simple          = %s"false"
                    / %s"true"
                    / %s"null"
                    / %s"undefined"
-                   / %s"simple(" S item S ")"
 
 
 
@@ -730,6 +730,7 @@ Bormann                 Expires 18 February 2025               [Page 13]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
+                   / %s"simple(" S item S ")"
    uint            = "0" / DIGIT1 *DIGIT
    tagged          = uint spec "(" S item S ")"
 
@@ -777,7 +778,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
                    / %s"n" ; LF line feed U+000A
                    / %s"r" ; CR carriage return U+000D
                    / %s"t" ; HT horizontal tab U+0009
-                   / "/"   ; / slash (solidus) U+002F (JSON!)
 
 
 
@@ -786,6 +786,7 @@ Bormann                 Expires 18 February 2025               [Page 14]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
+                   / "/"   ; / slash (solidus) U+002F (JSON!)
                    / "\"   ; \ backslash (reverse solidus) U+005C
                    / (%s"u" hexchar) ;  uXXXX      U+XXXX
 
@@ -833,7 +834,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
    obvious.
 
    The following additional items should help in the interpretation:
-
 
 
 
