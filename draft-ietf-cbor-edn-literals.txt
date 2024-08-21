@@ -4,8 +4,8 @@
 
 Network Working Group                                         C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Intended status: Informational                            18 August 2024
-Expires: 19 February 2025
+Intended status: Informational                            21 August 2024
+Expires: 22 February 2025
 
 
                 CBOR Extended Diagnostic Notation (EDN)
@@ -53,7 +53,7 @@ About This Document
 
 
 
-Bormann                 Expires 19 February 2025                [Page 1]
+Bormann                 Expires 22 February 2025                [Page 1]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -73,7 +73,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 February 2025.
+   This Internet-Draft will expire on 22 February 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                 Expires 19 February 2025                [Page 2]
+Bormann                 Expires 22 February 2025                [Page 2]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -165,7 +165,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 3]
+Bormann                 Expires 22 February 2025                [Page 3]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -221,7 +221,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 4]
+Bormann                 Expires 22 February 2025                [Page 4]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -277,7 +277,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 5]
+Bormann                 Expires 22 February 2025                [Page 5]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -333,7 +333,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 6]
+Bormann                 Expires 22 February 2025                [Page 6]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -389,7 +389,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 7]
+Bormann                 Expires 22 February 2025                [Page 7]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -445,7 +445,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 8]
+Bormann                 Expires 22 February 2025                [Page 8]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -501,7 +501,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025                [Page 9]
+Bormann                 Expires 22 February 2025                [Page 9]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -557,7 +557,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 10]
+Bormann                 Expires 22 February 2025               [Page 10]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -613,7 +613,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 11]
+Bormann                 Expires 22 February 2025               [Page 11]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -669,7 +669,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 12]
+Bormann                 Expires 22 February 2025               [Page 12]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -725,7 +725,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 13]
+Bormann                 Expires 22 February 2025               [Page 13]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -781,7 +781,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 14]
+Bormann                 Expires 22 February 2025               [Page 14]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -837,7 +837,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 15]
+Bormann                 Expires 22 February 2025               [Page 15]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -851,33 +851,33 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
       parsers accept only a subset of the floating point syntax in this
       document and may require some preprocessing to use here.
 
-   *  basenumber stands for an integer in the usual base 16/hexadecimal
-      ("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation,
-      unless the optional part containing a "p" is present, in which
-      case it stands for a floating point number in the usual
-      hexadecimal notation (which uses a mantissa in hexadecimal and an
-      exponent in decimal notation, see Section 5.12.3 of [IEEE754],
-      Section 6.4.4.2 of [C], or Section 5.13.4 of [Cplusplus];
-      floating-suffix/floating-point-suffix from the latter two is not
-      used here).
+   *  hexint, octint, and binint stand for an integer in the usual base
+      16/hexadecimal ("0x"), base 8/octal ("0o"), or base 2/binary
+      ("0b") notation. hexfloat stands for a floating point number in
+      the usual hexadecimal notation (which uses a mantissa in
+      hexadecimal and an exponent in decimal notation, see
+      Section 5.12.3 of [IEEE754], Section 6.4.4.2 of [C], or
+      Section 5.13.4 of [Cplusplus]; floating-suffix/floating-point-
+      suffix from the latter two is not used here).
 
-   *  When decnumber or basenumber stands for an integer, the
-      corresponding CBOR data item is represented using major type 0 or
-      1 if possible, or using tag 2 or 3 if not.  In the latter case,
-      this specification does not define any encoding indicators that
-      apply.  If fine control over encoding is desired, this can be
-      expressed by being explicit about the representation as a tag:
-      E.g., 987654321098765432310, which is equivalent to 2(h'35 8a 75
-      04 38 f3 80 f5 f6') in its preferred serialization, might be
-      written as 2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1) if
-      leading zeros need to be added during serialization to obtain
+   *  For hexint, octint, binint, and when decnumber stands for an
+      integer, the corresponding CBOR data item is represented using
+      major type 0 or 1 if possible, or using tag 2 or 3 if not.  In the
+      latter case, this specification does not define any encoding
+      indicators that apply.  If fine control over encoding is desired,
+      this can be expressed by being explicit about the representation
+      as a tag: E.g., 987654321098765432310, which is equivalent to
+      2(h'35 8a 75 04 38 f3 80 f5 f6') in its preferred serialization,
+      might be written as 2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1)
+      if leading zeros need to be added during serialization to obtain
       specific sizes for tag head, byte string head, and the overall
       byte string.
 
-      Otherwise, and for infin, a floating point data item with major
-      type 7 is used in preferred serialization (unless modified by an
-      encoding indicator, which then needs to be _1, _2, or _3).  For
-      this, the number range needs to fit into a binary64 (or the size
+      When decnumber stands for a floating point value, and for hexfloat
+      and nonfin, a floating point data item with major type 7 is used
+      in preferred serialization (unless modified by an encoding
+      indicator, which then needs to be _1, _2, or _3).  For this, the
+      number range needs to fit into an [IEEE754] binary64 (or the size
       corresponding to the encoding indicator), and the precision will
       be adjusted to binary64 before further applying preferred
       serialization (or to the size corresponding to the encoding
@@ -893,7 +893,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 16]
+Bormann                 Expires 22 February 2025               [Page 16]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -949,7 +949,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 17]
+Bormann                 Expires 22 February 2025               [Page 17]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 18]
+Bormann                 Expires 22 February 2025               [Page 18]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 19]
+Bormann                 Expires 22 February 2025               [Page 19]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 20]
+Bormann                 Expires 22 February 2025               [Page 20]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 21]
+Bormann                 Expires 22 February 2025               [Page 21]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 22]
+Bormann                 Expires 22 February 2025               [Page 22]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 23]
+Bormann                 Expires 22 February 2025               [Page 23]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 24]
+Bormann                 Expires 22 February 2025               [Page 24]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 25]
+Bormann                 Expires 22 February 2025               [Page 25]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 26]
+Bormann                 Expires 22 February 2025               [Page 26]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 27]
+Bormann                 Expires 22 February 2025               [Page 27]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 28]
+Bormann                 Expires 22 February 2025               [Page 28]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 29]
+Bormann                 Expires 22 February 2025               [Page 29]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1677,7 +1677,7 @@ Appendix A.  EDN and CDDL
 
 
 
-Bormann                 Expires 19 February 2025               [Page 30]
+Bormann                 Expires 22 February 2025               [Page 30]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
 
-Bormann                 Expires 19 February 2025               [Page 31]
+Bormann                 Expires 22 February 2025               [Page 31]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
@@ -1789,4 +1789,4 @@ Author's Address
 
 
 
-Bormann                 Expires 19 February 2025               [Page 32]
+Bormann                 Expires 22 February 2025               [Page 32]
