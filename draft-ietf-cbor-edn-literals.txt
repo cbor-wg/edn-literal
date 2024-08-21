@@ -105,7 +105,7 @@ Table of Contents
    4.  ABNF Definitions  . . . . . . . . . . . . . . . . . . . . . .  12
      4.1.  Overall ABNF Definition for Extended Diagnostic
            Notation  . . . . . . . . . . . . . . . . . . . . . . . .  13
-     4.2.  ABNF Definitions for app-string Content . . . . . . . . .  18
+     4.2.  ABNF Definitions for app-string Content . . . . . . . . .  19
 
 
 
@@ -115,11 +115,11 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
        4.2.1.  h: ABNF Definition of Hexadecimal representation of a
-               byte string . . . . . . . . . . . . . . . . . . . . .  18
+               byte string . . . . . . . . . . . . . . . . . . . . .  19
        4.2.2.  b64: ABNF Definition of Base64 representation of a byte
                string  . . . . . . . . . . . . . . . . . . . . . . .  19
        4.2.3.  dt: ABNF Definition of RFC 3339 Representation of a
-               Date/Time . . . . . . . . . . . . . . . . . . . . . .  19
+               Date/Time . . . . . . . . . . . . . . . . . . . . . .  20
        4.2.4.  ip: ABNF Definition of Textual Representation of an IP
                Address . . . . . . . . . . . . . . . . . . . . . . .  20
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
@@ -633,11 +633,10 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
      "signature": h'4711...0815',
    }
 
-   The example "contract" uses string concatenation as per Appendix G.4
-   of [RFC8610] as updated by Section 4.1, extending that by allowing
-   ellipses; while the example "signature" uses special syntax that
-   allows the use of ellipses between the bytes notated _inside_ h''
-   literals.
+   The example "contract" combines string concatenation via the +
+   operator (Section 4.1) with ellipses; while the example "signature"
+   uses special syntax that allows the use of ellipses between the bytes
+   notated _inside_ h'' literals.
 
    String elisions can be represented in a CBOR data item by a stand-in
    that wraps an array of string fragments alternating with ellipsis
@@ -665,6 +664,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
    This section collects grammars in ABNF form ([STD68] as extended in
    [RFC7405]) that serve to define the syntax of EDN and some
    application-oriented literals.
+
 
 
 
@@ -928,24 +928,24 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
       comes to mind, this is an extension point for EDN; Section 5.2
       defines a registry for additional values.
 
-   *  string and the rules preceding it in the same block realize both
-      the representation of strings that are split up into multiple
-      chunks (Appendix G.4 of [RFC8610]) and the use of ellipses to
-      represent elisions (Section 3.2).
+   *  Extended diagnostic notation allows a (text or byte) string to be
+      built up from multiple (text or byte) string literals, separated
+      by a + operator; these are then concatenated into a single string.
+
+      string, string1e, string1, and ellipsis realize: (1) the
+      representation of strings in this form split up into multiple
+      chunks, and (2) the use of ellipses to represent elisions
+      (Section 3.2).
 
       Note that the syntax defined here for concatenation of components
       uses an explicit + operator between the components to be
-      concatenated; Appendix G.4 of [RFC8610] used simple juxtaposition,
-      which got in the way of making the use of commas optional in other
-      places (OC).  The example equivalent text strings from
-      Appendix G.4 of [RFC8610] now read:
+      concatenated (Appendix G.4 of [RFC8610] used simple juxtaposition,
+      which was not widely implemented and got in the way of making the
+      use of commas optional in other places via the rule OC).
 
-      "Hello world"
-      "Hello " + "world"
-      "Hello" + h'20' + "world"
-      "" + h'48656c6c6f20776f726c64' + ""
-
-      Similarly, the following byte string values are equivalent:
+      Text strings and byte strings do not mix within such a
+      concatenation, except that byte string literal notation can be
+      used inside a sequence of concatenated text string notation
 
 
 
@@ -954,6 +954,18 @@ Bormann                 Expires 22 February 2025               [Page 17]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
 
+      literals, to encode characters that may be better represented in
+      an encoded way.  The following four text string values (adapted
+      from Appendix G.4 of [RFC8610] by updating to explicit +
+      operators) are equivalent:
+
+      "Hello world"
+      "Hello " + "world"
+      "Hello" + h'20' + "world"
+      "" + h'48656c6c6f20776f726c64' + ""
+
+      Similarly, the following byte string values are equivalent:
+
       'Hello world'
       'Hello ' + 'world'
       'Hello ' + h'776f726c64'
@@ -961,27 +973,42 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
       '' + h'48656c6c6f20776f726c64' + '' + b64''
       h'4 86 56c 6c6f' + h' 20776 f726c64'
 
-      The semantic processing of these rules is relatively complex:
+      The semantic processing of these constructs is governed by the
+      following rules:
 
-      -  A single ... is a general ellipsis, which can stand for any
-         data item.
+      -  A single ... is a general ellipsis, which by itself can stand
+         for any data item.  Multiple adjacent concatenated ellipses are
+         equivalent to a single ellipsis.
 
       -  An ellipsis can be concatenated (on one or both sides) with
          string chunks (string1); the result is a CBOR tag number CPA888
          that contains an array with joined together spans of such
          chunks plus the ellipses represented by 888(null).
 
-      -  A concatenated sequence of string chunks is simply joined
-         together.  In both cases of joining strings, the rules of
-         Appendix G.4 of [RFC8610] need to be followed; in particular,
-         if a text string results from the joining operation, that
-         result needs to be valid UTF-8.
+      -  If there is no ellipsis in the concatenated list, the result of
+         processing the list will always be a single item.
 
-      -  Some of the strings may be app-strings.  If the type of the
-         app-string is an actual string, joining of chunked strings
-         occurs as with directly notated strings; otherwise the
-         occurrence of more than one app-string or an app-string
-         together with a directly notated string cannot be processed.
+      -  The bytes in the concatenated sequence of string chunks are
+         simply joined together, proceeding from left to right.  If the
+         left hand side of a concatenation is a text string, the joining
+         operation results in a text string, and that result needs to be
+         valid UTF-8.  If the left hand side is a byte string, the right
+         hand side also needs to be a byte string.
+
+      -  Some of the strings may be app-strings.  If the result type of
+         the app-string is an actual (text or byte) string, joining of
+         those string chunks occurs as with chunks directly notated as
+         string literals; otherwise the occurrence of more than one app-
+         string or an app-string together with a directly notated string
+         cannot be processed.
+
+
+
+
+Bormann                 Expires 22 February 2025               [Page 18]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
+
 
 4.2.  ABNF Definitions for app-string Content
 
@@ -1000,15 +1027,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
    representation of << "foo" >>), is described by the ABNF in Figure 2.
    This syntax accommodates both lower case and upper case hex digits,
    as well as blank space (including comments) around each hex digit.
-
-
-
-
-
-Bormann                 Expires 22 February 2025               [Page 18]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
-
 
    app-string-h    = S *(HEXDIG S HEXDIG S / ellipsis S)
                      ["#" *non-lf]
@@ -1036,6 +1054,18 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
    inclusion of classic base64 makes it impossible to have in-line
    comments in b64, as "/" is valid base64-classic.
 
+
+
+
+
+
+
+
+Bormann                 Expires 22 February 2025               [Page 19]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
+
+
    app-string-b64  = B *(4(b64dig B))
                      [b64dig B b64dig B ["=" B "=" / b64dig B ["="]] B]
                      ["#" *inon-lf]
@@ -1053,18 +1083,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
    The syntax of the content of dt literals can be described by the ABNF
    for date-time from [RFC3339] as summarized in Section 3 of [RFC9165]:
-
-
-
-
-
-
-
-
-Bormann                 Expires 22 February 2025               [Page 19]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
-
 
    app-string-dt   = date-time
 
@@ -1095,24 +1113,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
    The syntax of the content of ip literals can be described by the ABNF
    for IPv4address and IPv6address in Section 3.2.2 of [RFC3986], as
    included in slightly updated form in Figure 5.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

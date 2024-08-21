@@ -1718,7 +1718,8 @@ not be valid.)<a href="#section-3.2-8" class="pilcrow">¶</a></p>
 }
 </pre><a href="#section-3.2-12" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-13">The example "contract" uses string concatenation as per <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> as updated by <a href="#grammar" class="auto internal xref">Section 4.1</a>, extending that by allowing
+<p id="section-3.2-13">The example "contract" combines string concatenation via the <code>+</code>
+operator (<a href="#grammar" class="auto internal xref">Section 4.1</a>) with
 ellipses; while the example
 "signature" uses special syntax that allows the use of ellipses
 between the bytes notated <em>inside</em> <code>h''</code> literals.<a href="#section-3.2-13" class="pilcrow">¶</a></p>
@@ -1996,28 +1997,36 @@ comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto
 a registry for additional values.<a href="#section-4.1-7.4.7" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-7.5">
-            <p id="section-4.1-7.5.1"><code>string</code> and the rules preceding it in the same block realize both
-the representation of strings that are split up into multiple chunks
-(<span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>) and the use of ellipses to represent elisions
-(<a href="#elision" class="auto internal xref">Section 3.2</a>).<a href="#section-4.1-7.5.1" class="pilcrow">¶</a></p>
-<p id="section-4.1-7.5.2">
+            <p id="section-4.1-7.5.1">Extended diagnostic notation allows a (text or byte) string to be
+built up from multiple (text or byte) string literals, separated by
+a <code>+</code> operator; these are then concatenated into a single string.<a href="#section-4.1-7.5.1" class="pilcrow">¶</a></p>
+<p id="section-4.1-7.5.2"><code>string</code>, <code>string1e</code>, <code>string1</code>, and <code>ellipsis</code> realize: (1) the
+representation of strings in this form split up into multiple
+chunks, and (2) the use of ellipses to represent elisions
+(<a href="#elision" class="auto internal xref">Section 3.2</a>).<a href="#section-4.1-7.5.2" class="pilcrow">¶</a></p>
+<p id="section-4.1-7.5.3">
 Note that the syntax defined here for concatenation of components
 uses an explicit <code>+</code> operator between the components to be
-concatenated; <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> used simple juxtaposition,
-which got in the way of making the use of commas optional in other
-places (<code>OC</code>).
-The example equivalent text strings from <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> now read:<a href="#section-4.1-7.5.2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1-7.5.3">
+concatenated (<span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> used simple juxtaposition,
+which was not widely implemented and got in the way of making the use
+of commas optional in other places via the rule <code>OC</code>).<a href="#section-4.1-7.5.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-7.5.4">
+Text strings and byte strings do not mix within such a
+concatenation, except that byte string literal notation can be used
+inside a sequence of concatenated text string notation literals, to
+encode characters that may be better represented in an encoded way.
+The following four text string values (adapted from <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> by updating to explicit <code>+</code> operators) are equivalent:<a href="#section-4.1-7.5.4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.1-7.5.5">
 <pre>
 "Hello world"
 "Hello " + "world"
 "Hello" + h'20' + "world"
 "" + h'48656c6c6f20776f726c64' + ""
-</pre><a href="#section-4.1-7.5.3" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-7.5.5" class="pilcrow">¶</a>
 </div>
-<p id="section-4.1-7.5.4">
-Similarly, the following byte string values are equivalent:<a href="#section-4.1-7.5.4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1-7.5.5">
+<p id="section-4.1-7.5.6">
+Similarly, the following byte string values are equivalent:<a href="#section-4.1-7.5.6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.1-7.5.7">
 <pre>
 'Hello world'
 'Hello ' + 'world'
@@ -2025,34 +2034,44 @@ Similarly, the following byte string values are equivalent:<a href="#section-4.1
 'Hello' + h'20' + 'world'
 '' + h'48656c6c6f20776f726c64' + '' + b64''
 h'4 86 56c 6c6f' + h' 20776 f726c64'
-</pre><a href="#section-4.1-7.5.5" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-7.5.7" class="pilcrow">¶</a>
 </div>
-<p id="section-4.1-7.5.6">
-The semantic processing of these rules is relatively
-complex:<a href="#section-4.1-7.5.6" class="pilcrow">¶</a></p>
+<p id="section-4.1-7.5.8">
+The semantic processing of these constructs is governed by the
+following rules:<a href="#section-4.1-7.5.8" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.1-7.5.7.1">
-                <p id="section-4.1-7.5.7.1.1">A single <code>...</code> is a general ellipsis, which can stand for any data
-item.<a href="#section-4.1-7.5.7.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4.1-7.5.9.1">
+                <p id="section-4.1-7.5.9.1.1">A single <code>...</code> is a general ellipsis, which by itself can stand
+for any data item.
+Multiple adjacent concatenated ellipses are equivalent to a single
+ellipsis.<a href="#section-4.1-7.5.9.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-4.1-7.5.7.2">
-                <p id="section-4.1-7.5.7.2.1">An ellipsis can be concatenated (on one or both sides) with string
+              <li class="normal" id="section-4.1-7.5.9.2">
+                <p id="section-4.1-7.5.9.2.1">An ellipsis can be concatenated (on one or both sides) with string
 chunks (<code>string1</code>); the result is a CBOR tag number CPA888 that contains an
 array with joined together spans of such chunks plus the ellipses
-represented by <code>888(null)</code>.<a href="#section-4.1-7.5.7.2.1" class="pilcrow">¶</a></p>
+represented by <code>888(null)</code>.<a href="#section-4.1-7.5.9.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-4.1-7.5.7.3">
-                <p id="section-4.1-7.5.7.3.1">A concatenated sequence of string chunks is simply joined together.
-In both cases of joining strings, the rules of <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> need to be followed; in particular, if a text string
-results from the joining operation, that result needs to be valid
-UTF-8.<a href="#section-4.1-7.5.7.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-4.1-7.5.9.3">
+                <p id="section-4.1-7.5.9.3.1">If there is no ellipsis in the concatenated list, the result of
+processing the list will always be a single item.<a href="#section-4.1-7.5.9.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-4.1-7.5.7.4">
-                <p id="section-4.1-7.5.7.4.1">Some of the strings may be app-strings.
-If the type of the app-string is an actual string, joining of
-chunked strings occurs as with directly notated strings; otherwise
-the occurrence of more than one app-string or an app-string
-together with a directly notated string cannot be processed.<a href="#section-4.1-7.5.7.4.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-4.1-7.5.9.4">
+                <p id="section-4.1-7.5.9.4.1">The bytes in the concatenated sequence of string chunks are simply
+joined together, proceeding from left to right.
+If the left hand side of a concatenation is a text string, the
+joining operation results in a text string, and that
+result needs to be valid UTF-8.
+If the left hand side is a byte string, the right hand side also
+needs to be a byte string.<a href="#section-4.1-7.5.9.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-7.5.9.5">
+                <p id="section-4.1-7.5.9.5.1">Some of the strings may be app-strings.
+If the result type of the app-string is an actual (text or byte)
+string, joining of those string chunks occurs as with chunks
+directly notated as string literals; otherwise the occurrence of more than
+one app-string or an app-string together with a directly notated
+string cannot be processed.<a href="#section-4.1-7.5.9.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
