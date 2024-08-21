@@ -1043,7 +1043,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 19 February 2025</td>
+<td class="center">Expires 22 February 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1056,12 +1056,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-cbor-edn-literals-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-08-18" class="published">18 August 2024</time>
+<time datetime="2024-08-21" class="published">21 August 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-02-19">19 February 2025</time></dd>
+<dd class="expires"><time datetime="2025-02-22">22 February 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ and prefixes (RFC 9164).<a href="#section-abstract-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 February 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 February 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2041,7 +2041,9 @@ following rules:<a href="#section-4.1-7.5.8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-7.5.9.1">
                 <p id="section-4.1-7.5.9.1.1">A single <code>...</code> is a general ellipsis, which by itself can stand
-for any data item.<a href="#section-4.1-7.5.9.1.1" class="pilcrow">¶</a></p>
+for any data item.
+Multiple adjacent concatenated ellipses are equivalent to a single
+ellipsis.<a href="#section-4.1-7.5.9.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-7.5.9.2">
                 <p id="section-4.1-7.5.9.2.1">An ellipsis can be concatenated (on one or both sides) with string
@@ -2050,18 +2052,25 @@ array with joined together spans of such chunks plus the ellipses
 represented by <code>888(null)</code>.<a href="#section-4.1-7.5.9.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-7.5.9.3">
-                <p id="section-4.1-7.5.9.3.1">The bytes in the concatenated sequence of string chunks are simply
-joined together.
-If the joining operation is to result in a text string, that
-result needs to be valid UTF-8.<a href="#section-4.1-7.5.9.3.1" class="pilcrow">¶</a></p>
+                <p id="section-4.1-7.5.9.3.1">If there is no ellipsis in the concatenated list, the result of
+processing the list will always be a single item.<a href="#section-4.1-7.5.9.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-7.5.9.4">
-                <p id="section-4.1-7.5.9.4.1">Some of the strings may be app-strings.
+                <p id="section-4.1-7.5.9.4.1">The bytes in the concatenated sequence of string chunks are simply
+joined together, proceeding from left to right.
+If the left hand side of a concatenation is a text string, the
+joining operation results in a text string, and that
+result needs to be valid UTF-8.
+If the left hand side is a byte string, the right hand side also
+needs to be a byte string.<a href="#section-4.1-7.5.9.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-7.5.9.5">
+                <p id="section-4.1-7.5.9.5.1">Some of the strings may be app-strings.
 If the result type of the app-string is an actual (text or byte)
 string, joining of those string chunks occurs as with chunks
-directly notated as strings; otherwise the occurrence of more than
+directly notated as string literals; otherwise the occurrence of more than
 one app-string or an app-string together with a directly notated
-string cannot be processed.<a href="#section-4.1-7.5.9.4.1" class="pilcrow">¶</a></p>
+string cannot be processed.<a href="#section-4.1-7.5.9.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
