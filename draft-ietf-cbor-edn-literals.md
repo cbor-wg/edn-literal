@@ -33,6 +33,7 @@ venue:
 normative:
   STD94: cbor
   RFC8610: cddl
+  RFC7049: old-cbor
   RFC8742: seq
   STD68: abnf
   RFC7405: abnfcs
@@ -83,6 +84,16 @@ informative:
   I-D.ietf-cbor-update-8610-grammar: cddlupd
   I-D.bormann-cbor-e-ref: eref
   I-D.bormann-t2trg-deref-id: deref
+  YAML:
+    target: https://yaml.org/spec/1.2.2/
+    title: YAML Ain't Markup Language (YAML™) Version 1.2
+    author:
+    - name: Oren Ben-Kiki
+    - name: Clark Evans
+    - name: Ingy | döt Net
+    date: 2021-10-01
+    refcontent:
+    - Revision 1.2.2
 
 --- abstract
 
@@ -272,6 +283,281 @@ test data.
 Information obtained from a CDDL model can help in choosing
 application-oriented literals or specific string representations such
 as embedded CBOR or `b64''` in the appropriate places.
+
+Overview over CBOR Extended Diagnostic Notation (EDN) {#diagnostic-notation}
+=====================================================
+
+CBOR is a binary interchange format.  To facilitate documentation and
+debugging, and in particular to facilitate communication between
+entities cooperating in debugging, this document defines a simple
+human-readable diagnostic notation.  All actual interchange always
+happens in the binary format.
+
+Note that this truly is a diagnostic format; it is not meant to be
+parsed.  Therefore, no formal definition (as in ABNF) is given in this
+document.  (Implementers looking for a text-based format for
+representing CBOR data items in configuration files may also want to
+consider YAML {{YAML}}.)
+
+The diagnostic notation is loosely based on JSON as it is defined in
+RFC 8259, extending it where needed.
+
+The notation borrows the JSON syntax for numbers (integer and
+floating-point), True (>true\<), False (>false\<), Null (>null\<), UTF-8
+strings, arrays, and maps (maps are called objects in JSON; the
+diagnostic notation extends JSON here by allowing any data item in the
+key position).  Undefined is written >undefined\< as in JavaScript.
+The non-finite floating-point numbers Infinity, -Infinity, and NaN are
+written exactly as in this sentence (this is also a way they can be
+written in JavaScript, although JSON does not allow them).  A tag is
+written as an integer number for the tag number, followed by the tag content
+in parentheses; for instance, a date in the format specified by RFC 3339
+(ISO 8601) could be
+notated as:
+
+{: indent='5'}
+0("2013-03-21T20:04:00Z")
+
+or the equivalent relative time as the following:
+
+{: indent='5'}
+1(1363896240)
+
+Byte strings are notated in one of the base encodings, without
+padding, enclosed in single quotes, prefixed by >h\< for base16,
+>b32\< for base32, >h32\< for base32hex, >b64\< for base64 or
+base64url (the actual encodings do not overlap, so the string remains
+unambiguous).  For example, the byte string 0x12345678 could be
+written h'12345678', b32'CI2FM6A', or b64'EjRWeA'.
+
+Unassigned simple values are given as "simple()" with the appropriate
+integer in the parentheses. For example, "simple(42)" indicates major
+type 7, value 42.
+
+A number of useful extensions to the diagnostic notation defined here are
+provided in {{Section G of RFC8610}}, "Extended Diagnostic Notation" (EDN).
+Similarly, this notation could be extended in a separate document to
+provide documentation for NaN payloads, which are not covered in this document.
+
+## Encoding Indicators {#encoding-indicators}
+
+Sometimes it is useful to indicate in the diagnostic notation which of
+several alternative representations were actually used; for example, a
+data item written >1.5\< by a diagnostic decoder might have been
+encoded as a half-, single-, or double-precision float.
+
+The convention for encoding indicators is that anything starting with
+an underscore and all following characters that are alphanumeric or
+underscore is an encoding indicator, and can be ignored by anyone not
+interested in this information.  For example, `_` or `_3`.
+Encoding indicators are always
+optional.
+
+A single underscore can be written after the opening brace of a map or
+the opening bracket of an array to indicate that the data item was
+represented in indefinite-length format.  For example, [_ 1, 2]
+contains an indicator that an indefinite-length representation was
+used to represent the data item [1, 2].
+
+An underscore followed by a decimal digit n indicates that the
+preceding item (or, for arrays and maps, the item starting with the
+preceding bracket or brace) was encoded with an additional information
+value of 24+n.  For example, 1.5_1 is a half-precision floating-point
+number, while 1.5_3 is encoded as double precision.  
+<!-- 
+This encoding
+indicator is not shown in {{examples}}.
+ -->
+(Note that the encoding
+indicator "_" is thus an abbreviation of the full form "_7", which is
+not used.)
+
+The detailed chunk structure of byte and text strings of indefinite
+length can be
+notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
+However, for an indefinite-length string with no chunks inside, (_ )
+would be ambiguous as to whether a byte string (0x5fff) or a text string
+(0x7fff) is meant and is therefore not used.
+The basic forms ''_ and ""_ can be used instead and are reserved for
+the case of no chunks only --- not as short forms for the (permitted,
+but not really useful) encodings with only empty chunks, which
+need to be notated as (_ ''), (_ ""), etc.,
+to preserve the chunk structure.
+
+# Extended Diagnostic Notation {#extended-diagnostic-notation}
+
+Section 6 of {{RFC7049}} defines a "diagnostic notation" in order to
+be able to converse about CBOR data items without having to resort to
+binary data.  Diagnostic notation is based on JSON, with extensions
+for representing CBOR constructs such as binary data and tags.
+
+(Standardizing this together with the actual interchange format does
+not serve to create another interchange format but enables the use of
+a shared diagnostic notation in tools for and documents about CBOR.)
+
+This appendix discusses a few extensions to the diagnostic notation
+that have turned out to be useful since RFC 7049 was written.
+We refer to the result as Extended Diagnostic Notation (EDN).
+
+## Whitespace in Byte String Notation {#white-space-in-byte-string-notation}
+
+Examples often benefit from some whitespace (spaces, line breaks) in
+byte strings.  In EDN, whitespace is ignored in prefixed byte strings; for
+instance, the following are equivalent:
+
+
+~~~~
+   h'48656c6c6f20776f726c64'
+   h'48 65 6c 6c 6f 20 77 6f 72 6c 64'
+   h'4 86 56c 6c6f
+     20776 f726c64'
+~~~~
+
+
+## Text in Byte String Notation {#textbin}
+
+Diagnostic notation notates byte strings in one of the
+base encodings per {{RFC4648}}, enclosed in single quotes,
+prefixed by >h\< for base16, >b32\< for base32, >h32\< for
+base32hex, or >b64\< for base64 or base64url.  Quite often, byte strings
+carry bytes that are meaningfully interpreted as UTF-8 text.  EDN
+allows the use of single quotes without a prefix to express byte
+strings with UTF-8 text; for instance, the following are equivalent:
+
+
+~~~~
+   'hello world'
+   h'68656c6c6f20776f726c64'
+~~~~
+
+The escaping rules of JSON strings are applied equivalently for
+text&nbhy;based byte strings, e.g., "\" stands for a single backslash and
+"'" stands for a single quote.  Whitespace is included literally,
+i.e., the previous section does not apply to text-based byte strings.
+
+
+## Embedded CBOR and CBOR Sequences in Byte Strings {#embedded-cbor-and-cbor-sequences-in-byte-strings}
+
+Where a byte string is to carry an embedded CBOR-encoded item, or more
+generally a sequence of zero or more such items, the diagnostic
+notation for these zero or more CBOR data items, separated by commas,
+can be enclosed in \<\<&nbsp;and&nbsp;>> to notate the byte string
+resulting from encoding the data items and concatenating the result.  For
+instance, each pair of columns in the following are equivalent:
+
+
+~~~~
+   <<1>>              h'01'
+   <<1, 2>>           h'0102'
+   <<"foo", null>>    h'63666F6FF6'
+   <<>>               h''
+~~~~
+
+<!-- 
+## Concatenated Strings {#concatenated-strings}
+
+While the ability to include whitespace enables line-breaking of
+encoded byte strings, a mechanism is needed to be able to include
+text strings as well as byte strings in direct UTF-8 representation
+into line-based documents (such as RFCs and source code).
+
+We extend the diagnostic notation by allowing multiple text strings or
+multiple byte strings to be notated separated by whitespace; these
+are then concatenated into a single text or byte string, respectively.
+Text strings and byte strings do not mix within such a
+concatenation, except that byte string notation can be used inside a
+sequence of concatenated text string notation to encode characters
+that may be better represented in an encoded way.  The following four
+values are equivalent:
+
+
+~~~~
+   "Hello world"
+   "Hello " "world"
+   "Hello" h'20' "world"
+   "" h'48656c6c6f20776f726c64' ""
+~~~~
+
+Similarly, the following byte string values are equivalent:
+
+
+~~~~
+   'Hello world'
+   'Hello ' 'world'
+   'Hello ' h'776f726c64'
+   'Hello' h'20' 'world'
+   '' h'48656c6c6f20776f726c64' '' b64''
+   h'4 86 56c 6c6f' h' 20776 f726c64'
+~~~~
+
+(Note that the approach of separating by whitespace, while familiar
+from the C language, requires some attention — a single comma makes a
+big difference here.)
+
+-->
+
+## Hexadecimal, Octal, and Binary Numbers {#hexadecimal-octal-and-binary-numbers}
+
+In addition to JSON's decimal numbers, EDN provides hexadecimal, octal,
+and binary numbers in the usual C-language notation (octal with 0o
+prefix present only).
+
+The following are equivalent:
+
+
+~~~~
+   4711
+   0x1267
+   0o11147
+   0b1001001100111
+~~~~
+
+As are:
+
+
+~~~~
+   1.5
+   0x1.8p0
+   0x18p-4
+~~~~
+
+
+## Comments {#comments}
+
+Longer pieces of diagnostic notation may benefit from comments.
+JSON famously does not provide for comments, and basic diagnostic notation
+per RFC&nbsp;7049 inherits this property.
+
+In EDN, comments can be included, delimited
+by slashes ("/").  Any text within and including a pair of slashes is
+considered a comment.
+
+Comments are considered whitespace.  Hence, they are allowed in
+prefixed byte strings; for instance, the following are equivalent:
+
+
+~~~~
+   h'68656c6c6f20776f726c64'
+   h'68 65 6c /doubled l!/ 6c 6f /hello/
+     20 /space/
+     77 6f 72 6c 64' /world/
+~~~~
+
+This can be used to annotate a CBOR structure as in:
+
+
+~~~~ CBORdiag
+   /grasp-message/ [/M_DISCOVERY/ 1, /session-id/ 10584416,
+                    /objective/ [/objective-name/ "opsonize",
+                                 /D, N, S/ 7, /loop-count/ 105]]
+~~~~
+
+(There are currently no end-of-line comments.  If we want to add them,
+"//" sounds like a reasonable delimiter given that we already use
+slashes for comments, but we could also go, for example, for&nbsp;"#".)
+
+
+
 
 Application-Oriented Extension Literals
 =======================================
