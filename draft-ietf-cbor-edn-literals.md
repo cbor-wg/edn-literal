@@ -191,12 +191,13 @@ interaction between tools is often smoother if media types can be used.
 > * `cddl` (which is used for the Concise Data Definition Language,
 >   CDDL, see {{terminology}} below).
 
-Note that EDN is not designed to be the only text-based representation of
+Note that EDN is not meant to be the only text-based representation of
 CBOR data items.
 For instance, {{YAML}} {{-yaml-media-type}} is able to represent most CBOR
 data items, possibly requiring use of YAML's extension points.
 YAML does not provide certain features that can be useful with tools
-and documents needing text-based representations of CBOR data items,
+and documents needing text-based representations of CBOR data items
+(such as embedded CBOR or encoding indicators),
 but it does provide a host of other features that EDN does not provide
 such as anchor/alias data sharing, at a cost of higher implementation
 and learning complexity.
@@ -584,7 +585,7 @@ instance, each pair of columns in the following are equivalent:
 ~~~~ cbor-diag
    <<1>>              h'01'
    <<1, 2>>           h'0102'
-   <<"hello", null>>    h'63 68656c6c6f f6'
+   <<"hello", null>>  h'65 68656c6c6f f6'
    <<>>               h''
 ~~~~
 
@@ -661,7 +662,7 @@ values are equivalent:
    "" h'48656c6c6f20776f726c64' ""
 ~~~~
 
-swSimilarly, the following byte string values are equivalent:
+Similarly, the following byte string values are equivalent:
 
 
 ~~~~
