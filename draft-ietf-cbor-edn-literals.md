@@ -404,7 +404,7 @@ or
 
 ## Numbers
 
-<!-- 
+<!--
 ## Hexadecimal, Octal, and Binary Numbers {#hexadecimal-octal-and-binary-numbers}
  -->
 
