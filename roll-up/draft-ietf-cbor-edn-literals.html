@@ -1371,12 +1371,13 @@ CDDL, see <a href="#terminology" class="auto internal xref">Section 1.2</a> belo
 </li>
         </ul>
 </aside>
-<p id="section-1-9">Note that EDN is not designed to be the only text-based representation of
+<p id="section-1-9">Note that EDN is not meant to be the only text-based representation of
 CBOR data items.
 For instance, <span>[<a href="#YAML" class="cite xref">YAML</a>]</span> <span>[<a href="#RFC9512" class="cite xref">RFC9512</a>]</span> is able to represent most CBOR
 data items, possibly requiring use of YAML's extension points.
 YAML does not provide certain features that can be useful with tools
-and documents needing text-based representations of CBOR data items,
+and documents needing text-based representations of CBOR data items
+(such as embedded CBOR or encoding indicators),
 but it does provide a host of other features that EDN does not provide
 such as anchor/alias data sharing, at a cost of higher implementation
 and learning complexity.<a href="#section-1-9" class="pilcrow">¶</a></p>
@@ -1776,7 +1777,7 @@ instance, each pair of columns in the following are equivalent:<a href="#section
 <pre>
    &lt;&lt;1&gt;&gt;              h'01'
    &lt;&lt;1, 2&gt;&gt;           h'0102'
-   &lt;&lt;"hello", null&gt;&gt;    h'63 68656c6c6f f6'
+   &lt;&lt;"hello", null&gt;&gt;  h'65 68656c6c6f f6'
    &lt;&lt;&gt;&gt;               h''
 </pre><a href="#section-2.5.2-2" class="pilcrow">¶</a>
 </div>
