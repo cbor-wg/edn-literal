@@ -657,7 +657,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)     August 2024
 
       <<1>>              h'01'
       <<1, 2>>           h'0102'
-      <<"edn", null>>    h'63 65646E F6'
+      <<"hello", null>>    h'63 68656c6c6f f6'
       <<>>               h''
 
 2.6.  Encoding Indicators
