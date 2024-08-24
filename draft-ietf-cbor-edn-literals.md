@@ -584,7 +584,7 @@ instance, each pair of columns in the following are equivalent:
 ~~~~ cbor-diag
    <<1>>              h'01'
    <<1, 2>>           h'0102'
-   <<"edn", null>>    h'63 65646E F6'
+   <<"hello", null>>    h'63 68656c6c6f f6'
    <<>>               h''
 ~~~~
 
