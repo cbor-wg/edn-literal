@@ -1599,8 +1599,8 @@ a pair of a "<code>#</code>" and the end of the line is considered blank space
         <h3 id="name-numbers">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-numbers" class="section-name selfRef">Numbers</a>
         </h3>
-<p id="section-2.2-1">In addition to JSON's decimal numbers, EDN provides hexadecimal, octal,
-and binary numbers in the usual C-language notation (octal with 0o
+<p id="section-2.2-1">In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
+and binary number literals in the usual C-language notation (octal with 0o
 prefix present only).<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">The following are equivalent:<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-2.2-3">
@@ -1685,7 +1685,7 @@ carriage return characters (U+000D) that may be present in the EDN
 text are not copied into the resulting string (see <a href="#cr" class="auto internal xref">Section 5.1, Paragraph 7, Item 2</a>).
 No other control characters can occur in a string literal, and the
 handling of escaped characters (<code>\r</code> etc.) is as in JSON.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
-<p id="section-2.5-3">JSON's escape scheme for characters that are not on Unicodes basic
+<p id="section-2.5-3">JSON's escape scheme for characters that are not on Unicode's basic
 multilingual plane (BMP) is cumbersome.
 EDN keeps it, but also adds the syntax <code>\u{NNN}</code> where NNN is the
 Unicode scalar value as a hexadecimal number.
@@ -1725,7 +1725,7 @@ backslash and <code>\'</code> stands for a single quote.
 <p id="section-2.5.1-1">Besides the unprefixed byte string literals that are analogous to JSON text
 string literals, EDN provides base-encoded byte string literals.
 These are notated in one of the base encodings <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>, without
-padding, enclosed in single quotes, prefixed by &gt;h&lt; for base16 or
+padding, enclosed in a single-quoted string literal, prefixed by &gt;h&lt; for base16 or
 &gt;b64&lt; for base64 or base64url (the actual encodings of the latter do
 not overlap, so the string remains unambiguous).
 For example, the byte string consisting of the four bytes <code>12 34 56
