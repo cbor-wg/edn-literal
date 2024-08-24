@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2024-05-18
+# date: 2024-08-24
 
 keyword: Internet-Draft
 cat: info
@@ -497,7 +497,7 @@ text are not copied into the resulting string (see {{cr}}).
 No other control characters can occur in a string literal, and the
 handling of escaped characters (`\r` etc.) is as in JSON.
 
-JSON's escape scheme for characters that are not on Unicodes basic
+JSON's escape scheme for characters that are not on Unicode's basic
 multilingual plane (BMP) is cumbersome.
 EDN keeps it, but also adds the syntax `\u{NNN}` where NNN is the
 Unicode scalar value as a hexadecimal number.
