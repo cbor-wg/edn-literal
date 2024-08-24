@@ -191,7 +191,7 @@ interaction between tools is often smoother if media types can be used.
 > * `cddl` (which is used for the Concise Data Definition Language,
 >   CDDL, see {{terminology}} below).
 
-Note that EDN does not have a monopoly on text-based representation of
+Note that EDN is not designed to be the only text-based representation of
 CBOR data items.
 For instance, {{YAML}} {{-yaml-media-type}} is able to represent most CBOR
 data items, possibly requiring use of YAML's extension points.
