@@ -409,8 +409,8 @@ or
 ## Hexadecimal, Octal, and Binary Numbers {#hexadecimal-octal-and-binary-numbers}
  -->
 
-In addition to JSON's decimal numbers, EDN provides hexadecimal, octal,
-and binary numbers in the usual C-language notation (octal with 0o
+In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
+and binary number literals in the usual C-language notation (octal with 0o
 prefix present only).
 
 The following are equivalent:
@@ -535,7 +535,7 @@ backslash and `\'` stands for a single quote.
 Besides the unprefixed byte string literals that are analogous to JSON text
 string literals, EDN provides base-encoded byte string literals.
 These are notated in one of the base encodings {{-base}}, without
-padding, enclosed in single quotes, prefixed by >h\< for base16 or
+padding, enclosed in a single-quoted string literal, prefixed by >h\< for base16 or
 >b64\< for base64 or base64url (the actual encodings of the latter do
 not overlap, so the string remains unambiguous).
 For example, the byte string consisting of the four bytes `12 34 56
