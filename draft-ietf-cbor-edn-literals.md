@@ -32,8 +32,6 @@ venue:
 
 normative:
   STD94: cbor
-  RFC8610: cddl
-  RFC7049: old-cbor
   RFC8742: seq
   STD68: abnf
   RFC7405: abnfcs
@@ -77,10 +75,13 @@ normative:
     - Sixth Edition
     annotation: The text of the standard is also available via https://isocpp.org/files/papers/N4860.pdf
 informative:
+  RFC8610: cddl
+  RFC7049: old-cbor
   RFC4648: base
-  RFC9290:
+  RFC9290: pd
   STD90: json
   RFC7493: i-json
+  I-D.bormann-cbor-numbers: numbers
   RFC9165: controls
   I-D.ietf-cbor-update-8610-grammar: cddlupd
   I-D.bormann-cbor-e-ref: eref
