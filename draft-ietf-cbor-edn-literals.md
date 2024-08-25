@@ -348,17 +348,32 @@ conjunction with {{-i-json}} (that is, any interoperable {{-i-json}} JSON
 text also is an EDN text), extending it both to cover the greater
 expressiveness of CBOR and to increase its usability.
 
-The notation borrows the JSON syntax for numbers (integer and
+EDN borrows the JSON syntax for numbers (integer and
 floating-point, {{numbers}}), certain simple values ({{simple-values}}),
 UTF-8 text
 strings, arrays, and maps (maps are called objects in JSON; the
 diagnostic notation extends JSON here by allowing any data item in the
 map key position).
 
-The rest of this section provides an overview over specific features
-of EDN; any additional detailed syntax discussion needed has been
-deferred to {{grammar}}.
+As EDN is used for truly diagnostic purposes, its implementations MAY
+support generation and possibly ingestion of EDN for CBOR data items
+that are well-formed but not valid.
+It is RECOMMENDED that an implementation enables such usage only
+explicitly by an API flag.
+Validity of CBOR data items is discussed in {{Section 5.3 of RFC8949@-cbor}},
+with basic validity discussed in {{Section 5.3.1 of RFC8949@-cbor}}, and
+tag validity discussed in {{Section 5.3.2 of RFC8949@-cbor}}.
+Tag validity is more likely a subject for individual
+application-oriented extensions, while the two cases of basic validity
+(for text strings and for maps) are addressed below under the heading
+of *validity*.
 
+The rest of this section provides an overview over specific features
+of EDN, starting with certain common syntactical features and then
+going through kinds of CBOR data items roughly in the order of CBOR major
+types.
+Any additional detailed syntax discussion needed has been deferred to
+{{grammar}}.
 
 ## Comments {#comments}
 
@@ -378,7 +393,7 @@ string literals, etc.):
   comment).
 
 * end-of-line comments, delimited by "`#`" and an end of line (LINE
-  FEED, U+000A).
+  FEED, U+000A):
 
   In a position that allows blank space, any text within and including
   a pair of a "`#`" and the end of the line is considered blank space
@@ -392,7 +407,7 @@ Comments can be used to annotate a CBOR structure as in:
                               /D, N, S/ 7, /loop-count/ 105]]
 ~~~~
 
-or
+or, combining the use of inline and end-of-line comments:
 
 ~~~ cbor-diag
 {
@@ -403,6 +418,38 @@ or
 }
 ~~~
 
+
+## Encoding Indicators {#encoding-indicators}
+
+XXX align with {{spec}}
+
+Sometimes it is useful to indicate in the diagnostic notation which of
+several alternative representations were actually used; for example, a
+data item written >1.5\< by a diagnostic decoder might have been
+encoded as a half-, single-, or double-precision float.
+
+The convention for encoding indicators is that anything starting with
+an underscore and all following characters that are alphanumeric or
+underscore is an encoding indicator, and can be ignored by anyone not
+interested in this information.  For example, `_` or `_3`.
+Encoding indicators are always
+optional.
+
+An underscore followed by a decimal digit n indicates that the
+preceding item (or, for arrays and maps, the item starting with the
+preceding bracket or brace) was encoded with an additional information
+value of 24+n.  For example, `1.5_1` is a half-precision floating-point
+number, while `1.5_3` is encoded as double precision.
+<!--
+This encoding
+indicator is not shown in {{examples}}.
+ -->
+(Note that the encoding
+indicator "_" is thus an abbreviation of the full form "_7", which is
+not used.)
+
+Encoding Indicators are discussed further below for indefinite length
+strings, and for arrays and maps.
 
 ## Numbers
 
@@ -433,49 +480,24 @@ As are:
 
 Numbers composed only of digits (of the respective base) are
 interpreted as CBOR integers (major type 0/1, or where the number
-cannot be represented in this way, tag 2/3).
+cannot be represented in this way, major type 6 with tag 2/3).
 Using a decimal point (`.`) and/or an exponent (`e` for decimal, `p`
 for hexadecimal) turns the number into a floating point number (major
 type 7) instead, irrespective of whether it is an integral number
 mathematically.
 
-The non-finite floating-point numbers Infinity, -Infinity, and NaN are
+The non-finite floating-point numbers `Infinity`, `-Infinity`, and `NaN` are
 written exactly as in this sentence (this is also a way they can be
 written in JavaScript, although JSON does not allow them).
 
 See {{decnumber}} for additional details of the EDN number syntax.
 
-(Note that further number formats, e.g., for representing rational
-numbers as fractions, or NaNs with non-zero payloads, can be added as
-application-oriented literals.)
-
-## Tags
-
-A tag is
-written as a decimal unsigned integer for the tag number, followed by the tag content
-in parentheses; for instance, a date in the format specified by RFC 3339
-(ISO 8601) could be
-notated as:
-
-{: indent='5'}
-0("2013-03-21T20:04:00Z")
-
-or the equivalent epoch-based time as the following:
-
-{: indent='5'}
-1(1363896240)
-
-
-
-## Simple values
-
-EDN uses JSON syntax for the simple values True (>`true`\<), False
-(>`false`\<), and Null (>`null`\<).
-Undefined is written >`undefined`\< as in JavaScript.
-
-Other simple values are given as "simple()" with the appropriate
-integer in the parentheses. For example, >`simple(42)`\< indicates major
-type 7, value 42.
+(Note that literals for further number formats, e.g., for representing
+rational numbers as fractions, or for NaNs with non-zero payloads, can
+be added as application-oriented literals.
+Background information beyond that in {{-cbor}} about the representation
+of numbers in CBOR can be found in the informational document
+{{-numbers}}.)
 
 ## Strings
 
@@ -530,6 +552,21 @@ The escaping rules of JSON strings are applied equivalently for
 text-based byte string literals, e.g., `\\` stands for a single
 backslash and `\'` stands for a single quote.
 (See {{concat}} for details.)
+
+### Encoding Indicators of Strings
+
+The detailed chunk structure of byte and text strings encoded with
+indefinite length can be
+notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
+However, for an indefinite-length string with no chunks inside, (_ )
+would be ambiguous as to whether a byte string (0x5fff) or a text string
+(0x7fff) is meant and is therefore not used.
+The basic forms ''_ and ""_ can be used instead and are reserved for
+the case of no chunks only --- not as short forms for the (permitted,
+but not really useful) encodings with only empty chunks, which
+need to be notated as (_ ''), (_ ""), etc.,
+to preserve the chunk structure.
+
 
 ### Base-Encoded Byte String Literals {#encoded-byte-strings}
 
@@ -590,53 +627,9 @@ instance, each pair of columns in the following are equivalent:
    <<>>               h''
 ~~~~
 
+### Validity of Text Strings
 
-## Encoding Indicators {#encoding-indicators}
-
-XXX align with {{spec}}
-
-Sometimes it is useful to indicate in the diagnostic notation which of
-several alternative representations were actually used; for example, a
-data item written >1.5\< by a diagnostic decoder might have been
-encoded as a half-, single-, or double-precision float.
-
-The convention for encoding indicators is that anything starting with
-an underscore and all following characters that are alphanumeric or
-underscore is an encoding indicator, and can be ignored by anyone not
-interested in this information.  For example, `_` or `_3`.
-Encoding indicators are always
-optional.
-
-A single underscore can be written after the opening brace of a map or
-the opening bracket of an array to indicate that the data item was
-represented in indefinite-length format.  For example, [_ 1, 2]
-contains an indicator that an indefinite-length representation was
-used to represent the data item [1, 2].
-
-An underscore followed by a decimal digit n indicates that the
-preceding item (or, for arrays and maps, the item starting with the
-preceding bracket or brace) was encoded with an additional information
-value of 24+n.  For example, 1.5_1 is a half-precision floating-point
-number, while 1.5_3 is encoded as double precision.
-<!--
-This encoding
-indicator is not shown in {{examples}}.
- -->
-(Note that the encoding
-indicator "_" is thus an abbreviation of the full form "_7", which is
-not used.)
-
-The detailed chunk structure of byte and text strings of indefinite
-length can be
-notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
-However, for an indefinite-length string with no chunks inside, (_ )
-would be ambiguous as to whether a byte string (0x5fff) or a text string
-(0x7fff) is meant and is therefore not used.
-The basic forms ''_ and ""_ can be used instead and are reserved for
-the case of no chunks only --- not as short forms for the (permitted,
-but not really useful) encodings with only empty chunks, which
-need to be notated as (_ ''), (_ ""), etc.,
-to preserve the chunk structure.
+XXX
 
 <!--
 ## Concatenated Strings {#concatenated-strings}
@@ -680,6 +673,105 @@ from the C language, requires some attention — a single comma makes a
 big difference here.)
 
 -->
+
+## Arrays and Maps
+
+EDN borrows the JSON syntax for arrays and maps.
+(Maps are called objects in JSON.)
+
+For maps, EDN extends the JSON syntax by allowing any data item in the
+map key position (before the colon).
+
+JSON requires the use of a comma as a separator character between
+the elements of an array as well as between the members (key/value
+pairs) of a map.
+(These commas also were required in the original diagnostic
+notation defined in {{-cbor}} and {{-cddl}}.)
+The separator commas are now optional in the places where EDN syntax
+allows commas.
+(Stylistically, leaving out the commas is more idiomatic when they
+occur at line breaks.)
+
+In addition, EDN also allows, but does not require, a trailing comma before the closing bracket/brace,
+enabling an easier to maintain "terminator" style of their use.
+
+In summary, the following eight examples are all equivalent:
+
+~~~ cbor-diag
+[1, 2, 3]
+[1, 2, 3,]
+[1  2  3]
+[1  2  3,]
+[1  2, 3]
+[1  2, 3,]
+[1, 2  3]
+[1, 2  3,]
+~~~
+
+as are
+
+~~~ cbor-diag
+{1: "n", "x": "a"}
+{1: "n", "x": "a",}
+{1: "n"  "x": "a"}
+# etc.
+~~~
+
+{:aside}
+> CDDL's comma separators in the equivalent contexts (CDDL groups) are
+  entirely optional
+  (and actually are terminators, which together with their optionality
+  allows them to be used like separators as well, or even not at all).
+  In summary, comma use is now aligned between EDN and CDDL, in a
+  fully backwards compatible way.
+
+### Encoding Indicators of Arrays and Maps
+
+A single underscore can be written after the opening brace of a map or
+the opening bracket of an array to indicate that the data item was
+represented in indefinite-length format.  For example, `[_ 1, 2]`
+contains an indicator that an indefinite-length representation was
+used to represent the data item `[1, 2]`.
+
+### Validity of Maps
+
+As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
+generation and possibly ingestion of EDN for CBOR data items that are
+well-formed but not valid.
+
+For maps, this is relevant for map keys that occur more than once, as in:
+
+~~~ cbor-diag
+{1: "to", 1: "fro"}
+~~~
+
+## Tags
+
+A tag is
+written as a decimal unsigned integer for the tag number, followed by the tag content
+in parentheses; for instance, a date in the format specified by RFC 3339
+(ISO 8601) could be
+notated as:
+
+{: indent='5'}
+0("2013-03-21T20:04:00Z")
+
+or the equivalent epoch-based time as the following:
+
+{: indent='5'}
+1(1363896240)
+
+
+
+## Simple values
+
+EDN uses JSON syntax for the simple values True (>`true`\<), False
+(>`false`\<), and Null (>`null`\<).
+Undefined is written >`undefined`\< as in JavaScript.
+
+Other simple values are given as "simple()" with the appropriate
+integer in the parentheses. For example, >`simple(42)`\< indicates major
+type 7, value 42.
 
 
 Application-Oriented Extension Literals
@@ -1655,24 +1747,6 @@ Important differences include:
 
   CDDL:
   : `COSE_Sign_Tagged = #6.98(COSE_Sign)`
-
-* Previously, the use of comma as separator character. [^move]
-  JSON requires commas as separators between array elements and map
-  members; these commas also were required in the original diagnostic
-  notation defined in {{-cbor}} and the EDN defined in {{-cddl}}.
-  They are now optional in the places where EDN syntax allows commas.
-  (EDN also allows, but does
-  not require, a trailing comma before the closing bracket/brace,
-  enabling an easier to maintain "terminator" style of their use).
-  CDDL's comma separators in the equivalent contexts (CDDL groups) are
-  entirely optional
-  (and actually are terminators, which together with their optionality
-  allows them to be used like separators as well, or even not at all).
-  In summary, comma use is now aligned between EDN and CDDL, in a
-  fully backwards compatible way.
-
-[^move]: Move this after embedded CBOR as it actually no longer is a
-    difference.  But first check the diff...
 
 * Embedded CBOR.  EDN has a special syntax to describe the content of
   byte strings that are encoded CBOR data items.  CDDL can specify
