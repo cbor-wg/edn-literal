@@ -481,10 +481,18 @@ As are:
 Numbers composed only of digits (of the respective base) are
 interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
+A leading "`+`" sign is a no-op, and a leading "`-`" sign inverts the
+sign of the number.
+So `0`, `000`, `+0` all represent the same integer zero, as does `-0`;
+`1`, `001`, `+1` and `+0001` all stand for the same integer one, and
+`-1` and `-0001` both designate the same integer minus one.
+
 Using a decimal point (`.`) and/or an exponent (`e` for decimal, `p`
 for hexadecimal) turns the number into a floating point number (major
 type 7) instead, irrespective of whether it is an integral number
 mathematically.
+Note that, in floating point numbers, `0.0` is not the same number as
+`-0.0`, even if they are mathematically equal.
 
 The non-finite floating-point numbers `Infinity`, `-Infinity`, and `NaN` are
 written exactly as in this sentence (this is also a way they can be
