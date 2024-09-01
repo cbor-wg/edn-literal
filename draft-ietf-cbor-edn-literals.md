@@ -84,7 +84,7 @@ informative:
   I-D.bormann-cbor-numbers: numbers
   RFC9165: controls
   I-D.ietf-cbor-update-8610-grammar: cddlupd
-  I-D.bormann-cbor-e-ref: eref
+  I-D.ietf-cbor-edn-e-ref: eref
   I-D.bormann-t2trg-deref-id: deref
   RFC9512: yaml-media-type
   YAML:
