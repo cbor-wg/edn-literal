@@ -567,9 +567,9 @@ The detailed chunk structure of byte and text strings encoded with
 indefinite length can be
 notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
 However, for an indefinite-length string with no chunks inside, (_ )
-would be ambiguous as to whether a byte string (0x5fff) or a text string
-(0x7fff) is meant and is therefore not used.
-The basic forms ''_ and ""_ can be used instead and are reserved for
+would be ambiguous as to whether a byte string (encoded 0x5fff) or a text string
+(encoded 0x7fff) is meant and is therefore not used.
+The basic forms `''_` and `""_` can be used instead and are reserved for
 the case of no chunks only --- not as short forms for the (permitted,
 but not really useful) encodings with only empty chunks, which
 need to be notated as (_ ''), (_ ""), etc.,
