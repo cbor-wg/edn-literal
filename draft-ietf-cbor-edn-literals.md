@@ -142,6 +142,24 @@ informative:
      specifies a formal ABNF grammar
 
 
+[^status]
+
+[^status]: The present revision `-12` reflects the branch "roll-up" in
+    the repository, an attempt to contain the entire specification of
+    EDN in this document, instead of describing updates to the
+    existing documents RFC 8949 and RFC 8610.
+    While the WG hasn't taken a decision to follow
+    this updated editorial approach, the feedback has been
+    sufficiently positive that the author believes it is not
+    misleading to make this revision available as the current WG
+    Internet-Draft as well.\\
+    That said, this is still a snapshot.
+    The editorial work on the branch "roll-up" is not complete.
+    Content will continue to move between sections.
+    The exact reflection of this document being a replacement for both
+    Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
+    recorded in the metadata and in abstract and introduction.
+
 --- middle
 
 Introduction        {#intro}
@@ -421,7 +439,7 @@ or, combining the use of inline and end-of-line comments:
 
 ## Encoding Indicators {#encoding-indicators}
 
-XXX align with {{spec}}
+TODO: align this with {{spec}}
 
 Sometimes it is useful to indicate in the diagnostic notation which of
 several alternative representations were actually used; for example, a
@@ -637,7 +655,9 @@ instance, each pair of columns in the following are equivalent:
 
 ### Validity of Text Strings
 
-XXX
+TODO: Add general text about validity of text strings, also addressing
+the semantics of concatenation (`+`).
+This could move up some text from {{concat}} and following.
 
 <!--
 ## Concatenated Strings {#concatenated-strings}
