@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2024-05-18
+# date: 2024-08-24
 
 keyword: Internet-Draft
 cat: info
@@ -32,7 +32,6 @@ venue:
 
 normative:
   STD94: cbor
-  RFC8610: cddl
   RFC8742: seq
   STD68: abnf
   RFC7405: abnfcs
@@ -76,51 +75,100 @@ normative:
     - Sixth Edition
     annotation: The text of the standard is also available via https://isocpp.org/files/papers/N4860.pdf
 informative:
+  RFC8610: cddl
+  RFC7049: old-cbor
   RFC4648: base
-  RFC9290:
+  RFC9290: pd
   STD90: json
+  RFC7493: i-json
+  I-D.bormann-cbor-numbers: numbers
   RFC9165: controls
   I-D.ietf-cbor-update-8610-grammar: cddlupd
-  I-D.bormann-cbor-e-ref: eref
+  I-D.ietf-cbor-edn-e-ref: eref
   I-D.bormann-t2trg-deref-id: deref
+  RFC9512: yaml-media-type
+  YAML:
+    target: https://yaml.org/spec/1.2.2/
+    title: YAML Ain't Markup Language (YAML™) Version 1.2
+    author:
+    - name: Oren Ben-Kiki
+    - name: Clark Evans
+    - name: Ingy | döt Net
+    date: 2021-10-01
+    refcontent:
+    - Revision 1.2.2
 
 --- abstract
 
-The Concise Binary Object Representation, CBOR (STD 94, RFC 8949), [^abs1-]
-RFC 8610 extends this into what is known as Extended Diagnostic Notation (EDN).
+[^abs0-]: The Concise Binary Object Representation (CBOR) (STD 94, RFC 8949)
+    is a data format whose design goals include the possibility of
+    extremely small code size, fairly small message size, and
+    extensibility without the need for version negotiation.
 
-[^abs1-]: defines a "diagnostic notation" in order to
-    be able to converse about CBOR data items without having to resort to
-    binary data.
+[^abs0-]
 
-[^abs3-]: This document sets forth a further step of evolution of EDN,
-    and it is intended to serve as a single reference target in
+[^abs1a-]: In addition to the binary interchange format, CBOR from the outset
+
+[^abs1b-]: defined a text-based "diagnostic notation" in
+    order to be able to converse about CBOR data items without having
+    to resort to binary data.
+
+[^abs1c-]:
+    extended this into what is known as Extended Diagnostic
+    Notation (EDN).
+
+[^abs1a-] (RFC 7049) [^abs1b-] RFC 8610 [^abs1c-]
+
+[^abs3-]: This document consolidates the definition of EDN, sets forth
+    a further step of its evolution,
+    and is intended to serve as a single reference target in
     specifications that use EDN.
 
-    It specifies how to add application-oriented extensions to
-    the diagnostic notation.  It then defines two such extensions for
-    text representations of epoch-based date/times and of IP addresses
+    It specifies an extension point for adding application-oriented extensions to
+    the diagnostic notation.
+    It then defines two such extensions that enhance EDN with text
+    representations of epoch-based date/times and of IP addresses
     and prefixes
 
 ​[^abs3-] (RFC 9164).
 
-[^abs4-]: A few further additions close some gaps in usability.
-     It modifies one extension specified in Appendix G.4 of RFC 8610
-     to enable further increasing usability.
+[^abs4a-]: A few further additions close some gaps in usability.
+     The document modifies one extension originally specified in
+
+[^abs4a-] Appendix G.4 of RFC 8610 [^abs4b-], and it adds media types.
+
+[^abs4b-]: to enable further increasing usability.
      To facilitate tool interoperation, this document
-     specifies a formal ABNF definition for EDN as defined
+     specifies a formal ABNF grammar
 
-[^abs4-] today, and it adds media types.
 
+[^status]
+
+[^status]: The present revision `-12` reflects the branch "roll-up" in
+    the repository, an attempt to contain the entire specification of
+    EDN in this document, instead of describing updates to the
+    existing documents RFC 8949 and RFC 8610.
+    While the WG hasn't taken a decision to follow
+    this updated editorial approach, the feedback has been
+    sufficiently positive that the author believes it is not
+    misleading to make this revision available as the current WG
+    Internet-Draft as well.\\
+    That said, this is still a snapshot.
+    The editorial work on the branch "roll-up" is not complete.
+    Content will continue to move between sections.
+    The exact reflection of this document being a replacement for both
+    Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
+    recorded in the metadata and in abstract and introduction.
 
 --- middle
 
 Introduction        {#intro}
 ============
 
-For the Concise Binary Object Representation (CBOR)
-{{Section 8 of RFC8949@-cbor}} in conjunction with {{Appendix G of -cddl}}
-[^abs1-]
+[^abs0-]
+
+[^abs1a-] ({{Section 6 of RFC7049}}, now {{Section 8 of RFC8949@-cbor}}) [^abs1b-] {{Appendix G of -cddl}} [^abs1c-]
+
 Diagnostic notation syntax is based on JSON, with extensions
 for representing CBOR constructs such as binary data and tags.
 [^abs2-]
@@ -131,7 +179,7 @@ for representing CBOR constructs such as binary data and tags.
 
 [^abs3-] {{-iptag}}.
 
-[^abs4-] today.
+[^abs4a-] {{Appendix G.4 of -cddl}} [^abs4b-].
     (See {{grammar}} for an overall ABNF grammar as well as the
     ABNF definitions in {{app-grammars}} for grammars for both the
     byte string presentations predefined in {{-cbor}} and the
@@ -162,7 +210,30 @@ interaction between tools is often smoother if media types can be used.
 > * `cddl` (which is used for the Concise Data Definition Language,
 >   CDDL, see {{terminology}} below).
 
+Note that EDN is not meant to be the only text-based representation of
+CBOR data items.
+For instance, {{YAML}} {{-yaml-media-type}} is able to represent most CBOR
+data items, possibly requiring use of YAML's extension points.
+YAML does not provide certain features that can be useful with tools
+and documents needing text-based representations of CBOR data items
+(such as embedded CBOR or encoding indicators),
+but it does provide a host of other features that EDN does not provide
+such as anchor/alias data sharing, at a cost of higher implementation
+and learning complexity.
+
 ## Structure of This Document
+
+{{diagnostic-notation}} of this document has been built from {{Section 8
+of RFC8949@-cbor}} and {{Section G of RFC8610}}.
+The latter provided a number of useful extensions to the
+diagnostic notation originally defined in {{Section 6 of -old-cbor}}.
+{{Section 8 of RFC8949@-cbor}} and {{Section G of RFC8610}} have
+collectively been called "Extended Diagnostic Notation" (EDN), giving
+the present document its name.
+<!--
+Similarly, this notation could be extended in a separate document to
+provide documentation for NaN payloads, which are not covered in this document.
+-->
 
 After introductory material, {{application-oriented-extension-literals}}
 introduces the concept of application-oriented extension literals and
@@ -219,7 +290,7 @@ languages EDN and CDDL is captured in {{edn-and-cddl}}.
 ## (Non-)Objectives of this Document
 
 {{Section 8 of RFC8949@-cbor}} states the objective of defining a
-human-readable diagnostic notation with CBOR.
+common human-readable diagnostic notation with CBOR.
 In particular, it states:
 
 {:quote}
@@ -272,6 +343,464 @@ test data.
 Information obtained from a CDDL model can help in choosing
 application-oriented literals or specific string representations such
 as embedded CBOR or `b64''` in the appropriate places.
+
+Overview over CBOR Extended Diagnostic Notation (EDN) {#diagnostic-notation}
+=====================================================
+
+CBOR is a binary interchange format.  To facilitate documentation and
+debugging, and in particular to facilitate communication between
+entities cooperating in debugging, this document defines a simple
+human-readable diagnostic notation.  All actual interchange always
+happens in the binary format.
+
+Note that diagnostic notation truly was designed as a diagnostic
+format; it originally was not meant to be parsed.
+Therefore, no formal definition (as in ABNF) was given in the original
+documents.
+Recognizing that formal grammars can aid interoperation of tools and
+usability of documents that employ EDN, {{grammars}} now provides ABNF
+definitions.
+
+EDN is a true superset of JSON as it is defined in {{STD90}} in
+conjunction with {{-i-json}} (that is, any interoperable {{-i-json}} JSON
+text also is an EDN text), extending it both to cover the greater
+expressiveness of CBOR and to increase its usability.
+
+EDN borrows the JSON syntax for numbers (integer and
+floating-point, {{numbers}}), certain simple values ({{simple-values}}),
+UTF-8 text
+strings, arrays, and maps (maps are called objects in JSON; the
+diagnostic notation extends JSON here by allowing any data item in the
+map key position).
+
+As EDN is used for truly diagnostic purposes, its implementations MAY
+support generation and possibly ingestion of EDN for CBOR data items
+that are well-formed but not valid.
+It is RECOMMENDED that an implementation enables such usage only
+explicitly by an API flag.
+Validity of CBOR data items is discussed in {{Section 5.3 of RFC8949@-cbor}},
+with basic validity discussed in {{Section 5.3.1 of RFC8949@-cbor}}, and
+tag validity discussed in {{Section 5.3.2 of RFC8949@-cbor}}.
+Tag validity is more likely a subject for individual
+application-oriented extensions, while the two cases of basic validity
+(for text strings and for maps) are addressed below under the heading
+of *validity*.
+
+The rest of this section provides an overview over specific features
+of EDN, starting with certain common syntactical features and then
+going through kinds of CBOR data items roughly in the order of CBOR major
+types.
+Any additional detailed syntax discussion needed has been deferred to
+{{grammar}}.
+
+## Comments {#comments}
+
+For presentation to humans, EDN text may benefit from comments.
+JSON famously does not provide for comments, and the original
+diagnostic notation in {{Section 6 of -old-cbor}} inherited this property.
+
+EDN now provides two comment syntaxes, which can be used where the
+syntax allows blank space (outside of constructs such as numbers,
+string literals, etc.):
+
+
+* inline comments, delimited by slashes ("`/`"):
+
+  In a position that allows blank space, any text within and including
+  a pair of slashes is considered blank space (and thus effectively a
+  comment).
+
+* end-of-line comments, delimited by "`#`" and an end of line (LINE
+  FEED, U+000A):
+
+  In a position that allows blank space, any text within and including
+  a pair of a "`#`" and the end of the line is considered blank space
+  (and thus effectively a comment).
+
+Comments can be used to annotate a CBOR structure as in:
+
+~~~~ cbor-diag
+/grasp-message/ [/M_DISCOVERY/ 1, /session-id/ 10584416,
+                 /objective/ [/objective-name/ "opsonize",
+                              /D, N, S/ 7, /loop-count/ 105]]
+~~~~
+
+or, combining the use of inline and end-of-line comments:
+
+~~~ cbor-diag
+{
+ /kty/ 1 : 4, # Symmetric
+ /alg/ 3 : 5, # HMAC 256-256
+  /k/ -1 : h'6684523ab17337f173500e5728c628547cb37df
+             e68449c65f885d1b73b49eae1'
+}
+~~~
+
+
+## Encoding Indicators {#encoding-indicators}
+
+TODO: align this with {{spec}}
+
+Sometimes it is useful to indicate in the diagnostic notation which of
+several alternative representations were actually used; for example, a
+data item written >1.5\< by a diagnostic decoder might have been
+encoded as a half-, single-, or double-precision float.
+
+The convention for encoding indicators is that anything starting with
+an underscore and all following characters that are alphanumeric or
+underscore is an encoding indicator, and can be ignored by anyone not
+interested in this information.  For example, `_` or `_3`.
+Encoding indicators are always
+optional.
+
+An underscore followed by a decimal digit n indicates that the
+preceding item (or, for arrays and maps, the item starting with the
+preceding bracket or brace) was encoded with an additional information
+value of 24+n.  For example, `1.5_1` is a half-precision floating-point
+number, while `1.5_3` is encoded as double precision.
+<!--
+This encoding
+indicator is not shown in {{examples}}.
+ -->
+(Note that the encoding
+indicator "_" is thus an abbreviation of the full form "_7", which is
+not used.)
+
+Encoding Indicators are discussed further below for indefinite length
+strings, and for arrays and maps.
+
+## Numbers
+
+<!--
+## Hexadecimal, Octal, and Binary Numbers {#hexadecimal-octal-and-binary-numbers}
+ -->
+
+In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
+and binary number literals in the usual C-language notation (octal with 0o
+prefix present only).
+
+The following are equivalent:
+
+~~~~ cbor-diag
+   4711
+   0x1267
+   0o11147
+   0b1001001100111
+~~~~
+
+As are:
+
+~~~~ cbor-diag
+   1.5
+   0x1.8p0
+   0x18p-4
+~~~~
+
+Numbers composed only of digits (of the respective base) are
+interpreted as CBOR integers (major type 0/1, or where the number
+cannot be represented in this way, major type 6 with tag 2/3).
+A leading "`+`" sign is a no-op, and a leading "`-`" sign inverts the
+sign of the number.
+So `0`, `000`, `+0` all represent the same integer zero, as does `-0`;
+`1`, `001`, `+1` and `+0001` all stand for the same integer one, and
+`-1` and `-0001` both designate the same integer minus one.
+
+Using a decimal point (`.`) and/or an exponent (`e` for decimal, `p`
+for hexadecimal) turns the number into a floating point number (major
+type 7) instead, irrespective of whether it is an integral number
+mathematically.
+Note that, in floating point numbers, `0.0` is not the same number as
+`-0.0`, even if they are mathematically equal.
+
+The non-finite floating-point numbers `Infinity`, `-Infinity`, and `NaN` are
+written exactly as in this sentence (this is also a way they can be
+written in JavaScript, although JSON does not allow them).
+
+See {{decnumber}} for additional details of the EDN number syntax.
+
+(Note that literals for further number formats, e.g., for representing
+rational numbers as fractions, or for NaNs with non-zero payloads, can
+be added as application-oriented literals.
+Background information beyond that in {{-cbor}} about the representation
+of numbers in CBOR can be found in the informational document
+{{-numbers}}.)
+
+## Strings
+
+CBOR distinguishes two kinds of strings: text strings (the bytes in
+the string constitute UTF-8 text, major type 3), and byte strings
+(CBOR does not further characterize the bytes that constitute the
+string, major type 2).
+
+EDN notates text strings in a form compatible to that of notating text
+strings in JSON, with a number of usability extensions.
+In JSON, no control characters are allowed to occur
+directly in text string literals; if needed, they can be specified using
+escapes such as `\t` or `\r`.
+In EDN, string literals additionally can contain newlines (LINEFEED
+U+000A), which are copied into the resulting string like other
+characters in the string literal.
+To deal with variability in platform presentation of newlines, any
+carriage return characters (U+000D) that may be present in the EDN
+text are not copied into the resulting string (see {{cr}}).
+No other control characters can occur in a string literal, and the
+handling of escaped characters (`\r` etc.) is as in JSON.
+
+JSON's escape scheme for characters that are not on Unicode's basic
+multilingual plane (BMP) is cumbersome.
+EDN keeps it, but also adds the syntax `\u{NNN}` where NNN is the
+Unicode scalar value as a hexadecimal number.
+This means the following are equivalent (the first `o` is escaped as
+`\u{6f}` for no particular reason):
+
+~~~ cbor-diag
+"D\u{6f}mino's \u{1F073} + \u{2318}"   # \u{}-escape 3 chars
+"Domino's \uD83C\uDC73 + \u2318"       # escape JSON-like
+"Domino's 🁳 + ⌘"                       # unescaped
+~~~
+
+EDN adds a number of ways to notate byte strings, some of which
+provide detailed access to the bits within those bytes (see
+{{encoded-byte-strings}}).
+However, quite often, byte strings carry bytes that can be meaningfully
+notated as UTF-8 text.
+Analogously to text string literals delimited by double quotes, EDN
+allows the use of single quotes (without a prefix) to express byte
+string literals with UTF-8 text; for instance, the following are
+equivalent:
+
+~~~~
+'hello world'
+h'68656c6c6f20776f726c64'
+~~~~
+
+The escaping rules of JSON strings are applied equivalently for
+text-based byte string literals, e.g., `\\` stands for a single
+backslash and `\'` stands for a single quote.
+(See {{concat}} for details.)
+
+### Encoding Indicators of Strings
+
+The detailed chunk structure of byte and text strings encoded with
+indefinite length can be
+notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
+However, for an indefinite-length string with no chunks inside, (_ )
+would be ambiguous as to whether a byte string (encoded 0x5fff) or a text string
+(encoded 0x7fff) is meant and is therefore not used.
+The basic forms `''_` and `""_` can be used instead and are reserved for
+the case of no chunks only --- not as short forms for the (permitted,
+but not really useful) encodings with only empty chunks, which
+need to be notated as (_ ''), (_ ""), etc.,
+to preserve the chunk structure.
+
+
+### Base-Encoded Byte String Literals {#encoded-byte-strings}
+
+Besides the unprefixed byte string literals that are analogous to JSON text
+string literals, EDN provides base-encoded byte string literals.
+These are notated in one of the base encodings {{-base}}, without
+padding, enclosed in a single-quoted string literal, prefixed by >h\< for base16 or
+>b64\< for base64 or base64url (the actual encodings of the latter do
+not overlap, so the string remains unambiguous).
+For example, the byte string consisting of the four bytes `12 34 56
+78` (given in hexadecimal here) could be written `h'12345678'` or `b64'EjRWeA'`.
+
+(Note that {{Section 8 of RFC8949@-cbor}} also mentions >b32\< for
+base32 and >h32\< for base32hex.
+This has not been implemented widely
+and therefore is not directly included in this specification.
+These and further byte string formats now can easily be added back as
+application-oriented literals.)
+
+Examples often benefit from some blank space (spaces, line breaks) in
+byte strings.  In EDN, blank space is ignored in prefixed byte strings; for
+instance, the following are equivalent:
+
+~~~~ cbor-diag
+   h'48656c6c6f20776f726c64'
+   h'48 65 6c 6c 6f 20 77 6f 72 6c 64'
+   h'4 86 56c 6c6f
+     20776 f726c64'
+~~~~
+
+Note that the internal syntax of prefixed single-quote literals such
+as h'' and b64'' can allow comments as blank space (see {{comments}}).
+Since slash characters are allowed in b64'', only inline comments are
+available in b64 string literals.
+
+~~~~ cbor-diag
+   h'68656c6c6f20776f726c64'
+   h'68 65 6c /doubled l!/ 6c 6f # hello
+     20 /space/
+     77 6f 72 6c 64' /world/
+~~~~
+
+### Embedded CBOR and CBOR Sequences in Byte Strings {#embedded-cbor-and-cbor-sequences-in-byte-strings}
+
+Where a byte string is to carry an embedded CBOR-encoded item, or more
+generally a sequence of zero or more such items, the diagnostic
+notation for these zero or more CBOR data items, separated by commas,
+can be enclosed in `<<` and `>>` to notate the byte string
+resulting from encoding the data items and concatenating the result.
+For
+instance, each pair of columns in the following are equivalent:
+
+
+~~~~ cbor-diag
+   <<1>>              h'01'
+   <<1, 2>>           h'0102'
+   <<"hello", null>>  h'65 68656c6c6f f6'
+   <<>>               h''
+~~~~
+
+### Validity of Text Strings
+
+TODO: Add general text about validity of text strings, also addressing
+the semantics of concatenation (`+`).
+This could move up some text from {{concat}} and following.
+
+<!--
+## Concatenated Strings {#concatenated-strings}
+
+While the ability to include whitespace enables line-breaking of
+encoded byte strings, a mechanism is needed to be able to include
+text strings as well as byte strings in direct UTF-8 representation
+into line-based documents (such as RFCs and source code).
+
+We extend the diagnostic notation by allowing multiple text strings or
+multiple byte strings to be notated separated by whitespace; these
+are then concatenated into a single text or byte string, respectively.
+Text strings and byte strings do not mix within such a
+concatenation, except that byte string notation can be used inside a
+sequence of concatenated text string notation to encode characters
+that may be better represented in an encoded way.  The following four
+values are equivalent:
+
+
+~~~~
+   "Hello world"
+   "Hello " "world"
+   "Hello" h'20' "world"
+   "" h'48656c6c6f20776f726c64' ""
+~~~~
+
+Similarly, the following byte string values are equivalent:
+
+
+~~~~
+   'Hello world'
+   'Hello ' 'world'
+   'Hello ' h'776f726c64'
+   'Hello' h'20' 'world'
+   '' h'48656c6c6f20776f726c64' '' b64''
+   h'4 86 56c 6c6f' h' 20776 f726c64'
+~~~~
+
+(Note that the approach of separating by whitespace, while familiar
+from the C language, requires some attention — a single comma makes a
+big difference here.)
+
+-->
+
+## Arrays and Maps
+
+EDN borrows the JSON syntax for arrays and maps.
+(Maps are called objects in JSON.)
+
+For maps, EDN extends the JSON syntax by allowing any data item in the
+map key position (before the colon).
+
+JSON requires the use of a comma as a separator character between
+the elements of an array as well as between the members (key/value
+pairs) of a map.
+(These commas also were required in the original diagnostic
+notation defined in {{-cbor}} and {{-cddl}}.)
+The separator commas are now optional in the places where EDN syntax
+allows commas.
+(Stylistically, leaving out the commas is more idiomatic when they
+occur at line breaks.)
+
+In addition, EDN also allows, but does not require, a trailing comma before the closing bracket/brace,
+enabling an easier to maintain "terminator" style of their use.
+
+In summary, the following eight examples are all equivalent:
+
+~~~ cbor-diag
+[1, 2, 3]
+[1, 2, 3,]
+[1  2  3]
+[1  2  3,]
+[1  2, 3]
+[1  2, 3,]
+[1, 2  3]
+[1, 2  3,]
+~~~
+
+as are
+
+~~~ cbor-diag
+{1: "n", "x": "a"}
+{1: "n", "x": "a",}
+{1: "n"  "x": "a"}
+# etc.
+~~~
+
+{:aside}
+> CDDL's comma separators in the equivalent contexts (CDDL groups) are
+  entirely optional
+  (and actually are terminators, which together with their optionality
+  allows them to be used like separators as well, or even not at all).
+  In summary, comma use is now aligned between EDN and CDDL, in a
+  fully backwards compatible way.
+
+### Encoding Indicators of Arrays and Maps
+
+A single underscore can be written after the opening brace of a map or
+the opening bracket of an array to indicate that the data item was
+represented in indefinite-length format.  For example, `[_ 1, 2]`
+contains an indicator that an indefinite-length representation was
+used to represent the data item `[1, 2]`.
+
+### Validity of Maps
+
+As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
+generation and possibly ingestion of EDN for CBOR data items that are
+well-formed but not valid.
+
+For maps, this is relevant for map keys that occur more than once, as in:
+
+~~~ cbor-diag
+{1: "to", 1: "fro"}
+~~~
+
+## Tags
+
+A tag is
+written as a decimal unsigned integer for the tag number, followed by the tag content
+in parentheses; for instance, a date in the format specified by RFC 3339
+(ISO 8601) could be
+notated as:
+
+{: indent='5'}
+0("2013-03-21T20:04:00Z")
+
+or the equivalent epoch-based time as the following:
+
+{: indent='5'}
+1(1363896240)
+
+
+
+## Simple values
+
+EDN uses JSON syntax for the simple values True (>`true`\<), False
+(>`false`\<), and Null (>`null`\<).
+Undefined is written >`undefined`\< as in JavaScript.
+
+Other simple values are given as "simple()" with the appropriate
+integer in the parentheses. For example, >`simple(42)`\< indicates major
+type 7, value 42.
+
 
 Application-Oriented Extension Literals
 =======================================
@@ -628,7 +1157,7 @@ The following additional items should help in the interpretation:
   rather than their UTF-8 encoding.  For example, the Unicode PLACE OF
   INTEREST SIGN (U+2318) would be defined in ABNF as %x2318.
 
-* Unicode CARRIAGE RETURN (U+000D, often seen escaped as "\r" in many
+* {: #cr} Unicode CARRIAGE RETURN (U+000D, often seen escaped as "\r" in many
   programming languages) that exist in the input (unescaped) are
   ignored as if they were not in the input wherever they appear.
   This is most important when they are found in (text or byte) string
@@ -636,7 +1165,7 @@ The following additional items should help in the interpretation:
   On some platforms, a carriage return is always added in front of a
   LINE FEED (U+000A, also often seen escaped as "\n" in many
   programming languages), but on other platforms, carriage returns are
-  not used at line ends.
+  not used at line breaks.
   The intent behind ignoring unescaped carriage returns is to ensure
   that input generated or processed on either of these kinds of
   platforms will generate the same bytes in the CBOR data items
@@ -647,7 +1176,8 @@ The following additional items should help in the interpretation:
   If a carriage return is needed in the CBOR data item, it can be
   added explicitly using the escaped form `\r`.
 
-* `decnumber` stands for an integer in the usual decimal notation, unless at
+* {: #decnumber}
+  `decnumber` stands for an integer in the usual decimal notation, unless at
   least one of the optional parts starting with "." and "e" are
   present, in which case it stands for a floating point value in the
   usual decimal notation.  Note that the grammar now allows `3.` for
@@ -690,7 +1220,7 @@ The following additional items should help in the interpretation:
   obtaining a tag 4/5 representation directly from a hex or decimal
   floating point literal.
 
-* `spec` stands for an encoding indicator.
+* {: #spec} `spec` stands for an encoding indicator.
 
   (In the following, an abbreviation of the form `ai=`nn gives nn as
   the numeric value of the field _additional information_, the low-order 5
@@ -719,7 +1249,8 @@ The following additional items should help in the interpretation:
   comes to mind, this is an extension point for EDN; {{reg-ei}} defines
   a registry for additional values.
 
-* Extended diagnostic notation allows a (text or byte) string to be
+* {: #concat}
+  Extended diagnostic notation allows a (text or byte) string to be
   built up from multiple (text or byte) string literals, separated by
   a `+` operator; these are then concatenated into a single string.
 
@@ -1212,7 +1743,7 @@ Important differences include:
   line characters, while EDN finds nothing in JSON that could be inherited here.
   Inspired by JavaScript, EDN simplifies JavaScript's copy of the
   original C comment syntax to be delimited by single slashes (where
-  line ends are not of interest); it also adds end-of-line comments
+  line breaks are not of interest); it also adds end-of-line comments
   starting with `#`.
 
   {:compact}
@@ -1244,24 +1775,6 @@ Important differences include:
 
   CDDL:
   : `COSE_Sign_Tagged = #6.98(COSE_Sign)`
-
-* Previously, the use of comma as separator character. [^move]
-  JSON requires commas as separators between array elements and map
-  members; these commas also were required in the original diagnostic
-  notation defined in {{-cbor}} and the EDN defined in {{-cddl}}.
-  They are now optional in the places where EDN syntax allows commas.
-  (EDN also allows, but does
-  not require, a trailing comma before the closing bracket/brace,
-  enabling an easier to maintain "terminator" style of their use).
-  CDDL's comma separators in the equivalent contexts (CDDL groups) are
-  entirely optional
-  (and actually are terminators, which together with their optionality
-  allows them to be used like separators as well, or even not at all).
-  In summary, comma use is now aligned between EDN and CDDL, in a
-  fully backwards compatible way.
-
-[^move]: Move this after embedded CBOR as it actually no longer is a
-    difference.  But first check the diff...
 
 * Embedded CBOR.  EDN has a special syntax to describe the content of
   byte strings that are encoded CBOR data items.  CDDL can specify
