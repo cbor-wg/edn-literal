@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2024-08-24
+# date: 2024-11-01
 
 keyword: Internet-Draft
 cat: info
@@ -439,35 +439,60 @@ or, combining the use of inline and end-of-line comments:
 
 ## Encoding Indicators {#encoding-indicators}
 
-TODO: align this with {{spec}}
-
 Sometimes it is useful to indicate in the diagnostic notation which of
 several alternative representations were actually used; for example, a
 data item written >1.5\< by a diagnostic decoder might have been
 encoded as a half-, single-, or double-precision float.
 
 The convention for encoding indicators is that anything starting with
-an underscore and all following characters that are alphanumeric or
+an underscore and all immediately following characters that are alphanumeric or
 underscore is an encoding indicator, and can be ignored by anyone not
 interested in this information.  For example, `_` or `_3`.
 Encoding indicators are always
 optional.
 
-An underscore followed by a decimal digit n indicates that the
+(In the following, an abbreviation of the form `ai=`nn gives nn as
+the numeric value of the field _additional information_, the low-order 5
+bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.)
+
+An underscore followed by a decimal digit `n` indicates that the
 preceding item (or, for arrays and maps, the item starting with the
 preceding bracket or brace) was encoded with an additional information
-value of 24+n.  For example, `1.5_1` is a half-precision floating-point
+value of `ai=`24+`n`.  For example, `1.5_1` is a half-precision floating-point
 number, while `1.5_3` is encoded as double precision.
 <!--
 This encoding
 indicator is not shown in {{examples}}.
  -->
-(Note that the encoding
-indicator "_" is thus an abbreviation of the full form "_7", which is
-not used.)
 
-Encoding Indicators are discussed further below for indefinite length
-strings, and for arrays and maps.
+The encoding indicator `_` is an abbreviation of what would in full
+form be `_7`, which is not used.
+Therefore, an underscore `_` on its own stands for indefinite length
+encoding (`ai=31`).
+(Note that this encoding indicator is only available behind the opening
+brace/bracket for `map` and `array` ({{ei-container}}): strings have a special syntax
+`streamstring` for indefinite length encoding except for the special
+cases ''_ and ""_ ({{ei-string}}).)
+
+The encoding indicators `_0` to `_3` can be used to indicate `ai=24`
+to `ai=27`, respectively.
+
+Surprisingly, {{Section 8.1 of RFC8949@-cbor}} does not address `ai=0` to
+`ai=23` — the assumption seems to have been that preferred serialization
+({{Section 4.1 of RFC8949@-cbor}}) will be used when converting CBOR
+diagnostic notation to an encoded CBOR data item, so leaving out the
+encoding indicator for a data item with a preferred serialization
+will implicitly use `ai=0` to `ai=23` if that is possible.
+The present specification allows making this explicit:
+
+`_i` ("immediate") stands for encoding with `ai=0` to `ai=23`.
+
+While no pressing use for further values for encoding indicators
+comes to mind, this is an extension point for EDN; {{reg-ei}} defines
+a registry for additional values.
+
+Encoding Indicators are discussed in further detail in {{ei-string}} for
+indefinite length strings and in {{ei-container}} for arrays and maps.
 
 ## Numbers
 
@@ -579,7 +604,7 @@ text-based byte string literals, e.g., `\\` stands for a single
 backslash and `\'` stands for a single quote.
 (See {{concat}} for details.)
 
-### Encoding Indicators of Strings
+### Encoding Indicators of Strings {#ei-string}
 
 The detailed chunk structure of byte and text strings encoded with
 indefinite length can be
@@ -753,7 +778,7 @@ as are
   In summary, comma use is now aligned between EDN and CDDL, in a
   fully backwards compatible way.
 
-### Encoding Indicators of Arrays and Maps
+### Encoding Indicators of Arrays and Maps {#ei-container}
 
 A single underscore can be written after the opening brace of a map or
 the opening bracket of an array to indicate that the data item was
@@ -1221,33 +1246,7 @@ The following additional items should help in the interpretation:
   floating point literal.
 
 * {: #spec} `spec` stands for an encoding indicator.
-
-  (In the following, an abbreviation of the form `ai=`nn gives nn as
-  the numeric value of the field _additional information_, the low-order 5
-  bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.)
-
-  As per {{Section 8.1 of RFC8949@-cbor}}:
-
-  * an underscore `_` on its own stands
-    for indefinite length encoding (`ai=31`, only available behind the
-    opening brace/bracket for `map` and `array`: strings have a special
-    syntax `streamstring` for indefinite length encoding except for the
-    special cases ''_ and ""_), and
-  * `_0` to `_3` stand for `ai=24` to `ai=27`, respectively.
-
-  Surprisingly, {{Section 8.1 of RFC8949@-cbor}} does not address `ai=0` to
-  `ai=23` — the assumption seems to be that preferred serialization
-  ({{Section 4.1 of RFC8949@-cbor}}) will be used when converting CBOR
-  diagnostic notation to an encoded CBOR data item, so leaving out the
-  encoding indicator for a data item with a preferred serialization
-  will implicitly use `ai=0` to `ai=23` if that is possible.
-  The present specification allows to make this explicit:
-
-  * `_i` ("immediate") stands for encoding with `ai=0` to `ai=23`.
-
-  While no pressing use for further values for encoding indicators
-  comes to mind, this is an extension point for EDN; {{reg-ei}} defines
-  a registry for additional values.
+  See {{encoding-indicators}} for details.
 
 * {: #concat}
   Extended diagnostic notation allows a (text or byte) string to be
