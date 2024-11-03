@@ -1207,7 +1207,8 @@ represented in the overall ABNF.
 E.g., the rules
 
 > ~~~~~ abnf
-> HEXDIG          = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+> HEXDIG          = DIGIT /
+>                   "A" / "B" / "C" / "D" / "E" / "F"
 > DIGIT           = %x30-39
 > ~~~~~
 
