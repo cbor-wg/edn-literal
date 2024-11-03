@@ -285,7 +285,7 @@ well as {{-cddlupd}}.
 Additional information about the relationship between the two
 languages EDN and CDDL is captured in {{edn-and-cddl}}.
 
-{::boilerplate bcp14-tagged}
+{::boilerplate bcp14-tagged-bcp14}
 
 ## (Non-)Objectives of this Document
 
