@@ -145,7 +145,7 @@ Table of Contents
    5.  ABNF Definitions  . . . . . . . . . . . . . . . . . . . . . .  23
      5.1.  Overall ABNF Definition for Extended Diagnostic
            Notation  . . . . . . . . . . . . . . . . . . . . . . . .  23
-     5.2.  ABNF Definitions for app-string Content . . . . . . . . .  29
+     5.2.  ABNF Definitions for app-string Content . . . . . . . . .  30
        5.2.1.  h: ABNF Definition of Hexadecimal representation of a
                byte string . . . . . . . . . . . . . . . . . . . . .  30
        5.2.2.  b64: ABNF Definition of Base64 representation of a byte
@@ -153,10 +153,10 @@ Table of Contents
        5.2.3.  dt: ABNF Definition of RFC 3339 Representation of a
                Date/Time . . . . . . . . . . . . . . . . . . . . . .  31
        5.2.4.  ip: ABNF Definition of Textual Representation of an IP
-               Address . . . . . . . . . . . . . . . . . . . . . . .  31
+               Address . . . . . . . . . . . . . . . . . . . . . . .  32
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  32
      6.1.  CBOR Diagnostic Notation Application-extension Identifiers
-           Registry  . . . . . . . . . . . . . . . . . . . . . . . .  32
+           Registry  . . . . . . . . . . . . . . . . . . . . . . . .  33
      6.2.  Encoding Indicators . . . . . . . . . . . . . . . . . . .  34
      6.3.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  36
      6.4.  Content-Format  . . . . . . . . . . . . . . . . . . . . .  37
@@ -1291,7 +1291,8 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
       |  
-      |        HEXDIG          = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+      |        HEXDIG          = DIGIT /
+      |                          "A" / "B" / "C" / "D" / "E" / "F"
       |        DIGIT           = %x30-39
       |  
       |  can be expanded to
@@ -1337,7 +1338,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
                    / %s"-Infinity"
                    / %s"NaN"
    simple          = %s"false"
-                   / %s"true"
 
 
 
@@ -1346,6 +1346,7 @@ Bormann                    Expires 7 May 2025                  [Page 24]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
+                   / %s"true"
                    / %s"null"
                    / %s"undefined"
                    / %s"simple(" S item S ")"
@@ -1393,7 +1394,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
    escapable       = %s"b" ; BS backspace U+0008
                    / %s"f" ; FF form feed U+000C
-                   / %s"n" ; LF line feed U+000A
 
 
 
@@ -1402,6 +1402,7 @@ Bormann                    Expires 7 May 2025                  [Page 25]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
+                   / %s"n" ; LF line feed U+000A
                    / %s"r" ; CR carriage return U+000D
                    / %s"t" ; HT horizontal tab U+0009
                    / "/"   ; / slash (solidus) U+002F (JSON!)
@@ -1446,10 +1447,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
                Figure 1: Overall ABNF Definition of CBOR EDN
 
-   While an ABNF grammar defines the set of character strings that are
-   considered to be valid EDN by this ABNF, the mapping of these
-   character strings into the generic data model of CBOR is not always
-   obvious.
+
+
+
 
 
 
@@ -1457,6 +1457,11 @@ Bormann                    Expires 7 May 2025                  [Page 26]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
+
+   While an ABNF grammar defines the set of character strings that are
+   considered to be valid EDN by this ABNF, the mapping of these
+   character strings into the generic data model of CBOR is not always
+   obvious.
 
    The following additional items should help in the interpretation:
 
@@ -1500,12 +1505,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
       Section 5.13.4 of [Cplusplus]; floating-suffix/floating-point-
       suffix from the latter two is not used here).
 
-   *  For hexint, octint, binint, and when decnumber stands for an
-      integer, the corresponding CBOR data item is represented using
-      major type 0 or 1 if possible, or using tag 2 or 3 if not.  In the
-      latter case, this specification does not define any encoding
-      indicators that apply.  If fine control over encoding is desired,
-      this can be expressed by being explicit about the representation
+
 
 
 
@@ -1514,6 +1514,12 @@ Bormann                    Expires 7 May 2025                  [Page 27]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
+   *  For hexint, octint, binint, and when decnumber stands for an
+      integer, the corresponding CBOR data item is represented using
+      major type 0 or 1 if possible, or using tag 2 or 3 if not.  In the
+      latter case, this specification does not define any encoding
+      indicators that apply.  If fine control over encoding is desired,
+      this can be expressed by being explicit about the representation
       as a tag: E.g., 987654321098765432310, which is equivalent to
       2(h'35 8a 75 04 38 f3 80 f5 f6') in its preferred serialization,
       might be written as 2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1)
@@ -1551,6 +1557,19 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    widely implemented and got in the way of making the use of commas
    optional in other places via the rule OC).
 
+
+
+
+
+
+
+
+
+Bormann                    Expires 7 May 2025                  [Page 28]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
+
+
    Text strings and byte strings do not mix within such a concatenation,
    except that byte string literal notation can be used inside a
    sequence of concatenated text string notation literals, to encode
@@ -1562,13 +1581,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
      "Hello " + "world"
      "Hello" + h'20' + "world"
      "" + h'48656c6c6f20776f726c64' + ""
-
-
-
-Bormann                    Expires 7 May 2025                  [Page 28]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
-
 
    Similarly, the following byte string values are equivalent:
 
@@ -1601,6 +1613,19 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
       If the left hand side is a byte string, the right hand side also
       needs to be a byte string.
 
+
+
+
+
+
+
+
+
+Bormann                    Expires 7 May 2025                  [Page 29]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
+
+
    *  Some of the strings may be app-strings.  If the result type of the
       app-string is an actual (text or byte) string, joining of those
       string chunks occurs as with chunks directly notated as string
@@ -1617,14 +1642,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    identifiers used as prefixes to form application-oriented extension
    literals.  Each of these may make integrate ABNF rules defined in
    Figure 1, which are not always repeated here.
-
-
-
-
-Bormann                    Expires 7 May 2025                  [Page 29]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
-
 
 5.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
         string
@@ -1655,6 +1672,16 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    The syntax of the content of byte strings represented in base64 is
    described by the ABNF in Figure 2.
 
+
+
+
+
+
+Bormann                    Expires 7 May 2025                  [Page 30]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
+
+
    This syntax allows both the classic (Section 4 of [RFC4648]) and the
    URL-safe (Section 5 of [RFC4648]) alphabet to be used.  It
    accommodates, but does not require base64 padding.  Note that
@@ -1673,14 +1700,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    DIGIT           = %x30-39
 
     Figure 3: ABNF definition of Base64 Representation of a Byte String
-
-
-
-
-Bormann                    Expires 7 May 2025                  [Page 30]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
-
 
 5.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
 
@@ -1711,25 +1730,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
      Figure 4: ABNF Definition of RFC3339 Representation of a Date/Time
 
-5.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
-
-   The syntax of the content of ip literals can be described by the ABNF
-   for IPv4address and IPv6address in Section 3.2.2 of [RFC3986], as
-   included in slightly updated form in Figure 5.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1737,6 +1737,12 @@ Bormann                    Expires 7 May 2025                  [Page 31]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
+
+5.2.4.  ip: ABNF Definition of Textual Representation of an IP Address
+
+   The syntax of the content of ip literals can be described by the ABNF
+   for IPv4address and IPv6address in Section 3.2.2 of [RFC3986], as
+   included in slightly updated form in Figure 5.
 
    app-string-ip = IPaddress ["/" uint]
 
@@ -1778,13 +1784,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    // RFC, [IANA.cbor-diagnostic-notation] with a reference to the new
    // registry group, and remove this note.
 
-6.1.  CBOR Diagnostic Notation Application-extension Identifiers
-      Registry
 
-   IANA is requested to create an "Application-Extension Identifiers"
-   registry in a new "CBOR Diagnostic Notation" registry group
-   [IANA.cbor-diagnostic-notation], with the policy "expert review"
-   (Section 4.5 of RFC 8126 [BCP26]).
 
 
 
@@ -1793,6 +1793,14 @@ Bormann                    Expires 7 May 2025                  [Page 32]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
+
+6.1.  CBOR Diagnostic Notation Application-extension Identifiers
+      Registry
+
+   IANA is requested to create an "Application-Extension Identifiers"
+   registry in a new "CBOR Diagnostic Notation" registry group
+   [IANA.cbor-diagnostic-notation], with the policy "expert review"
+   (Section 4.5 of RFC 8126 [BCP26]).
 
    The experts are instructed to be frugal in the allocation of
    application-extension identifiers that are suggestive of generally
@@ -1827,14 +1835,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
    The initial content of the registry is shown in Table 1; all initial
    entries have the Change Controller "IETF".
-
-
-
-
-
-
-
-
 
 
 
