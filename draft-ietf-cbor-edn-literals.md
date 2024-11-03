@@ -145,18 +145,13 @@ informative:
 
 [^status]
 
-[^status]: The present revision `-12` reflects the branch "roll-up" in
+[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
+    The present revision `-13` reflects the branches "roll-up"
+    and "roll-up-2" in
     the repository, an attempt to contain the entire specification of
     EDN in this document, instead of describing updates to the
     existing documents RFC 8949 and RFC 8610.
-    While the WG hasn't taken a decision to follow
-    this updated editorial approach, the feedback has been
-    sufficiently positive that the author believes it is not
-    misleading to make this revision available as the current WG
-    Internet-Draft as well.\\
-    That said, this is still a snapshot.
-    The editorial work on the branch "roll-up" is not complete.
-    Content will continue to move between sections.
+    Editorial work on the branch "roll-up-2" might continue.
     The exact reflection of this document being a replacement for both
     Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
     recorded in the metadata and in abstract and introduction.
