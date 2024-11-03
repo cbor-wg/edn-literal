@@ -40,16 +40,16 @@ Abstract
    adds media types.
 
 
-   // The present revision -12 reflects the branch "roll-up" in the
-   // repository, an attempt to contain the entire specification of EDN
-   // in this document, instead of describing updates to the existing
-   // documents RFC 8949 and RFC 8610.  While the WG hasn't taken a
-   // decision to follow this updated editorial approach, the feedback
-   // has been sufficiently positive that the author believes it is not
-   // misleading to make this revision available as the current WG
-   // Internet-Draft as well.  That said, this is still a snapshot.  The
-   // editorial work on the branch "roll-up" is not complete.  Content
-   // will continue to move between sections.  The exact reflection of
+   // (This "cref" paragraph will be removed by the RFC editor:) The
+   // present revision -13 reflects the branches "roll-up" and "roll-up-
+   // 2" in the repository, an attempt to contain the entire
+   // specification of EDN in this document, instead of describing
+   // updates to the existing documents RFC 8949 and RFC 8610.
+   // Editorial work on the branch "roll-up-2" might continue.  The
+   // exact reflection of this document being a replacement for both
+   // Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
+   // recorded in the metadata and in abstract and introduction.
+
 
 
 
@@ -57,10 +57,6 @@ Bormann                    Expires 7 May 2025                   [Page 1]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
-
-   // this document being a replacement for both Section 8 of RFC 8949
-   // and Appendix G of RFC 8610 needs to be recorded in the metadata
-   // and in abstract and introduction.
 
 About This Document
 
@@ -106,6 +102,10 @@ Copyright Notice
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
 
 
 
@@ -114,14 +114,10 @@ Bormann                    Expires 7 May 2025                   [Page 2]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
-   extracted from this document must include Revised BSD License text as
-   described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Revised BSD License.
-
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   4
-     1.1.  Structure of This Document  . . . . . . . . . . . . . . .   6
+     1.1.  Structure of This Document  . . . . . . . . . . . . . . .   5
      1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   6
      1.3.  (Non-)Objectives of this Document . . . . . . . . . . . .   7
    2.  Overview over CBOR Extended Diagnostic Notation (EDN) . . . .   8
@@ -162,6 +158,10 @@ Table of Contents
      6.1.  CBOR Diagnostic Notation Application-extension Identifiers
            Registry  . . . . . . . . . . . . . . . . . . . . . . . .  32
      6.2.  Encoding Indicators . . . . . . . . . . . . . . . . . . .  34
+     6.3.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  36
+     6.4.  Content-Format  . . . . . . . . . . . . . . . . . . . . .  37
+     6.5.  Stand-in Tags . . . . . . . . . . . . . . . . . . . . . .  37
+   7.  Security considerations . . . . . . . . . . . . . . . . . . .  38
 
 
 
@@ -170,10 +170,6 @@ Bormann                    Expires 7 May 2025                   [Page 3]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
-     6.3.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  36
-     6.4.  Content-Format  . . . . . . . . . . . . . . . . . . . . .  37
-     6.5.  Stand-in Tags . . . . . . . . . . . . . . . . . . . . . .  37
-   7.  Security considerations . . . . . . . . . . . . . . . . . . .  38
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  38
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  38
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  41
@@ -211,10 +207,14 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    extensions that enhance EDN with text representations of epoch-based
    date/times and of IP addresses and prefixes [RFC9164].
 
-
-
-
-
+   A few further additions close some gaps in usability.  The document
+   modifies one extension originally specified in Appendix G.4 of
+   [RFC8610] to enable further increasing usability.  To facilitate tool
+   interoperation, this document specifies a formal ABNF grammar.  (See
+   Section 5.1 for an overall ABNF grammar as well as the ABNF
+   definitions in Section 5.2 for grammars for both the byte string
+   presentations predefined in [STD94] and the application-extensions
+   defined here.)
 
 
 
@@ -225,15 +225,6 @@ Bormann                    Expires 7 May 2025                   [Page 4]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
-
-   A few further additions close some gaps in usability.  The document
-   modifies one extension originally specified in Appendix G.4 of
-   [RFC8610] to enable further increasing usability.  To facilitate tool
-   interoperation, this document specifies a formal ABNF grammar.  (See
-   Section 5.1 for an overall ABNF grammar as well as the ABNF
-   definitions in Section 5.2 for grammars for both the byte string
-   presentations predefined in [STD94] and the application-extensions
-   defined here.)
 
    In addition, this document finally registers a media type identifier
    and a content-format for CBOR diagnostic notation.  This does not
@@ -274,14 +265,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    such as anchor/alias data sharing, at a cost of higher implementation
    and learning complexity.
 
-
-
-
-Bormann                    Expires 7 May 2025                   [Page 5]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
-
-
 1.1.  Structure of This Document
 
    Section 2 of this document has been built from Section 8 of RFC 8949
@@ -290,6 +273,14 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    Section 6 of [RFC7049].  Section 8 of RFC 8949 [STD94] and Appendix G
    of [RFC8610] have collectively been called "Extended Diagnostic
    Notation" (EDN), giving the present document its name.
+
+
+
+
+Bormann                    Expires 7 May 2025                   [Page 5]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
+
 
    After introductory material, Section 3 introduces the concept of
    application-oriented extension literals and defines the "dt" and "ip"
@@ -329,6 +320,15 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    "characters" of Section 2.3 of RFC 5234 [STD68] are Unicode scalar
    values.
 
+   The term "CDDL" (Concise Data Definition Language) refers to the data
+   definition language defined in [RFC8610] and its registered
+   extensions (such as those in [RFC9165]), as well as
+   [I-D.ietf-cbor-update-8610-grammar].  Additional information about
+   the relationship between the two languages EDN and CDDL is captured
+   in Appendix A.
+
+
+
 
 
 
@@ -337,13 +337,6 @@ Bormann                    Expires 7 May 2025                   [Page 6]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
-
-   The term "CDDL" (Concise Data Definition Language) refers to the data
-   definition language defined in [RFC8610] and its registered
-   extensions (such as those in [RFC9165]), as well as
-   [I-D.ietf-cbor-update-8610-grammar].  Additional information about
-   the relationship between the two languages EDN and CDDL is captured
-   in Appendix A.
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -387,17 +380,19 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    EDN — the original EDN possibly was created by humans or by a
    different EDN generator.
 
+   However, there is a certain expectation that EDN generators can be
+   configured to some basic output format, which:
+
+   *  looks like JSON where that is possible;
+
+
+
 
 
 Bormann                    Expires 7 May 2025                   [Page 7]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
-
-   However, there is a certain expectation that EDN generators can be
-   configured to some basic output format, which:
-
-   *  looks like JSON where that is possible;
 
    *  inserts encoding indicators only where the binary form differs
       from preferred encoding;
@@ -443,6 +438,11 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    diagnostic notation extends JSON here by allowing any data item in
    the map key position).
 
+   As EDN is used for truly diagnostic purposes, its implementations MAY
+   support generation and possibly ingestion of EDN for CBOR data items
+   that are well-formed but not valid.  It is RECOMMENDED that an
+   implementation enables such usage only explicitly by an API flag.
+
 
 
 Bormann                    Expires 7 May 2025                   [Page 8]
@@ -450,10 +450,6 @@ Bormann                    Expires 7 May 2025                   [Page 8]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
-   As EDN is used for truly diagnostic purposes, its implementations MAY
-   support generation and possibly ingestion of EDN for CBOR data items
-   that are well-formed but not valid.  It is RECOMMENDED that an
-   implementation enables such usage only explicitly by an API flag.
    Validity of CBOR data items is discussed in Section 5.3 of RFC 8949
    [STD94], with basic validity discussed in Section 5.3.1 of RFC 8949
    [STD94], and tag validity discussed in Section 5.3.2 of RFC 8949
@@ -498,6 +494,10 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
                                  /D, N, S/ 7, /loop-count/ 105]]
 
    or, combining the use of inline and end-of-line comments:
+
+
+
+
 
 
 
