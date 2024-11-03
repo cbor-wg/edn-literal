@@ -34,6 +34,7 @@ normative:
   STD94: cbor
   RFC8742: seq
   STD68: abnf
+  STD63: utf8
   RFC7405: abnfcs
   RFC3339: datetime
   RFC3986: uri
@@ -368,7 +369,7 @@ expressiveness of CBOR and to increase its usability.
 
 EDN borrows the JSON syntax for numbers (integer and
 floating-point, {{numbers}}), certain simple values ({{simple-values}}),
-UTF-8 text
+UTF-8 {{-utf8}} text
 strings, arrays, and maps (maps are called objects in JSON; the
 diagnostic notation extends JSON here by allowing any data item in the
 map key position).
@@ -553,7 +554,7 @@ of numbers in CBOR can be found in the informational document
 ## Strings
 
 CBOR distinguishes two kinds of strings: text strings (the bytes in
-the string constitute UTF-8 text, major type 3), and byte strings
+the string constitute UTF-8 {{-utf8}} text, major type 3), and byte strings
 (CBOR does not further characterize the bytes that constitute the
 string, major type 2).
 
