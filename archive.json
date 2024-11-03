@@ -1,7 +1,7 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-12-07T00:16:26.060140+00:00",
-  "repo": "cabo/edn-literal",
+  "timestamp": "2024-11-03T01:04:42.276503+00:00",
+  "repo": "cbor-wg/edn-literal",
   "labels": [
     {
       "name": "bug",
@@ -24,14 +24,14 @@
       "color": "a2eeef"
     },
     {
-      "name": "help wanted",
-      "description": "Extra attention is needed",
-      "color": "008672"
-    },
-    {
       "name": "good first issue",
       "description": "Good for newcomers",
       "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
     },
     {
       "name": "invalid",
@@ -47,8 +47,3568 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "has-pr",
+      "description": "Has a pull request",
+      "color": "90F236"
+    },
+    {
+      "name": "editorial",
+      "description": "",
+      "color": "2C2641"
+    },
+    {
+      "name": "possibly-leave-to-extension",
+      "description": "",
+      "color": "BCF840"
+    },
+    {
+      "name": "leave-to-future-extension",
+      "description": "",
+      "color": "81AA0F"
     }
   ],
-  "issues": [],
-  "pulls": []
+  "issues": [
+    {
+      "number": 5,
+      "id": "I_kwDOGLBEBs5uMS0s",
+      "title": "Diagnostic notation to support trailing commas",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/5",
+      "state": "CLOSED",
+      "author": "jnz86",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "This is low on any list of priorities, but when working with C, dart, rust, python, etc, trailing commas are allowed and it's handy to have slightly looser rules where no real damage could come from the mistake.\r\n\r\nIf CBOR inherited an inability to accept a trailing comma from JSON, I question the usefulness of it. \r\n\r\nI would think this needs some consideration because it would be making a version incompatibility in existing parsers, but it is something I would like to see happen.",
+      "createdAt": "2023-08-13T19:45:33Z",
+      "updatedAt": "2023-08-24T21:13:13Z",
+      "closedAt": "2023-08-24T21:13:13Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I'd appreciate if we could make this happen -- EDN is often hand-written, and hand-writing these days means having an editor that can copy and adjust lines, and having a trialing comma in a multi-line expression is quite helpful to avoid tedious editing.\r\n\r\n(Plus it makes diffs so much more readable.)",
+          "createdAt": "2023-08-23T07:32:43Z",
+          "updatedAt": "2023-08-23T07:32:43Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOGLBEBs5ubTgd",
+      "title": "Document floating point values vs. integer numbers",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/6",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "EDN implementations use the wide-spread convention to use NR2/NR3 syntax to notate floating point values and only NR1 to notate integer values; RFC 8949 uses this convention in Appendix A without explaining it in its Section 8 \u2014 an omission that needs to be addressed here.",
+      "createdAt": "2023-08-16T07:14:46Z",
+      "updatedAt": "2023-10-01T21:09:54Z",
+      "closedAt": "2023-10-01T21:09:53Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Not sure I understand \"NR2/NR3\" syntax (thought it'd be a term from the [JSON RFC](https://www.rfc-editor.org/rfc/rfc8259) but it's not) -- am I right in mapping this to the concern that any number of `[minus] int` ABNF shape is an integer, and the occurrence of any frac or exp (even 0) makes it a float?\r\n\r\n[edit: If so, it'd be a good addition]",
+          "createdAt": "2023-08-23T14:42:50Z",
+          "updatedAt": "2023-08-23T14:47:36Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In <https://mailarchive.ietf.org/arch/msg/json/8o-MsWsF5FA7ShZg1Q-IZM6sNB0>\r\nI wrote:\r\n\r\n> There actually is a standard that should be referenced: ISO 6093:1985 (*), with its subformats NR1, NR2, and NR3.\r\n> (*) Yes, this standard has not been touched since 1985.  It is still on the books as an effective ISO standard.\r\n\r\nJoe has pointed out that my usage of the terms from 1985 maybe wasn't quite correct.\r\nWhat I wanted to say was indeed: ignoring the initial minus, decimal digits \u2794 integer, decimal digits + dot and/or exponent \u2794 float.  RFC 8610 says this in its Section 2.2.1, but EDN doesn't.",
+          "createdAt": "2023-08-23T14:55:02Z",
+          "updatedAt": "2023-08-23T14:55:02Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in b8de58b",
+          "createdAt": "2023-10-01T21:09:53Z",
+          "updatedAt": "2023-10-01T21:09:53Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOGLBEBs5ubVTY",
+      "title": "Hex floating point",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/7",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "EDN should support hex floating point notation, as in `0x0.1p-2`\r\n\r\nhttps://en.cppreference.com/w/cpp/language/floating_literal\r\n",
+      "createdAt": "2023-08-16T07:20:12Z",
+      "updatedAt": "2023-10-01T21:09:13Z",
+      "closedAt": "2023-10-01T21:09:12Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Small detail I couldn't get from the C++ reference: Is it legal for a hex literal to offer more precision than fits in a float? For Decimal that makes sense because it's not an exact conversion, but would `0x1.000000000000000000000001p0` (insert zeros until the final one is not part of the mantissa of a f64 any more) be accepted by EDN processors?\r\n\r\n[edit: Either way, sounds like a good thing to have]",
+          "createdAt": "2023-08-23T14:47:09Z",
+          "updatedAt": "2023-08-23T14:47:59Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Great question.  If you type 100000000000000000000 into cbor.me, you get:\r\n\r\n~~~\r\nC2                       # tag(2)\r\n   49                    # bytes(9)\r\n      056BC75E2D63100000 # ...\r\n~~~\r\n\r\nMaybe your observation should become part of our Tag 5 project...",
+          "createdAt": "2023-08-23T15:00:29Z",
+          "updatedAt": "2023-08-23T15:00:29Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed in 6f61745",
+          "createdAt": "2023-10-01T21:09:13Z",
+          "updatedAt": "2023-10-01T21:09:13Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOGLBEBs5vB5J2",
+      "title": "Comments containing slashes \u2794 end-of-line comments",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/8",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Given that the box has been opened to collect (E)DN feature requests here, there's one I'd like to propose: Allow slashes in comments.\r\n\r\nOur current comments span from one `/` to the next, so while a comment like `/ see http://example.com for details /` technically works, that is just because luckily there are not odd slashes in the URI. Some examples already contain weird workarounds that substitute slashes in the comment with weird lookalike characters, breaking copy-paste of the URI (`/ See http:\u2044\u2044example.com\u2044 /`).\r\n\r\nOne way of achieving this is to count asterisks immediately following the first slash, and requiring (at least) the same number of asterisks before the trailing slash. Thus, `/ comment /`, `/* See http://example.com/ */` and `/** You can wrap comments in /* slashes */ if needed **/` would all be single closed comments.\r\n\r\nNoteworthy properties of this proposal:\r\n* +: Mostly backward compatible: Documents valid under the old rules are still valid unless they had asterisks immediately around their slashes.\r\n* +: Looks like C comments. If people *did* use asterisk around comments previously, it's likely they did it C style out of habit, thus not breaking things.\r\n* +: Allows nested comments. If you have a section that contains comments and want to comment out the whole section, you just pick one more asterisk than the comments in there use.\r\n* \u2013: Users in the habits of Doxygen might be tripped up, because Doxygen distinguishes regular C comments `/* comment */` from Doxygen comments `/** @directive */` that don't necessarily have the double asterisk on their trailing end. Catering for those habits would mean losing the nesting property, unless we want to start counting comment depths (which would again be unlike what C does).",
+      "createdAt": "2023-08-23T07:48:51Z",
+      "updatedAt": "2023-10-01T21:08:10Z",
+      "closedAt": "2023-10-01T21:08:10Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "You can always double any slash.\r\nJim Schaad liked using backslashes :-)\r\n\r\nOh, and you just volunteered doing the ABNF for the matching asterisks...\r\n(The matching asterisks at the end are easy, as they are context free, but ignoring only up to n-1 asterisks and a slash inside the comment is interesting.)",
+          "createdAt": "2023-08-23T07:56:44Z",
+          "updatedAt": "2023-08-23T07:56:44Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think we are more likely to add line-end comments (whether we start them with `#` and/or `;` and/or even `//`, you can use as many slashes there as you like).",
+          "createdAt": "2023-08-23T07:59:17Z",
+          "updatedAt": "2023-08-23T07:59:17Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Only if I can do the asterisk part with \"regular\" expressions instead of ABNF ;-)\r\n\r\nMore seriously: Introducing trailing comments would solve the issue almost just as well.",
+          "createdAt": "2023-08-23T08:04:59Z",
+          "updatedAt": "2023-08-23T08:04:59Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "OK, so this is \"almost solved\" now by c4aff27",
+          "createdAt": "2023-10-01T21:08:10Z",
+          "updatedAt": "2023-10-01T21:08:10Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOGLBEBs5vSnGB",
+      "title": "Encoding indicators",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/11",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "cabo"
+      ],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "My mail at https://mailarchive.ietf.org/arch/msg/cbor/x9xl2lqqSNBK_wtApzo6H6ak8N4 got a bit lost, moving it here to keep track.\r\n\r\nRephrasing what is in there:\r\n* EDN without EDN (notably also without `<>` embedded CBOR) allows round-tripping from CBOR to DN back to CBOR, even when the CBOR is not ideally (which is also deterministically) encoded, provided the CBOR->DN conversion annotates the explicit encoding indicators (at least where it's not using the size the encoder would use).\r\n* EDN literals can (currently) not be annotated with bit widths, and that can not be fixed trivially.\r\n\r\nActions which I think would be good are:\r\n* State on which EDN literals bit width annotation can be done and on which not. (For example, I expect that for CRIs bit width annotations have no meaningful interpretation, whereas they do for hex or base64 strings).\r\n* If the topic of round-tripping ever comes up, point out that not all EDN expressions allow bit-perfect round-tripping by using simpler literals and encoding indicators.\r\n\r\nLooking at the details of 8949 encoding indicators, I also found that chunked strings can be expressed by using prefixed strings on every single chunk. Does that capability stay limited to the pseudo-EDN-literals h/b32/h32/b64/base64url, or can new literals go in there if they expand to a string? (That question is not actually new ... was `(_ <<1>>, <<2, 3>>)` a valid way to write `(_ h'01', h'0203')` aka `5F4101420203FF`). The most straightforward way here is probably to just allow the pseudo-EDN-literals there and be done with it; it's not like we can't still allow it later (it still isn't an interchange format).",
+      "createdAt": "2023-08-25T14:22:13Z",
+      "updatedAt": "2023-10-12T20:25:20Z",
+      "closedAt": "2023-10-12T20:25:20Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "On the \"streamstrings\": I already updated the byte string branch to \"bstr\" in \u201304 (was sqstr, and that is too narrow).  This syntactically includes app-prefix constructs, but not \"embedded\" -- the easiest fix would be to add a third alternative \"embedded\" to bstr.\r\n\r\nWe don't have much implementation experience with encoding indicators...",
+          "createdAt": "2023-10-02T05:21:31Z",
+          "updatedAt": "2023-10-02T05:21:31Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Uh oh.  I hadn't looked at encoding indicators much for about a decade.\r\n\r\n* We don't seem to have a way to indicate 1+0 encoding (ai = 0..23).  That is a surprising omission.  Of course, with preferred encoding, you would never have to say this as the case would be selected automatically.  Still...\r\n* Arrays and maps are a bit of an exception.  I think the encoding indicator was meant to be coming after the *opening* bracket/brace, but the text requires a bit inference to get there.  So it's `[_0 1]`, not `[1]_0`.",
+          "createdAt": "2023-10-05T14:04:44Z",
+          "updatedAt": "2023-10-05T14:04:44Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "If \"it's too broken, it needs to go\" is your conclusion, I'll be a bit sad, but with me lacking sufficient time to provide fixes right now, that may be an outcome.",
+          "createdAt": "2023-10-05T14:28:30Z",
+          "updatedAt": "2023-10-05T14:28:30Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The \"_\" can be followed by any \\w -- we could simply pull a new convention for 1+0 out of our hats, say, \"__\" or \"_1plus0\" :-)\r\n",
+          "createdAt": "2023-10-05T14:49:32Z",
+          "updatedAt": "2023-10-05T14:50:05Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We need examples for tagged \u2014 1(_3 5)? 1_3(5)? 1(5)_3?\r\nFortunately not for simple() -- that is deterministic",
+          "createdAt": "2023-10-05T15:01:40Z",
+          "updatedAt": "2023-10-05T15:01:40Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "For tagged, the [cbor-diag crate](https://crates.io/crates/cbor-diag-cli) interprets it the existing text to lead to `32_0(\"https://cbor.nemo157.com\")`",
+          "createdAt": "2023-10-05T18:12:46Z",
+          "updatedAt": "2023-10-05T18:12:46Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I copied that and completed the set (e.g., <<1>>_0) in PR #15",
+          "createdAt": "2023-10-06T08:57:09Z",
+          "updatedAt": "2023-10-06T08:57:09Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR #15 is complete on the ABNF side, with considerable latitude given in the ABNF to what values the `*wordchar` in `spec` can take.  I'd like to merge this first, and then:\r\n\r\n* new text should explain what values the `*wordchar` in `spec` can take (empty string for indefinite on array and map, 0 to 3 and the new value, second `_`??, for ai=0..23) and...\r\n* how this applies to application-extensions (essentially: the same way it would apply to their output items, but as an opt-in to be defined in detail by each application-extension, which we then need to do).\r\n\r\n~~* We also should define something like a tag 999 for unimplemented application-extensions, as in 999([\"dt\", \"4711\"]), as proposed in #13.~~ (Now PR #16)\r\n\r\nI don't think we want to have extensive text about round-tripping, but\r\n\r\n* we could mention that additional information is required to create non-basic diagnostic notation (e.g., b64 or application-extensions) is basing that on additional information.  If CDDL is used for that, `~time` does this for dt''; but how to decide '' vs h'' vs b64''?\r\n\r\n* We could also mention that the preferred [sic] way of implementing encoding indicators in cbor-to-diag is to put in encoding indicators only where the encoding is not already preferred encoding.",
+          "createdAt": "2023-10-07T11:34:05Z",
+          "updatedAt": "2023-10-07T16:20:40Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I think that that'd be a good \"preferred way\". Note that for indefinite length encoding, as it's never preferred, it'd mean that it's always rendered explicitly (as `(_ 'foo' 'bar')` or `[_ ...]` etc), and that's good. (For <<>> parts and application literals that contain them and have no described structure for their insides, that may mean that they are not used unless the cbor-to-diag tool is configured to ignore those lengths.)\r\n\r\nOn that additional notation, being ~time is a good indicator (I don't suppose we want DT\"\" to mean that it carries a tag too). For b64 it could be a ~'d tag 21, but I don't know where the CDDL for it would be best described.",
+          "createdAt": "2023-10-09T14:57:17Z",
+          "updatedAt": "2023-10-09T14:57:17Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOGLBEBs5yf8GL",
+      "title": "Define IANA considerations for app-prefix registry",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/12",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "cabo"
+      ],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "",
+      "createdAt": "2023-10-01T21:10:25Z",
+      "updatedAt": "2023-10-08T13:22:37Z",
+      "closedAt": "2023-10-08T13:22:36Z",
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOGLBEBs5y0zJF",
+      "title": "Tag for undecoded-EDN-literal?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/13",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "cabo"
+      ],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "For elisions in CDN (lost track a bit ... where is that?), there was the suggestion to allocate tag 888 so that even incomplete EDN can be expressed in CBOR at least with a tag that the later user will stumble over.\r\n\r\nDoes it make sense to do the same with EDN-literals, eg. `123456([\"dt\", \"2023-01-01\"])`? A diagnostic parser could emit that (at least when `--dont-fail-just-because-you-dont-know-the-application-literal` is given), and it'd be useful when a tool takes CBOR and wants to annotate it before doing the \"dirty\" (less library support) work of diagnostic notation. For example, even though the Python cbor-diag library is really really bare bones (converting bytes into str and vice versa), a tool annotating dates could load the CBOR into Python data structures, find its way through dicts and arrays to the points where it'd see a date to convert to discordian dates, convert it to such a tagged value (`123456([\"ddt\", \"Pungenday, the 57th day of Confusion in the YOLD 3176\"])`), and let the existing diag implementation (that's never heard of this newfangled \"ddt\" even though it of course supports application literals).\r\n\r\nCan be done later as well, but if it sounds like a good idea, why not do it right away.",
+      "createdAt": "2023-10-04T15:07:40Z",
+      "updatedAt": "2023-10-09T09:56:59Z",
+      "closedAt": "2023-10-09T09:56:59Z",
+      "comments": []
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOGLBEBs5zMt7K",
+      "title": "Elision/Ellipsis",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/19",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "https://mailarchive.ietf.org/arch/msg/cbor/fDYNZg1343Q1sfw6iKxOU-BKVuo/\r\n\r\n",
+      "createdAt": "2023-10-09T10:00:45Z",
+      "updatedAt": "2023-10-16T19:18:51Z",
+      "closedAt": "2023-10-16T19:18:50Z",
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOGLBEBs5zoFbb",
+      "title": "Support Appendix G.4 of RFC 8610",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/20",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "i.e., build strings by concatenation\r\n\r\n~~~ cbor-diag\r\n      \"Hello \" \"world\"\r\n      \"Hello\" h'20' \"world\"\r\n      \"\" h'48656c6c6f20776f726c64' \"\"\r\n~~~",
+      "createdAt": "2023-10-12T12:29:03Z",
+      "updatedAt": "2023-10-16T19:22:00Z",
+      "closedAt": "2023-10-16T19:22:00Z",
+      "comments": []
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOGLBEBs5z1rdy",
+      "title": "Immediate application literals for newer tags",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/23",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "This document was overtaken by [RFC9164](https://www.rfc-editor.org/rfc/rfc9164.html).\r\n\r\nShould we have ipv4\"192.168.0.1\" and ipv6\"2001:db8::1\" as application literals for that document, or do we wait for anyone to step up with that in a later document? (I didn't check whether there are any other recent good tags that'd need this).\r\n\r\nAlso, what's the recommendation for those defining such application literals? Should ipv6\"2001:db8::1\" map to `h'20010db800......01'`, or to `54(h'20010db8......01')`? (I'm leaning toward the former, because I'd guess that tag 54 would often be used in `~` form).",
+      "createdAt": "2023-10-14T18:19:42Z",
+      "updatedAt": "2023-10-17T16:43:07Z",
+      "closedAt": "2023-10-17T16:43:07Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> This document was overtaken by [RFC9164](https://www.rfc-editor.org/rfc/rfc9164.html).\r\n> \r\n> Should we have ipv4\"192.168.0.1\" and ipv6\"2001:db8::1\" as application literals for that document, \r\n\r\nWell, it would be ipv4'192.168.0.1' and ipv6'2001:db8::1' (single quotes).\r\n\r\nHmm, why not ip'192.168.0.1' and ip'2001:db8::1'?\r\n\r\n> Also, what's the recommendation for those defining such application literals? Should ipv6\"2001:db8::1\" map to `h'20010db800......01'`, \r\n\r\nThis.\r\n\r\n> or to `54(h'20010db8......01')`? (I'm leaning toward the former, because I'd guess that tag 54 would often be used in `~` form).\r\n\r\nRight.\r\n\r\n",
+          "createdAt": "2023-10-14T23:14:23Z",
+          "updatedAt": "2023-10-14T23:14:23Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Maybe there should be syntax for evoking a tag (could be used for dt'', too).\r\nReduces likelihood of making a mistake when choosing the number.\r\nCan't think of a syntax (~ would be great if we had a tag by default, but I think that would be tail/dog).\r\n",
+          "createdAt": "2023-10-14T23:21:53Z",
+          "updatedAt": "2023-10-14T23:21:53Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "> Well, it would be ipv4'192.168.0.1' and ipv6'2001:db8::1' (single quotes)\r\n\r\nIt's nitpicking, but why? Just as a date is a sequence of ASCII characters, so is a human-readable IP address. (Neither allows any values that'd warrant extending to Unicode, but non-Unicode meaningless high bytes would be even weirder in both). Just because the IP address desugars to a byte sequence should have as little impact as the date's desugaring to an integer (no quotes ;-) ) has -- even more so because the IP address may also desugar into an array (ip\"2000::/3\").\r\n\r\n> Maybe there should be syntax for evoking a tag (could be used for dt'', too).\r\n\r\n`DT\"2023-01-01\"` (with tag)? `dt+\"2023-01-01\"` (with tag)? `dt~\"2023-01-01\"` (without tag, making with-tag the default)? I'm not particularly happy with any of them.",
+          "createdAt": "2023-10-15T15:01:33Z",
+          "updatedAt": "2023-10-15T15:01:33Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I went for upper case; please check the PR...\r\n\r\nAs to the \"why single quotes\"?  I'm just saying what the ABNF says at the moment; app-literals are only defined with single quotes.",
+          "createdAt": "2023-10-15T15:15:41Z",
+          "updatedAt": "2023-10-15T15:15:41Z"
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOGLBEBs6HnCky",
+      "title": "Add brief note that https://www.rfc-editor.org/materials/sourcecode-types.txt has 'cbor-diag' for EDN.",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/31",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-02T10:29:09Z",
+      "updatedAt": "2024-05-18T19:22:37Z",
+      "closedAt": "2024-05-18T19:22:37Z",
+      "comments": []
+    },
+    {
+      "number": 37,
+      "id": "I_kwDOGLBEBs6K6pVQ",
+      "title": "Superfluous `S` in ABNF",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/37",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "There is a trailing `S` in the `seq` ABNF:\r\n\r\n```\r\nseq             = S [item S *(\",\" S item S) OC] S\r\n```\r\nAs far as I understand, if the `[]` is absent, any data that might go into the trailing S would go into the leading S. If it is present and `OC` contains a comma, then any data that might go into the trailing S would go into the OC. Otherwise, it would go into the last `S` of the repeat expression or into the `S` after the first item -- at any rate, no data can wind up in that position.\r\n\r\nIt does no harm, and it might be too late to change the ABNF -- but it should be documented *somewhere*, and this issue is as good as any place for it. Feel free to just close it if it's not going to be changed.",
+      "createdAt": "2024-06-03T09:24:17Z",
+      "updatedAt": "2024-06-27T08:44:04Z",
+      "closedAt": "2024-06-27T08:44:04Z",
+      "comments": []
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOGLBEBs6K7iz_",
+      "title": "Clarify: Long numbers and bignums",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/38",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr",
+        "editorial",
+        "leave-to-future-extension"
+      ],
+      "body": "Implementing EDN, I found no help in the text:\r\n\r\nIf an EDN processor encounters (say) `987654321098765432310`, should it err out or process that into a tag 2 bignum?\r\n\r\nSimilarly, if a floating point exponent exceeds the expressible range, should it produce a tag 5 bigfloat? Should it also produce a bigfloat if there are digits in the decimal representation that would be discarded by float conversion?\r\n\r\n(I was leaning toward \"yes\" for the first question, but that would point towards \"yes\" for the later questions as well, and that becomes increasingly difficult while at the same time becoming increasingly unpredictable).",
+      "createdAt": "2024-06-03T11:12:40Z",
+      "updatedAt": "2024-06-27T08:44:29Z",
+      "closedAt": "2024-06-27T08:44:29Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Reading cbor-cde-02 would indicate the other direction. While not directly interacting with EDN, it does unify tag2/3 into the major type 0/1 integers, while explicitly not making such statements on tag 5.\r\n\r\nQuestions remain on encoding indicators. Does `987654321098765432310_i` become valid, because it is `2(h'358a750438f380f5f6'_i)`, or are encoding indicators just not applicable to larger numbers, as they require the (still legal) alternative form where both lengths can be given (`2_3(h'358a750438f380f5f6'_3)` sounds legal)?",
+          "createdAt": "2024-06-05T13:18:08Z",
+          "updatedAt": "2024-06-05T13:18:08Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I agree that the general direction of CBOR has been to make the threshold between mt0/1 integers and tag2/3 integers smaller.  No such thing happened with mt7 float and tag 4/5.\r\n\r\nRe the encoding indicator: When would you ever want to use a long form for tag 2/3?  This is only really relevant for test vectors, and the `2_3(h'358a750438f380f5f6'_3)` form covers those.\r\nSomeone could register an encoding indicators that simplifies this, if we ever want it.\r\nSo the remaining question is what `987654321098765432310_i` might mean.  This could be for the byte string head.  But we also have leading zero bytes in the byte string.  RFC 8949 says:\r\n\r\n> The preferred serialization of the byte string is to leave out any leading zeroes\r\n\r\nso an encoding indicator could be used to leave space using leading zero bytes.\r\nThis might be used in those \"template in ROM, fill in the blanks\" situations.\r\nExisting encoding indicators don't really fit here, so I'd also leave this to an extension (the unpacked form is available until then).",
+          "createdAt": "2024-06-12T12:20:47Z",
+          "updatedAt": "2024-06-12T12:20:47Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "From today's interim: doing encoding indicators for long numbers would be leave-to-extension, but stating that longnums are supposed to become tag2/3 would be helpful text at this stage already.",
+          "createdAt": "2024-06-12T15:12:38Z",
+          "updatedAt": "2024-06-12T15:12:38Z"
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "I_kwDOGLBEBs6L95zL",
+      "title": "Clarify: NaN representatioin",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/39",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "As part of working on an [implementation](https://codeberg.org/chrysn/cbor-edn), I noted that NaN payloads are not expressible -- a diag2cbor can take `NaN` to mean `F9 7E00`, but if I find `F9 7E01` I can't express this in EDN without losing information.\r\n\r\nI think that's OK because NaN payloads are a niche case, and because there is the extension point of specifying a `nan'7e00'` literal (with the caveat that while most other literals can be turned into a non-application-literal form, this one can't, so EDN libraries may need to support it internally rather than through an extension point). Still would like to confirm that this is an intentional elision.",
+      "createdAt": "2024-06-12T09:19:37Z",
+      "updatedAt": "2024-06-12T12:28:47Z",
+      "closedAt": "2024-06-12T12:28:46Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It is slightly weird that app-string resolvers that implement nan'...' will need to output non-basic EDN, but otherwise I'm fine with leaving this to an app-extension -- I'd rather have a use case in hand for which we design this.\r\n(The syntax clash between `NaN` and `nan'foo'` worries me slightly in case we ever get rid of required commas, but that has to be solved there.)",
+          "createdAt": "2024-06-12T12:25:33Z",
+          "updatedAt": "2024-06-12T12:25:33Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Thanks, then let's close this.\r\n\r\nThe weirdness of producing non-basic EDN is a tad odd, but given that implementers may choose to also treat h, b64 & co as application oriented literals, they may already be familiar with the situation, because other than through those they can't produce non-UTF8 binary strings.",
+          "createdAt": "2024-06-12T12:28:46Z",
+          "updatedAt": "2024-06-12T12:28:46Z"
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "id": "I_kwDOGLBEBs6L_bI3",
+      "title": "ABNF approach: Special casing h'' and b64'' to be single-layer?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/41",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Rohan proposes that:\r\n\r\n> The ABNF have all known app strings parsed in a single pass with the rest of the EDN document\r\n\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/yLhPGvXKC4uBmCEwAb3Kq3ExGGM\r\n\r\n\"All known app strings\" sounds like an extensibility nightmare -- we put in a registry to make this easy to extend.\r\nIt is also much easier to build a mental model where all foo'' constructs are treated the same way.\r\n\r\nMore discussion in:\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/iDsBOW-2nKSPPfiIgGWtAmSVWTw>\r\n",
+      "createdAt": "2024-06-12T12:33:11Z",
+      "updatedAt": "2024-08-21T13:33:26Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "For one data point, I found this construction conveniently usable. In particular, it spares the downstream parser the hassle of dealing with escaped characters, which admittedly are not required anyway in h the existing app strings.\r\n\r\nThere is no good reason to explicitly allow `h'0\\u0030'`, but unless we want to allow concrete app strings to alter the parsing rules (which I'd strongly discourage), that's better than the alternative of special handling per app string.\r\n\r\n[edit: Should probably have gone into mail to the thread.]",
+          "createdAt": "2024-06-12T13:43:45Z",
+          "updatedAt": "2024-06-12T13:44:18Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Note that, unless the intention is to make two-layer implementations non-conforming, a one-layer implementation can be built from the current ABNF.  Munched-up ABNF for this could be recorded on a wiki page or in a reference implementation.",
+          "createdAt": "2024-06-12T16:55:30Z",
+          "updatedAt": "2024-06-12T16:55:30Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I'm not sure I understand the implications of a 1-layer approach correctly:\r\n\r\nCurrently, `h'00 / ' / 11'` is a syntax error, and `h'00 / \\' / 11'` is allowed (and the comment contains no backslash), and `h'00 # foo\\n 11'` is two bytes because the comment terminates. Would a single-pass grammar change anything about that? If so, can a processor still transform `999(\"unknown\", \"a ' b\")` into whichever is the legal form, both if it knows and if it does not know the rules of unknown?",
+          "createdAt": "2024-06-13T19:42:26Z",
+          "updatedAt": "2024-06-13T19:42:26Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The problem here is that it is not that hard to write a single-level grammar that captures *most* of the cases.\r\nIt is harder to do this in a correct way, and I am not aware of ready-made tools that would support this.\r\nReplacing the two-level grammar by an authoritative single-level grammar would create risk that I think we do not need.\r\nI'd rather take up the formulation of a single-level grammar as a desirable implementation project (destination: a github repo or another draft) than slow down this specification while trying to manage that risk.\r\n\r\n",
+          "createdAt": "2024-06-13T20:05:42Z",
+          "updatedAt": "2024-06-13T20:05:42Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> Rohan proposes that:\r\n\r\nFYI, this is proposed in #49 ",
+          "createdAt": "2024-07-03T23:32:30Z",
+          "updatedAt": "2024-07-03T23:32:30Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> I'm not sure I understand the implications of a 1-layer approach correctly:\r\n> \r\n> Currently, `h'00 / ' / 11'` is a syntax error, and `h'00 / \\' / 11'` is allowed (and the comment contains no backslash), and `h'00 # foo\\n 11'` is two bytes because the comment terminates. Would a single-pass grammar change anything about that? \r\n\r\nAs the ABNF has been written it does not. I recently added a commit after Joe brought up that bare single quotes in comments had not been allowed even outside of single-quoted strings. That has been fixed.\r\n\r\n>If so, can a processor still transform `999(\"unknown\", \"a ' b\")` into whichever is the legal form, both if it knows and if it does not know the rules of unknown?\r\n\r\nDepending on the rules for quoting a 999-tagged value, an implementation could still turn various tagged CBOR back into app-strings. So I don't think your question is quite correct. The CBOR tstr \r\n78 22 # text(34)\r\n74657374696E67202274657374225C277465737427202F746573742F202374657374\r\nis literally the string `testing \"test\"\\'test' /test/ #test` to encode that in EDN as a double quoted string you would need to write:\r\n`999(\"unknown\",\"testing \\\"test\\\"\\\\'test' /test/ #test\")` or\r\n`unknown'testing \"test\"\\\\\\'test\\' /test/ #test'`",
+          "createdAt": "2024-08-21T13:24:30Z",
+          "updatedAt": "2024-08-21T13:24:30Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> The problem here is that it is not that hard to write a single-level grammar that captures _most_ of the cases. It is harder to do this in a correct way, and I am not aware of ready-made tools that would support this. Replacing the two-level grammar by an authoritative single-level grammar would create risk that I think we do not need. I'd rather take up the formulation of a single-level grammar as a desirable implementation project (destination: a github repo or another draft) than slow down this specification while trying to manage that risk.\r\n\r\nYou are saying that the convenience of the writer of extension specs of EDN is more important that the usability of the grammar for implementers. I think this is a terrible trade off. \r\n\r\nI also happen to disagree with your assessment. There are currently only 2 more proposed app strings that I am aware of (e and ref). Neither had a proposed inner ABNF until I took 15 minutes to write one for the single-layer ABNF in [edn-e-ref issue #1](https://github.com/cbor-wg/edn-e-ref/issues/1). The effort required to make this compatible was to add a single boilerplate `known-app-str =/ e / ref` line and to take the working ABNF for the inside and remove bare single quotes from the allowable characters. The bulk of the work was actually fixing the ABNF to remove unused productions, which would have been required regardless how many layers of ABNF were required. \r\n\r\nIn summary, there is currently exactly one data point available and it contradicts your argument.",
+          "createdAt": "2024-08-21T13:33:25Z",
+          "updatedAt": "2024-08-21T13:33:25Z"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "I_kwDOGLBEBs6L_gKN",
+      "title": "Major change: modify RFC 8610 G.4 (concatenated strings) with an explicit concatenation operator (`+`)?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/42",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement",
+        "has-pr"
+      ],
+      "body": "When we discussed the general use of EDN for human input, one desire that came up was to get rid of required commas, maybe the way CDDL does.\r\n\r\nThis is generally doable (not without a little pain).\r\nHowever, it is incompatible with RFC 8610 G.4 (concatenated strings).\r\n\r\nCan we get rid of that feature?\r\n(It is not implemented in cbor.me, so I'm too biased to answer this.)\r\nOf course, we'd do this to make commas optional right away as well.\r\n\r\nIf yes, what do we put in instead?\r\n`\"abcd\" +\r\n\"efgh\"`\r\nmaybe?\r\n(Or any other recognizable \"cat\" operator.)\r\n\r\n\r\nAny other surgery needed?\r\n\r\n`foo 'bar'` might become distinct from `foo'bar'` at least for the barewords we support:\r\n\r\n```\r\n%s\"Infinity\"\r\n%s\"NaN\"\r\n%s\"false\"\r\n%s\"true\"\r\n%s\"null\"\r\n%s\"undefined\"\r\n%s\"simple(\" S item S \")\"\r\n```\r\n\r\nOr maybe we just actually reserve those and make them unavailable for `app-prefix`.\r\n\r\nAh, the tree of temptation...",
+      "createdAt": "2024-06-12T12:43:21Z",
+      "updatedAt": "2024-07-03T20:48:41Z",
+      "closedAt": "2024-07-03T20:48:41Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "If I disregard any chair hat and procedural considerations: Yes please, that brings things closer to CDDL; it's not like people *expect* C style concatenation, and it's not the most widely used/supported feature.\r\n\r\n(I might even throw in a | or || into the concatenation operator pool, with a nod to cryptography people using it).\r\n\r\nMarking the barewords as reserved for app literals sounds doable (especially since the floaty ones are mixed case and thus ineligible anyway; sadly we can't capitalize the others without losing JSON interoperability).\r\n\r\nIf you decide to make a PR out of that, I think I can crate a branch of [my implementation](https://codeberg.org/chrysn/cbor-edn) that follows.\r\n\r\n---\r\n\r\nThen there is the aspect of roadmap -- sure this puts us back into the WGLC-required phase. I'd consider it worth it, but that's eventually for the ADs (for the push back into the WG) and the WG to decide.",
+          "createdAt": "2024-06-12T15:11:31Z",
+          "updatedAt": "2024-06-12T15:11:31Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Before going all-space-is-space, is there any merit to the middle ground where we do introduce a concatenation operator. That way, a grammar update could still later make the commas optional without hitting this particular obstacle, and non-validating consumers can use a comma-free grammar.\r\n\r\nAs long as we do have mandatory commas, this also simplifies implementations that handle comments, because rather than having (for some `t`) `S t S t S` and `S t S \",\" S t S` chains we only have `S t S delim S t S` style chains (with the `delim` from `[,+]` or whatever you pick as concatenation operator).",
+          "createdAt": "2024-06-14T12:12:02Z",
+          "updatedAt": "2024-06-14T12:12:02Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not sure I understand your approach, but I have one observation:  There needs to be a operator precedence between \",\" and \"+\" (or whatever character we use for that), at least if we want the AST to be useful (which helps implementers immensely).",
+          "createdAt": "2024-06-14T12:41:40Z",
+          "updatedAt": "2024-06-14T12:41:40Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\r\n\r\nI made a rough prototype of edn-abnf with explicit concatenation (and optional commas everywhere).\r\nYou can see it in the edn-abnf PoC.  Install the ec variant with:\r\n\r\n    gem install edn-abnf-ec\r\n\r\n(ec stands for explicit concatenation).\r\n\r\nYou now can compare the output of edn-abnf-ec against that of (unchanged) edn-abnf\r\n\r\nThe five changes (four to allow optional comma (OC), one for ec) can be seen here:\r\n\r\nhttps://github.com/cabo/edn-abnf/pull/1/files#diff-bc1c8602a\r\n\r\n(There are some intermediate compilation results in the repo, these result from the changes in the actual attributed grammar source file .abnftt.)\r\n\r\n\r\n# Which concatenation operator?\r\n\r\nI chose `+` as a separator.\r\nThis has a slightly weird interaction with the leading \"+\" we allow in numbers:\r\n\r\n$ echo \"'a''b'+'c'+1'd'1(0)\" | edn-abnf-ec -tdiag - | diag2diag.rb -et\r\n'a', 'bc', 1, 'd', 1(0)\r\n\r\n(You would normally write this with spaces to make it readable, like in the output; this would make `'a' + 'b'` stand out from `+1`.)\r\n\r\n# Testing\r\n\r\nI did not test this a lot yet.  Against a corpus of examples in RFCs and I-Ds, I find:\r\n\r\n* The examples that show concatenation in the edn-literals draft of course no longer work.\r\n  Note that concatenation is now also explicit for ellipses, so\r\n\r\n      \"Herewith I buy\" ... \"gned: Alice & Bob\"\r\n\r\n  needs to become\r\n\r\n      \"Herewith I buy\" + ... + \"gned: Alice & Bob\"\r\n\r\n  Wondering if we want to do something with the syntax of ellipses, but probably the above is good enough.\r\n\r\n\r\n* Noise from examples that were broken and now no longer are: :-)\r\n\r\n\r\n    * Examples that just list multiple data items now work (parsed as a sequence)\r\n    i-d/draft-ietf-core-href-13/cbor-diag/extended-cri-accommodating--b.cbor-diag\r\n\r\n    * Same for some other examples that are missing commas\r\n    i-d/draft-ietf-cose-merkle-tree-proofs-02/cbor-diag/consistency-proof-signature-c.cbor-diag\r\n\r\n* Noise from examples that already are broken and stay so:\r\n\r\n    * examples that try to have single slashes in in-line comments break with different error messages\r\n    rfc/rfc9173/cbor-diag/example-1-bib-abstract-secu.cbor-diag\r\n    rfc/rfc9173/cbor-diag/example-4-bib-abstract-secu.cbor-diag\r\n\r\n    * same with non-EDN in examples labeled as cbor-diag\r\n    rfc/rfc9200/cbor-diag/as-request-creation-hints-p.cbor-diag\r\n    rfc/rfc9202/cbor-diag/access-token-response-examp.cbor-diag\r\n\r\n    * same for EDN of a map just missing outer braces\r\n    rfc/rfc9202/cbor-diag/access-token-without-keying.cbor-diag\r\n\r\n# Comment about string concatenation from SauerkrautLM:\r\n\r\nHere are some common string concatenation operators in various programming languages:\r\n\r\n* . (dot) in Perl, PHP, and some other languages\r\n* & (ampersand) in Visual Basic (VB) and some other languages\r\n* ~ (tilde) in some languages, such as PowerShell\r\n* || (double pipe) in some languages, such as Oracle SQL\r\n* .. (double dot) in some languages, such as Lua\r\n* ^ (caret) in some languages, such as Pascal\r\n\r\nNote that these operators might not be as widely used as the + (plus) operator for string concatenation, but they are still valid and commonly used in their respective languages.\r\n\r\nPlease vote now ;-)\r\n\r\n",
+          "createdAt": "2024-06-15T13:14:57Z",
+          "updatedAt": "2024-06-15T13:14:57Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I must have stepped out for this part...\r\n\r\nI don't love this:\r\n\r\n> \"Herewith I buy\" + ... + \"gned: Alice & Bob\"\r\n\r\nI'm not sure if its possible, but could `...` have implicit concatenation for generic partials defined?\r\n\r\nFor example \r\n\r\n- `\"Herewith I buy\" ... \"gned: Alice & Bob\"` implicit string concatenation with a string elision.\r\n- `[ 0, 1 ... 8, 9]` implicit list concatenation with a list elision.\r\n- `{ 1 : 2, 3 : 4 ... 8 : 9 }`, implicit map concatenation with a map key value elision.\r\n\r\nBut then explicit concatenation for none elided instances?\r\n\r\n- `\"My name\" + \"is Alice\"` == `\"My name is Alice\"`\r\n- `[ 0, 1 ] + [ 2, 3 ]` == `[ 0, 1, 2, 3 ]`\r\n- `{ 1 : 2, 3 : 4 }  + { 8 : 9 }` == `{ 1 : 2, 3 : 4, 8 : 9 }`\r\n\r\nI can imagine choosing `..` as concatenation operator would be a nightmare given the `...` is used for elision, but just for fun:\r\n\r\n```\r\n\"Herewith I buy\" .. ... .. \"gned: Alice & Bob\"\r\n```\r\n\r\n",
+          "createdAt": "2024-06-15T14:24:06Z",
+          "updatedAt": "2024-06-15T14:24:06Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> * `\"Herewith I buy\" ... \"gned: Alice & Bob\"` implicit string concatenation with a string elision.\r\n> * `[ 0, 1 ... 8, 9]` implicit list concatenation with a list elision.\r\n\r\nWe could give \"...\" some additional syntactic sugar.\r\nThe array example already works, anyway:\r\n\r\n```\r\n$ echo '[ 0, 1 ... 8, 9]' | edn-abnf-ec -tdiag -\r\n[0, 1, 888(null), 8, 9]\r\n```\r\nHowever, mixing the syntaxes gets complicated quickly, e.g., with\r\n`[\"a\", \"f\"  ... \"m\", \"q\"]`\r\n\r\n```\r\n$ echo '[ \"a\", \"f\" ... \"m\", \"q\"]' | edn-abnf-ec -tdiag -\r\n[\"a\", \"f\", 888(null), \"m\", \"q\"]\r\n```\r\n\r\nToday, the ellipsis attaches to the string:\r\n\r\n```\r\n$ echo '[ \"a\", \"f\" ... \"m\", \"q\"]' | edn-abnf -tdiag -\r\n[\"a\", 888([\"f\", 888(null), \"m\"]), \"q\"]\r\n```\r\n\r\nWhich of these is \"right\"?",
+          "createdAt": "2024-06-15T14:45:28Z",
+          "updatedAt": "2024-06-15T14:45:28Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm biased by my experience with the \"spread operator\" ... https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax\r\n\r\nAnd its support for typescript partials ... https://www.executeprogram.com/courses/everyday-typescript/lessons/partial-in-practice\r\n\r\n",
+          "createdAt": "2024-06-15T14:52:38Z",
+          "updatedAt": "2024-06-15T14:52:38Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I'm biased by my experience with the \"spread operator\"\r\n\r\nRight, Ruby has had these for a while as `*` (arrays and positional parameter lists) and `**` (hashes and keyword parameter lists), and of course Scheme has had unquote-splicing `,@` since the dark ages.\r\n\r\nBut these always have a variable-like thing that provides (or receives) the spread.\r\nMaybe we need to separate splicing ellipses from free-standing ones, just like Scheme does.\r\nBut then, neither unquote (`,` in Scheme) nor unquote-splicing (`,@`) attach to neighboring syntactic features.\r\nAnd we don't really want to say how this resolves.\r\n\r\nTo me, this is mainly about preserving the beauty of \"Herewith I buy\" ... \"gned: Alice & Bob\"; this doesn't really generalize (or already does, as with arrays and to a limited extent maps).\r\n",
+          "createdAt": "2024-06-15T15:08:27Z",
+          "updatedAt": "2024-06-15T15:08:27Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "One data point: [Section 3.5 of RFC9529](https://datatracker.ietf.org/doc/html/rfc9529#name-message_3-2) pioneered the comma-free version of EDN in the line that says `5c47bf16df96660a41298cb4307f7eb6' /x/` and is followed by the y coordinate without any comma ;-)\r\n(Holding off on reporting that as an erratum there because while the then-current version of EDN had commas, it was not really formal)",
+          "createdAt": "2024-06-23T21:10:58Z",
+          "updatedAt": "2024-06-23T21:10:58Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@chrysn this issue seems to be about string concatenation, but your comment is about optional commas.\r\n\r\nIs there some implication or interaction you are suggesting? I don't follow.\r\n\r\nEdit: your point is obvious, now that I have had a single sip of coffee.\r\n",
+          "createdAt": "2024-06-24T13:23:13Z",
+          "updatedAt": "2024-06-24T13:43:02Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Making commas optional is the motivating driver for doing string concatenation different (Carsten pointed this out in the top-most item): As long as we have implicit concatenation, commas can't be made optional.\r\n\r\nMy impression of this issue is that if we really go that way this late in the process, then the commas would become optional in a second change in the same PR.",
+          "createdAt": "2024-06-24T13:27:21Z",
+          "updatedAt": "2024-06-24T13:27:21Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> > * `\"Herewith I buy\" ... \"gned: Alice & Bob\"` implicit string concatenation with a string elision.\r\n> > * `[ 0, 1 ... 8, 9]` implicit list concatenation with a list elision.\r\n> \r\n> We could give \"...\" some additional syntactic sugar. The array example already works, anyway:\r\n\r\nI don't think we want to be making the rules for elision more complicated. Another option is to make elision only work inside `h''` and `b64''`.\r\n\r\n`\"Herewith I buy\" + h'...' + \"gned: Alice & Bob\"`\r\n\r\nAlso, I want to point out that \"...\" is a map key for selective disclosure JWTs and possibly for selective disclosure CWTs as well. That could make misreading really ugly.",
+          "createdAt": "2024-06-24T13:49:07Z",
+          "updatedAt": "2024-06-24T13:51:05Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> My impression of this issue is that if we really go that way this late in the process, then the commas would become optional in a second change in the same PR.\r\n\r\nWell, the change is near trivial.\r\n\r\nOf the five small changes in https://github.com/cabo/edn-abnf/pull/1/files#diff-bc1c860\r\n\r\n* all but the second one simply make the comma optional (replace \",\" S by OC), so these would be in your second commit\r\n* the second one introduces the \"+\" operator, i.e., the first commit.\r\n\r\n(The attributed grammar in edngrammar.abnftt needs one more change, which is about picking up the right subtree for AST building after inserting elements that need to be counted -- my abnftt grammar does not currently have labels.)\r\n",
+          "createdAt": "2024-06-24T14:01:41Z",
+          "updatedAt": "2024-06-24T14:01:41Z"
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOGLBEBs6L_mqK",
+      "title": "tag 999 error handling guidance needed (opsdir review)",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/43",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "Archived-At: <https://mailarchive.ietf.org/arch/msg/last-call/AF4-C6Qibc_qg8A8BOoeV52RAEQ>\r\n\r\nThe use of 999 is already marked as exceptional in 3.1:\r\nhttps://www.ietf.org/archive/id/draft-ietf-cbor-edn-literals-09.html#section-3.1-2\r\n\r\nMaybe we indeed want to add some language that avoids a situation where tag 999 items start to pollute into tools that are not prepared to handle them.\r\n",
+      "createdAt": "2024-06-12T12:54:33Z",
+      "updatedAt": "2024-06-27T08:45:25Z",
+      "closedAt": "2024-06-27T08:45:25Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "My kneejerk reaction is that this is coming from not being familiar with tags -- handling *any* unknown tag is usually a stop-and-fail on the consumer side (maybe not at parsing time when building a DOM-like structure, but then at traversing time) unless working on a very general level (at which 999 may or may not be understood).\r\n\r\nFrom that, a sentence to add would start with \"As with any other tag a consumer is not expecing. \u2026\".",
+          "createdAt": "2024-06-12T13:39:46Z",
+          "updatedAt": "2024-06-12T13:39:46Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> My kneejerk reaction is that this is coming from not being familiar with tags -- handling any unknown tag is usually a stop-and-fail on the consumer side (maybe not at parsing time when building a DOM-like structure, but then at traversing time) unless working on a very general level (at which 999 may or may not be understood).\r\n\r\nWhile that may be true, I do feel that tools may want to handle 888 and 999 specially even before they bump up in an application\u2019s tag processing.  This could be worth a sentence.\r\n\r\nE.g., tools like cbor-diag might provide flags that say \u201cellipsis expected\u201d or \u201cunknown application prefixes expected\u201d, and throw errors (or warnings) if these occur without such a pre-warning.\r\n\r\nGr\u00fc\u00dfe, Carsten\r\n\r\n",
+          "createdAt": "2024-06-12T14:02:27Z",
+          "updatedAt": "2024-06-12T14:02:27Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "At least the way I'm writing it, the EDN tool's main way to pass on data (when not doing manipulations on EDN level) is to encode it to CBOR, and that encoding will fail unless there is an explicit preprocessing step that turns ellipses into 888 etc. Stating clearly that EDN tools are not supposed to emit 888/999 just because they are fed ellipses/unknown-literals is what I thought was in there already, but at any rate would be a welcome statement. (It's a bit of extra work when the EDN tool internally uses 888/999, but that I'd only expect of edn-cbor converters and not of EDN editing tools, and the converters could also just fail processing in presence of those unless there is a switch).",
+          "createdAt": "2024-06-12T15:17:06Z",
+          "updatedAt": "2024-06-12T15:17:06Z"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "I_kwDOGLBEBs6L_pJE",
+      "title": "Security considerations of adding extensions (secdir review)",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/44",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "Archived-At: <https://mailarchive.ietf.org/arch/msg/cbor/PQmYkzHYKJtWgljWqhhg0G4Cyhk>\r\n\r\nClearly, an extension can be architected to have security implications ([exhibit a](https://www.ietf.org/archive/id/draft-bormann-cbor-e-ref-00.html#name-security-considerations)), so this is a good point.\r\n",
+      "createdAt": "2024-06-12T12:59:17Z",
+      "updatedAt": "2024-06-27T08:46:19Z",
+      "closedAt": "2024-06-27T08:46:19Z",
+      "comments": []
+    },
+    {
+      "number": 45,
+      "id": "I_kwDOGLBEBs6L_qzr",
+      "title": "Better introduce existing and new encoding indicators (genart review)",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/45",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-pr",
+        "editorial"
+      ],
+      "body": "Archived-At: <https://mailarchive.ietf.org/arch/msg/last-call/JZxTR3QabJhit2j2zKcD3RmW2WA>\r\n\r\nCopying this here:\r\n\r\n>  It would be helpful if section 4.2 (IANA Considerations creating the\r\n   Encoding Indications registry) said it was recording the assignments made\r\n   in RFC 8949 section 8.1, and adding the _i indication.  It would also be\r\n   helpful if that sentence noted that _i is defined in the ABNF appendix, as\r\n   otherwise the reader is left going \"what is this and where did it come\r\n   from?\"",
+      "createdAt": "2024-06-12T13:02:30Z",
+      "updatedAt": "2024-06-27T08:44:54Z",
+      "closedAt": "2024-06-27T08:44:54Z",
+      "comments": []
+    },
+    {
+      "number": 51,
+      "id": "I_kwDOGLBEBs6Nltjm",
+      "title": "Adapt title?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/51",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "Wasn't there a missed comment from a reviewer on the title being a bit dated given what the document does?\r\n\r\n(IMD pointed that out in today's interim again)",
+      "createdAt": "2024-06-26T14:09:12Z",
+      "updatedAt": "2024-07-03T19:49:20Z",
+      "closedAt": "2024-07-03T19:49:20Z",
+      "comments": []
+    },
+    {
+      "number": 52,
+      "id": "I_kwDOGLBEBs6NmMra",
+      "title": "Normative appendix in non-normative document",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/52",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "This issue was brought up in [today's interim](https://datatracker.ietf.org/meeting/interim-2024-cbor-11/session/cbor), with a note to have another look at it:\r\n\r\nThis document is an informative document (on grounds of not being an interchange format, and thus not having the strict versioning and no-breakage requirements CBOR itself has). Still, the appendix states that it is normative.\r\n\r\nA phrasing that was used in the meeting was (roughly, and composing two statements)( \"For users who choose this format, this ABNF normatively describes valid data items. There is no requirement to use exactly this ABNF rule set: other ABNF rules or grammars can express the same validity constraints.\"",
+      "createdAt": "2024-06-26T15:01:07Z",
+      "updatedAt": "2024-07-04T18:08:24Z",
+      "closedAt": "2024-07-04T18:08:24Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Dividing an informational document into normative and informative parts is OK if the document defines a protocol.\r\n\r\nEDN definitely is a protocol, so I think there is no contradiction here at all.\r\n\r\n(There are lots of specifications that are informational; suddenly no longer being able to identify informative and normative parts of such a specification would be a major regression.)",
+          "createdAt": "2024-06-26T15:42:58Z",
+          "updatedAt": "2024-06-26T15:43:17Z"
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "id": "I_kwDOGLBEBs6QT5_m",
+      "title": "Naming ambiguity with Extensible Data Notation",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/57",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "There exists a format described at https://github.com/edn-format/edn that uses the same TLA (different pronunciation, eed-n vs. ee-dee-en, but that doesn't help with search engines) and that has a somewhat similar information model.\r\n\r\nI'm having a hard time assessing how actively that other EDN is being used \u2013 the spec last changed 11 years ago, and many Rust implementation crates are deprecated, but neither is a conclusive indicator for the format being dead (the former can be b/c it is stable, the latter can be b/c it has been around for so long that the first crates just became obsolete), and [a fedi chat](https://chaos.social/@jgomo3@mastodon.social/112776523758943834) indicated it's a big thing around Clojure.\r\n\r\nIt's really late to change the name, and had it not been for a toot I picked up by chance, it would have been missed \u2013 the ecosystems are just quite far apart, and there's only so-and-so-many three-letter acronyms. So I'd say that it's probably OK to stick with the name, especially given that disambiguation as \"CBOR EDN\" is easy. Nonetheless, I'd like to doublecheck that with @cabo, @OR13 and the CBOR group, to ensure it's an informed decision.",
+      "createdAt": "2024-07-21T00:11:56Z",
+      "updatedAt": "2024-07-21T17:47:05Z",
+      "closedAt": "2024-07-21T17:47:05Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "There was fast and decisive feedback in the thread at https://mailarchive.ietf.org/arch/msg/cbor/DuJl5AH3_y9lvr2S_Wq3PQ-Ku1w -- closing this as \"we discussed it, stick with EDN, and call it CBOR EDN when there is danger of confusion\"",
+          "createdAt": "2024-07-21T17:47:03Z",
+          "updatedAt": "2024-07-21T17:47:03Z"
+        }
+      ]
+    },
+    {
+      "number": 62,
+      "id": "I_kwDOGLBEBs6TcgfT",
+      "title": "Include IPv6 zone IDs in 'IP' BNF?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/62",
+      "state": "OPEN",
+      "author": "rohanmahy",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC6874 extends IP-literal URIs to support IPv6 zone IDs. the 'IP' app-string defines a bare address with an optional subnet mask (app-string-ip as IPaddress plus an optional slash and mask). IPaddress includes a regular IPv4 or IPv6 address but does not include IPv6 addresses with a zone ID:\r\n\r\n`fe80::bd0f:a8bc:6480:2389%en1`\r\n\r\nwhile there is no direct representation of a zone ID for a lower case 'ip', the IPv6 tagged array (tag 54) could be extended to include the zone ID with 'IP':\r\n\r\n`54([128,h'fe80 0000 0000 0000 bd0f a8bc 6480 238b', \"en1\"])\r\n\r\nIf we don't want 'IP' to support zone IDs I think we should explicitly mention that in the draft.",
+      "createdAt": "2024-08-19T16:13:46Z",
+      "updatedAt": "2024-08-23T16:44:53Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "RFC 9164 (tags 54 and 52) supports zone-IDs in the Interface format (section 3.1.3) only.\r\nI'm not sure the 3986/6874 combo is good guidance for how Interface format IP addresses should be represented.\r\n\r\nSection 2.2 already says:\r\n\r\n~~~\r\n\r\n   Note that there is no direct representation of an address combined\r\n   with a prefix length; this can be represented as\r\n   52([ip'192.0.2.42',24]), if needed.\r\n~~~\r\n\r\nIn the tradition of messing up everything with zone identifiers, the CDDL for    ip-zone-identifier   in RFC 9164 is not consistent with the example in Section 3.2.\r\n\r\nI'd rather stay out of the zone identifier quicksand until it settles.\r\n",
+          "createdAt": "2024-08-22T08:36:02Z",
+          "updatedAt": "2024-08-22T08:36:02Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "Hi, proposed a change to PR#63 that addresses my concern:\r\n\r\n\"If we don't want 'IP' to support zone IDs I think we should explicitly mention that in the draft.\"",
+          "createdAt": "2024-08-22T13:54:41Z",
+          "updatedAt": "2024-08-22T13:54:41Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(This was auto-closed as a result of merging #63 as a basis for an editorial attempt.)\r\nAs the discussion is not yet completed (https://github.com/cbor-wg/edn-literal/pull/63#discussion_r1727104056), this issue is reopened.\r\n",
+          "createdAt": "2024-08-23T16:35:58Z",
+          "updatedAt": "2024-08-23T16:35:58Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "See also the thread under\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/oTnpnDt-Rl4K51L-OeLJ2LgEIDQ>\r\n",
+          "createdAt": "2024-08-23T16:44:52Z",
+          "updatedAt": "2024-08-23T16:44:52Z"
+        }
+      ]
+    },
+    {
+      "number": 66,
+      "id": "I_kwDOGLBEBs6UOOHs",
+      "title": "Trim down abstract to a minimum?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/66",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> I think a lot of the material in the Abstract is more appropriate in the Introduction. For the Abstract, I propose the following radically shorter text:\r\n>\r\n> \"The Compact Binary Object Representation (CBOR) specification includes an informal description of a diagnostic notation, which was augmented over time and is now know as Extended Diagnostic Notation (EDN). This document consolidates previous descriptions of EDN into a formal specification, preserves backwards compatibility with most instance documents, adds requested features which are already implemented, and introduces a limited extensibility mechanism.\"\r\n\r\n_Originally posted by @rohanmahy in https://github.com/cbor-wg/edn-literal/issues/65#issuecomment-2308897484_\r\n            ",
+      "createdAt": "2024-08-26T12:33:30Z",
+      "updatedAt": "2024-08-26T12:35:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOGLBEBs6UOO4-",
+      "title": "Restructure introduction?",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/67",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> Then I think the Introduction would be best split into the material that explains the goals of EDN, how it is related to CBOR, where it is used, that JSON is a strict subset, and summarizes the features in the current incarnation. I would put the \"how we got here\" material into an \"Historical Background\" subsection of the Introduction.\r\n\r\n_Originally posted by @rohanmahy in https://github.com/cbor-wg/edn-literal/issues/65#issuecomment-2308897484_\r\n            ",
+      "createdAt": "2024-08-26T12:34:51Z",
+      "updatedAt": "2024-08-26T12:34:51Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOGLBEBs5OxLC8",
+      "title": "Define file extension .diag",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/1",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-04-20T13:28:11Z",
+      "updatedAt": "2023-07-10T11:18:19Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "35c676ebfb408123eeec143a500f7f586b923c8e",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "file-extension",
+      "headRefOid": "841b39c582c9340f29d26cb04859a1d121e9ea17",
+      "closedAt": "2023-06-14T15:43:19Z",
+      "mergedAt": "2023-06-14T15:43:19Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "8e64adcb36dbaf52e42e5d4183e27cf32f2b8a59"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOGLBEBs5UjiH4",
+      "title": "Abnf",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/2",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add ABNF for diagnostic notation.\r\n",
+      "createdAt": "2023-07-03T19:46:59Z",
+      "updatedAt": "2023-07-10T11:17:50Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "a5d58dacebccbfe57d27f4befa8a0d63947f526b",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "abnf",
+      "headRefOid": "62892365f8717917b198af6d0593fa9b05248d07",
+      "closedAt": "2023-07-10T11:17:44Z",
+      "mergedAt": "2023-07-10T11:17:44Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d072dcd33a3e9ff53846245a05bcb363122a139b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOGLBEBs5WJN5-",
+      "title": "Add EDN vs. CDDL, some terminology",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/3",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-22T08:46:47Z",
+      "updatedAt": "2023-07-23T12:50:05Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "b37072768862aeae6baa33b0b30a20cd308a291c",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "edncddl",
+      "headRefOid": "874d4eff8e3647d316d052f6ce444100553df61d",
+      "closedAt": "2023-07-23T09:32:36Z",
+      "mergedAt": "2023-07-23T09:32:36Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "03097b64f1d927e255706d291423b0db271929db"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOGLBEBs5WO0Ly",
+      "title": "Don't prevent blank space between \"==\" in base64",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/4",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-24T13:20:17Z",
+      "updatedAt": "2024-05-17T07:47:04Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "03097b64f1d927e255706d291423b0db271929db",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "pad-space",
+      "headRefOid": "4d80310d82085f4b64528617e51eb97baaae68d4",
+      "closedAt": "2023-09-04T15:49:39Z",
+      "mergedAt": "2023-09-04T15:49:39Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "fe0e6d3bddd8fb7f54fab4a047d9a663d60ae5a2"
+      },
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(This probably can be golfed a bit, hence just a PR for now.)\r\n",
+          "createdAt": "2023-07-24T13:23:25Z",
+          "updatedAt": "2023-07-24T13:23:25Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOGLBEBs5Ykcw8",
+      "title": "fix: Actually exclude the slash from non-slash",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/9",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-08-23T08:07:00Z",
+      "updatedAt": "2024-05-17T07:47:03Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "03097b64f1d927e255706d291423b0db271929db",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "fix-non-slash",
+      "headRefOid": "4d22f8c1d3ac5dec428626c3afa3ebf1869af50d",
+      "closedAt": "2023-08-24T21:16:59Z",
+      "mergedAt": "2023-08-24T21:16:59Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "986ca0c330f5d1f006ef4587742364c5f0e49f77"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOGLBEBs5YkiB1",
+      "title": "Allow trailing commas in all comma-separated lists",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/10",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "fix #5 ",
+      "createdAt": "2023-08-23T08:20:13Z",
+      "updatedAt": "2023-08-24T21:15:54Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "03097b64f1d927e255706d291423b0db271929db",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "optional-trailing-comma",
+      "headRefOid": "61748e1e39925ccca29dda3ed68acb7a69882e2c",
+      "closedAt": "2023-08-24T21:13:12Z",
+      "mergedAt": "2023-08-24T21:13:12Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a08a99723c5fdec75ebeb05d02416ae9b4b2a8f8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOGLBEBs5b_pal",
+      "title": "close #12: Complete IANA considerations for Application-extension Identifiers Registry",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/14",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As per discussion at the CBOR interim meeting 2023-10-04",
+      "createdAt": "2023-10-05T10:49:54Z",
+      "updatedAt": "2024-05-17T07:47:01Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "aad7ab3fe5b73339d6ed06f501d1f4dbfa55c48c",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "ianacons",
+      "headRefOid": "d88f827f4bff05decc6590a5680b0986823224fe",
+      "closedAt": "2023-10-08T13:22:35Z",
+      "mergedAt": "2023-10-08T13:22:35Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f647a6d41d9b322ea2e0d985abb35a298f981040"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOGLBEBs5cFYhB",
+      "title": "Address part of #11: Fully embrace RFC 8949 encoding indicator syntax",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/15",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Remove spurious spaces in front of them\r\n* Allow them behind all strings and numbers\r\n* Allow then right after the tag number\r\n* Add embedded to the bstr choice (So now also allow them in streamstring)\r\n\r\nEncoding Indicator within streamstring addressed in commit below.\r\nWith app-string in the picture, there no longer is a syntactic way to\r\ncheck that the chunks of streamstrings are all text or all bytes.\r\n",
+      "createdAt": "2023-10-06T08:26:32Z",
+      "updatedAt": "2024-05-17T07:46:59Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "f647a6d41d9b322ea2e0d985abb35a298f981040",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "encoding-indicators",
+      "headRefOid": "f05fa757401d0703becf8a964eb842ac917abbbb",
+      "closedAt": "2023-10-09T09:54:41Z",
+      "mergedAt": "2023-10-09T09:54:41Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "98ff2247a5a901491a053f53d0114a588875a6ae"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5jMAa3",
+          "commit": {
+            "abbreviatedOid": "f05fa75"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-09T09:49:32Z",
+          "updatedAt": "2023-10-09T09:49:32Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOGLBEBs5cLGmb",
+      "title": "close #13: add DNUAE tag",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/16",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-07T16:18:06Z",
+      "updatedAt": "2024-05-17T07:46:57Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "98ff2247a5a901491a053f53d0114a588875a6ae",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-13",
+      "headRefOid": "025f3a77769fafd161c047b63e06ca154467e6c6",
+      "closedAt": "2023-10-09T09:56:57Z",
+      "mergedAt": "2023-10-09T09:56:57Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "aff681119abd5098dd7a45b3e190eeedb4c2289e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5jMBkm",
+          "commit": {
+            "abbreviatedOid": "d7e1fe5"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-09T09:52:20Z",
+          "updatedAt": "2023-10-09T09:52:20Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOGLBEBs5cMosf",
+      "title": "Encoding indicators prose",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/17",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Continuing from the ABNF changes in #15, fully close #11.\r\n",
+      "createdAt": "2023-10-08T16:28:32Z",
+      "updatedAt": "2023-10-08T16:32:52Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "f647a6d41d9b322ea2e0d985abb35a298f981040",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "encoding-indicators-prose",
+      "headRefOid": "860a16aa38417b60e0d2fde5a9ab61e83500e182",
+      "closedAt": "2023-10-08T16:32:43Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Wrong base.)",
+          "createdAt": "2023-10-08T16:32:52Z",
+          "updatedAt": "2023-10-08T16:32:52Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOGLBEBs5cMp2h",
+      "title": "Close #11: Encoding indicators prose",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/18",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Continuing from the ABNF changes in https://github.com/cbor-wg/edn-literal/pull/15, fully close https://github.com/cbor-wg/edn-literal/issues/11.",
+      "createdAt": "2023-10-08T16:31:23Z",
+      "updatedAt": "2024-05-17T07:46:55Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "996fe6bd07afcedeebe591dc0dc19df399679360",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "encoding-indicators-prose",
+      "headRefOid": "094dcf7c235226c556b08ba7283ec47fb3761c90",
+      "closedAt": "2023-10-12T20:25:19Z",
+      "mergedAt": "2023-10-12T20:25:19Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "79974e3ef4729c73bfd118b663d138eab5eef4a6"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5jPiCa",
+          "commit": {
+            "abbreviatedOid": "afbbb67"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "Is there any example you could give a designated expert as to what a good and a bad entry to this registry would be?\r\n\r\nReason I'm asking is that I can't come up with any (short of abusing these for what application extension identifiers are for, when my application doesn't want to look string-ish), which makes me wonder whether it warrants a registry. There's certainly need for extensibility, because at one time we'll finally admit that AI=28 has no other practical purpose than 128bit arguments, but that'd need a Specification anyway, which could also update this document just as well.",
+          "createdAt": "2023-10-09T17:54:29Z",
+          "updatedAt": "2023-10-09T18:01:08Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\nIf the expert becomes aware of encoding indicators that are deployed and\r\n```\r\n\r\nCopy-paste leftover.",
+              "createdAt": "2023-10-09T17:54:29Z",
+              "updatedAt": "2023-10-09T18:01:08Z"
+            },
+            {
+              "originalPosition": 83,
+              "body": "```suggestion\r\n  comes to mind, this is an extension point for EDN; {{reg-ei}} defines\r\n```\r\n\r\nTypo led to violation of the Klammerschlussgesetz.",
+              "createdAt": "2023-10-09T17:57:02Z",
+              "updatedAt": "2023-10-09T18:01:08Z"
+            },
+            {
+              "originalPosition": 46,
+              "body": "I don't think that using _ and __ as different things is ideal, from a legibility point of view. Maybe `_a` for \"additional information\" (which is where in that case the value resides)?\r\n\r\n(If you go with your suggestion of https://github.com/cbor-wg/edn-literal/issues/11#issuecomment-1751688613, will only be generated if some c2d tool has a `--all-indicators` flag, or when an author wants to make a point).",
+              "createdAt": "2023-10-09T18:01:00Z",
+              "updatedAt": "2023-10-09T18:01:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5jyPVi",
+          "commit": {
+            "abbreviatedOid": "b5e19c4"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-12T13:02:58Z",
+          "updatedAt": "2023-10-12T13:02:58Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "Exactly, `__` would not actually be used very much, except for making the point that something does fit into 1+0.  The current syntax (`_[_A-Za-z0-9]*`) does not yield an obvious candidate. `_a` doesn't ring a bell with me (except 0xA).  `_z` maybe (zero-length follow-on, or maybe Frankfurt airport gate area Z, which comes before A...).  Hmm.  Bike-shed...",
+              "createdAt": "2023-10-12T13:02:58Z",
+              "updatedAt": "2023-10-12T13:03:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5jyi2W",
+          "commit": {
+            "abbreviatedOid": "afbbb67"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-12T13:33:18Z",
+          "updatedAt": "2023-10-12T13:33:18Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "My immediate (ha) reaction was `_i`, but that was because I've spent too much time around instruction encodings.",
+              "createdAt": "2023-10-12T13:33:18Z",
+              "updatedAt": "2023-10-12T13:33:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5j1MiQ",
+          "commit": {
+            "abbreviatedOid": "afbbb67"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-12T18:33:57Z",
+          "updatedAt": "2023-10-12T18:33:57Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "`_i` is it!  See commit below.",
+              "createdAt": "2023-10-12T18:33:57Z",
+              "updatedAt": "2023-10-12T18:34:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5j2FDF",
+          "commit": {
+            "abbreviatedOid": "094dcf7"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-12T20:20:45Z",
+          "updatedAt": "2023-10-12T20:20:45Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOGLBEBs5crK2K",
+      "title": "Close #19: Elisions (prose)",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/21",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-12T20:24:09Z",
+      "updatedAt": "2024-05-17T07:46:53Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "79974e3ef4729c73bfd118b663d138eab5eef4a6",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "elisions",
+      "headRefOid": "9542380a271fe2ae9c1d532074648a0e2efa9851",
+      "closedAt": "2023-10-16T19:18:48Z",
+      "mergedAt": "2023-10-16T19:18:48Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "b5b355a25fcd7a351c73eedd1dc7e6ab4421d1de"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOGLBEBs5crLsQ",
+      "title": "Close #20: ABNF for G.4 and ellipsis",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/22",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Technical part of #19 \r\nNote that this accepts 3 or more dots in a row.",
+      "createdAt": "2023-10-12T20:27:46Z",
+      "updatedAt": "2024-05-17T07:46:51Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "79974e3ef4729c73bfd118b663d138eab5eef4a6",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "ellipsis",
+      "headRefOid": "8214bfb4c98a1d09277e29b567c77c4afa756327",
+      "closedAt": "2023-10-16T19:21:57Z",
+      "mergedAt": "2023-10-16T19:21:57Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "aea0ee02c58d83724098b222282a48247f02d009"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5j6Dg0",
+          "commit": {
+            "abbreviatedOid": "81b47a4"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-13T10:05:05Z",
+          "updatedAt": "2023-10-13T10:11:58Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "\"...\" is easier to find by someone grepping for it\r\n```suggestion\r\nellipsis        = \"...\"\r\n```",
+              "createdAt": "2023-10-13T10:05:05Z",
+              "updatedAt": "2023-10-13T10:11:58Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOGLBEBs5c1QUV",
+      "title": "Close #23: IP address literals, lc/uc convention",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/24",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-15T15:13:37Z",
+      "updatedAt": "2024-05-17T07:46:49Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "aea0ee02c58d83724098b222282a48247f02d009",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "ip-literals",
+      "headRefOid": "a163ef44c2d2e2c7977f30b6506ec004e05e73c2",
+      "closedAt": "2023-10-17T16:43:05Z",
+      "mergedAt": "2023-10-17T16:43:05Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f4f850233d01e0bb19fdc54e7662df6b64b70021"
+      },
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The question is how much symmetry an lc and an uc variant should have -- I think symmetry is good, so I'm prone to answer \r\n\r\n> Should `ip'192.0.2.0/24'` then be an unwrapped `[24,h'c00002']`?\r\n\r\nwith yes.",
+          "createdAt": "2023-10-15T15:17:19Z",
+          "updatedAt": "2023-10-15T15:17:19Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5kEYG0",
+          "commit": {
+            "abbreviatedOid": "11334bc"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "> answer \"ip'192.0.2.0/24' then be an unwrapped [24,h'c00002']?\" with yes\r\n\r\nAh, that relates to the `[^unwrapped-prefix]` note -- if you're asking me, do it.\r\n\r\nI'm conflicted about the prevalence of the can-we-sunset-it-already version in the prose's inline examples (conflicted because I see the charm of shorter examples -- were that not so, I'd have said \"dismayed\").\r\n\r\nNot being able to express addresses with prefix length is fine with me (there's just no 5952 guidance on representing them). I do miss the ability to do interface identifiers -- but a) even though we don't have the problems that caused the controversial bis 6874 of here, its controversial status makes we can't easily use its IPv6addrz ABNF, and b) it doesn't mesh well with the absence of prefix lengths, for while `ip'fe80::1%eth0'` could map to `[h'fe80...01', null, \"eth0\"]` easily, mapping `[h'fe80...01', 64, \"eth0\"]` back would create the unsightly situation of looking vastly different (`[ip'fe80::1', 64, \"eth0\"]`) from the semantically similar `ip'fe80::1%eth0'`. Long story short, I don't miss it enough to warrant extra text and holdup.",
+          "createdAt": "2023-10-15T20:44:26Z",
+          "updatedAt": "2023-10-15T20:44:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5kTUU_",
+          "commit": {
+            "abbreviatedOid": "a163ef4"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-17T16:12:39Z",
+          "updatedAt": "2023-10-17T16:12:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOGLBEBs5fb9jT",
+      "title": "Move CRI to draft-ietf-core-href",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/25",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Also: Unify RFC-XXXX and RFCthis into RFC-XXXX",
+      "createdAt": "2023-11-14T17:39:24Z",
+      "updatedAt": "2024-05-17T07:46:46Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "f3e78d9094efab265b90d387236009f0029501a9",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "move-cri-to-href",
+      "headRefOid": "49e4f539f9e83cddb4849b7b2d2b6dfd6da15b63",
+      "closedAt": "2023-11-15T08:24:22Z",
+      "mergedAt": "2023-11-15T08:24:22Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "9e3763a78da36b4d1af47cec43c19cfb08ed36f4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5nNCaK",
+          "commit": {
+            "abbreviatedOid": "49e4f53"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-11-15T08:22:37Z",
+          "updatedAt": "2023-11-15T08:22:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOGLBEBs5ikwzQ",
+      "title": "Address items from Shepherd review",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/26",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-21T13:59:08Z",
+      "updatedAt": "2024-05-17T07:46:45Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "a04642704b95e2438f093c93d0cec286d9121293",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "shepherd-review",
+      "headRefOid": "89f447c1d5d294766c5e242cea490a3a49529bed",
+      "closedAt": "2023-12-21T14:51:54Z",
+      "mergedAt": "2023-12-21T14:51:54Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "26aadb77c910705144f2dd615d03ee2cf0a5837e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5q35g1",
+          "commit": {
+            "abbreviatedOid": "89f447c"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-21T14:05:16Z",
+          "updatedAt": "2023-12-21T14:05:16Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOGLBEBs5lEca6",
+      "title": "Add references (754, C, C++) for hexadecimal floating point format",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/27",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-01-25T14:02:19Z",
+      "updatedAt": "2024-05-17T07:46:36Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "620d8c4f6f630d7196ae2c44c14f4e392bef75ee",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "hex-fp-ref",
+      "headRefOid": "d937563779a6541992419742fe033ac310d57d30",
+      "closedAt": "2024-01-26T10:25:33Z",
+      "mergedAt": "2024-01-26T10:25:33Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "fd68f801c837951fa627f7b3d452b8672a096403"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5t6UGJ",
+          "commit": {
+            "abbreviatedOid": "8c56b2e"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-01-25T15:22:26Z",
+          "updatedAt": "2024-01-25T15:47:05Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "It infuriates me that this is correct. :(",
+              "createdAt": "2024-01-25T15:22:26Z",
+              "updatedAt": "2024-01-25T15:47:05Z"
+            },
+            {
+              "originalPosition": 45,
+              "body": "double check `5.3.14`?  I think you mean `5.13.4`.",
+              "createdAt": "2024-01-25T15:46:49Z",
+              "updatedAt": "2024-01-25T15:47:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5t7bqP",
+          "commit": {
+            "abbreviatedOid": "8c56b2e"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-25T17:32:14Z",
+          "updatedAt": "2024-01-25T17:32:14Z",
+          "comments": [
+            {
+              "originalPosition": 45,
+              "body": "Indeed!  Fixed.\r\n",
+              "createdAt": "2024-01-25T17:32:14Z",
+              "updatedAt": "2024-01-25T17:32:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5t7ceo",
+          "commit": {
+            "abbreviatedOid": "8c56b2e"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-25T17:34:06Z",
+          "updatedAt": "2024-01-25T17:34:06Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I wish there were another \"text available at\" annotation here...\r\nBut at least IEEE is very open with institutional membership, so many engineers can get a login and free access through their employer.\r\n",
+              "createdAt": "2024-01-25T17:34:06Z",
+              "updatedAt": "2024-01-25T17:34:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5t7eYC",
+          "commit": {
+            "abbreviatedOid": "d937563"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-25T17:38:43Z",
+          "updatedAt": "2024-01-25T17:38:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOGLBEBs5lF5gb",
+      "title": "Added Unicode scalar hex escapes (\\u{1F913} for \ud83e\udd13) to string syntax",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/28",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-01-25T17:53:57Z",
+      "updatedAt": "2024-05-17T07:46:34Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "620d8c4f6f630d7196ae2c44c14f4e392bef75ee",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "scalar-hex-escapes",
+      "headRefOid": "418dc162287ef74ac2e744d7501b6ad20a8c8a44",
+      "closedAt": "2024-01-26T16:14:45Z",
+      "mergedAt": "2024-01-26T16:14:45Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "1c9598ba2fb67cd05540c74d8fd2a98774d0e004"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5t7noV",
+          "commit": {
+            "abbreviatedOid": "1d99d1b"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-01-25T18:01:42Z",
+          "updatedAt": "2024-01-25T18:09:41Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "`*\"0\"` doesn't feel right.  Do you want `\\u{00000000000001}` to be valid?  Maybe roll this into hexscalar for each alternative, bringing each up to a max of 6 characters.",
+              "createdAt": "2024-01-25T18:01:42Z",
+              "updatedAt": "2024-01-25T18:09:41Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "`\\u{}` should not be valid, so this should be `1*3HEXDIG`, I think.",
+              "createdAt": "2024-01-25T18:09:25Z",
+              "updatedAt": "2024-01-25T18:09:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5t_v4U",
+          "commit": {
+            "abbreviatedOid": "1d99d1b"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-26T10:12:15Z",
+          "updatedAt": "2024-01-26T10:12:16Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Well, \\U00001234 is quite common in other languages, so six is probably not making it too easy to convert that.\r\nBut this seems to be a stylistic thing anyway, I'd say; there is no specific artificial limit that can obviously be agreed on.\r\n\r\nBackground is that I'm trying to keep this PEG-compatible, and there is only so much that can be achieved in the syntax.  I was trying to ensure surrogates trip the grammar, and that has priority I think.",
+              "createdAt": "2024-01-26T10:12:15Z",
+              "updatedAt": "2024-01-26T10:26:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5t_wQ2",
+          "commit": {
+            "abbreviatedOid": "1d99d1b"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-26T10:13:21Z",
+          "updatedAt": "2024-01-26T10:13:21Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Another PEG compatibility thing.  The 0 is eaten by the greedy `*\"0\"`, and to properly disallow `\\u{}` this needs a bit more gymnastics.  Oh well.  418dc16 now.",
+              "createdAt": "2024-01-26T10:13:21Z",
+              "updatedAt": "2024-01-26T10:25:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5uCGZC",
+          "commit": {
+            "abbreviatedOid": "1d99d1b"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-26T16:02:33Z",
+          "updatedAt": "2024-01-26T16:02:33Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Nod, that looks adequate to me.  I double-checked with node-abnf, which generates a peggy grammar from abnf.",
+              "createdAt": "2024-01-26T16:02:33Z",
+              "updatedAt": "2024-01-26T16:02:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5uCGmf",
+          "commit": {
+            "abbreviatedOid": "418dc16"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-26T16:03:04Z",
+          "updatedAt": "2024-01-26T16:03:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOGLBEBs5lOlx_",
+      "title": "Allow .3 and 3. for decimal and hex float",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/29",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(... as opposed to requiring 0.3 and 3.0)",
+      "createdAt": "2024-01-27T14:20:04Z",
+      "updatedAt": "2024-05-17T07:46:32Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "6096deb14ca16979765095c1b1261b7dea882b8d",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "elide-zero-mantissa-parts",
+      "headRefOid": "c8eaf921b4659ae3357993109d2de73586a7eaac",
+      "closedAt": "2024-01-27T15:25:40Z",
+      "mergedAt": "2024-01-27T15:25:40Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "edc778bef1105952efa5aa0f470848969e6772a0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5uGHiM",
+          "commit": {
+            "abbreviatedOid": "c8eaf92"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-27T14:42:30Z",
+          "updatedAt": "2024-01-27T14:46:04Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "This looks right for now -- as long as you don't add 0-prefixed octal.",
+              "createdAt": "2024-01-27T14:42:30Z",
+              "updatedAt": "2024-01-27T14:46:04Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "is `0xFF.pF` supposed to be legal?  I guess that's a logical outcome from allowing trailing dots.",
+              "createdAt": "2024-01-27T14:45:39Z",
+              "updatedAt": "2024-01-27T14:46:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5uGIuv",
+          "commit": {
+            "abbreviatedOid": "c8eaf92"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T15:21:19Z",
+          "updatedAt": "2024-01-27T15:21:19Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Right, 0-prefixed octal just doesn't mix with datasets that have leading zeroes, so I think these are out.",
+              "createdAt": "2024-01-27T15:21:19Z",
+              "updatedAt": "2024-01-27T15:21:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5uGI32",
+          "commit": {
+            "abbreviatedOid": "c8eaf92"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T15:25:04Z",
+          "updatedAt": "2024-01-27T15:25:04Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "The exponent is decimal (!), so, no.\r\nWith p9:\r\n\r\n```\r\n#include<stdio.h>\r\n\r\nint main()\r\n{\r\n    double x=0xFF.p9;\r\n    double y=.25;\r\n    double z=x+y;\r\n\r\n    printf(\"%f\", z);\r\n    return 0;\r\n}\r\n```\r\n\u2794  `130560.250000`",
+              "createdAt": "2024-01-27T15:25:04Z",
+              "updatedAt": "2024-01-27T15:25:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5uGLSw",
+          "commit": {
+            "abbreviatedOid": "c8eaf92"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T16:23:19Z",
+          "updatedAt": "2024-01-27T16:23:19Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "Sorry, I meant `0xFF.p10`",
+              "createdAt": "2024-01-27T16:23:19Z",
+              "updatedAt": "2024-01-27T16:23:19Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOGLBEBs5lTitc",
+      "title": "Add implementer advice for decnumber (and basenumber) float syntax",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/30",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-01-29T10:03:30Z",
+      "updatedAt": "2024-05-17T07:46:30Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "edc778bef1105952efa5aa0f470848969e6772a0",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "advice-elide-zero-mantissa-parts",
+      "headRefOid": "3a92ffe00f374241acba34b5dc30f797a28e7949",
+      "closedAt": "2024-01-29T10:39:49Z",
+      "mergedAt": "2024-01-29T10:39:49Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "80ff3375b880978311bb143164900fe632d66ade"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOGLBEBs5vwb3Z",
+      "title": "Appendix A is normative.",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/32",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(To the extent that can be the case in an informational document.)",
+      "createdAt": "2024-05-17T08:07:06Z",
+      "updatedAt": "2024-05-18T19:23:56Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "850807608465593196d74d1f548b2e4b69045edb",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "appendix-normative",
+      "headRefOid": "0f67fba4b1d82ce95b80d32d8a118434f89d9961",
+      "closedAt": "2024-05-18T19:23:56Z",
+      "mergedAt": "2024-05-18T19:23:56Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a5f3cb1f115f9d5adae812e3f38a0451f233c4a3"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs57ApM9",
+          "commit": {
+            "abbreviatedOid": "0f67fba"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T15:34:49Z",
+          "updatedAt": "2024-05-17T15:34:49Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOGLBEBs5vw9z2",
+      "title": "Explain ai= short notation",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/33",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-17T09:27:41Z",
+      "updatedAt": "2024-05-18T19:23:42Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "850807608465593196d74d1f548b2e4b69045edb",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "introduce-ai",
+      "headRefOid": "4efee5c14cb8390ab1b0220658dd58cd95bcdbba",
+      "closedAt": "2024-05-18T19:23:41Z",
+      "mergedAt": "2024-05-18T19:23:41Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "97ec5d75f93ed3c2458228ed021e6b577f5548fb"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs57ApZI",
+          "commit": {
+            "abbreviatedOid": "4efee5c"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T15:35:16Z",
+          "updatedAt": "2024-05-17T15:35:16Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOGLBEBs5vxl3T",
+      "title": "G.4 (string concatenation) is in 8610, not 8949",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/34",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-17T10:57:35Z",
+      "updatedAt": "2024-05-18T19:23:19Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "850807608465593196d74d1f548b2e4b69045edb",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "fix-section-reference",
+      "headRefOid": "35a6c6935ad527406b21c633b59d77ab890c6558",
+      "closedAt": "2024-05-18T19:23:19Z",
+      "mergedAt": "2024-05-18T19:23:19Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a8ac482791ce839d0ed556d3b488b2f45e43bb91"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs57Apgi",
+          "commit": {
+            "abbreviatedOid": "35a6c69"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T15:35:32Z",
+          "updatedAt": "2024-05-17T15:35:32Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOGLBEBs5vySKL",
+      "title": "AD review nits",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/35",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-17T12:29:24Z",
+      "updatedAt": "2024-05-18T19:22:57Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "850807608465593196d74d1f548b2e4b69045edb",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "ad-review-nits",
+      "headRefOid": "748bbc8f0607f2deb7e7abe824c42154afebc5b5",
+      "closedAt": "2024-05-18T19:22:56Z",
+      "mergedAt": "2024-05-18T19:22:56Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "86d1e1a62fddc41181fd52de7f6bda314af82bba"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs57Ap7m",
+          "commit": {
+            "abbreviatedOid": "748bbc8"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T15:36:24Z",
+          "updatedAt": "2024-05-17T15:36:24Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOGLBEBs5vzMfa",
+      "title": "Mention RFC sourcecode types for CBOR and CBOR-related languages",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/36",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Close #31",
+      "createdAt": "2024-05-17T14:22:23Z",
+      "updatedAt": "2024-05-18T19:22:37Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "850807608465593196d74d1f548b2e4b69045edb",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "sourcecode-types",
+      "headRefOid": "dba4f2191a39aef3e9aa1283a8ce1243b58f9a08",
+      "closedAt": "2024-05-18T19:22:36Z",
+      "mergedAt": "2024-05-18T19:22:36Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a7399c2fc7c2bdb85c7b03e3fc6eb1f6d87dc7b2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs57AqZO",
+          "commit": {
+            "abbreviatedOid": "dba4f21"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T15:37:26Z",
+          "updatedAt": "2024-05-17T15:37:26Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOGLBEBs5yOnto",
+      "title": "Close #37: Superfluous S in ABNF",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/40",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This change should be innocuous (i.e., it doesn't actually matter if you pick it up or not), but will reduce confusion.",
+      "createdAt": "2024-06-12T12:06:52Z",
+      "updatedAt": "2024-06-27T08:44:03Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-37",
+      "headRefOid": "693fb4dadca3ae095dc8f2be76649ebccfc0cb8e",
+      "closedAt": "2024-06-27T08:44:03Z",
+      "mergedAt": "2024-06-27T08:44:03Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "2f4dedd13f52a5698f208621d66117c6d766afbe"
+      },
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Now implemented in edn-abnf 0.1.7",
+          "createdAt": "2024-06-12T12:09:28Z",
+          "updatedAt": "2024-06-12T12:09:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs598AJv",
+          "commit": {
+            "abbreviatedOid": "693fb4d"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "LGTM. Pinging @OR13 because at this stage this will need his OK as well.",
+          "createdAt": "2024-06-12T12:33:14Z",
+          "updatedAt": "2024-06-12T12:33:14Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5-MdKl",
+          "commit": {
+            "abbreviatedOid": "693fb4d"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-13T23:52:08Z",
+          "updatedAt": "2024-06-13T23:52:09Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOGLBEBs5yQtSV",
+      "title": "Close #38 (Clarify: Long numbers and bignums)",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/46",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-12T16:37:59Z",
+      "updatedAt": "2024-06-27T08:44:29Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-38",
+      "headRefOid": "b04154094bfa064492f51b106f1a02c4494500a4",
+      "closedAt": "2024-06-27T08:44:28Z",
+      "mergedAt": "2024-06-27T08:44:28Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "0ce34139a828286d9b3e02c9b0413ceea474de94"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5-Qcsx",
+          "commit": {
+            "abbreviatedOid": "b041540"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks, this clarifies my concern.",
+          "createdAt": "2024-06-14T12:15:11Z",
+          "updatedAt": "2024-06-14T12:15:11Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "id": "PR_kwDOGLBEBs5yQ0Hb",
+      "title": "Close #45 (Better introduce existing and new encoding indicators (genart review))",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/47",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-12T16:51:09Z",
+      "updatedAt": "2024-06-27T08:44:53Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-45",
+      "headRefOid": "a40439343da30fcbfb2412b630afb64be1557c5f",
+      "closedAt": "2024-06-27T08:44:53Z",
+      "mergedAt": "2024-06-27T08:44:53Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "e18fbe543d667be7fcd0ff6db74b9caed0a47fa1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5_r2CO",
+          "commit": {
+            "abbreviatedOid": "a404393"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "It's a minimal fix to the received comment, but I think it does address it.",
+          "createdAt": "2024-06-26T15:15:10Z",
+          "updatedAt": "2024-06-26T15:15:10Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_tqXH",
+          "commit": {
+            "abbreviatedOid": "a404393"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-26T18:33:37Z",
+          "updatedAt": "2024-06-26T18:33:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "id": "PR_kwDOGLBEBs5yQ7SJ",
+      "title": "Close #43 (tag 999 error handling guidance needed (opsdir review))",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/48",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-12T17:04:10Z",
+      "updatedAt": "2024-06-27T08:45:24Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-43",
+      "headRefOid": "bcaefe6b2cd31eb2c3a41211b69d557189b01273",
+      "closedAt": "2024-06-27T08:45:24Z",
+      "mergedAt": "2024-06-27T08:45:24Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "c0240f6db6ca059fc0ba60dc372793c53f8ef1fd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5_roro",
+          "commit": {
+            "abbreviatedOid": "bcaefe6"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "As someone who has been in such situations with data formats dissimilar and similar to this one, I support the addition of this note.",
+          "createdAt": "2024-06-26T14:56:37Z",
+          "updatedAt": "2024-06-26T14:56:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_r1Ml",
+          "commit": {
+            "abbreviatedOid": "bcaefe6"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks AJ for weighin in; I agree this is good to have. (Implementation consequence: cbor-edn tools will only convert 888/999 when explicitly prompted.)",
+          "createdAt": "2024-06-26T15:13:45Z",
+          "updatedAt": "2024-06-26T15:13:45Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "id": "PR_kwDOGLBEBs5yV7pU",
+      "title": "alternate single-pass ABNF",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/49",
+      "state": "OPEN",
+      "author": "rohanmahy",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi,\r\nI believe this PR contains the changes that would be needed to make a single ABNF for EDN. A future app-string that had no requirement for interior comments could just define its ABNF (with any unquoted characters from unescaped and DQUOTE), and append the app-string to the `known-app-str` production. A future app-string that wanted comments could add safely either slash-comment or hash-comment to its whitespace as long as \"/\" or \"#\" respectively did not have meaning in the interior grammar.\r\n\r\nHope this helps.\r\nThanks,\r\n-rohan\r\n\r\n",
+      "createdAt": "2024-06-13T10:10:50Z",
+      "updatedAt": "2024-08-23T18:56:08Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
+      "headRepository": "rohanmahy/edn-literal",
+      "headRefName": "rohan/single-abnf",
+      "headRefOid": "ab6b12fddc5224cbf90b5e58f95c29b1d44bf7ba",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I tend to prefer a single ABNF, and clear guidance and examples for extensions.\n\nI don't fully follow the comments regarding extensions to support comments, is the suggestion that if a single ABNF is provided then it must not define support for comments and leave that to extension? I don't like that.\n\nIf comments are just used as an example here, can we use a new app specific literal as an example instead?",
+          "createdAt": "2024-06-29T09:02:58Z",
+          "updatedAt": "2024-06-29T09:02:58Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> I tend to prefer a single ABNF, and clear guidance and examples for extensions.\r\n\r\nMe too. I'm sorry that I didn't provide more text about what that guidance would be. Basically, someone writing a new app-string, writes the grammar using as many of the productions in the base/existing ABNF as possible. If they allow whitespace and want both slash and hash comment, insert the `S` production (see the example below for e). If they want hash comments only (because / is meaningful inside), insert the `B` production (see the example below for ip). \r\n\r\nRegardless if comments are used inside the app-string, the new app-string definition is added to the end of the `known-app-str` production.\r\n\r\nThat's it.\r\n\r\n> I don't fully follow the comments regarding extensions to support comments, is the suggestion that if a single ABNF is provided then it must not define support for comments and leave that to extension? I don't like that.\r\n\r\nComments are supposed to be treated like whitespace in EDN.\r\nWithout this PR, the four app strings defined in this draft have the following characteristics:\r\n\r\n- h: allows whitespace, # comments, and / / comments.\r\n- b64: allow whitespace, and # comments. Slash (/) is a legal character inside base64.\r\n- ip: does not allow whitespace in -09. Slash (/) is a legal character inside the grammar (to separate ip addresses from prefixes lengths).\r\n- dt: does not allow whitespace in -09. Carsten has used some examples with a textual timezone (ex: America/Los Angeles ) which has both non-fungible whitespace and slashes (/) in the timezone names.\r\n\r\nWhile I see no reason to add comments inside an ip address, If you were willing to make the application ignorine all whitespace and wanted to extend ip to support # comments, you could add the `B` production into the lowest levels of the BNF (h16, colon, double colon, decoctet, uint/prefix). for example:\r\n\r\n`h16 = 1*4(HEXDIG / B)`\r\n\r\nIncluding https://www.ietf.org/archive/id/draft-ietf-cbor-edn-e-ref-00.html , there is no formal grammar defined, but the intent of e'' seems to be to allow anything that is valid as the `id` production in CDDL; and the intent of ref'' seems to be to allow anything compatible with the generic URI syntax and literal filenames. Literal filenames don't have fungible whitespace, often contain slashes and could contain arbitrary characters such as #. URIs don't allow any whitespace and the / and # characters are used in their BNFs. The `id` production allows [A-Za-z0-9@_$.-]. If the author wanted to allow comments and whitespace anywhere in e'', he could add the `S` production inside the BNF of enum:\r\n\r\n```\r\n; app-string e\r\ne              = (%s\"e\" / %s\"E\") SQUOTE enum SQUOTE\r\nenum       = S EALPHA *(*(\"-\" / \".\") (EALPHA / DIGIT/ S))\r\nEALPHA  = ALPHA / \"@\" / \"_\" / \"$\"\r\n```\r\n\r\nPersonally, I think the fact that the current grammars for ip and dt don't allow comments, and none of the examples for e or ref have comments is a strong indicator that nobody is going to bother incorporating comments in future app strings, largely because every new app string so far doesn't allow whitespace.\r\n\r\n> If comments are just used as an example here, can we use a new app specific literal as an example instead?\r\n\r\nI'm not sure what you mean @OR13 . Hopefully I answered your questions somewhere else in this reply.\r\n\r\n\r\n",
+          "createdAt": "2024-06-29T14:32:44Z",
+          "updatedAt": "2024-06-29T14:34:23Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I meant that as the working group compares the approaches, an example that is complex enough to highlight differences might be valuable.\n\nAlso, all these comments are as an individual. I'd like to hear from other implementers,.",
+          "createdAt": "2024-06-29T21:06:23Z",
+          "updatedAt": "2024-06-29T21:07:15Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "This currently has the `ellipsis` rule defined twice, and the inside-h rule has `\"ellipsis\"` instead of `ellipsis`.",
+          "createdAt": "2024-08-19T01:27:28Z",
+          "updatedAt": "2024-08-19T01:27:28Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> This currently has the `ellipsis` rule defined twice, and the inside-h rule has `\"ellipsis\"` instead of `ellipsis`.\r\n\r\nThanks Joe!",
+          "createdAt": "2024-08-19T02:00:15Z",
+          "updatedAt": "2024-08-19T02:00:15Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "OK, here are some more issues then:\r\n- `uint` defined more than once\r\n- `S` defined more than once\r\n- Rule names according to RFC 5234 are `ALPHA *(ALPHA / DIGIT / \"-\")`, which means b64_4 (etc) are invalid.\r\n- There are a bunch of \\xa0 non-breaking spaces scattered around, I bet unintentionally\r\n- `SQOUTE` is a typo\r\n- `b64dig` is not defined\r\n- `ALPHA` is not defined\r\n\r\nWith these changes, I was able to at least parse this.",
+          "createdAt": "2024-08-19T04:36:34Z",
+          "updatedAt": "2024-08-19T04:36:34Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> OK, here are some more issues then:\r\n> \r\n>     * `uint` defined more than once\r\n> \r\n>     * `S` defined more than once\r\n> \r\n>     * Rule names according to RFC 5234 are `ALPHA *(ALPHA / DIGIT / \"-\")`, which means b64_4 (etc) are invalid.\r\n> \r\n>     * There are a bunch of \\xa0 non-breaking spaces scattered around, I bet unintentionally\r\n> \r\n>     * `SQOUTE` is a typo\r\n> \r\n>     * `b64dig` is not defined\r\n> \r\n>     * `ALPHA` is not defined\r\n> \r\n> \r\n> With these changes, I was able to at least parse this.\r\n\r\nOK, all fixed now. Not sure how the \\xA0 got in there. :-\\",
+          "createdAt": "2024-08-19T15:07:47Z",
+          "updatedAt": "2024-08-19T15:07:47Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "There's also going to need a bunch of rework in the comment rules used in inside-*.  None of them should accept an SQUOTE, I think.  `h'12 /'/ 34'` shouldn't work, for example.",
+          "createdAt": "2024-08-19T15:08:43Z",
+          "updatedAt": "2024-08-19T15:08:43Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "Note that 'one-item' is an alternate entry point, so it's not unused.",
+          "createdAt": "2024-08-19T17:01:05Z",
+          "updatedAt": "2024-08-19T17:01:05Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> There's also going to need a bunch of rework in the comment rules used in inside-*. None of them should accept an SQUOTE, I think. `h'12 /'/ 34'` shouldn't work, for example.\r\n\r\nBy my read, it does not allow /'/, since safe-unescaped specifically excludes <'> unless it is backslash escaped (see `slash-escaped` and `hash-escaped`). So `h'12 / wasn\\'t a problem / 34'` is OK.",
+          "createdAt": "2024-08-19T19:07:27Z",
+          "updatedAt": "2024-08-19T19:19:49Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "As an existence proof that extending a single-layer ABNF is straightforward, [edn-e-ref issue #1](https://github.com/cbor-wg/edn-e-ref/issues/1) shows an ABNF for e'' and ref'' that works with the ABNF in this PR. The changes specifically needed to make this work in a single layer were:\r\n- add `known-app-str   =/ e / ref`\r\n- remove bare single quotes from `sub-delims` (a five character change)\r\n\r\nThe bulk of the work was fixing removing duplicate or unused productions.",
+          "createdAt": "2024-08-19T19:25:11Z",
+          "updatedAt": "2024-08-19T19:25:11Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5-F7or",
+          "commit": {
+            "abbreviatedOid": "3515631"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T11:09:44Z",
+          "updatedAt": "2024-06-13T11:09:45Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "```suggestion\r\nip              = (%s\"ip\" / %s\"IP\") SQUOTE inside-ip SQUOTE\r\n```\r\ncopy-paste error",
+              "createdAt": "2024-06-13T11:09:44Z",
+              "updatedAt": "2024-06-13T11:09:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5-F-WL",
+          "commit": {
+            "abbreviatedOid": "18aeb29"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T11:15:16Z",
+          "updatedAt": "2024-06-13T11:15:17Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nb64_2           = 2(b64dig B) [\"=\" B \"=\"] B\r\n```",
+              "createdAt": "2024-06-13T11:15:16Z",
+              "updatedAt": "2024-06-13T11:15:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6FyEqS",
+          "commit": {
+            "abbreviatedOid": "9eca672"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-19T01:55:41Z",
+          "updatedAt": "2024-08-19T01:55:41Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\ninside-h        = S *(HEXDIG S HEXDIG S / ellipsis S) S\r\n```",
+              "createdAt": "2024-08-19T01:55:41Z",
+              "updatedAt": "2024-08-19T01:55:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6FyE_T",
+          "commit": {
+            "abbreviatedOid": "9eca672"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-19T01:57:57Z",
+          "updatedAt": "2024-08-19T01:57:58Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-08-19T01:57:58Z",
+              "updatedAt": "2024-08-19T01:57:58Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "id": "PR_kwDOGLBEBs5yZuEe",
+      "title": "Close #44: Security considerations of extensibility",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/50",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Explain how tool implementers and operators may need to be considerate of security implementations posed by the extensions they support.\r\n\r\nThank you for bringing up this subject, Rifaat!\r\n<https://mailarchive.ietf.org/arch/msg/cbor/PQmYkzHYKJtWgljWqhhg0G4Cyhk>",
+      "createdAt": "2024-06-13T18:56:28Z",
+      "updatedAt": "2024-06-27T08:46:18Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-44",
+      "headRefOid": "01f0cb13abb1443186dfcd9cc81c981284efb9cd",
+      "closedAt": "2024-06-27T08:46:18Z",
+      "mergedAt": "2024-06-27T08:46:18Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "b7d203ab74cf801dbabfafa4558989531ab89194"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs5-LIYN",
+          "commit": {
+            "abbreviatedOid": "bdeb58a"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T20:30:54Z",
+          "updatedAt": "2024-06-13T20:30:54Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "s/considerations/considerations to take into account when used",
+              "createdAt": "2024-06-13T20:30:54Z",
+              "updatedAt": "2024-06-13T20:30:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5-LIsL",
+          "commit": {
+            "abbreviatedOid": "bdeb58a"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T20:31:45Z",
+          "updatedAt": "2024-06-13T20:31:46Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "OLD:\r\n> ... tool operator, who might not have considered security considerations of specific extensions such as those posed by their use of ...\r\n\r\n\r\nNEW:\r\n> ... tool operator. In fact, it is unlikely that security considerations have been taken into account for specific, not planned extensions, such as those concerning the use of ...",
+              "createdAt": "2024-06-13T20:31:46Z",
+              "updatedAt": "2024-06-13T20:31:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5-LI34",
+          "commit": {
+            "abbreviatedOid": "bdeb58a"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T20:32:15Z",
+          "updatedAt": "2024-06-13T20:32:15Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "OLD:\r\n> list; this can possibly be made less onerous by combining this with a mechanism for supplying any parameters controlling such an extension.\r\n\r\nNEW:\r\n> list. This task can possibly be made less onerous by combining it with a mechanism for supplying any parameters controlling such an extension.",
+              "createdAt": "2024-06-13T20:32:15Z",
+              "updatedAt": "2024-06-13T20:32:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5-gMVR",
+          "commit": {
+            "abbreviatedOid": "fbd0575"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-17T09:19:19Z",
+          "updatedAt": "2024-06-17T09:19:19Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_pjDM",
+          "commit": {
+            "abbreviatedOid": "fbd0575"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T12:07:47Z",
+          "updatedAt": "2024-06-26T12:07:47Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "I think this can be inferred by the reader...",
+              "createdAt": "2024-06-26T12:07:47Z",
+              "updatedAt": "2024-06-26T12:07:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_pjrf",
+          "commit": {
+            "abbreviatedOid": "fbd0575"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T12:09:04Z",
+          "updatedAt": "2024-06-26T12:09:04Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "I think we already have \"not planned\" once in the sentence, which is already long enough...",
+              "createdAt": "2024-06-26T12:09:04Z",
+              "updatedAt": "2024-06-26T12:09:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_pnQg",
+          "commit": {
+            "abbreviatedOid": "bdeb58a"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T12:15:55Z",
+          "updatedAt": "2024-06-26T12:15:55Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Ok. Let's assume that, then the original text is fine.",
+              "createdAt": "2024-06-26T12:15:55Z",
+              "updatedAt": "2024-06-26T12:15:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_po7S",
+          "commit": {
+            "abbreviatedOid": "bdeb58a"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T12:17:41Z",
+          "updatedAt": "2024-06-26T12:17:41Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Ok, let's not repeat \"not planned\"\r\n\r\n(Even though the new text is starting a new sentence, it should be clear that it's still talking about the same extensions)",
+              "createdAt": "2024-06-26T12:17:41Z",
+              "updatedAt": "2024-06-26T12:17:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_ppH_",
+          "commit": {
+            "abbreviatedOid": "fbd0575"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-26T12:17:49Z",
+          "updatedAt": "2024-06-26T12:17:49Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_rmtK",
+          "commit": {
+            "abbreviatedOid": "fbd0575"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-26T14:53:46Z",
+          "updatedAt": "2024-06-26T14:53:54Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "Non-blocking: I am not sure this editorial comment is in line with style and terminology in IETF, but for developers and security engineers writ large, the terms I have heard more generally for this concept are whitelist (not out of style as of late for a variety of reasons) and [allowlist](https://en.wikipedia.org/wiki/Whitelist). Either way, I understand the intent of the change and approve of this PR, with or without the recommendation.\r\n\r\n```suggestion\r\nextension that is not on an allowlist.\r\n```",
+              "createdAt": "2024-06-26T14:53:46Z",
+              "updatedAt": "2024-06-26T14:53:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs5_sIxx",
+          "commit": {
+            "abbreviatedOid": "fbd0575"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T15:46:48Z",
+          "updatedAt": "2024-06-26T15:46:49Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "I like this change and agree with the rationale.",
+              "createdAt": "2024-06-26T15:46:48Z",
+              "updatedAt": "2024-06-26T15:46:49Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "id": "PR_kwDOGLBEBs5zwBJQ",
+      "title": "Close #51: Update title, abstract, and introduction",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/53",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The need for an updated title was discussed at the 2024-06-26 CBOR WG interim meeting.\r\nThis also has an influence on abstract and introduction, which are also adapted.",
+      "createdAt": "2024-06-27T10:06:33Z",
+      "updatedAt": "2024-07-03T19:49:19Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "b7d203ab74cf801dbabfafa4558989531ab89194",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-51",
+      "headRefOid": "35dc020d0196a9a79027e91dee227cf30375714f",
+      "closedAt": "2024-07-03T19:49:19Z",
+      "mergedAt": "2024-07-03T19:49:19Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "baa406575906bf2af8810c21a6981077788d59bf"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6AHWEX",
+          "commit": {
+            "abbreviatedOid": "35dc020"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-29T08:57:26Z",
+          "updatedAt": "2024-06-29T08:57:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6AIpBi",
+          "commit": {
+            "abbreviatedOid": "35dc020"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-29T17:39:23Z",
+          "updatedAt": "2024-06-29T17:39:23Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "id": "PR_kwDOGLBEBs5zxtuy",
+      "title": "Close #42: Explicit concatenation via `+`, optional commas",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/54",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-27T13:54:50Z",
+      "updatedAt": "2024-07-03T20:48:40Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "baa406575906bf2af8810c21a6981077788d59bf",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "close-42",
+      "headRefOid": "3ac704d9b40339a5c68fcd1180033301017a3bc5",
+      "closedAt": "2024-07-03T20:48:40Z",
+      "mergedAt": "2024-07-03T20:48:40Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "bbf6b9c9ad0a6b95bf46f39f6da28c948e38dc2d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6AHWFx",
+          "commit": {
+            "abbreviatedOid": "3ac704d"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-29T08:58:28Z",
+          "updatedAt": "2024-07-03T19:49:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6AI2Yn",
+          "commit": {
+            "abbreviatedOid": "3ac704d"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-29T18:54:13Z",
+          "updatedAt": "2024-07-03T19:49:51Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "id": "PR_kwDOGLBEBs50XdJL",
+      "title": "Add text about later stages of ingestion, failing on 999",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/55",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(Linda Dunbar, Opsdir review)",
+      "createdAt": "2024-07-03T20:01:41Z",
+      "updatedAt": "2024-07-05T04:35:07Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "baa406575906bf2af8810c21a6981077788d59bf",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "error-999",
+      "headRefOid": "8346d49f832374320e61f41fff4cd11bb9d17f63",
+      "closedAt": "2024-07-04T18:04:26Z",
+      "mergedAt": "2024-07-04T18:04:26Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "84148c7e39505026e918d157b2c7dca5f0b8c8b8"
+      },
+      "comments": [
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "The paragraph before the added text says: \r\n\r\n>\"The content of this tag is an array of two text strings: The application-extension identifier, and the (escape-processed) content of the single-quoted string.\"\r\n\r\n1) It would be worth mentioning here that the identifier is case sensitive.\r\n\r\n2) As both the single-quoted string and double-quoted strings need to be escaped for mostly the same characters, I would instead say:\r\n\r\n\"The content of this tag is an array of two text strings. The first is the case-sensitive application-extension identifier. The second is the contents of the single-quoted string, with any escaped single quote (ASCII 0x5c 0x27) replaced with a single quote (ASCII 0x27), and any unescaped double-quote (ASCII 0x22) replaced with backslash double-quote (ASCII 0x5c 0x22).\"\r\n",
+          "createdAt": "2024-07-03T23:08:59Z",
+          "updatedAt": "2024-07-03T23:08:59Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "There already is text about the case of application-extension identifiers; we don't need to repeat this here.\r\nI also don't think we benefit from restating the handling of strings in an abbreviated, ultimately incorrect way; simply saying that the escape processing applies here as well should suffice.",
+          "createdAt": "2024-07-04T18:04:14Z",
+          "updatedAt": "2024-07-04T18:04:14Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> There already is text about the case of application-extension identifiers; we don't need to repeat this here. I also don't think we benefit from restating the handling of strings in an abbreviated, ultimately incorrect way; simply saying that the escape processing applies here as well should suffice.\r\n\r\nSaying that the contents is \"the (escape-processed) content of the single-quoted string.\" is also wrong and likely to be misinterpreted. It is the (double-quote) escape-processed content of the (single-quote) unescaped single-quoted string.\r\n",
+          "createdAt": "2024-07-04T20:48:02Z",
+          "updatedAt": "2024-07-04T20:48:02Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Saying that the contents is \"the (escape-processed) content of the single-quoted string.\" is also wrong and likely to be misinterpreted. It is the (double-quote) escape-processed content of the (single-quote) unescaped single-quoted string.\r\n\r\nCan you elaborate?  I don't follow.  How do double quotes enter the picture?",
+          "createdAt": "2024-07-04T22:48:59Z",
+          "updatedAt": "2024-07-04T22:48:59Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "> > Saying that the contents is \"the (escape-processed) content of the single-quoted string.\" is also wrong and likely to be misinterpreted. It is the (double-quote) escape-processed content of the (single-quote) unescaped single-quoted string.\r\n> \r\n> Can you elaborate? I don't follow. How do double quotes enter the picture?\r\n\r\nIf I understand the intent, `foo'don\\'t \"worry\"\\n \\\\ be happy'` needs to become `999(\"foo\", \"don't \\\"worry\\\"\\n \\\\ be happy\")`. the string inside the single-quotes needs to be unescaped, then needs to be re-escaped as a the contents of a double-quoted string. The original text could mean double escaping to 999(\"foo\", \"don\\\\'t \\\"worry\\\"\\\\n \\\\\\\\ be happy\") which is not wanted.",
+          "createdAt": "2024-07-05T03:11:12Z",
+          "updatedAt": "2024-07-05T03:11:12Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The text talks about the data model level.  Of course, when you represent these as EDN, you'll need to use the right representation for the text strings found.  If you represent them as CBOR, you don't need to do any escaping.",
+          "createdAt": "2024-07-05T04:35:06Z",
+          "updatedAt": "2024-07-05T04:35:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6Amihx",
+          "commit": {
+            "abbreviatedOid": "8346d49"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-07-03T22:18:57Z",
+          "updatedAt": "2024-07-03T22:18:57Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "id": "PR_kwDOGLBEBs50X7bh",
+      "title": "Move abnf to body",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/56",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Please look at individual commits, the whole change set is confusing",
+      "createdAt": "2024-07-03T21:18:22Z",
+      "updatedAt": "2024-07-04T18:08:24Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "84148c7e39505026e918d157b2c7dca5f0b8c8b8",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "move-abnf-to-body",
+      "headRefOid": "4e2a34d7b3b2467ce30bca29f55573d0f27b4282",
+      "closedAt": "2024-07-04T18:08:23Z",
+      "mergedAt": "2024-07-04T18:08:23Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "8ed45e971452fb48359dede4414458c5af450718"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6AsqB0",
+          "commit": {
+            "abbreviatedOid": "4e2a34d"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-07-04T15:45:50Z",
+          "updatedAt": "2024-07-04T18:04:49Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 58,
+      "id": "PR_kwDOGLBEBs54o4th",
+      "title": "Remove incorrect part of examples for commented out text",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/58",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Thanks to Joe Hildebrand.",
+      "createdAt": "2024-08-17T11:01:34Z",
+      "updatedAt": "2024-08-18T09:14:12Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "8ed45e971452fb48359dede4414458c5af450718",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "fix-comment-out-example",
+      "headRefOid": "e9169476af877f0dfd7683324ba5567205f6ea79",
+      "closedAt": "2024-08-18T09:14:12Z",
+      "mergedAt": "2024-08-18T09:14:12Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f2746b4f219c0b28ef6fe8a996c0c54b14c25710"
+      },
+      "comments": [
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "wfm",
+          "createdAt": "2024-08-17T15:50:55Z",
+          "updatedAt": "2024-08-17T15:50:55Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 59,
+      "id": "PR_kwDOGLBEBs54o_x5",
+      "title": "Split numbers",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/59",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(Via Joe Hildebrand)",
+      "createdAt": "2024-08-17T12:55:44Z",
+      "updatedAt": "2024-08-18T09:15:45Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "8ed45e971452fb48359dede4414458c5af450718",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "split-numbers",
+      "headRefOid": "353dcae3c97169fa8526bc507faf588968c4a524",
+      "closedAt": "2024-08-18T09:15:45Z",
+      "mergedAt": "2024-08-18T09:15:44Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d5ae0fa591caa3e740e94ee73646005979f9fe5e"
+      },
+      "comments": [
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "I don't think this is terribly necessary if we believe the tools to handle all of those formats in one pass are readily available.  If we are going to make the change, I suggest that the hexfloat bits might want to be a separate rule also, since those are likely to need completely separate processing from the hexints.",
+          "createdAt": "2024-08-17T15:53:59Z",
+          "updatedAt": "2024-08-17T15:53:59Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In the case of my implementation, I now have very simple, if somewhat repetitive (on the level of a few tokens), code.\r\nIt now seems really hard to get this wrong...\r\n",
+          "createdAt": "2024-08-17T16:37:27Z",
+          "updatedAt": "2024-08-17T16:37:27Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(There is indeed a trade-off between making the ABNF best for explaining the syntax and making it most useful as a ready-cut code base for implementers.\r\nI think in this case we have eat the cake and have it, too.)",
+          "createdAt": "2024-08-17T18:32:53Z",
+          "updatedAt": "2024-08-17T18:32:53Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "I think how you have it here is much easier to read.  WFM, thanks.",
+          "createdAt": "2024-08-17T19:13:06Z",
+          "updatedAt": "2024-08-17T19:13:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6FwtXz",
+          "commit": {
+            "abbreviatedOid": "353dcae"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-17T19:13:37Z",
+          "updatedAt": "2024-08-17T19:13:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "id": "PR_kwDOGLBEBs54qrHx",
+      "title": "Reflect the ABNF changes in #59 in the associated descriptive text.",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/60",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-08-18T16:36:37Z",
+      "updatedAt": "2024-08-21T11:49:42Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d5ae0fa591caa3e740e94ee73646005979f9fe5e",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "reflect-split-number-abnf-in-text",
+      "headRefOid": "dab24599491bcdd70859878df06ddca83291f59b",
+      "closedAt": "2024-08-21T11:49:42Z",
+      "mergedAt": "2024-08-21T11:49:42Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "fbf34a2e3a4a8c857fe96bfaf14835fe0c55b12d"
+      },
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merge for 2024-08-21 interim",
+          "createdAt": "2024-08-21T11:49:39Z",
+          "updatedAt": "2024-08-21T11:49:39Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6GCUmU",
+          "commit": {
+            "abbreviatedOid": "dab2459"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-20T18:32:02Z",
+          "updatedAt": "2024-08-20T18:32:02Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 61,
+      "id": "PR_kwDOGLBEBs54q5hS",
+      "title": "Deemphasize the use of Appendix G.4 of RFC 8610",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/61",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Copy and rephrase all relevant processing rules from G.4 so that this is no longer used normatively.",
+      "createdAt": "2024-08-18T20:01:53Z",
+      "updatedAt": "2024-08-21T12:14:05Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d5ae0fa591caa3e740e94ee73646005979f9fe5e",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "deemphasize-g4-of-8610",
+      "headRefOid": "68173cea46fe59d87fec3f4a258365186cee09e6",
+      "closedAt": "2024-08-21T12:14:04Z",
+      "mergedAt": "2024-08-21T12:14:04Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d86fc4e09d5c0fc6f2f7a04345c4cfc4afb4721f"
+      },
+      "comments": [
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "This is more clear, thank you.  I think there needs to be another rule about adjacent ellipses being combined into a single ellipsis.  Here are the rules I've found:\r\n\r\n- The mode of the list is the MT of the first non-ellipsis item in the list.\r\n  If the mode is not tstr or bstr, there can be only one non-ellipsis item.\r\n\r\n- If there is no ellipsis in the list, the result of processing the list will always be a single item.\r\n\r\n- Concatenate adjacent items of the same type, if possible.\r\n  Possible:\r\n  - Ellipsis <- Ellipsis\r\n  - tstr <- tstr\r\n  - tstr <- bstr (but check for UTF8 conformance)\r\n  - bstr <- bstr\r\n  \r\n- Not allowed:\r\n  - bstr <- tstr",
+          "createdAt": "2024-08-20T16:00:05Z",
+          "updatedAt": "2024-08-20T16:00:05Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging now for 2024-08-21 interim",
+          "createdAt": "2024-08-21T12:13:56Z",
+          "updatedAt": "2024-08-21T12:13:56Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 63,
+      "id": "PR_kwDOGLBEBs55GBIv",
+      "title": "Mention zone identifiers (ip'' supports them only indirectly)",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/63",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Close #62\r\n(Thanks, Rohan!)",
+      "createdAt": "2024-08-22T08:46:17Z",
+      "updatedAt": "2024-08-23T16:34:27Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d86fc4e09d5c0fc6f2f7a04345c4cfc4afb4721f",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "mention-zone-identifiers",
+      "headRefOid": "887d866f988aa5cd886eb55ffaf0e566c1c38b7a",
+      "closedAt": "2024-08-23T16:34:26Z",
+      "mergedAt": "2024-08-23T16:34:26Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "cb1dbf1b8c27f8f952458d93e14059f29b38f79f"
+      },
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@rohanmahy Sorry, my github fu is too weak to assign you as a reviewer.\r\n",
+          "createdAt": "2024-08-22T08:53:00Z",
+          "updatedAt": "2024-08-22T08:53:00Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging this now as a basis for an editorial attempt.\r\nAs the discussion is not yet completed (https://github.com/cbor-wg/edn-literal/pull/63#discussion_r1727104056), Issue #62 to be reopened.\r\n",
+          "createdAt": "2024-08-23T16:34:16Z",
+          "updatedAt": "2024-08-23T16:34:16Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6GYluT",
+          "commit": {
+            "abbreviatedOid": "887d866"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-08-22T13:51:52Z",
+          "updatedAt": "2024-08-22T13:52:12Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "I would keep the sentence about zoneinfo separate (for which there is no defined encoding), from the sentence about prefix lengths.\r\n\r\nRegarding the use of prefixes, I would have expected that ip'192.0.2.42/27' meant a host address of 192.0.2.43 with a mask of 255.255.255.224, however it seems that you mean to only use the /prefix notation for networks. If this is the case, I would continue the paragraph with text such what I wrote below.\r\n\r\n```suggestion\r\nNote that there is no direct representation of the \"Interface format\"\r\ndefined in {{Section 3.1.3 of -iptag}}.\r\nAn IP address with prefix in this app-string format represents an entire IP subnet, not a\r\nspecific host IP address and its mask/prefix. An Interface format (host IP address combined with an\r\noptional prefix length and/or optional zone ID) can be represented as in the examples `52([ip'192.0.2.42',27])`, `54([ip'2001:54::b8:82ae:a7c:1234', 64], or `54([ip'fe80::82ae:a7c:1234', null, 'eth2'] , if needed.\r\n```",
+              "createdAt": "2024-08-22T13:51:52Z",
+              "updatedAt": "2024-08-22T13:52:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GayXg",
+          "commit": {
+            "abbreviatedOid": "887d866"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-22T16:51:50Z",
+          "updatedAt": "2024-08-22T16:51:50Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "The point of edn-literal is to provide a notation for tags, not to provide additional documentation for the tags, restating what already is on the definition of a tag.\r\n[Restatements are bad][1].\r\n(And, as I said, I don't want to include an example for zone identifiers here, because it is not the job of this document to meddle with the zone identifiers in 9164.)\r\n\r\n[1]: https://www.ietf.org/archive/id/draft-bormann-restatement-01.html#name-perils-of-restatements",
+              "createdAt": "2024-08-22T16:51:50Z",
+              "updatedAt": "2024-08-22T16:52:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GbHfM",
+          "commit": {
+            "abbreviatedOid": "887d866"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-22T17:32:37Z",
+          "updatedAt": "2024-08-22T17:32:37Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": ">The point of edn-literal is to provide a notation for tags\r\n?? I thought the point of edn-literal was to describe a human-readable notation for CBOR (including tags). \r\n\r\nThe subtlety of the difference between 192.0.2.42/27 (interface format) not representable in an ip app-string and 192.0.2.32/27 (prefix) representable in an ip app-string will be lost on most readers. It is essential to call this out in the description of the app-string.\r\n\r\nExamples are good. They help implementers. You had an example in your text. I just added 2 additional examples. ",
+              "createdAt": "2024-08-22T17:32:37Z",
+              "updatedAt": "2024-08-22T17:32:37Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 64,
+      "id": "PR_kwDOGLBEBs55KaBL",
+      "title": "Add explanatory material on ABNF's character usage.",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/64",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on:\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/lo-gJoXLEySth1YkQXIeDtAMTgU>\r\nThank you, Joe!",
+      "createdAt": "2024-08-22T18:50:20Z",
+      "updatedAt": "2024-08-23T16:32:20Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "d86fc4e09d5c0fc6f2f7a04345c4cfc4afb4721f",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "abnf-notes",
+      "headRefOid": "6efa741756023ebd1b9f4684f97521bee4e9dc17",
+      "closedAt": "2024-08-23T16:32:20Z",
+      "mergedAt": "2024-08-23T16:32:20Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a6080eecc1a83bd46e05d48d52baa059ffdf58dd"
+      },
+      "comments": [
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "+1, LGTM.",
+          "createdAt": "2024-08-22T19:02:19Z",
+          "updatedAt": "2024-08-22T19:02:19Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging this now as a basis for an editorial attempt.",
+          "createdAt": "2024-08-23T16:32:13Z",
+          "updatedAt": "2024-08-23T16:32:13Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 65,
+      "id": "PR_kwDOGLBEBs55UrTz",
+      "title": "Roll up",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/65",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Pull in Section 8 of RFC 8949 and Appendix G of RFC 8610 so we indeed have a single document defining EDN (minus EDN extensions).\r\n\r\nWork in progress.",
+      "createdAt": "2024-08-24T13:26:53Z",
+      "updatedAt": "2024-10-31T15:32:15Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "cb1dbf1b8c27f8f952458d93e14059f29b38f79f",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "roll-up",
+      "headRefOid": "2fce3766a801b99c1f3d60491afb8744594de65a",
+      "closedAt": "2024-10-31T15:32:15Z",
+      "mergedAt": "2024-10-31T15:32:15Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "222fa35b3a489d17aec7e9de5e4a614dffd1fe18"
+      },
+      "comments": [
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "Hi, Thank you Carsten for getting the ball rolling on this. I have not had time go over this in detail yet, but I think getting consensus on an outline/document flow is great. I was pleased with the discussion between you and Joe H on that topic and feel that that work is yielding good results. \r\n\r\nOn a separate note, I think a lot of the material in the Abstract is more appropriate in the Introduction. For the Abstract, I propose the following radically shorter text:\r\n\r\n\"The Compact Binary Object Representation (CBOR) specification includes an informal description of a diagnostic notation, which was augmented over time and is now know as Extended Diagnostic Notation (EDN). This document consolidates previous descriptions of EDN into a formal specification, preserves backwards compatibility with most instance documents, adds requested features which are already implemented, and introduces a limited extensibility mechanism.\"\r\n\r\nThen I think the Introduction would be best split into the material that explains the goals of EDN, how it is related to CBOR, where it is used, that JSON is a strict subset, and summarizes the features in the current incarnation. I would put the \"how we got here\" material into an \"Historical Background\" subsection of the Introduction.\r\n\r\nI hope this helps.\r\nthanks,\r\n-rohan",
+          "createdAt": "2024-08-25T15:32:09Z",
+          "updatedAt": "2024-08-25T15:33:32Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> On a separate note, [...]\r\n\r\nThank you for this feedback.\r\n\r\nI generally write introductory material twice: \r\n\r\n* Once to make up my mind what I want to write\r\n* Once after I have written the main document and know what the introductory material should have said.\r\n\r\nWe aren't at the second point yet.\r\n\r\nI opened issue #66 and #67 so we don't forget this when we get there.\r\n",
+          "createdAt": "2024-08-26T12:41:04Z",
+          "updatedAt": "2024-08-26T12:41:04Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6GoYQb",
+          "commit": {
+            "abbreviatedOid": "ded893e"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-24T13:41:00Z",
+          "updatedAt": "2024-08-24T13:41:00Z",
+          "comments": [
+            {
+              "originalPosition": 118,
+              "body": "```suggestion\r\nNote that EDN is not designed to be the only text-based representation of\r\nCBOR data items.\r\n```",
+              "createdAt": "2024-08-24T13:41:00Z",
+              "updatedAt": "2024-08-24T13:41:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GoYTH",
+          "commit": {
+            "abbreviatedOid": "ded893e"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-24T13:41:51Z",
+          "updatedAt": "2024-08-24T13:41:52Z",
+          "comments": [
+            {
+              "originalPosition": 121,
+              "body": "it might be good to name these features or omit this",
+              "createdAt": "2024-08-24T13:41:52Z",
+              "updatedAt": "2024-08-24T13:41:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GoYdW",
+          "commit": {
+            "abbreviatedOid": "ded893e"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-24T13:45:55Z",
+          "updatedAt": "2024-08-24T13:45:56Z",
+          "comments": [
+            {
+              "originalPosition": 417,
+              "body": "```suggestion\r\n   <<\"hello\", null>>    h'63 68656c6c6f f6'\r\n```",
+              "createdAt": "2024-08-24T13:45:56Z",
+              "updatedAt": "2024-08-24T13:45:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GoYgH",
+          "commit": {
+            "abbreviatedOid": "ded893e"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-24T13:46:37Z",
+          "updatedAt": "2024-08-24T13:46:37Z",
+          "comments": [
+            {
+              "originalPosition": 417,
+              "body": "using the \"edn\" might be more confusing here... also, is there a preferred casing for hex strings?\r\n\r\nfeel free to dismiss this suggestion.",
+              "createdAt": "2024-08-24T13:46:37Z",
+              "updatedAt": "2024-08-24T13:46:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GodHK",
+          "commit": {
+            "abbreviatedOid": "ded893e"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-24T14:36:26Z",
+          "updatedAt": "2024-08-24T14:36:26Z",
+          "comments": [
+            {
+              "originalPosition": 121,
+              "body": "Done (not all features, just two examples).",
+              "createdAt": "2024-08-24T14:36:26Z",
+              "updatedAt": "2024-08-24T14:36:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGLBEBs6GodO4",
+          "commit": {
+            "abbreviatedOid": "ded893e"
+          },
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-24T14:40:11Z",
+          "updatedAt": "2024-08-24T14:40:11Z",
+          "comments": [
+            {
+              "originalPosition": 417,
+              "body": "> is there a preferred casing for hex strings?\r\n\r\nI prefer lower case.  Unfortunately, Section 8 of RFC 4648 uses upper case (while sprinkling a \"case-insensitive\" on the unhappy result, I might add) and that is mostly hardwired in various CBOR specs now.  RFC 6991 is explicitly lowercase.\r\n\r\n* We should have an ART-wide agreement to move to lowercase, where reasonable\r\n* We need to think how much we can pick this up here.",
+              "createdAt": "2024-08-24T14:40:11Z",
+              "updatedAt": "2024-08-24T14:40:12Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 68,
+      "id": "PR_kwDOGLBEBs6AogQE",
+      "title": "Continue roll-up editorial work (round 2)",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/68",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-11-01T13:47:53Z",
+      "updatedAt": "2024-11-01T13:47:53Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "270ae960a5ea1feafec2125b45fc79df1df63980",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "roll-up-2",
+      "headRefOid": "1ad87aaf0f75a8e3806bc886ac0d2d15a6397700",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
