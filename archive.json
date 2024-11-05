@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-03T01:04:42.276503+00:00",
+  "timestamp": "2024-11-05T00:58:57.585321+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3596,13 +3596,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-11-01T13:47:53Z",
-      "updatedAt": "2024-11-01T13:47:53Z",
+      "updatedAt": "2024-11-03T18:51:40Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "270ae960a5ea1feafec2125b45fc79df1df63980",
       "headRepository": "cbor-wg/edn-literal",
       "headRefName": "roll-up-2",
-      "headRefOid": "1ad87aaf0f75a8e3806bc886ac0d2d15a6397700",
+      "headRefOid": "6a4c6d13a52779625e7907cd41c93c431458179f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
