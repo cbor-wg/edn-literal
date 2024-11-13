@@ -886,9 +886,11 @@ EDN uses JSON syntax for the simple values True (>`true`\<), False
 (>`false`\<), and Null (>`null`\<).
 Undefined is written >`undefined`\< as in JavaScript.
 
-Other simple values are given as "simple()" with the appropriate
-integer in the parentheses. For example, >`simple(42)`\< indicates major
-type 7, value 42.
+These and all other simple values can be given as "simple()" with the
+appropriate integer in the parentheses.  For example, >`simple(42)`\<
+indicates major type 7, value 42, and >`simple(0x14)`\< indicates
+>`false`\<, as does >`simple(20)`\< or >`simple(0b10100)`\<.
+
 
 
 Application-Oriented Extension Literals {#app-lit}
