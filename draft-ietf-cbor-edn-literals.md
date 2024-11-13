@@ -7,9 +7,10 @@ docname: draft-ietf-cbor-edn-literals-latest
 # date: 2024-11-01
 
 keyword: Internet-Draft
-cat: info
+cat: std
 stream: IETF
-# consensus: true
+consensus: true
+updates: 8610, 8949
 
 pi: [toc, sortrefs, symrefs, compact, comments]
 
@@ -120,18 +121,24 @@ informative:
 
 [^abs1a-] (RFC 7049) [^abs1b-] RFC 8610 [^abs1c-]
 
-[^abs3-]: This document consolidates the definition of EDN, sets forth
+[^abs3a-]: This document consolidates the definition of EDN, sets forth
     a further step of its evolution,
     and is intended to serve as a single reference target in
     specifications that use EDN.
+    It updates
 
+​[^abs3a-]
+RFC 8949, obsoleting its Section 8, and
+RFC 8610, obsoleting its Appendix G.
+
+[^abs3b-]:
     It specifies an extension point for adding application-oriented extensions to
     the diagnostic notation.
     It then defines two such extensions that enhance EDN with text
     representations of epoch-based date/times and of IP addresses
     and prefixes
 
-​[^abs3-] (RFC 9164).
+[^abs3b-] (RFC 9164).
 
 [^abs4a-]: A few further additions close some gaps in usability.
      The document modifies one extension originally specified in
@@ -146,15 +153,8 @@ informative:
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision `-13` reflects the branches "roll-up"
-    and "roll-up-2" in
-    the repository, an attempt to contain the entire specification of
-    EDN in this document, instead of describing updates to the
-    existing documents RFC 8949 and RFC 8610.
-    Editorial work on the branch "roll-up-2" might continue.
-    The exact reflection of this document being a replacement for both
-    Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
-    recorded in the metadata and in abstract and introduction.
+    The present revision `-14` is intended to reflect the feedback on `-13` as
+    discussed during IETF 121.
 
 --- middle
 
@@ -173,7 +173,11 @@ for representing CBOR constructs such as binary data and tags.
     not serve to create another interchange format, but enables the use of
     a shared diagnostic notation in tools for and in documents about CBOR.)
 
-[^abs3-] {{-iptag}}.
+​[^abs3a-]
+{{RFC8949}}, obsoleting {{Section 8 of RFC8949@-cbor}}, and
+{{RFC8610}}, obsoleting {{Appendix G of -cddl}}.
+
+[^abs3b-] {{-iptag}}.
 
 [^abs4a-] {{Appendix G.4 of -cddl}} [^abs4b-].
     (See {{grammar}} for an overall ABNF grammar as well as the
