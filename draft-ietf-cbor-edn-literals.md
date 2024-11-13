@@ -1084,8 +1084,12 @@ number CPA999 ({{iana-standin}}).
 The content of this tag is an array of two text strings: The
 application-extension identifier, and the (escape-processed) content
 of the single-quoted string.
+<!-- 
 For example, `dt'1969-07-21T02:56:16Z'` can be provisionally represented as
 `/CPA/ 999(["dt", "1969-07-21T02:56:16Z"])`.
+ -->
+For example, `cri'https://example.com'` can be provisionally represented as
+`/CPA/ 999(["cri", "https://example.com"])`.
 
 If a stage of ingestion is not prepared to handle the Unresolved
 Application-Extension Tag, this is an error and processing has to
