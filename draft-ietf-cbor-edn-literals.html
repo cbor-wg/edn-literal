@@ -6,12 +6,12 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>CBOR Extended Diagnostic Notation (EDN)</title>
 <meta content="Carsten Bormann" name="author">
-<meta content="
+<meta content='
        The Concise Binary Object Representation (CBOR) (STD 94, RFC 8949)
 is a data format whose design goals include the possibility of
 extremely small code size, fairly small message size, and
 extensibility without the need for version negotiation. 
-       In addition to the binary interchange format, CBOR from the outset (RFC 7049) defined a text-based &quot;diagnostic notation&quot; in
+       In addition to the binary interchange format, CBOR from the outset (RFC 7049) defined a text-based "diagnostic notation" in
 order to be able to converse about CBOR data items without having
 to resort to binary data. RFC 8610 extended this into what is known as Extended Diagnostic
 Notation (EDN). 
@@ -28,33 +28,28 @@ and prefixes (RFC 9164).
  The document modifies one extension originally specified in Appendix G.4 of RFC 8610 to enable further increasing usability.
  To facilitate tool interoperation, this document
  specifies a formal ABNF grammar, and it adds media types. 
-       The present revision  -12  reflects the branch &quot;roll-up&quot; in
+       (This "cref" paragraph will be removed by the RFC editor:) 
+The present revision  -13  reflects the branches "roll-up"
+and "roll-up-2" in
 the repository, an attempt to contain the entire specification of
 EDN in this document, instead of describing updates to the
 existing documents RFC 8949 and RFC 8610.
-While the WG hasn't taken a decision to follow
-this updated editorial approach, the feedback has been
-sufficiently positive that the author believes it is not
-misleading to make this revision available as the current WG
-Internet-Draft as well. 
-That said, this is still a snapshot.
-The editorial work on the branch &quot;roll-up&quot; is not complete.
-Content will continue to move between sections.
+Editorial work on the branch "roll-up-2" might continue.
 The exact reflection of this document being a replacement for both
 Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
 recorded in the metadata and in abstract and introduction. 
-    " name="description">
-<meta content="xml2rfc 3.23.2" name="generator">
+    ' name="description">
+<meta content="xml2rfc 3.24.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-cbor-edn-literals-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.23.2
+  xml2rfc 3.24.0
     Python 3.12.7
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
-    lxml 4.9.4
+    lxml 5.3.0
     platformdirs 4.3.6
     pycountry 22.3.5
     PyYAML 6.0.1
@@ -1112,11 +1107,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CBOR Extended Diagnostic Notation (EDN)</td>
-<td class="right">October 2024</td>
+<td class="right">November 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 4 May 2025</td>
+<td class="center">Expires 17 May 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1129,12 +1124,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-cbor-edn-literals-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-10-31" class="published">31 October 2024</time>
+<time datetime="2024-11-13" class="published">13 November 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-05-04">4 May 2025</time></dd>
+<dd class="expires"><time datetime="2025-05-17">17 May 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1168,18 +1163,13 @@ and prefixes (RFC 9164).<a href="#section-abstract-4" class="pilcrow">¶</a></p>
  The document modifies one extension originally specified in Appendix G.4 of RFC 8610 to enable further increasing usability.
  To facilitate tool interoperation, this document
  specifies a formal ABNF grammar, and it adds media types.<a href="#section-abstract-5" class="pilcrow">¶</a></p>
-<p id="section-abstract-6"><span class="cref" id="status">The present revision <code>-12</code> reflects the branch "roll-up" in
+<p id="section-abstract-6"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC editor:)<br>
+The present revision <code>-13</code> reflects the branches "roll-up"
+and "roll-up-2" in
 the repository, an attempt to contain the entire specification of
 EDN in this document, instead of describing updates to the
 existing documents RFC 8949 and RFC 8610.
-While the WG hasn't taken a decision to follow
-this updated editorial approach, the feedback has been
-sufficiently positive that the author believes it is not
-misleading to make this revision available as the current WG
-Internet-Draft as well.<br>
-That said, this is still a snapshot.
-The editorial work on the branch "roll-up" is not complete.
-Content will continue to move between sections.
+Editorial work on the branch "roll-up-2" might continue.
 The exact reflection of this document being a replacement for both
 Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
 recorded in the metadata and in abstract and introduction.</span><a href="#section-abstract-6" class="pilcrow">¶</a></p>
@@ -1219,7 +1209,7 @@ recorded in the metadata and in abstract and introduction.</span><a href="#secti
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1278,16 +1268,19 @@ recorded in the metadata and in abstract and introduction.</span><a href="#secti
                 <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-strings" class="internal xref">Strings</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4.2.1">
-                    <p id="section-toc.1-1.2.2.4.2.1.1"><a href="#section-2.4.1" class="auto internal xref">2.4.1</a>.  <a href="#name-encoding-indicators-of-stri" class="internal xref">Encoding Indicators of Strings</a></p>
+                    <p id="section-toc.1-1.2.2.4.2.1.1"><a href="#section-2.4.1" class="auto internal xref">2.4.1</a>.  <a href="#name-prefixed-string-literals" class="internal xref">Prefixed String Literals</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4.2.2">
-                    <p id="section-toc.1-1.2.2.4.2.2.1"><a href="#section-2.4.2" class="auto internal xref">2.4.2</a>.  <a href="#name-base-encoded-byte-string-li" class="internal xref">Base-Encoded Byte String Literals</a></p>
+                    <p id="section-toc.1-1.2.2.4.2.2.1"><a href="#section-2.4.2" class="auto internal xref">2.4.2</a>.  <a href="#name-encoding-indicators-of-stri" class="internal xref">Encoding Indicators of Strings</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4.2.3">
-                    <p id="section-toc.1-1.2.2.4.2.3.1"><a href="#section-2.4.3" class="auto internal xref">2.4.3</a>.  <a href="#name-embedded-cbor-and-cbor-sequ" class="internal xref">Embedded CBOR and CBOR Sequences in Byte Strings</a></p>
+                    <p id="section-toc.1-1.2.2.4.2.3.1"><a href="#section-2.4.3" class="auto internal xref">2.4.3</a>.  <a href="#name-base-encoded-byte-string-li" class="internal xref">Base-Encoded Byte String Literals</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4.2.4">
-                    <p id="section-toc.1-1.2.2.4.2.4.1"><a href="#section-2.4.4" class="auto internal xref">2.4.4</a>.  <a href="#name-validity-of-text-strings" class="internal xref">Validity of Text Strings</a></p>
+                    <p id="section-toc.1-1.2.2.4.2.4.1"><a href="#section-2.4.4" class="auto internal xref">2.4.4</a>.  <a href="#name-embedded-cbor-and-cbor-sequ" class="internal xref">Embedded CBOR and CBOR Sequences in Byte Strings</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4.2.5">
+                    <p id="section-toc.1-1.2.2.4.2.5.1"><a href="#section-2.4.5" class="auto internal xref">2.4.5</a>.  <a href="#name-validity-of-text-strings" class="internal xref">Validity of Text Strings</a></p>
 </li>
                 </ul>
 </li>
@@ -1492,7 +1485,7 @@ diagnostic notation originally defined in <span><a href="https://rfc-editor.org/
 Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> have
 collectively been called "Extended Diagnostic Notation" (EDN), giving
 the present document its name.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">After introductory material, <a href="#application-oriented-extension-literals" class="auto internal xref">Section 3</a>
+<p id="section-1.1-2">After introductory material, <a href="#app-lit" class="auto internal xref">Section 3</a>
 introduces the concept of application-oriented extension literals and
 defines the "dt" and "ip" extensions.
 <a href="#stand-in" class="auto internal xref">Section 4</a> defines mechanisms
@@ -1544,7 +1537,7 @@ Additional information about the relationship between the two
 languages EDN and CDDL is captured in <a href="#edn-and-cddl" class="auto internal xref">Appendix A</a>.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
 <p id="section-1.2-5">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
-described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+described in <span>[<a href="#BCP14" class="cite xref">BCP14</a>]</span> (<a href="#RFC2119" class="auto internal xref">RFC2119</a>) (<a href="#RFC8174" class="auto internal xref">RFC8174</a>) when, and only when, they
 appear in all capitals, as shown here.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1561,7 +1554,7 @@ In particular, it states:<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 </blockquote>
 <p id="section-1.3-3">One important application of EDN is the notation of CBOR data for
 humans: in specifications, on whiteboards, and for entering test data.
-A number of features, such as comments in string literals, are mainly
+A number of features, such as comments inside prefixed string literals, are mainly
 useful for people-to-people communication via EDN.
 Programs also often output EDN for diagnostic purposes, such as in
 error messages or to enable comparison (including generation of diffs
@@ -1638,7 +1631,7 @@ text also is an EDN text), extending it both to cover the greater
 expressiveness of CBOR and to increase its usability.<a href="#section-2-3" class="pilcrow">¶</a></p>
 <p id="section-2-4">EDN borrows the JSON syntax for numbers (integer and
 floating-point, <a href="#numbers" class="auto internal xref">Section 2.3</a>), certain simple values (<a href="#simple-values" class="auto internal xref">Section 2.7</a>),
-UTF-8 text
+UTF-8 <span>[<a href="#STD63" class="cite xref">STD63</a>]</span> text
 strings, arrays, and maps (maps are called objects in JSON; the
 diagnostic notation extends JSON here by allowing any data item in the
 map key position).<a href="#section-2-4" class="pilcrow">¶</a></p>
@@ -1652,7 +1645,8 @@ with basic validity discussed in Section <a href="https://rfc-editor.org/rfc/rfc
 tag validity discussed in Section <a href="https://rfc-editor.org/rfc/rfc8949#section-5.3.2" class="relref">5.3.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.
 Tag validity is more likely a subject for individual
 application-oriented extensions, while the two cases of basic validity
-(for text strings and for maps) are addressed below under the heading
+(for text strings and for maps) are addressed in Sections
+<a href="#text-validity" class="auto internal xref">2.4.5</a> and <a href="#map-validity" class="auto internal xref">2.5.2</a> under the heading
 of <em>validity</em>.<a href="#section-2-5" class="pilcrow">¶</a></p>
 <p id="section-2-6">The rest of this section provides an overview over specific features
 of EDN, starting with certain common syntactical features and then
@@ -1714,28 +1708,47 @@ a pair of a "<code>#</code>" and the end of the line is considered blank space
         <h3 id="name-encoding-indicators">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-encoding-indicators" class="section-name selfRef">Encoding Indicators</a>
         </h3>
-<p id="section-2.2-1">TODO: align this with <a href="#spec" class="auto internal xref">Section 5.1, Paragraph 7, Item 6</a><a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2">Sometimes it is useful to indicate in the diagnostic notation which of
+<p id="section-2.2-1">Sometimes it is useful to indicate in the diagnostic notation which of
 several alternative representations were actually used; for example, a
 data item written &gt;1.5&lt; by a diagnostic decoder might have been
-encoded as a half-, single-, or double-precision float.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2-3">The convention for encoding indicators is that anything starting with
-an underscore and all following characters that are alphanumeric or
+encoded as a half-, single-, or double-precision float.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">The convention for encoding indicators is that anything starting with
+an underscore and all immediately following characters that are alphanumeric or
 underscore is an encoding indicator, and can be ignored by anyone not
 interested in this information.  For example, <code>_</code> or <code>_3</code>.
 Encoding indicators are always
-optional.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2-4">An underscore followed by a decimal digit n indicates that the
+optional.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
+the numeric value of the field <em>additional information</em>, the low-order 5
+bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">An underscore followed by a decimal digit <code>n</code> indicates that the
 preceding item (or, for arrays and maps, the item starting with the
 preceding bracket or brace) was encoded with an additional information
-value of 24+n.  For example, <code>1.5_1</code> is a half-precision floating-point
-number, while <code>1.5_3</code> is encoded as double precision.
-
-(Note that the encoding
-indicator "_" is thus an abbreviation of the full form "_7", which is
-not used.)<a href="#section-2.2-4" class="pilcrow">¶</a></p>
-<p id="section-2.2-5">Encoding Indicators are discussed further below for indefinite length
-strings, and for arrays and maps.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+value of <code>ai=</code>24+<code>n</code>.  For example, <code>1.5_1</code> is a half-precision floating-point
+number, while <code>1.5_3</code> is encoded as double precision.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">The encoding indicator <code>_</code> is an abbreviation of what would in full
+form be <code>_7</code>, which is not used.
+Therefore, an underscore <code>_</code> on its own stands for indefinite length
+encoding (<code>ai=31</code>).
+(Note that this encoding indicator is only available behind the opening
+brace/bracket for <code>map</code> and <code>array</code> (<a href="#ei-container" class="auto internal xref">Section 2.5.1</a>): strings have a special syntax
+<code>streamstring</code> for indefinite length encoding except for the special
+cases ''_ and ""_ (<a href="#ei-string" class="auto internal xref">Section 2.4.2</a>).)<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">The encoding indicators <code>_0</code> to <code>_3</code> can be used to indicate <code>ai=24</code>
+to <code>ai=27</code>, respectively.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.2-7">Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
+<code>ai=23</code> — the assumption seems to have been that preferred serialization
+(Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
+diagnostic notation to an encoded CBOR data item, so leaving out the
+encoding indicator for a data item with a preferred serialization
+will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
+The present specification allows making this explicit:<a href="#section-2.2-7" class="pilcrow">¶</a></p>
+<p id="section-2.2-8"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">While no pressing use for further values for encoding indicators
+comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 6.2</a> defines
+a registry for additional values.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<p id="section-2.2-10">Encoding Indicators are discussed in further detail in <a href="#ei-string" class="auto internal xref">Section 2.4.2</a> for
+indefinite length strings and in <a href="#ei-container" class="auto internal xref">Section 2.5.1</a> for arrays and maps.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="numbers">
@@ -1795,11 +1808,12 @@ of numbers in CBOR can be found in the informational document
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-strings" class="section-name selfRef">Strings</a>
         </h3>
 <p id="section-2.4-1">CBOR distinguishes two kinds of strings: text strings (the bytes in
-the string constitute UTF-8 text, major type 3), and byte strings
+the string constitute UTF-8 <span>[<a href="#STD63" class="cite xref">STD63</a>]</span> text, major type 3), and byte strings
 (CBOR does not further characterize the bytes that constitute the
 string, major type 2).<a href="#section-2.4-1" class="pilcrow">¶</a></p>
 <p id="section-2.4-2">EDN notates text strings in a form compatible to that of notating text
-strings in JSON, with a number of usability extensions.
+strings in JSON (i.e., as a double-quoted string literal), with a
+number of usability extensions.
 In JSON, no control characters are allowed to occur
 directly in text string literals; if needed, they can be specified using
 escapes such as <code>\t</code> or <code>\r</code>.
@@ -1808,9 +1822,9 @@ U+000A), which are copied into the resulting string like other
 characters in the string literal.
 To deal with variability in platform presentation of newlines, any
 carriage return characters (U+000D) that may be present in the EDN
-text are not copied into the resulting string (see <a href="#cr" class="auto internal xref">Section 5.1, Paragraph 7, Item 2</a>).
-No other control characters can occur in a string literal, and the
-handling of escaped characters (<code>\r</code> etc.) is as in JSON.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+string literal are not copied into the resulting string (see <a href="#cr" class="auto internal xref">Section 5.1, Paragraph 7, Item 2</a>).
+No other control characters can occur directly in a string literal,
+and the handling of escaped characters (<code>\r</code> etc.) is as in JSON.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-3">JSON's escape scheme for characters that are not on Unicode's basic
 multilingual plane (BMP) is cumbersome.
 EDN keeps it, but also adds the syntax <code>\u{NNN}</code> where NNN is the
@@ -1826,7 +1840,7 @@ This means the following are equivalent (the first <code>o</code> is escaped as
 </div>
 <p id="section-2.4-5">EDN adds a number of ways to notate byte strings, some of which
 provide detailed access to the bits within those bytes (see
-<a href="#encoded-byte-strings" class="auto internal xref">Section 2.4.2</a>).
+<a href="#encoded-byte-strings" class="auto internal xref">Section 2.4.3</a>).
 However, quite often, byte strings carry bytes that can be meaningfully
 notated as UTF-8 text.
 Analogously to text string literals delimited by double quotes, EDN
@@ -1843,12 +1857,37 @@ h'68656c6c6f20776f726c64'
 text-based byte string literals, e.g., <code>\\</code> stands for a single
 backslash and <code>\'</code> stands for a single quote.
 (See <a href="#concat" class="auto internal xref">Section 5.1, Paragraph 7, Item 7</a> for details.)<a href="#section-2.4-7" class="pilcrow">¶</a></p>
-<div id="encoding-indicators-of-strings">
+<div id="prefixed-lit">
 <section id="section-2.4.1">
-          <h4 id="name-encoding-indicators-of-stri">
-<a href="#section-2.4.1" class="section-number selfRef">2.4.1. </a><a href="#name-encoding-indicators-of-stri" class="section-name selfRef">Encoding Indicators of Strings</a>
+          <h4 id="name-prefixed-string-literals">
+<a href="#section-2.4.1" class="section-number selfRef">2.4.1. </a><a href="#name-prefixed-string-literals" class="section-name selfRef">Prefixed String Literals</a>
           </h4>
-<p id="section-2.4.1-1">The detailed chunk structure of byte and text strings encoded with
+<p id="section-2.4.1-1">Single-quoted string literals can be prefixed by a sequence of ASCII
+letters and digits, starting with a letter, and using either lower
+case or upper case throughout.
+&gt;false&lt;, &gt;true&lt;, &gt;null&lt;, and &gt;undefined&lt; cannot be used as such
+prefixes.
+This means that the text string value (the "content") of the single-quoted string
+literal is not used directly as a byte string, but is further
+processed in a way that is defined by the meaning given to the prefix.
+Depending on the prefix, the result of that processing can, but need
+not be, a byte string value.<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-2">Prefixed string literals (which are always single-quoted after the
+prefix) are used both for base-encoded byte string literals (see <a href="#encoded-byte-strings" class="auto internal xref">Section 2.4.3</a>) and for
+application-oriented extension literals (see <a href="#app-lit" class="auto internal xref">Section 3</a>, called app-string).
+(Additional base-encoded string literals can be defined as
+application-oriented extension literals by registering their prefixes;
+there is no fundamental difference between the two predefined
+base-encoded string literal prefixes (<code>h</code>, <code>b64</code>) and any such potential
+future extension literal prefixes.)<a href="#section-2.4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="ei-string">
+<section id="section-2.4.2">
+          <h4 id="name-encoding-indicators-of-stri">
+<a href="#section-2.4.2" class="section-number selfRef">2.4.2. </a><a href="#name-encoding-indicators-of-stri" class="section-name selfRef">Encoding Indicators of Strings</a>
+          </h4>
+<p id="section-2.4.2-1">The detailed chunk structure of byte and text strings encoded with
 indefinite length can be
 notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
 However, for an indefinite-length string with no chunks inside, (_ )
@@ -1858,83 +1897,95 @@ The basic forms <code>''_</code> and <code>""_</code> can be used instead and ar
 the case of no chunks only --- not as short forms for the (permitted,
 but not really useful) encodings with only empty chunks, which
 need to be notated as (_ ''), (_ ""), etc.,
-to preserve the chunk structure.<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
+to preserve the chunk structure.<a href="#section-2.4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="encoded-byte-strings">
-<section id="section-2.4.2">
+<section id="section-2.4.3">
           <h4 id="name-base-encoded-byte-string-li">
-<a href="#section-2.4.2" class="section-number selfRef">2.4.2. </a><a href="#name-base-encoded-byte-string-li" class="section-name selfRef">Base-Encoded Byte String Literals</a>
+<a href="#section-2.4.3" class="section-number selfRef">2.4.3. </a><a href="#name-base-encoded-byte-string-li" class="section-name selfRef">Base-Encoded Byte String Literals</a>
           </h4>
-<p id="section-2.4.2-1">Besides the unprefixed byte string literals that are analogous to JSON text
+<p id="section-2.4.3-1">Besides the unprefixed byte string literals that are analogous to JSON text
 string literals, EDN provides base-encoded byte string literals.
-These are notated in one of the base encodings <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>, without
-padding, enclosed in a single-quoted string literal, prefixed by &gt;h&lt; for base16 or
+These are notated as prefixed string literals that carry one of the base encodings <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>, without
+padding, i.e., the base encoding is
+enclosed in a single-quoted string literal, prefixed by &gt;h&lt; for base16 or
 &gt;b64&lt; for base64 or base64url (the actual encodings of the latter do
 not overlap, so the string remains unambiguous).
-For example, the byte string consisting of the four bytes <code>12 34 56
-78</code> (given in hexadecimal here) could be written <code>h'12345678'</code> or <code>b64'EjRWeA'</code>.<a href="#section-2.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.4.2-2">(Note that Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> also mentions &gt;b32&lt; for
+For example, the byte string consisting of the four bytes <code>12 34 56 78</code>
+(given in hexadecimal here) could be written <code>h'12345678'</code> or <code>b64'EjRWeA'</code>.<a href="#section-2.4.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.4.3-2">(Note that Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> also mentions &gt;b32&lt; for
 base32 and &gt;h32&lt; for base32hex.
 This has not been implemented widely
 and therefore is not directly included in this specification.
 These and further byte string formats now can easily be added back as
-application-oriented literals.)<a href="#section-2.4.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.4.2-3">Examples often benefit from some blank space (spaces, line breaks) in
+application-oriented extension literals.)<a href="#section-2.4.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.4.3-3">Examples often benefit from some blank space (spaces, line breaks) in
 byte strings.  In EDN, blank space is ignored in prefixed byte strings; for
-instance, the following are equivalent:<a href="#section-2.4.2-3" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-2.4.2-4">
+instance, the following are equivalent:<a href="#section-2.4.3-3" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.4.3-4">
 <pre>
    h'48656c6c6f20776f726c64'
    h'48 65 6c 6c 6f 20 77 6f 72 6c 64'
    h'4 86 56c 6c6f
      20776 f726c64'
-</pre><a href="#section-2.4.2-4" class="pilcrow">¶</a>
+</pre><a href="#section-2.4.3-4" class="pilcrow">¶</a>
 </div>
-<p id="section-2.4.2-5">Note that the internal syntax of prefixed single-quote literals such
+<p id="section-2.4.3-5">Note that the internal syntax of prefixed single-quote literals such
 as h'' and b64'' can allow comments as blank space (see <a href="#comments" class="auto internal xref">Section 2.1</a>).
 Since slash characters are allowed in b64'', only inline comments are
-available in b64 string literals.<a href="#section-2.4.2-5" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-2.4.2-6">
+available in b64 string literals.<a href="#section-2.4.3-5" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.4.3-6">
 <pre>
    h'68656c6c6f20776f726c64'
    h'68 65 6c /doubled l!/ 6c 6f # hello
      20 /space/
      77 6f 72 6c 64' /world/
-</pre><a href="#section-2.4.2-6" class="pilcrow">¶</a>
+</pre><a href="#section-2.4.3-6" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="embedded-cbor-and-cbor-sequences-in-byte-strings">
-<section id="section-2.4.3">
+<section id="section-2.4.4">
           <h4 id="name-embedded-cbor-and-cbor-sequ">
-<a href="#section-2.4.3" class="section-number selfRef">2.4.3. </a><a href="#name-embedded-cbor-and-cbor-sequ" class="section-name selfRef">Embedded CBOR and CBOR Sequences in Byte Strings</a>
+<a href="#section-2.4.4" class="section-number selfRef">2.4.4. </a><a href="#name-embedded-cbor-and-cbor-sequ" class="section-name selfRef">Embedded CBOR and CBOR Sequences in Byte Strings</a>
           </h4>
-<p id="section-2.4.3-1">Where a byte string is to carry an embedded CBOR-encoded item, or more
+<p id="section-2.4.4-1">Where a byte string is to carry an embedded CBOR-encoded item, or more
 generally a sequence of zero or more such items, the diagnostic
 notation for these zero or more CBOR data items, separated by commas,
 can be enclosed in <code>&lt;&lt;</code> and <code>&gt;&gt;</code> to notate the byte string
 resulting from encoding the data items and concatenating the result.
 For
-instance, each pair of columns in the following are equivalent:<a href="#section-2.4.3-1" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-2.4.3-2">
+instance, each pair of columns in the following are equivalent:<a href="#section-2.4.4-1" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.4.4-2">
 <pre>
    &lt;&lt;1&gt;&gt;              h'01'
    &lt;&lt;1, 2&gt;&gt;           h'0102'
    &lt;&lt;"hello", null&gt;&gt;  h'65 68656c6c6f f6'
    &lt;&lt;&gt;&gt;               h''
-</pre><a href="#section-2.4.3-2" class="pilcrow">¶</a>
+</pre><a href="#section-2.4.4-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
-<div id="validity-of-text-strings">
-<section id="section-2.4.4">
+<div id="text-validity">
+<section id="section-2.4.5">
           <h4 id="name-validity-of-text-strings">
-<a href="#section-2.4.4" class="section-number selfRef">2.4.4. </a><a href="#name-validity-of-text-strings" class="section-name selfRef">Validity of Text Strings</a>
+<a href="#section-2.4.5" class="section-number selfRef">2.4.5. </a><a href="#name-validity-of-text-strings" class="section-name selfRef">Validity of Text Strings</a>
           </h4>
-<p id="section-2.4.4-1">TODO: Add general text about validity of text strings, also addressing
-the semantics of concatenation (<code>+</code>).
-This could move up some text from <a href="#concat" class="auto internal xref">Section 5.1, Paragraph 7, Item 7</a> and following.<a href="#section-2.4.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4.5-1">To be valid CBOR, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-5.3.1" class="relref">5.3.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> requires that text
+strings are byte sequences in UTF-8 <span>[<a href="#STD63" class="cite xref">STD63</a>]</span> form.
+EDN provides several ways to construct such byte strings (see <a href="#concat" class="auto internal xref">Section 5.1, Paragraph 7, Item 7</a>
+for details).
+These mechanisms might operate on subsequences that do not themselves
+constitute UTF-8, e.g., by building larger sequences out of
+concatenating the subsequences; for validity of a text string
+resulting from these mechanisms it is only of importance that the
+result is UTF-8.
+Both double-quoted and single-quoted string literals have been defined
+such that they lead to byte sequences that are UTF-8: the source
+language of EDN is UTF-8, and all escaping mechanisms lead only to
+adding further UTF-8 characters.
+Only prefixed string literals can generate non-UTF-8 byte sequences.<a href="#section-2.4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1989,7 +2040,7 @@ enabling an easier to maintain "terminator" style of their use.<a href="#section
   In summary, comma use is now aligned between EDN and CDDL, in a
   fully backwards compatible way.<a href="#section-2.5-9.1" class="pilcrow">¶</a></p>
 </aside>
-<div id="encoding-indicators-of-arrays-and-maps">
+<div id="ei-container">
 <section id="section-2.5.1">
           <h4 id="name-encoding-indicators-of-arra">
 <a href="#section-2.5.1" class="section-number selfRef">2.5.1. </a><a href="#name-encoding-indicators-of-arra" class="section-name selfRef">Encoding Indicators of Arrays and Maps</a>
@@ -2001,7 +2052,7 @@ contains an indicator that an indefinite-length representation was
 used to represent the data item <code>[1, 2]</code>.<a href="#section-2.5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="validity-of-maps">
+<div id="map-validity">
 <section id="section-2.5.2">
           <h4 id="name-validity-of-maps">
 <a href="#section-2.5.2" class="section-number selfRef">2.5.2. </a><a href="#name-validity-of-maps" class="section-name selfRef">Validity of Maps</a>
@@ -2049,7 +2100,7 @@ type 7, value 42.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
 </div>
 </section>
 </div>
-<div id="application-oriented-extension-literals">
+<div id="app-lit">
 <section id="section-3">
       <h2 id="name-application-oriented-extens">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-application-oriented-extens" class="section-name selfRef">Application-Oriented Extension Literals</a>
@@ -2082,8 +2133,8 @@ stands for a CBOR data item the value of which is derived from the
 text given in the single-quoted string using a procedure defined in
 the specification for an application-extension identifier.<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">An application-extension (such as <code>dt</code>) <span class="bcp14">MAY</span> also define the meaning of
-a variant of the application-extension identifier where each
-lower-case character is replaced by its upper-case counterpart (such
+a variant prefix built out of the application-extension identifier by
+replacing each lower-case character by its upper-case counterpart (such
 as <code>DT</code>), for building an application-oriented extension literal using
 that all-uppercase variant as the prefix of a single-quoted string.<a href="#section-3-7" class="pilcrow">¶</a></p>
 <p id="section-3-8">As a convention for such definitions, using the all-uppercase variant
@@ -2137,13 +2188,13 @@ DT'1969-07-21T02:56:16Z'
 address literal that can be used as an IP address as per <span><a href="https://rfc-editor.org/rfc/rfc9164#section-3" class="relref">Section 3</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">The text of the literal is an IPv4address or IPv6address as per
 <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">Section 3.2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">With the lower-case app-string <code>ip</code>, the value of the literal is a
+<p id="section-3.2-3">With the lower-case app-string prefix <code>ip</code>, the value of the literal is a
 byte string representing the binary IP address.
-With the upper-case app-string <code>IP</code>, the literal is such a byte string
+With the upper-case app-string prefix <code>IP</code>, the literal is such a byte string
 tagged with tag number 54, if an IPv6address is used, or tag number
 52, if an IPv4address is used.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2-4">As an additional case, the upper-case app-string <code>IP''</code> can be used
-with a prefix such as <code>2001:db8::/56</code> or <code>192.0.2.0/24</code>, with the equivalent tag as its value.
+<p id="section-3.2-4">As an additional case, the upper-case app-string prefix <code>IP''</code> can be used
+with an IP address prefix such as <code>2001:db8::/56</code> or <code>192.0.2.0/24</code>, with the equivalent tag as its value.
 (Note that <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span> representations of address prefixes need to
 implement the truncation of the address byte string as described in
 <span><a href="https://rfc-editor.org/rfc/rfc9164#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>; see example below.)
@@ -2365,9 +2416,52 @@ interpretation (see <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-A
         </h3>
 <p id="section-5.1-1">This subsection provides an overall ABNF definition for the syntax of
 CBOR extended diagnostic notation.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">To complete the parsing of an <code>app-string</code> with prefix, say, <code>p</code>, the
-processed <code>sqstr</code> inside it is further parsed using the ABNF definition specified
-for the production <code>app-string-p</code> in <a href="#app-grammars" class="auto internal xref">Section 5.2</a>.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<aside id="section-5.1-2">
+          <p id="section-5.1-2.1">This ABNF definition treats all single-quoted strings the same,
+whether they are unprefixed and constitute byte string literals, or
+prefixed and their content subject to further processing.
+The text string value of the single-quoted strings that goes into that
+further processing is described using separate ABNF definitions in
+<a href="#app-grammars" class="auto internal xref">Section 5.2</a>; as a convention, the grammar for the content of an
+app-string<code> with  prefix, say, </code>p<code>, is described by an ABNF definition
+with the rule name </code>app-string-p`.<a href="#section-5.1-2.1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2.2">As an implementation note, some implementations may want to integrate
+the parsing and processing of app-string content with the overall
+grammar.
+Such an integrated syntax is not defined in this specification, but it can
+be derived from the overall ABNF definition and the prefix-specific
+app-string ABNF definitions by mechanically replacing each character in the
+app-string definition in <a href="#app-grammars" class="auto internal xref">Section 5.2</a> by the ways that character can be
+represented in the overall ABNF.<a href="#section-5.1-2.2" class="pilcrow">¶</a></p>
+<p id="section-5.1-2.3">E.g., the rules<a href="#section-5.1-2.3" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-5.1-2.4.1">
+              <div class="lang-abnf sourcecode" id="section-5.1-2.4.1.1">
+<pre>
+HEXDIG          = DIGIT /
+                  "A" / "B" / "C" / "D" / "E" / "F"
+DIGIT           = %x30-39
+</pre><a href="#section-5.1-2.4.1.1" class="pilcrow">¶</a>
+</div>
+</li>
+          </ul>
+<p id="section-5.1-2.5">can be expanded to<a href="#section-5.1-2.5" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-5.1-2.6.1">
+              <div class="lang-abnf sourcecode" id="section-5.1-2.6.1.1">
+<pre>
+qHEXDIG         = qDIGIT /
+                  "A" / "B" / "C" / "D" / "E" / "F" /
+                  (ULZ ("4"/"6") %x31-36 "}")
+qDIGIT          = %x30-39 /
+                  (ULZ ("3") %x30-39 "}")
+ULZ             = %s"\u{" *"0"
+</pre><a href="#section-5.1-2.6.1.1" class="pilcrow">¶</a>
+</div>
+</li>
+          </ul>
+<p id="section-5.1-2.7">A tool that performs this mechanical substitution is in preparation.<a href="#section-5.1-2.7" class="pilcrow">¶</a></p>
+</aside>
 <p id="section-5.1-3">For simplicity, the internal parsing for the built-in EDN prefixes is
 specified in the same way.
 ABNF definitions for <code>h''</code> and <code>b64''</code> are provided in <a href="#h-grammar" class="auto internal xref">Section 5.2.1</a> and
@@ -2586,42 +2680,8 @@ floating point literal.<a href="#section-5.1-7.5.2" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-7.6" class="normal">
 <div class="normal" id="spec">
-            <p id="section-5.1-7.6.1"><code>spec</code> stands for an encoding indicator.<a href="#section-5.1-7.6.1" class="pilcrow">¶</a></p>
-<p id="section-5.1-7.6.2">
-(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
-the numeric value of the field <em>additional information</em>, the low-order 5
-bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#section-5.1-7.6.2" class="pilcrow">¶</a></p>
-<p id="section-5.1-7.6.3">
-As per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>:<a href="#section-5.1-7.6.3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.1-7.6.4.1">
-                <p id="section-5.1-7.6.4.1.1">an underscore <code>_</code> on its own stands
-for indefinite length encoding (<code>ai=31</code>, only available behind the
-opening brace/bracket for <code>map</code> and <code>array</code>: strings have a special
-syntax <code>streamstring</code> for indefinite length encoding except for the
-special cases ''_ and ""_), and<a href="#section-5.1-7.6.4.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-5.1-7.6.4.2">
-                <p id="section-5.1-7.6.4.2.1"><code>_0</code> to <code>_3</code> stand for <code>ai=24</code> to <code>ai=27</code>, respectively.<a href="#section-5.1-7.6.4.2.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<p id="section-5.1-7.6.5">
-Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
-<code>ai=23</code> — the assumption seems to be that preferred serialization
-(Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
-diagnostic notation to an encoded CBOR data item, so leaving out the
-encoding indicator for a data item with a preferred serialization
-will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
-The present specification allows to make this explicit:<a href="#section-5.1-7.6.5" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.1-7.6.6.1">
-                <p id="section-5.1-7.6.6.1.1"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#section-5.1-7.6.6.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<p id="section-5.1-7.6.7">
-While no pressing use for further values for encoding indicators
-comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 6.2</a> defines
-a registry for additional values.<a href="#section-5.1-7.6.7" class="pilcrow">¶</a></p>
+            <p id="section-5.1-7.6.1"><code>spec</code> stands for an encoding indicator.
+See <a href="#encoding-indicators" class="auto internal xref">Section 2.2</a> for details.<a href="#section-5.1-7.6.1" class="pilcrow">¶</a></p>
 </div>
           </li>
 <li id="section-5.1-7.7" class="normal">
@@ -2709,12 +2769,14 @@ string cannot be processed.<a href="#section-5.1-15.5.1" class="pilcrow">¶</a><
         <h3 id="name-abnf-definitions-for-app-st">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-abnf-definitions-for-app-st" class="section-name selfRef">ABNF Definitions for app-string Content</a>
         </h3>
-<p id="section-5.2-1">This subsection provides ABNF definitions for application-oriented extension
-literals defined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and in this specification.
+<p id="section-5.2-1">This subsection provides ABNF definitions for the content of
+application-oriented extension literals defined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and in this
+specification.
 These grammars describe the <em>decoded</em> content of the <code>sqstr</code> components that
-combine with the application-extension identifiers to form
+combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
-Each of these may make use of ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+Each of these may make integrate ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>,
+which are not always repeated here.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <div id="h-grammar">
 <section id="section-5.2.1">
           <h4 id="name-h-abnf-definition-of-hexade">
@@ -2967,6 +3029,26 @@ initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class
               <td class="text-left" rowspan="1" colspan="1">b64</td>
               <td class="text-left" rowspan="1" colspan="1">Reserved</td>
               <td class="text-left" rowspan="1" colspan="1">RFC8949</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">false</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">true</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">null</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">undefined</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">dt</td>
@@ -3354,6 +3436,16 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="BCP14">[BCP14]</dt>
+        <dd>
+<div class="refInstance">Best Current Practice 14, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp14">https://www.rfc-editor.org/info/bcp14</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC2119">
+            <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </div>
+<div class="refInstance" id="RFC8174">
+            <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
 <dt id="BCP26">[BCP26]</dt>
         <dd>
 <div class="refInstance">Best Current Practice 26, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp26">https://www.rfc-editor.org/info/bcp26</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
@@ -3388,10 +3480,6 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
         <dd>
 <span class="refAuthor">IEEE</span>, <span class="refTitle">"IEEE Standard for Floating-Point Arithmetic"</span>, <span class="seriesInfo">IEEE Std 754-2019</span>, <span class="seriesInfo">DOI 10.1109/IEEESTD.2019.8766229</span>, <span>&lt;<a href="https://ieeexplore.ieee.org/document/8766229">https://ieeexplore.ieee.org/document/8766229</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC2119">[RFC2119]</dt>
-        <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC3339">[RFC3339]</dt>
         <dd>
 <span class="refAuthor">Klyne, G.</span> and <span class="refAuthor">C. Newman</span>, <span class="refTitle">"Date and Time on the Internet: Timestamps"</span>, <span class="seriesInfo">RFC 3339</span>, <span class="seriesInfo">DOI 10.17487/RFC3339</span>, <time datetime="2002-07" class="refDate">July 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3339">https://www.rfc-editor.org/rfc/rfc3339</a>&gt;</span>. </dd>
@@ -3404,10 +3492,6 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
         <dd>
 <span class="refAuthor">Kyzivat, P.</span>, <span class="refTitle">"Case-Sensitive String Support in ABNF"</span>, <span class="seriesInfo">RFC 7405</span>, <span class="seriesInfo">DOI 10.17487/RFC7405</span>, <time datetime="2014-12" class="refDate">December 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7405">https://www.rfc-editor.org/rfc/rfc7405</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8174">[RFC8174]</dt>
-        <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC8742">[RFC8742]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Sequences"</span>, <span class="seriesInfo">RFC 8742</span>, <span class="seriesInfo">DOI 10.17487/RFC8742</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8742">https://www.rfc-editor.org/rfc/rfc8742</a>&gt;</span>. </dd>
@@ -3415,6 +3499,14 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
 <dt id="RFC9164">[RFC9164]</dt>
         <dd>
 <span class="refAuthor">Richardson, M.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Tags for IPv4 and IPv6 Addresses and Prefixes"</span>, <span class="seriesInfo">RFC 9164</span>, <span class="seriesInfo">DOI 10.17487/RFC9164</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9164">https://www.rfc-editor.org/rfc/rfc9164</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD63">[STD63]</dt>
+        <dd>
+<div class="refInstance">Internet Standard 63, <span>&lt;<a href="https://www.rfc-editor.org/info/std63">https://www.rfc-editor.org/info/std63</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC3629">
+            <span class="refAuthor">Yergeau, F.</span>, <span class="refTitle">"UTF-8, a transformation format of ISO 10646"</span>, <span class="seriesInfo">STD 63</span>, <span class="seriesInfo">RFC 3629</span>, <span class="seriesInfo">DOI 10.17487/RFC3629</span>, <time datetime="2003-11" class="refDate">November 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3629">https://www.rfc-editor.org/info/rfc3629</a>&gt;</span>. </div>
+</dd>
 <dd class="break"></dd>
 <dt id="STD68">[STD68]</dt>
         <dd>
