@@ -200,7 +200,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    files, and user interfaces for viewing and editing for all these, EDN
    is often "interchanged" and therefore merits a specification that
    facilitates interoperability within this domain as well as reliable
-   translation to and from CBOR.
+   translation to and from CBOR.  EDN is not designed or intended for
+   general-purpose use in protocol elements exchanged between systems
+   engaged in processes outside those listed above.
 
    This document consolidates the definition of EDN, sets forth a
    further step of its evolution, and is intended to serve as a single
@@ -216,8 +218,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    A few further additions close some gaps in usability.  The document
    modifies one extension originally specified in Appendix G.4 of
    [RFC8610] to enable further increasing usability.  To facilitate tool
-   interoperation, this document specifies a formal ABNF grammar.  (See
-   Section 5.1 for an overall ABNF grammar as well as the ABNF
 
 
 
@@ -226,6 +226,8 @@ Bormann                    Expires 17 May 2025                  [Page 4]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
 
 
+   interoperation, this document specifies a formal ABNF grammar.  (See
+   Section 5.1 for an overall ABNF grammar as well as the ABNF
    definitions in Section 5.2 for grammars for both the byte string
    presentations predefined in [STD94] and the application-extensions
    defined here.)
@@ -267,8 +269,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)   November 2024
    it does provide a host of other features that EDN does not provide
    such as anchor/alias data sharing, at a cost of higher implementation
    and learning complexity.
-
-
 
 
 
