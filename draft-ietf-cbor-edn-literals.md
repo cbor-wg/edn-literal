@@ -190,7 +190,7 @@ domain as well as reliable translation to and from CBOR.
     byte string presentations predefined in {{-cbor}} and the
     application-extensions defined here.)
 
-In addition, this document finally registers a media type identifier
+In addition, this document registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
 elevate its status as an interchange format, but recognizes that
 interaction between tools is often smoother if media types can be used.
