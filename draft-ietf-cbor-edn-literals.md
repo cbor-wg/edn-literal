@@ -1257,12 +1257,12 @@ obvious.
 
 The following additional items should help in the interpretation:
 
-* As mentioned in the terminology ({{terminology}}), the ABNF terminal
+1. As mentioned in the terminology ({{terminology}}), the ABNF terminal
   values in this document define Unicode scalar values (characters)
   rather than their UTF-8 encoding.  For example, the Unicode PLACE OF
   INTEREST SIGN (U+2318) would be defined in ABNF as %x2318.
 
-* {: #cr} Unicode CARRIAGE RETURN (U+000D, often seen escaped as "\r" in many
+2. {: #cr} Unicode CARRIAGE RETURN (U+000D, often seen escaped as "\r" in many
   programming languages) that exist in the input (unescaped) are
   ignored as if they were not in the input wherever they appear.
   This is most important when they are found in (text or byte) string
@@ -1281,7 +1281,7 @@ The following additional items should help in the interpretation:
   If a carriage return is needed in the CBOR data item, it can be
   added explicitly using the escaped form `\r`.
 
-* {: #decnumber}
+3. {: #decnumber}
   `decnumber` stands for an integer in the usual decimal notation, unless at
   least one of the optional parts starting with "." and "e" are
   present, in which case it stands for a floating point value in the
@@ -1290,7 +1290,8 @@ The following additional items should help in the interpretation:
   below); implementers are advised that some platform numeric parsers
   accept only a subset of the floating point syntax in this document
   and may require some preprocessing to use here.
-* `hexint`, `octint`, and `binint` stand for an integer in the usual base 16/hexadecimal
+
+4. `hexint`, `octint`, and `binint` stand for an integer in the usual base 16/hexadecimal
   ("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation.
   `hexfloat` stands
   for a floating point number in the usual hexadecimal notation (which
@@ -1298,7 +1299,8 @@ The following additional items should help in the interpretation:
   see Section 5.12.3 of {{IEEE754}}, Section 6.4.4.2 of {{C}}, or Section
   5.13.4 of {{Cplusplus}}; floating-suffix/floating-point-suffix from
   the latter two is not used here).
-* For `hexint`, `octint`, `binint`, and when `decnumber` stands for an integer, the
+
+5. For `hexint`, `octint`, `binint`, and when `decnumber` stands for an integer, the
   corresponding CBOR data item is represented using major type 0 or 1
   if possible, or using tag 2 or 3 if not.
   In the latter case, this specification does not define any encoding
@@ -1312,85 +1314,85 @@ The following additional items should help in the interpretation:
   specific sizes for tag head, byte string head, and the overall byte
   string.
 
-  When `decnumber` stands for a floating point value, and for
-  `hexfloat` and `nonfin`, a floating point data item with major
-  type 7 is used in preferred serialization (unless modified by an
-  encoding indicator, which then needs to be `_1`, `_2`, or `_3`).
-  For this, the number range needs to fit into an {{IEEE754}} binary64 (or the size
-  corresponding to the encoding indicator), and the precision will be
-  adjusted to binary64 before further applying preferred serialization
-  (or to the size corresponding to the encoding indicator).
-  Tag 4/5 representations are not generated in these cases.
-  Future app-prefixes could be defined to allow more control for
-  obtaining a tag 4/5 representation directly from a hex or decimal
-  floating point literal.
+   When `decnumber` stands for a floating point value, and for
+   `hexfloat` and `nonfin`, a floating point data item with major
+   type 7 is used in preferred serialization (unless modified by an
+   encoding indicator, which then needs to be `_1`, `_2`, or `_3`).
+   For this, the number range needs to fit into an {{IEEE754}} binary64 (or the size
+   corresponding to the encoding indicator), and the precision will be
+   adjusted to binary64 before further applying preferred serialization
+   (or to the size corresponding to the encoding indicator).
+   Tag 4/5 representations are not generated in these cases.
+   Future app-prefixes could be defined to allow more control for
+   obtaining a tag 4/5 representation directly from a hex or decimal
+   floating point literal.
 
-* {: #spec} `spec` stands for an encoding indicator.
+6. {: #spec} `spec` stands for an encoding indicator.
   See {{encoding-indicators}} for details.
 
-* {: #concat}
+7. {: #concat}
   Extended diagnostic notation allows a (text or byte) string to be
   built up from multiple (text or byte) string literals, separated by
   a `+` operator; these are then concatenated into a single string.
 
-  `string`, `string1e`, `string1`, and `ellipsis` realize: (1) the
-  representation of strings in this form split up into multiple
-  chunks, and (2) the use of ellipses to represent elisions
-  ({{elision}}).
+    `string`, `string1e`, `string1`, and `ellipsis` realize: (1) the
+    representation of strings in this form split up into multiple
+    chunks, and (2) the use of ellipses to represent elisions
+    ({{elision}}).
 
-  Note that the syntax defined here for concatenation of components
-  uses an explicit `+` operator between the components to be
-  concatenated ({{Section G.4 of -cddl}} used simple juxtaposition,
-  which was not widely implemented and got in the way of making the use
-  of commas optional in other places via the rule `OC`).
+    Note that the syntax defined here for concatenation of components
+    uses an explicit `+` operator between the components to be
+    concatenated ({{Section G.4 of -cddl}} used simple juxtaposition,
+    which was not widely implemented and got in the way of making the use
+    of commas optional in other places via the rule `OC`).
 
-  Text strings and byte strings do not mix within such a
-  concatenation, except that byte string literal notation can be used
-  inside a sequence of concatenated text string notation literals, to
-  encode characters that may be better represented in an encoded way.
-  The following four text string values (adapted from {{Section G.4 of
-  -cddl}} by updating to explicit `+` operators) are equivalent:
+    Text strings and byte strings do not mix within such a
+    concatenation, except that byte string literal notation can be used
+    inside a sequence of concatenated text string notation literals, to
+    encode characters that may be better represented in an encoded way.
+    The following four text string values (adapted from {{Section G.4 of
+    -cddl}} by updating to explicit `+` operators) are equivalent:
 
-      "Hello world"
-      "Hello " + "world"
-      "Hello" + h'20' + "world"
-      "" + h'48656c6c6f20776f726c64' + ""
+        "Hello world"
+        "Hello " + "world"
+        "Hello" + h'20' + "world"
+        "" + h'48656c6c6f20776f726c64' + ""
 
-  Similarly, the following byte string values are equivalent:
+    Similarly, the following byte string values are equivalent:
 
-      'Hello world'
-      'Hello ' + 'world'
-      'Hello ' + h'776f726c64'
-      'Hello' + h'20' + 'world'
-      '' + h'48656c6c6f20776f726c64' + '' + b64''
-      h'4 86 56c 6c6f' + h' 20776 f726c64'
+        'Hello world'
+        'Hello ' + 'world'
+        'Hello ' + h'776f726c64'
+        'Hello' + h'20' + 'world'
+        '' + h'48656c6c6f20776f726c64' + '' + b64''
+        h'4 86 56c 6c6f' + h' 20776 f726c64'
 
-  The semantic processing of these constructs is governed by the
-  following rules:
+    The semantic processing of these constructs is governed by the
+    following rules:
 
-  * A single `...` is a general ellipsis, which by itself can stand
-    for any data item.
-    Multiple adjacent concatenated ellipses are equivalent to a single
-    ellipsis.
-  * An ellipsis can be concatenated (on one or both sides) with string
-    chunks (`string1`); the result is a CBOR tag number CPA888 that contains an
-    array with joined together spans of such chunks plus the ellipses
-    represented by `888(null)`.
-  * If there is no ellipsis in the concatenated list, the result of
-    processing the list will always be a single item.
-  * The bytes in the concatenated sequence of string chunks are simply
-    joined together, proceeding from left to right.
-    If the left hand side of a concatenation is a text string, the
-    joining operation results in a text string, and that
-    result needs to be valid UTF-8.
-    If the left hand side is a byte string, the right hand side also
-    needs to be a byte string.
-  * Some of the strings may be app-strings.
-    If the result type of the app-string is an actual (text or byte)
-    string, joining of those string chunks occurs as with chunks
-    directly notated as string literals; otherwise the occurrence of more than
-    one app-string or an app-string together with a directly notated
-    string cannot be processed.
+    * A single `...` is a general ellipsis, which by itself can stand
+      for any data item.
+      Multiple adjacent concatenated ellipses are equivalent to a single
+      ellipsis.
+    * An ellipsis can be concatenated (on one or both sides) with string
+      chunks (`string1`); the result is a CBOR tag number CPA888 that contains an
+      array with joined together spans of such chunks plus the ellipses
+      represented by `888(null)`.
+    * If there is no ellipsis in the concatenated list, the result of
+      processing the list will always be a single item.
+    * The bytes in the concatenated sequence of string chunks are simply
+      joined together, proceeding from left to right.
+      If the left hand side of a concatenation is a text string, the
+      joining operation results in a text string, and that
+      result needs to be valid UTF-8.
+      If the left hand side is a byte string, the right hand side also
+      needs to be a byte string.
+    * Some of the strings may be app-strings.
+      If the result type of the app-string is an actual (text or byte)
+      string, joining of those string chunks occurs as with chunks
+      directly notated as string literals; otherwise the occurrence of more than
+      one app-string or an app-string together with a directly notated
+      string cannot be processed.
 
 ABNF Definitions for app-string Content {#app-grammars}
 ---------------------------------------
