@@ -866,6 +866,18 @@ or the equivalent epoch-based time as the following:
 {: indent='5'}
 1(1363896240)
 
+The tag number can be followed by an encoding indicator giving the
+encoding of the tag head.  For example:
+
+{: indent='5'}
+1_1(1363896240)
+
+(assuming preferred encoding for the tag content) is encoded as
+
+~~~ cbor-pretty
+d9 0001        # tag(1)
+   1a 514b67b0 # unsigned(1363896240)
+~~~
 
 
 ## Simple values
