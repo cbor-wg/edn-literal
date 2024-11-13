@@ -163,7 +163,7 @@ Introduction        {#intro}
 
 [^abs0-]
 
-[^abs1a-] ({{Section 6 of RFC7049}}, now {{Section 8 of RFC8949@-cbor}}) [^abs1b-] {{Appendix G of -cddl}} [^abs1c-]
+[^abs1a-] ({{Section 6 of -old-cbor}}, now {{Section 8 of RFC8949@-cbor}}) [^abs1b-] {{Appendix G of -cddl}} [^abs1c-]
 
 Diagnostic notation syntax is based on JSON, with extensions
 for representing CBOR constructs such as binary data and tags.
