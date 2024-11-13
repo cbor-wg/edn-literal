@@ -833,6 +833,11 @@ represented in indefinite-length format.  For example, `[_ 1, 2]`
 contains an indicator that an indefinite-length representation was
 used to represent the data item `[1, 2]`.
 
+At the same position, encoding indicators for specifying the size of
+the array or map head for definite-length format can be used instead,
+specifically `_i` or `_0` to `_3`.  For example `[_0 false, true]` can be
+used to specify the encoding of the array `[false, true]` as `98 02 f4 f5`.
+
 ### Validity of Maps {#map-validity}
 
 As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
