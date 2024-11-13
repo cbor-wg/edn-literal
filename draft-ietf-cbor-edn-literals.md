@@ -167,11 +167,16 @@ Introduction        {#intro}
 
 Diagnostic notation syntax is based on JSON, with extensions
 for representing CBOR constructs such as binary data and tags.
-[^abs2-]
 
-[^abs2-]: (Standardizing this together with the actual interchange format does
-    not serve to create another interchange format, but enables the use of
-    a shared diagnostic notation in tools for and in documents about CBOR.)
+Standardizing EDN in addition to the actual binary interchange format CBOR does
+not serve to create a competing interchange format, but enables the use of
+a shared diagnostic notation in tools for and in documents about CBOR.
+Between components of the limited domain of development and diagnostic
+tools for CBOR, document generation systems, continuous integration (CI)
+environments, configuration files, and user interfaces for viewing and
+editing for all these, EDN is often "interchanged" and therefore
+merits a specification that facilitates interoperability within this
+domain as well as reliable translation to and from CBOR.
 
 ​[^abs3a-]
 {{RFC8949}}, obsoleting {{Section 8 of RFC8949@-cbor}}, and
