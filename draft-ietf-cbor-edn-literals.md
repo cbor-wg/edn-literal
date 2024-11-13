@@ -177,6 +177,9 @@ environments, configuration files, and user interfaces for viewing and
 editing for all these, EDN is often "interchanged" and therefore
 merits a specification that facilitates interoperability within this
 domain as well as reliable translation to and from CBOR.
+EDN is not designed or intended for general-purpose use in protocol
+elements exchanged between systems engaged in processes outside those
+listed above.
 
 ​[^abs3a-]
 {{RFC8949}}, obsoleting {{Section 8 of RFC8949@-cbor}}, and
