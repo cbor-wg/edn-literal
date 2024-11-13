@@ -725,6 +725,12 @@ language of EDN is UTF-8, and all escaping mechanisms lead only to
 adding further UTF-8 characters.
 Only prefixed string literals can generate non-UTF-8 byte sequences.
 
+As discussed at the start of {{diagnostic-notation}}, EDN
+implementations MAY support generation and possibly ingestion of EDN
+for CBOR data items that are well-formed but not valid; when this is
+enabled, such implementations MAY relax the requirement on text
+strings to be valid UTF-8.
+
 <!--
 ## Concatenated Strings {#concatenated-strings}
 
@@ -1384,7 +1390,9 @@ The following additional items should help in the interpretation:
       joined together, proceeding from left to right.
       If the left hand side of a concatenation is a text string, the
       joining operation results in a text string, and that
-      result needs to be valid UTF-8.
+      result needs to be valid UTF-8 except for implementations that
+      support and are enabled for generation/ingestion of EDN for CBOR
+      data items that are well-formed but not valid.
       If the left hand side is a byte string, the right hand side also
       needs to be a byte string.
     * Some of the strings may be app-strings.
