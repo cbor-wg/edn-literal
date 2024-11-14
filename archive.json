@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-12T00:58:35.313753+00:00",
+  "timestamp": "2024-11-14T00:59:40.937219+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3589,26 +3589,75 @@
       "id": "PR_kwDOGLBEBs6AogQE",
       "title": "Continue roll-up editorial work (round 2)",
       "url": "https://github.com/cbor-wg/edn-literal/pull/68",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-11-01T13:47:53Z",
-      "updatedAt": "2024-11-03T18:51:40Z",
+      "updatedAt": "2024-11-13T13:50:50Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "270ae960a5ea1feafec2125b45fc79df1df63980",
       "headRepository": "cbor-wg/edn-literal",
       "headRefName": "roll-up-2",
       "headRefOid": "6a4c6d13a52779625e7907cd41c93c431458179f",
+      "closedAt": "2024-11-13T13:50:50Z",
+      "mergedAt": "2024-11-13T13:50:50Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "5ce158aea3df42db4586c58585d0a52a88a7c40f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 69,
+      "id": "PR_kwDOGLBEBs6B0Xop",
+      "title": "Post-121: Address Joe Hildebrand's feedback",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/69",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\n25b24ec Use `cri` and not `dt` for tag 999 example (Joe)\r\nea39ddb Equivalence of simple(0x14) and false (Joe)\r\ndc45ddf Show encoding indicators for tags (Joe)\r\nc5142f6 Definite length arrays/maps: Add EI example/text (Joe)\r\n478973f Explain that some impls deliberately generate/ingest non-UTF8 (Joe)\r\ned26a97 Use numbered items in 5.1; handle indentation issue\r\ndd92dc7 Remove superfluous adjective (Joe)\r\n31fdbab Explain better that EDN is not a format competing with CBOR (Joe)\r\nac683c7 Address \"what documents this doc updates\" (Joe)\r\n06e270c (markdown nit)\r\n```",
+      "createdAt": "2024-11-13T17:37:53Z",
+      "updatedAt": "2024-11-13T22:15:19Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "5ce158aea3df42db4586c58585d0a52a88a7c40f",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "post-121",
+      "headRefOid": "8c65a777e349d642ee744db1ace8b3d2700ef8bf",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6RGirw",
+          "commit": {
+            "abbreviatedOid": "d46b2be"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "One extra suggestion, which I'm making to the list as well.",
+          "createdAt": "2024-11-13T21:02:05Z",
+          "updatedAt": "2024-11-13T21:06:26Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "I'll say this on this list, but I think there should be one more sentence here:\r\n\r\n\"However, EDN is not designed or intended for general-purpose use in protocol elements exchanged between systems engaged in processes outside those listed above.\"",
+              "createdAt": "2024-11-13T21:02:05Z",
+              "updatedAt": "2024-11-13T21:06:26Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
