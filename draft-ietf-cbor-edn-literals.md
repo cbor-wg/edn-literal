@@ -7,9 +7,10 @@ docname: draft-ietf-cbor-edn-literals-latest
 # date: 2024-11-01
 
 keyword: Internet-Draft
-cat: info
+cat: std
 stream: IETF
-# consensus: true
+consensus: true
+updates: 8610, 8949
 
 pi: [toc, sortrefs, symrefs, compact, comments]
 
@@ -120,18 +121,24 @@ informative:
 
 [^abs1a-] (RFC 7049) [^abs1b-] RFC 8610 [^abs1c-]
 
-[^abs3-]: This document consolidates the definition of EDN, sets forth
+[^abs3a-]: This document consolidates the definition of EDN, sets forth
     a further step of its evolution,
     and is intended to serve as a single reference target in
     specifications that use EDN.
+    It updates
 
+​[^abs3a-]
+RFC 8949, obsoleting its Section 8, and
+RFC 8610, obsoleting its Appendix G.
+
+[^abs3b-]:
     It specifies an extension point for adding application-oriented extensions to
     the diagnostic notation.
     It then defines two such extensions that enhance EDN with text
     representations of epoch-based date/times and of IP addresses
     and prefixes
 
-​[^abs3-] (RFC 9164).
+[^abs3b-] (RFC 9164).
 
 [^abs4a-]: A few further additions close some gaps in usability.
      The document modifies one extension originally specified in
@@ -146,15 +153,8 @@ informative:
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision `-13` reflects the branches "roll-up"
-    and "roll-up-2" in
-    the repository, an attempt to contain the entire specification of
-    EDN in this document, instead of describing updates to the
-    existing documents RFC 8949 and RFC 8610.
-    Editorial work on the branch "roll-up-2" might continue.
-    The exact reflection of this document being a replacement for both
-    Section 8 of RFC 8949 and Appendix G of RFC 8610 needs to be
-    recorded in the metadata and in abstract and introduction.
+    The present revision `-14` is intended to reflect the feedback on `-13` as
+    discussed during IETF 121.
 
 --- middle
 
@@ -163,17 +163,29 @@ Introduction        {#intro}
 
 [^abs0-]
 
-[^abs1a-] ({{Section 6 of RFC7049}}, now {{Section 8 of RFC8949@-cbor}}) [^abs1b-] {{Appendix G of -cddl}} [^abs1c-]
+[^abs1a-] ({{Section 6 of -old-cbor}}, now {{Section 8 of RFC8949@-cbor}}) [^abs1b-] {{Appendix G of -cddl}} [^abs1c-]
 
 Diagnostic notation syntax is based on JSON, with extensions
 for representing CBOR constructs such as binary data and tags.
-[^abs2-]
 
-[^abs2-]: (Standardizing this together with the actual interchange format does
-    not serve to create another interchange format, but enables the use of
-    a shared diagnostic notation in tools for and in documents about CBOR.)
+Standardizing EDN in addition to the actual binary interchange format CBOR does
+not serve to create a competing interchange format, but enables the use of
+a shared diagnostic notation in tools for and in documents about CBOR.
+Between components of the limited domain of development and diagnostic
+tools for CBOR, document generation systems, continuous integration (CI)
+environments, configuration files, and user interfaces for viewing and
+editing for all these, EDN is often "interchanged" and therefore
+merits a specification that facilitates interoperability within this
+domain as well as reliable translation to and from CBOR.
+EDN is not designed or intended for general-purpose use in protocol
+elements exchanged between systems engaged in processes outside those
+listed above.
 
-[^abs3-] {{-iptag}}.
+​[^abs3a-]
+{{RFC8949}}, obsoleting {{Section 8 of RFC8949@-cbor}}, and
+{{RFC8610}}, obsoleting {{Appendix G of -cddl}}.
+
+[^abs3b-] {{-iptag}}.
 
 [^abs4a-] {{Appendix G.4 of -cddl}} [^abs4b-].
     (See {{grammar}} for an overall ABNF grammar as well as the
@@ -181,7 +193,7 @@ for representing CBOR constructs such as binary data and tags.
     byte string presentations predefined in {{-cbor}} and the
     application-extensions defined here.)
 
-In addition, this document finally registers a media type identifier
+In addition, this document registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
 elevate its status as an interchange format, but recognizes that
 interaction between tools is often smoother if media types can be used.
@@ -716,6 +728,12 @@ language of EDN is UTF-8, and all escaping mechanisms lead only to
 adding further UTF-8 characters.
 Only prefixed string literals can generate non-UTF-8 byte sequences.
 
+As discussed at the start of {{diagnostic-notation}}, EDN
+implementations MAY support generation and possibly ingestion of EDN
+for CBOR data items that are well-formed but not valid; when this is
+enabled, such implementations MAY relax the requirement on text
+strings to be valid UTF-8.
+
 <!--
 ## Concatenated Strings {#concatenated-strings}
 
@@ -818,6 +836,11 @@ represented in indefinite-length format.  For example, `[_ 1, 2]`
 contains an indicator that an indefinite-length representation was
 used to represent the data item `[1, 2]`.
 
+At the same position, encoding indicators for specifying the size of
+the array or map head for definite-length format can be used instead,
+specifically `_i` or `_0` to `_3`.  For example `[_0 false, true]` can be
+used to specify the encoding of the array `[false, true]` as `98 02 f4 f5`.
+
 ### Validity of Maps {#map-validity}
 
 As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
@@ -846,6 +869,18 @@ or the equivalent epoch-based time as the following:
 {: indent='5'}
 1(1363896240)
 
+The tag number can be followed by an encoding indicator giving the
+encoding of the tag head.  For example:
+
+{: indent='5'}
+1_1(1363896240)
+
+(assuming preferred encoding for the tag content) is encoded as
+
+~~~ cbor-pretty
+d9 0001        # tag(1)
+   1a 514b67b0 # unsigned(1363896240)
+~~~
 
 
 ## Simple values
@@ -854,9 +889,11 @@ EDN uses JSON syntax for the simple values True (>`true`\<), False
 (>`false`\<), and Null (>`null`\<).
 Undefined is written >`undefined`\< as in JavaScript.
 
-Other simple values are given as "simple()" with the appropriate
-integer in the parentheses. For example, >`simple(42)`\< indicates major
-type 7, value 42.
+These and all other simple values can be given as "simple()" with the
+appropriate integer in the parentheses.  For example, >`simple(42)`\<
+indicates major type 7, value 42, and >`simple(0x14)`\< indicates
+>`false`\<, as does >`simple(20)`\< or >`simple(0b10100)`\<.
+
 
 
 Application-Oriented Extension Literals {#app-lit}
@@ -1050,8 +1087,12 @@ number CPA999 ({{iana-standin}}).
 The content of this tag is an array of two text strings: The
 application-extension identifier, and the (escape-processed) content
 of the single-quoted string.
+<!--
 For example, `dt'1969-07-21T02:56:16Z'` can be provisionally represented as
 `/CPA/ 999(["dt", "1969-07-21T02:56:16Z"])`.
+ -->
+For example, `cri'https://example.com'` can be provisionally represented as
+`/CPA/ 999(["cri", "https://example.com"])`.
 
 If a stage of ingestion is not prepared to handle the Unresolved
 Application-Extension Tag, this is an error and processing has to
@@ -1248,12 +1289,12 @@ obvious.
 
 The following additional items should help in the interpretation:
 
-* As mentioned in the terminology ({{terminology}}), the ABNF terminal
+1. As mentioned in the terminology ({{terminology}}), the ABNF terminal
   values in this document define Unicode scalar values (characters)
   rather than their UTF-8 encoding.  For example, the Unicode PLACE OF
   INTEREST SIGN (U+2318) would be defined in ABNF as %x2318.
 
-* {: #cr} Unicode CARRIAGE RETURN (U+000D, often seen escaped as "\r" in many
+2. {: #cr} Unicode CARRIAGE RETURN (U+000D, often seen escaped as "\r" in many
   programming languages) that exist in the input (unescaped) are
   ignored as if they were not in the input wherever they appear.
   This is most important when they are found in (text or byte) string
@@ -1272,7 +1313,7 @@ The following additional items should help in the interpretation:
   If a carriage return is needed in the CBOR data item, it can be
   added explicitly using the escaped form `\r`.
 
-* {: #decnumber}
+3. {: #decnumber}
   `decnumber` stands for an integer in the usual decimal notation, unless at
   least one of the optional parts starting with "." and "e" are
   present, in which case it stands for a floating point value in the
@@ -1281,7 +1322,8 @@ The following additional items should help in the interpretation:
   below); implementers are advised that some platform numeric parsers
   accept only a subset of the floating point syntax in this document
   and may require some preprocessing to use here.
-* `hexint`, `octint`, and `binint` stand for an integer in the usual base 16/hexadecimal
+
+4. `hexint`, `octint`, and `binint` stand for an integer in the usual base 16/hexadecimal
   ("0x"), base 8/octal ("0o"), or base 2/binary ("0b") notation.
   `hexfloat` stands
   for a floating point number in the usual hexadecimal notation (which
@@ -1289,7 +1331,8 @@ The following additional items should help in the interpretation:
   see Section 5.12.3 of {{IEEE754}}, Section 6.4.4.2 of {{C}}, or Section
   5.13.4 of {{Cplusplus}}; floating-suffix/floating-point-suffix from
   the latter two is not used here).
-* For `hexint`, `octint`, `binint`, and when `decnumber` stands for an integer, the
+
+5. For `hexint`, `octint`, `binint`, and when `decnumber` stands for an integer, the
   corresponding CBOR data item is represented using major type 0 or 1
   if possible, or using tag 2 or 3 if not.
   In the latter case, this specification does not define any encoding
@@ -1303,85 +1346,87 @@ The following additional items should help in the interpretation:
   specific sizes for tag head, byte string head, and the overall byte
   string.
 
-  When `decnumber` stands for a floating point value, and for
-  `hexfloat` and `nonfin`, a floating point data item with major
-  type 7 is used in preferred serialization (unless modified by an
-  encoding indicator, which then needs to be `_1`, `_2`, or `_3`).
-  For this, the number range needs to fit into an {{IEEE754}} binary64 (or the size
-  corresponding to the encoding indicator), and the precision will be
-  adjusted to binary64 before further applying preferred serialization
-  (or to the size corresponding to the encoding indicator).
-  Tag 4/5 representations are not generated in these cases.
-  Future app-prefixes could be defined to allow more control for
-  obtaining a tag 4/5 representation directly from a hex or decimal
-  floating point literal.
+   When `decnumber` stands for a floating point value, and for
+   `hexfloat` and `nonfin`, a floating point data item with major
+   type 7 is used in preferred serialization (unless modified by an
+   encoding indicator, which then needs to be `_1`, `_2`, or `_3`).
+   For this, the number range needs to fit into an {{IEEE754}} binary64 (or the size
+   corresponding to the encoding indicator), and the precision will be
+   adjusted to binary64 before further applying preferred serialization
+   (or to the size corresponding to the encoding indicator).
+   Tag 4/5 representations are not generated in these cases.
+   Future app-prefixes could be defined to allow more control for
+   obtaining a tag 4/5 representation directly from a hex or decimal
+   floating point literal.
 
-* {: #spec} `spec` stands for an encoding indicator.
+6. {: #spec} `spec` stands for an encoding indicator.
   See {{encoding-indicators}} for details.
 
-* {: #concat}
+7. {: #concat}
   Extended diagnostic notation allows a (text or byte) string to be
   built up from multiple (text or byte) string literals, separated by
   a `+` operator; these are then concatenated into a single string.
 
-  `string`, `string1e`, `string1`, and `ellipsis` realize: (1) the
-  representation of strings in this form split up into multiple
-  chunks, and (2) the use of ellipses to represent elisions
-  ({{elision}}).
+    `string`, `string1e`, `string1`, and `ellipsis` realize: (1) the
+    representation of strings in this form split up into multiple
+    chunks, and (2) the use of ellipses to represent elisions
+    ({{elision}}).
 
-  Note that the syntax defined here for concatenation of components
-  uses an explicit `+` operator between the components to be
-  concatenated ({{Section G.4 of -cddl}} used simple juxtaposition,
-  which was not widely implemented and got in the way of making the use
-  of commas optional in other places via the rule `OC`).
+    Note that the syntax defined here for concatenation of components
+    uses an explicit `+` operator between the components to be
+    concatenated ({{Section G.4 of -cddl}} used simple juxtaposition,
+    which was not widely implemented and got in the way of making the use
+    of commas optional in other places via the rule `OC`).
 
-  Text strings and byte strings do not mix within such a
-  concatenation, except that byte string literal notation can be used
-  inside a sequence of concatenated text string notation literals, to
-  encode characters that may be better represented in an encoded way.
-  The following four text string values (adapted from {{Section G.4 of
-  -cddl}} by updating to explicit `+` operators) are equivalent:
+    Text strings and byte strings do not mix within such a
+    concatenation, except that byte string literal notation can be used
+    inside a sequence of concatenated text string notation literals, to
+    encode characters that may be better represented in an encoded way.
+    The following four text string values (adapted from {{Section G.4 of
+    -cddl}} by updating to explicit `+` operators) are equivalent:
 
-      "Hello world"
-      "Hello " + "world"
-      "Hello" + h'20' + "world"
-      "" + h'48656c6c6f20776f726c64' + ""
+        "Hello world"
+        "Hello " + "world"
+        "Hello" + h'20' + "world"
+        "" + h'48656c6c6f20776f726c64' + ""
 
-  Similarly, the following byte string values are equivalent:
+    Similarly, the following byte string values are equivalent:
 
-      'Hello world'
-      'Hello ' + 'world'
-      'Hello ' + h'776f726c64'
-      'Hello' + h'20' + 'world'
-      '' + h'48656c6c6f20776f726c64' + '' + b64''
-      h'4 86 56c 6c6f' + h' 20776 f726c64'
+        'Hello world'
+        'Hello ' + 'world'
+        'Hello ' + h'776f726c64'
+        'Hello' + h'20' + 'world'
+        '' + h'48656c6c6f20776f726c64' + '' + b64''
+        h'4 86 56c 6c6f' + h' 20776 f726c64'
 
-  The semantic processing of these constructs is governed by the
-  following rules:
+    The semantic processing of these constructs is governed by the
+    following rules:
 
-  * A single `...` is a general ellipsis, which by itself can stand
-    for any data item.
-    Multiple adjacent concatenated ellipses are equivalent to a single
-    ellipsis.
-  * An ellipsis can be concatenated (on one or both sides) with string
-    chunks (`string1`); the result is a CBOR tag number CPA888 that contains an
-    array with joined together spans of such chunks plus the ellipses
-    represented by `888(null)`.
-  * If there is no ellipsis in the concatenated list, the result of
-    processing the list will always be a single item.
-  * The bytes in the concatenated sequence of string chunks are simply
-    joined together, proceeding from left to right.
-    If the left hand side of a concatenation is a text string, the
-    joining operation results in a text string, and that
-    result needs to be valid UTF-8.
-    If the left hand side is a byte string, the right hand side also
-    needs to be a byte string.
-  * Some of the strings may be app-strings.
-    If the result type of the app-string is an actual (text or byte)
-    string, joining of those string chunks occurs as with chunks
-    directly notated as string literals; otherwise the occurrence of more than
-    one app-string or an app-string together with a directly notated
-    string cannot be processed.
+    * A single `...` is a general ellipsis, which by itself can stand
+      for any data item.
+      Multiple adjacent concatenated ellipses are equivalent to a single
+      ellipsis.
+    * An ellipsis can be concatenated (on one or both sides) with string
+      chunks (`string1`); the result is a CBOR tag number CPA888 that contains an
+      array with joined together spans of such chunks plus the ellipses
+      represented by `888(null)`.
+    * If there is no ellipsis in the concatenated list, the result of
+      processing the list will always be a single item.
+    * The bytes in the concatenated sequence of string chunks are simply
+      joined together, proceeding from left to right.
+      If the left hand side of a concatenation is a text string, the
+      joining operation results in a text string, and that
+      result needs to be valid UTF-8 except for implementations that
+      support and are enabled for generation/ingestion of EDN for CBOR
+      data items that are well-formed but not valid.
+      If the left hand side is a byte string, the right hand side also
+      needs to be a byte string.
+    * Some of the strings may be app-strings.
+      If the result type of the app-string is an actual (text or byte)
+      string, joining of those string chunks occurs as with chunks
+      directly notated as string literals; otherwise the occurrence of more than
+      one app-string or an app-string together with a directly notated
+      string cannot be processed.
 
 ABNF Definitions for app-string Content {#app-grammars}
 ---------------------------------------
