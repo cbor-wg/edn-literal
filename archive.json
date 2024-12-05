@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-03T01:05:49.417638+00:00",
+  "timestamp": "2024-12-05T01:06:03.602968+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3617,24 +3617,26 @@
       "id": "PR_kwDOGLBEBs6B0Xop",
       "title": "Post-121: Address Joe Hildebrand's feedback",
       "url": "https://github.com/cbor-wg/edn-literal/pull/69",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\n25b24ec Use `cri` and not `dt` for tag 999 example (Joe)\r\nea39ddb Equivalence of simple(0x14) and false (Joe)\r\ndc45ddf Show encoding indicators for tags (Joe)\r\nc5142f6 Definite length arrays/maps: Add EI example/text (Joe)\r\n478973f Explain that some impls deliberately generate/ingest non-UTF8 (Joe)\r\ned26a97 Use numbered items in 5.1; handle indentation issue\r\ndd92dc7 Remove superfluous adjective (Joe)\r\n31fdbab Explain better that EDN is not a format competing with CBOR (Joe)\r\nac683c7 Address \"what documents this doc updates\" (Joe)\r\n06e270c (markdown nit)\r\n```",
       "createdAt": "2024-11-13T17:37:53Z",
-      "updatedAt": "2024-11-13T22:15:19Z",
+      "updatedAt": "2024-12-05T00:04:58Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "5ce158aea3df42db4586c58585d0a52a88a7c40f",
       "headRepository": "cbor-wg/edn-literal",
       "headRefName": "post-121",
       "headRefOid": "8c65a777e349d642ee744db1ace8b3d2700ef8bf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-12-05T00:04:58Z",
+      "mergedAt": "2024-12-05T00:04:58Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "c23b5119e5f7aec633e88ec125b2fd85912e1db8"
+      },
       "comments": [],
       "reviews": [
         {
