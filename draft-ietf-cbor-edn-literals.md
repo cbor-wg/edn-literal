@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2024-11-01
+# date: 2024-12-09
 
 keyword: Internet-Draft
 cat: std
@@ -99,6 +99,9 @@ informative:
     date: 2021-10-01
     refcontent:
     - Revision 1.2.2
+  ABNFROB:
+    target: https://github.com/cabo/abnftt
+    title: PEG-parsing using ABNF grammars (via treetop)
 
 --- abstract
 
@@ -258,7 +261,9 @@ for
 {{<<sec-iana}} ({{<sec-iana}}),
 {{<<seccons}} ({{<seccons}}),
 and References ({{<sec-normative-references}}, {{<sec-informative-references}}).
-An informational comparison of EDN with CDDL follows in {{edn-and-cddl}}.
+An informational comparison of EDN with CDDL follows in
+{{edn-and-cddl}}, and some implementation considerations for integrating
+specific ABNF grammars into the overall ABNF grammar in {{squash}}.
 
 ## Terminology
 
@@ -1218,6 +1223,8 @@ Implementation note: The ABNF definitions in this section are
 intended to be useful in a Parsing Expression Grammar (PEG) parser
 interpretation (see {{Appendix A
 of -cddl}} for an introduction into PEG).
+{{squash}} briefly discusses implementation considerations for when it is
+desired to integrate some specific ABNF grammars into overall ABNF grammar.
 
 Overall ABNF Definition for Extended Diagnostic Notation {#grammar}
 --------------------------------------------------------
@@ -1239,32 +1246,10 @@ with the rule name `app-string-p`.
 As an implementation note, some implementations may want to integrate
 the parsing and processing of app-string content with the overall
 grammar.
-Such an integrated syntax is not defined in this specification, but it can
-be derived from the overall ABNF definition and the prefix-specific
-app-string ABNF definitions by mechanically replacing each character in the
-app-string definition in {{app-grammars}} by the ways that character can be
-represented in the overall ABNF.
-
-E.g., the rules
-
-> ~~~~~ abnf
-> HEXDIG          = DIGIT /
->                   "A" / "B" / "C" / "D" / "E" / "F"
-> DIGIT           = %x30-39
-> ~~~~~
-
-can be expanded to
-
-> ~~~~~ abnf
-> qHEXDIG         = qDIGIT /
->                   "A" / "B" / "C" / "D" / "E" / "F" /
->                   (ULZ ("4"/"6") %x31-36 "}")
-> qDIGIT          = %x30-39 /
->                   (ULZ ("3") %x30-39 "}")
-> ULZ             = %s"\u{" *"0"
-> ~~~~~
-
-A tool that performs this mechanical substitution is in preparation.
+Such an integrated syntax is not provided with this specification, but
+it can be derived from the overall ABNF definition and the
+prefix-specific app-string ABNF definitions by performing an automated
+transformation; see {{squash}}.
 
 </aside>
 
@@ -1911,7 +1896,36 @@ Important differences include:
   CDDL:
   : `serialized_map = bytes .cbor header_map`
 
+Integrating Specific ABNF Grammars into the Overall Grammar {#squash}
+================================================================
 
+This appendix is for information.
+
+It discusses an implementation strategy that integrates the parsing
+and processing of certain app-string content into the overall ABNF
+grammar.
+Such an integrated grammar is not provided with this specification,
+but it can be automatically derived from the overall ABNF definition
+and the prefix-specific app-string ABNF definitions (such as those
+provided in {{app-grammars}} or as later extensions).
+
+At the time of writing, one example a tool performing such a
+derivation is available as open-source software {{ABNFROB}}.
+As an extension to the existing tool `abnftt` for converting ABNF
+grammars into PEG parsers, an ABNF processing tool, `abnfrob`, was
+added that can mechanically replace each character in the supplied
+grammar for an app-string definition by the ways that this character
+can be represented in the overall ABNF.
+
+Such an ABNF processing tool can be used while building an EDN tool,
+by converting some of the app-string grammars for integration into the
+overall grammar, combining the processing into a single pass.
+Other app-string grammars (including future ones still to be defined
+and possibly added as a runtime extension) might be kept separate from
+the overall grammar.
+The latter approach can be particularly useful if the platform already
+has parsers for the app-specific grammar, which is quite likely for
+instance for IP addresses (`ip''`) and {{RFC3339}} date/time strings (`dt''`).
 
 Acknowledgements
 ================
