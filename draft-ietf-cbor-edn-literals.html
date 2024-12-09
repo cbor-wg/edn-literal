@@ -1070,7 +1070,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 8 June 2025</td>
+<td class="center">Expires 12 June 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1086,12 +1086,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-12-05" class="published">5 December 2024</time>
+<time datetime="2024-12-09" class="published">9 December 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-06-08">8 June 2025</time></dd>
+<dd class="expires"><time datetime="2025-06-12">12 June 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1167,7 +1167,7 @@ discussed during IETF 121.</span><a href="#section-abstract-6" class="pilcrow">�
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1346,10 +1346,13 @@ discussed during IETF 121.</span><a href="#section-abstract-6" class="pilcrow">�
             <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-edn-and-cddl" class="internal xref">EDN and CDDL</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-integrating-specific-abnf-g" class="internal xref">Integrating Specific ABNF Grammars into the Overall Grammar</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1470,7 +1473,9 @@ for
 <a href="#sec-iana" class="internal xref">IANA Considerations</a> (<a href="#sec-iana" class="auto internal xref">6</a>),
 <a href="#seccons" class="internal xref">Security considerations</a> (<a href="#seccons" class="auto internal xref">7</a>),
 and References (<a href="#sec-normative-references" class="auto internal xref">8.1</a>, <a href="#sec-informative-references" class="auto internal xref">8.2</a>).
-An informational comparison of EDN with CDDL follows in <a href="#edn-and-cddl" class="auto internal xref">Appendix A</a>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+An informational comparison of EDN with CDDL follows in
+<a href="#edn-and-cddl" class="auto internal xref">Appendix A</a>, and some implementation considerations for integrating
+specific ABNF grammars into the overall ABNF grammar in <a href="#squash" class="auto internal xref">Appendix B</a>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -2399,7 +2404,9 @@ the elisions.<a href="#section-4.2-18" class="pilcrow">¶</a></p>
 application-oriented literals.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">Implementation note: The ABNF definitions in this section are
 intended to be useful in a Parsing Expression Grammar (PEG) parser
-interpretation (see <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-A" class="relref">Appendix A</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for an introduction into PEG).<a href="#section-5-2" class="pilcrow">¶</a></p>
+interpretation (see <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-A" class="relref">Appendix A</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for an introduction into PEG).
+<a href="#squash" class="auto internal xref">Appendix B</a> briefly discusses implementation considerations for when it is
+desired to integrate some specific ABNF grammars into overall ABNF grammar.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div id="grammar">
 <section id="section-5.1">
         <h3 id="name-overall-abnf-definition-for">
@@ -2419,39 +2426,10 @@ with the rule name </code>app-string-p`.<a href="#section-5.1-2.1" class="pilcro
 <p id="section-5.1-2.2">As an implementation note, some implementations may want to integrate
 the parsing and processing of app-string content with the overall
 grammar.
-Such an integrated syntax is not defined in this specification, but it can
-be derived from the overall ABNF definition and the prefix-specific
-app-string ABNF definitions by mechanically replacing each character in the
-app-string definition in <a href="#app-grammars" class="auto internal xref">Section 5.2</a> by the ways that character can be
-represented in the overall ABNF.<a href="#section-5.1-2.2" class="pilcrow">¶</a></p>
-<p id="section-5.1-2.3">E.g., the rules<a href="#section-5.1-2.3" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-5.1-2.4.1">
-              <div class="lang-abnf sourcecode" id="section-5.1-2.4.1.1">
-<pre>
-HEXDIG          = DIGIT /
-                  "A" / "B" / "C" / "D" / "E" / "F"
-DIGIT           = %x30-39
-</pre><a href="#section-5.1-2.4.1.1" class="pilcrow">¶</a>
-</div>
-</li>
-          </ul>
-<p id="section-5.1-2.5">can be expanded to<a href="#section-5.1-2.5" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-5.1-2.6.1">
-              <div class="lang-abnf sourcecode" id="section-5.1-2.6.1.1">
-<pre>
-qHEXDIG         = qDIGIT /
-                  "A" / "B" / "C" / "D" / "E" / "F" /
-                  (ULZ ("4"/"6") %x31-36 "}")
-qDIGIT          = %x30-39 /
-                  (ULZ ("3") %x30-39 "}")
-ULZ             = %s"\u{" *"0"
-</pre><a href="#section-5.1-2.6.1.1" class="pilcrow">¶</a>
-</div>
-</li>
-          </ul>
-<p id="section-5.1-2.7">A tool that performs this mechanical substitution is in preparation.<a href="#section-5.1-2.7" class="pilcrow">¶</a></p>
+Such an integrated syntax is not provided with this specification, but
+it can be derived from the overall ABNF definition and the
+prefix-specific app-string ABNF definitions by performing an automated
+transformation; see <a href="#squash" class="auto internal xref">Appendix B</a>.<a href="#section-5.1-2.2" class="pilcrow">¶</a></p>
 </aside>
 <p id="section-5.1-3">For simplicity, the internal parsing for the built-in EDN prefixes is
 specified in the same way.
@@ -3538,6 +3516,10 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="ABNFROB">[ABNFROB]</dt>
+        <dd>
+<span class="refTitle">"PEG-parsing using ABNF grammars (via treetop)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/cabo/abnftt">https://github.com/cabo/abnftt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.bormann-cbor-numbers">[I-D.bormann-cbor-numbers]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"On Numbers in CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-numbers-00</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-numbers-00">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-numbers-00</a>&gt;</span>. </dd>
@@ -3710,19 +3692,50 @@ these with a control operator, which looks very different.<a href="#appendix-A-7
       </ul>
 </section>
 </div>
-<div id="acknowledgements">
+<div id="squash">
 <section id="appendix-B">
+      <h2 id="name-integrating-specific-abnf-g">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-integrating-specific-abnf-g" class="section-name selfRef">Integrating Specific ABNF Grammars into the Overall Grammar</a>
+      </h2>
+<p id="appendix-B-1">This appendix is for information.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">It discusses an implementation strategy that integrates the parsing
+and processing of certain app-string content into the overall ABNF
+grammar.
+Such an integrated grammar is not provided with this specification,
+but it can be automatically derived from the overall ABNF definition
+and the prefix-specific app-string ABNF definitions (such as those
+provided in <a href="#app-grammars" class="auto internal xref">Section 5.2</a> or as later extensions).<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3">At the time of writing, one example a tool performing such a
+derivation is available as open-source software <span>[<a href="#ABNFROB" class="cite xref">ABNFROB</a>]</span>.
+As an extension to the existing tool <code>abnftt</code> for converting ABNF
+grammars into PEG parsers, an ABNF processing tool, <code>abnfrob</code>, was
+added that can mechanically replace each character in the supplied
+grammar for an app-string definition by the ways that this character
+can be represented in the overall ABNF.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">Such an ABNF processing tool can be used while building an EDN tool,
+by converting some of the app-string grammars for integration into the
+overall grammar, combining the processing into a single pass.
+Other app-string grammars (including future ones still to be defined
+and possibly added as a runtime extension) might be kept separate from
+the overall grammar.
+The latter approach can be particularly useful if the platform already
+has parsers for the app-specific grammar, which is quite likely for
+instance for IP addresses (<code>ip''</code>) and <span>[<a href="#RFC3339" class="cite xref">RFC3339</a>]</span> date/time strings (<code>dt''</code>).<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-C">
       <h2 id="name-acknowledgements">
 <a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-B-1">The concept of application-oriented extensions to diagnostic notation,
+<p id="appendix-C-1">The concept of application-oriented extensions to diagnostic notation,
 as well as the definition for the "dt" extension, were inspired by the
-CoRAL work by Klaus Hartke.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">(TBD)<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+CoRAL work by Klaus Hartke.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">(TBD)<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-C">
+<section id="appendix-D">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
