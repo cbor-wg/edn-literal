@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-02T00:59:48.358501+00:00",
+  "timestamp": "2025-01-05T01:05:24.256453+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3660,6 +3660,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 70,
+      "id": "PR_kwDOGLBEBs6GszrF",
+      "title": "Rewrite Abstract and Introduction",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/70",
+      "state": "OPEN",
+      "author": "rohanmahy",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Make the Abstract confirm to the IETF style guidelines for an Abstract, and somewhat streamline the Introduction.",
+      "createdAt": "2025-01-03T23:30:35Z",
+      "updatedAt": "2025-01-03T23:30:36Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "7d7673435e15fdc37f3c42c07b4cd82fbb78577b",
+      "headRepository": "rohanmahy/edn-literal",
+      "headRefName": "patch-1",
+      "headRefOid": "5a20ca78b99b1affa5f0281de8f19b23c6e34363",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
