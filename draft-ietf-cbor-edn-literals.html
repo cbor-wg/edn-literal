@@ -6,49 +6,31 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>CBOR Extended Diagnostic Notation (EDN)</title>
 <meta content="Carsten Bormann" name="author">
-<meta content='
-       The Concise Binary Object Representation (CBOR) (STD 94, RFC 8949)
-is a data format whose design goals include the possibility of
-extremely small code size, fairly small message size, and
-extensibility without the need for version negotiation. 
-       In addition to the binary interchange format, CBOR from the outset (RFC 7049) defined a text-based "diagnostic notation" in
-order to be able to converse about CBOR data items without having
-to resort to binary data. RFC 8610 extended this into what is known as Extended Diagnostic
-Notation (EDN). 
-       ​This document consolidates the definition of EDN, sets forth
-a further step of its evolution,
-and is intended to serve as a single reference target in
-specifications that use EDN.
-It updates
-RFC 8949, obsoleting its Section 8, and
-RFC 8610, obsoleting its Appendix G. 
-       It specifies an extension point for adding application-oriented extensions to
-the diagnostic notation.
-It then defines two such extensions that enhance EDN with text
-representations of epoch-based date/times and of IP addresses
-and prefixes (RFC 9164). 
-       A few further additions close some gaps in usability.
- The document modifies one extension originally specified in Appendix G.4 of RFC 8610 to enable further increasing usability.
- To facilitate tool interoperation, this document
- specifies a formal ABNF grammar, and it adds media types. 
-       (This "cref" paragraph will be removed by the RFC editor:) 
-The present revision  -14  is intended to reflect the feedback on  -13  as
-discussed during IETF 121. 
-    ' name="description">
+<meta content="
+       This document formalizes and consolidates the definition of the Extended
+Diagnostic Notation (EDN) of the Concise Binary Object Representation
+(CBOR), addressing implementer experience. 
+       Replacing EDN's previous informal descriptions, it updates
+RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+Appendix G. 
+       It also specifies and uses registry-based extension points, using one
+to support text representations of epoch-based dates/times and of IP
+addresses and prefixes. 
+    " name="description">
 <meta content="xml2rfc 3.25.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-cbor-edn-literals-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.25.0
-    Python 3.12.7
+    Python 3.12.8
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.4
+    Jinja2 3.1.5
     lxml 5.3.0
     platformdirs 4.3.6
-    pycountry 22.3.5
-    PyYAML 6.0.1
+    pycountry 24.6.1
+    PyYAML 6.0.2
     requests 2.32.3
     setuptools 70.3.0
     wcwidth 0.2.13
@@ -560,7 +542,11 @@ figcaption, caption {
   }
   pre, svg {
     display: inline-block;
-    overflow-x: auto;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
   }
   pre {
     max-width: 100%;
@@ -1066,11 +1052,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CBOR Extended Diagnostic Notation (EDN)</td>
-<td class="right">December 2024</td>
+<td class="right">January 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 12 June 2025</td>
+<td class="center">Expires 9 July 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1086,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-12-09" class="published">9 December 2024</time>
+<time datetime="2025-01-05" class="published">5 January 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-06-12">12 June 2025</time></dd>
+<dd class="expires"><time datetime="2025-07-09">9 July 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1104,33 +1090,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">CBOR Extended Diagnostic Notation (EDN)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">The Concise Binary Object Representation (CBOR) (STD 94, RFC 8949)
-is a data format whose design goals include the possibility of
-extremely small code size, fairly small message size, and
-extensibility without the need for version negotiation.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">In addition to the binary interchange format, CBOR from the outset (RFC 7049) defined a text-based "diagnostic notation" in
-order to be able to converse about CBOR data items without having
-to resort to binary data. RFC 8610 extended this into what is known as Extended Diagnostic
-Notation (EDN).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3">​This document consolidates the definition of EDN, sets forth
-a further step of its evolution,
-and is intended to serve as a single reference target in
-specifications that use EDN.
-It updates
-RFC 8949, obsoleting its Section 8, and
-RFC 8610, obsoleting its Appendix G.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
-<p id="section-abstract-4">It specifies an extension point for adding application-oriented extensions to
-the diagnostic notation.
-It then defines two such extensions that enhance EDN with text
-representations of epoch-based date/times and of IP addresses
-and prefixes (RFC 9164).<a href="#section-abstract-4" class="pilcrow">¶</a></p>
-<p id="section-abstract-5">A few further additions close some gaps in usability.
- The document modifies one extension originally specified in Appendix G.4 of RFC 8610 to enable further increasing usability.
- To facilitate tool interoperation, this document
- specifies a formal ABNF grammar, and it adds media types.<a href="#section-abstract-5" class="pilcrow">¶</a></p>
-<p id="section-abstract-6"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC editor:)<br>
-The present revision <code>-14</code> is intended to reflect the feedback on <code>-13</code> as
-discussed during IETF 121.</span><a href="#section-abstract-6" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document formalizes and consolidates the definition of the Extended
+Diagnostic Notation (EDN) of the Concise Binary Object Representation
+(CBOR), addressing implementer experience.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">Replacing EDN's previous informal descriptions, it updates
+RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+Appendix G.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">It also specifies and uses registry-based extension points, using one
+to support text representations of epoch-based dates/times and of IP
+addresses and prefixes.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1167,7 +1135,7 @@ discussed during IETF 121.</span><a href="#section-abstract-6" class="pilcrow">�
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 12 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1176,7 +1144,7 @@ discussed during IETF 121.</span><a href="#section-abstract-6" class="pilcrow">�
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2024 IETF Trust and the persons identified as the
+            Copyright (c) 2025 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1363,81 +1331,79 @@ discussed during IETF 121.</span><a href="#section-abstract-6" class="pilcrow">�
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">The Concise Binary Object Representation (CBOR) (STD 94, RFC 8949)
-is a data format whose design goals include the possibility of
-extremely small code size, fairly small message size, and
-extensibility without the need for version negotiation.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">In addition to the binary interchange format, CBOR from the outset (<span><a href="https://rfc-editor.org/rfc/rfc7049#section-6" class="relref">Section 6</a> of [<a href="#RFC7049" class="cite xref">RFC7049</a>]</span>, now Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) defined a text-based "diagnostic notation" in
-order to be able to converse about CBOR data items without having
-to resort to binary data. <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> extended this into what is known as Extended Diagnostic
-Notation (EDN).<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">Diagnostic notation syntax is based on JSON, with extensions
-for representing CBOR constructs such as binary data and tags.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Standardizing EDN in addition to the actual binary interchange format CBOR does
+<p id="section-1-1">The Concise Binary Object Representation (CBOR) (RFC8949) <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>
+    is a data format whose design goals include the possibility of
+    extremely small code size, fairly small message size, and
+    extensibility without the need for version negotiation.
+In addition to the binary interchange format, the original CBOR specification
+    described a text-based "diagnostic notation" (<span><a href="https://rfc-editor.org/rfc/rfc7049#section-6" class="relref">Section 6</a> of [<a href="#RFC7049" class="cite xref">RFC7049</a>]</span>, now Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>), in
+    order to be able to converse about CBOR data items without having
+    to resort to binary data.
+<span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> extended this into what is also known as
+Extended Diagnostic Notation (EDN).<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Diagnostic notation syntax is based on JSON, with extensions
+for representing CBOR constructs such as binary data and tags.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Standardizing EDN in addition to the actual binary interchange format CBOR does
 not serve to create a competing interchange format, but enables the use of
 a shared diagnostic notation in tools for and in documents about CBOR.
-Between components of the limited domain of development and diagnostic
-tools for CBOR, document generation systems, continuous integration (CI)
+Still, between tools for CBOR development and diagnosis, document
+generation systems, continuous integration (CI)
 environments, configuration files, and user interfaces for viewing and
 editing for all these, EDN is often "interchanged" and therefore
 merits a specification that facilitates interoperability within this
 domain as well as reliable translation to and from CBOR.
 EDN is not designed or intended for general-purpose use in protocol
 elements exchanged between systems engaged in processes outside those
-listed above.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">​This document consolidates the definition of EDN, sets forth
-a further step of its evolution,
-and is intended to serve as a single reference target in
-specifications that use EDN.
-It updates
-<a href="#RFC8949" class="auto internal xref">RFC8949</a>, obsoleting Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, and
-<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, obsoleting <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">It specifies an extension point for adding application-oriented extensions to
-the diagnostic notation.
-It then defines two such extensions that enhance EDN with text
+listed here.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">​This document consolidates and formalizes the definition of EDN,
+providing a formal grammar (see <a href="#grammar" class="auto internal xref">Section 5.1</a> and <a href="#app-grammars" class="auto internal xref">Section 5.2</a>), and
+incorporating small changes based on implementation experience.
+It updates <a href="#RFC8949" class="auto internal xref">RFC8949</a>, obsoleting Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>, and
+<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, obsoleting <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.
+It is intended to serve as a single reference target that can be used
+in specifications that use EDN.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">It also specifies two registry-based extension points for the
+diagnostic notation:
+one for additional encoding indicators, and
+one for adding application-oriented literal forms.
+It uses these registries to add encoding indicators for a more
+complete coverage of encoding variation,
+and to add two application-oriented literal forms that enhance EDN with text
 representations of epoch-based date/times and of IP addresses
-and prefixes <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">A few further additions close some gaps in usability.
- The document modifies one extension originally specified in <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G.4" class="relref">Appendix G.4</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> to enable further increasing usability.
- To facilitate tool interoperation, this document
- specifies a formal ABNF grammar.
-    (See <a href="#grammar" class="auto internal xref">Section 5.1</a> for an overall ABNF grammar as well as the
-    ABNF definitions in <a href="#app-grammars" class="auto internal xref">Section 5.2</a> for grammars for both the
-    byte string presentations predefined in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> and the
-    application-extensions defined here.)<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">In addition, this document registers a media type identifier
+and prefixes <span>[<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">In addition, this document registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
 elevate its status as an interchange format, but recognizes that
-interaction between tools is often smoother if media types can be used.<a href="#section-1-8" class="pilcrow">¶</a></p>
-<aside id="section-1-9">
-        <p id="section-1-9.1">Examples in RFCs often do not use media type identifiers, but
+interaction between tools is often smoother if media types can be used.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<aside id="section-1-7">
+        <p id="section-1-7.1">Examples in RFCs often do not use media type identifiers, but
 special sourcecode type names that are allocated
 in <a href="https://www.rfc-editor.org/materials/sourcecode-types.txt">https://www.rfc-editor.org/materials/sourcecode-types.txt</a>.
 At the time of writing, this resource lists four sourcecode type
 names that can be used in RFCs for including CBOR data items and
-CBOR-related languages:<a href="#section-1-9.1" class="pilcrow">¶</a></p>
+CBOR-related languages:<a href="#section-1-7.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-9.2.1">
-            <p id="section-1-9.2.1.1"><code>cbor</code> (which is actually not useful, as CBOR is a binary format
-and cannot be used in textual examples in an RFC),<a href="#section-1-9.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-1-7.2.1">
+            <p id="section-1-7.2.1.1"><code>cbor</code> (which is actually not useful, as CBOR is a binary format
+and cannot be used in textual examples in an RFC),<a href="#section-1-7.2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1-9.2.2">
-            <p id="section-1-9.2.2.1"><code>cbor-diag</code> (which is another name for EDN, as defined in the
-present document),<a href="#section-1-9.2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-1-7.2.2">
+            <p id="section-1-7.2.2.1"><code>cbor-diag</code> (which is another name for EDN, as defined in the
+present document),<a href="#section-1-7.2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1-9.2.3">
-            <p id="section-1-9.2.3.1"><code>cbor-pretty</code> (which is a possibly annotated and pretty-printed
+          <li class="normal" id="section-1-7.2.3">
+            <p id="section-1-7.2.3.1"><code>cbor-pretty</code> (which is a possibly annotated and pretty-printed
 hexdump of an encoded CBOR data item, along the lines of the
 grammar of <a href="#h-grammar" class="auto internal xref">Section 5.2.1</a>, as used for instance for some of the examples
-in <span><a href="https://rfc-editor.org/rfc/rfc9290#appendix-A.3" class="relref">Appendix A.3</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>), and<a href="#section-1-9.2.3.1" class="pilcrow">¶</a></p>
+in <span><a href="https://rfc-editor.org/rfc/rfc9290#appendix-A.3" class="relref">Appendix A.3</a> of [<a href="#RFC9290" class="cite xref">RFC9290</a>]</span>), and<a href="#section-1-7.2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1-9.2.4">
-            <p id="section-1-9.2.4.1"><code>cddl</code> (which is used for the Concise Data Definition Language,
-CDDL, see <a href="#terminology" class="auto internal xref">Section 1.2</a> below).<a href="#section-1-9.2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-1-7.2.4">
+            <p id="section-1-7.2.4.1"><code>cddl</code> (which is used for the Concise Data Definition Language,
+CDDL, see <a href="#terminology" class="auto internal xref">Section 1.2</a> below).<a href="#section-1-7.2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </aside>
-<p id="section-1-10">Note that EDN is not meant to be the only text-based representation of
+<p id="section-1-8">Note that EDN is not meant to be the only text-based representation of
 CBOR data items.
 For instance, <span>[<a href="#YAML" class="cite xref">YAML</a>]</span> <span>[<a href="#RFC9512" class="cite xref">RFC9512</a>]</span> is able to represent most CBOR
 data items, possibly requiring use of YAML's extension points.
@@ -1446,7 +1412,7 @@ and documents needing text-based representations of CBOR data items
 (such as embedded CBOR or encoding indicators),
 but it does provide a host of other features that EDN does not provide
 such as anchor/alias data sharing, at a cost of higher implementation
-and learning complexity.<a href="#section-1-10" class="pilcrow">¶</a></p>
+and learning complexity.<a href="#section-1-8" class="pilcrow">¶</a></p>
 <div id="structure-of-this-document">
 <section id="section-1.1">
         <h3 id="name-structure-of-this-document">
@@ -1493,7 +1459,10 @@ A simple diagnostic notation extension that enables representing CBOR
 sequences was added in <span><a href="https://rfc-editor.org/rfc/rfc8742#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC8742" class="cite xref">RFC8742</a>]</span>.
 As diagnostic notation is not used in the kind of interchange
 situations where backward compatibility would pose a significant
-obstacle, there is little point in not using these extensions.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+obstacle, there is little point in not using these extensions; as at
+least some elements of the extended form are now near-universally
+used, the terms "diagnostic notation" and "EDN" have become
+synonyms in the context of CBOR.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2">Therefore, when we refer to "<em>diagnostic notation</em>", we mean to
 include the original notation from Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">8</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> as well as the
 extensions from <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, <span><a href="https://rfc-editor.org/rfc/rfc8742#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC8742" class="cite xref">RFC8742</a>]</span>, and the
@@ -3386,7 +3355,7 @@ specification reference.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 application-extension identifiers (<a href="#appext-iana" class="auto internal xref">Section 6.1</a>) and encoding
 indicators (<a href="#reg-ei" class="auto internal xref">Section 6.2</a>).
 Extensions introduced this way can have their own security
-considerations (see, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-00#section-5" class="relref">Section 5</a> of [<a href="#I-D.ietf-cbor-edn-e-ref" class="cite xref">I-D.ietf-cbor-edn-e-ref</a>]</span>).
+considerations (see, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01#section-5" class="relref">Section 5</a> of [<a href="#I-D.ietf-cbor-edn-e-ref" class="cite xref">I-D.ietf-cbor-edn-e-ref</a>]</span>).
 When implementing tools that support the use of EDN extensions, the
 implementer needs to be careful not to inadvertently introduce a
 vector for an attacker to invoke extensions not planned for by the
@@ -3530,7 +3499,7 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-e-ref">[I-D.ietf-cbor-edn-e-ref]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-00</span>, <time datetime="2024-06-27" class="refDate">27 June 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-01</span>, <time datetime="2024-12-29" class="refDate">29 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-update-8610-grammar">[I-D.ietf-cbor-update-8610-grammar]</dt>
         <dd>
