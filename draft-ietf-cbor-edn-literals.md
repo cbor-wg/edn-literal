@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2024-12-09
+# date: 2025-01-05
 
 keyword: Internet-Draft
 cat: std
@@ -106,12 +106,16 @@ informative:
 --- abstract
 
 This document formalizes and consolidates the definition of the Extended
-Diagnostic Notation (EDN) of the Concise Binary Object Representation (CBOR),
-obsoleting non-normative descriptions in Section 8 of RFC 8949 and Appendix G of
-RFC 8610 and incorporating implementor experience. It also specifies a mechanism
-to add application-oriented extensions to EDN, and defines two such
-extensions—-for text representations of epoch-based dates/times and IP addresses
-and prefixes respectively.
+Diagnostic Notation (EDN) of the Concise Binary Object Representation
+(CBOR), addressing implementer experience.
+
+Replacing EDN's previous informal descriptions, it updates
+RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+Appendix G.
+
+It also specifies and uses registry-based extension points, using one
+to support text representations of epoch-based dates/times and of IP
+addresses and prefixes.
 
 --- middle
 
@@ -122,13 +126,13 @@ The Concise Binary Object Representation (CBOR) (RFC8949) {{STD94}}
     is a data format whose design goals include the possibility of
     extremely small code size, fairly small message size, and
     extensibility without the need for version negotiation.
-In addition to the binary interchange format, CBOR originally ({{RFC7049}})
-    defined a text-based "diagnostic notation" in
+In addition to the binary interchange format, the original CBOR specification
+    described a text-based "diagnostic notation" ({{Section 6 of
+    RFC7049}}, now {{Section 8 of RFC8949@-cbor}}), in
     order to be able to converse about CBOR data items without having
     to resort to binary data.
-Appendix G of {{RFC8610}} informally
-    extended this into what is known as Extended Diagnostic
-    Notation (EDN).
+{{Appendix G of -cddl}} extended this into what is also known as
+Extended Diagnostic Notation (EDN).
 
 Diagnostic notation syntax is based on JSON, with extensions
 for representing CBOR constructs such as binary data and tags.
@@ -136,27 +140,33 @@ for representing CBOR constructs such as binary data and tags.
 Standardizing EDN in addition to the actual binary interchange format CBOR does
 not serve to create a competing interchange format, but enables the use of
 a shared diagnostic notation in tools for and in documents about CBOR.
-Between components of the limited domain of development and diagnostic
-tools for CBOR, document generation systems, continuous integration (CI)
+Still, between tools for CBOR development and diagnosis, document
+generation systems, continuous integration (CI)
 environments, configuration files, and user interfaces for viewing and
 editing for all these, EDN is often "interchanged" and therefore
 merits a specification that facilitates interoperability within this
 domain as well as reliable translation to and from CBOR.
 EDN is not designed or intended for general-purpose use in protocol
 elements exchanged between systems engaged in processes outside those
-listed above.
+listed here.
 
-​This document consolidates the definition of EDN into a formal specification,
-    with a formal grammar (see {{grammars}} and {{app-grammars}}) and
-    incorporates small changes based on implementation experience.
+​This document consolidates and formalizes the definition of EDN,
+providing a formal grammar (see {{grammar}} and {{app-grammars}}), and
+incorporating small changes based on implementation experience.
 It updates {{RFC8949}}, obsoleting {{Section 8 of RFC8949@-cbor}}, and
-{{RFC8610}}, obsoleting {{Appendix G of -cddl}}.
+{{-cddl}}, obsoleting {{Appendix G of -cddl}}.
+It is intended to serve as a single reference target that can be used
+in specifications that use EDN.
 
-It also specifies an extension point for adding application-oriented
-    extensions to the diagnostic notation.
-It then defines two such extensions that enhance EDN with text
-    representations of epoch-based date/times and of IP addresses
-    and prefixes ({{RFC9164}}).
+It also specifies two registry-based extension points for the
+diagnostic notation:
+one for additional encoding indicators, and
+one for adding application-oriented literal forms.
+It uses these registries to add encoding indicators for a more
+complete coverage of encoding variation,
+and to add two application-oriented literal forms that enhance EDN with text
+representations of epoch-based date/times and of IP addresses
+and prefixes {{-iptag}}.
 
 In addition, this document registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
@@ -239,7 +249,10 @@ A simple diagnostic notation extension that enables representing CBOR
 sequences was added in {{Section 4.2 of -seq}}.
 As diagnostic notation is not used in the kind of interchange
 situations where backward compatibility would pose a significant
-obstacle, there is little point in not using these extensions.
+obstacle, there is little point in not using these extensions; as at
+least some elements of the extended form are now near-universally
+used, the terms "diagnostic notation" and "EDN" have become
+synonyms in the context of CBOR.
 
 Therefore, when we refer to "_diagnostic notation_", we mean to
 include the original notation from {{Section 8 of RFC8949@-cbor}} as well as the
