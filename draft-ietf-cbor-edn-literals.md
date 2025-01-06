@@ -1158,6 +1158,7 @@ Elisions also can be used as part of a (text or byte) string:
 
 ~~~ cbor-diag
 { "contract": "Herewith I buy" + ... + "gned: Alice & Bob",
+  "bytes_in_IRI": 'https://a.example/' + ... + '&q=Übergrößenträger',
   "signature": h'4711...0815',
 }
 ~~~
@@ -1175,6 +1176,8 @@ indicators:
 ~~~ cbor-diag
 { "contract": /CPA/888(["Herewith I buy", 888(null),
                         "gned: Alice & Bob"]),
+  "bytes_in_IRI": 888(['https://a.example/', 888(null),
+                       '&q=Übergrößenträger']),
   "signature": 888([h'4711', 888(null), h'0815']),
 }
 ~~~
