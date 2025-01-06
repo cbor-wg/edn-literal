@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2025-01-05
+# date: 2025-01-06
 
 keyword: Internet-Draft
 cat: std
@@ -55,27 +55,35 @@ normative:
       IEEE Std: 754-2019
       DOI: 10.1109/IEEESTD.2019.8766229
   C:
-    target: https://www.iso.org/standard/74528.html
+    target: https://www.iso.org/standard/82075.html
     title: Information technology — Programming languages — C
     author:
     - org: International Organization for Standardization
-    date: 2018-06
+    date: 2024-10
     seriesinfo:
-      ISO/IEC: 9899:2018
+      ISO/IEC: 9899:2024
     refcontent:
-    - Fourth Edition
-    annotation: The text of the standard is also available via https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2310.pdf
+    - Edition 5
+    annotation: >
+       
+      The standard is widely known as C23.
+      Its technical content is also available via
+      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf>.
   Cplusplus:
-    target: https://www.iso.org/standard/79358.html
+    target: https://www.iso.org/standard/83626.html
     title: Programming languages — C++
     author:
     - org: International Organization for Standardization
-    date: 2020-12
+    date: 2024-10
     seriesinfo:
-      ISO/IEC: 14882:2020
+      ISO/IEC: 14882:2024
     refcontent:
-    - Sixth Edition
-    annotation: The text of the standard is also available via https://isocpp.org/files/papers/N4860.pdf
+    - Edition 7
+    annotation: >
+       
+      The standard is widely known as C++23.
+      Its technical content is also available via
+      <https://open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf>.
 informative:
   RFC8610: cddl
   RFC7049: old-cbor
@@ -1288,7 +1296,7 @@ The following additional items should help in the interpretation:
   `hexfloat` stands
   for a floating point number in the usual hexadecimal notation (which
   uses a mantissa in hexadecimal and an exponent in decimal notation,
-  see Section 5.12.3 of {{IEEE754}}, Section 6.4.4.2 of {{C}}, or Section
+  see Section 5.12.3 of {{IEEE754}}, Section 6.4.4.3 of {{C}}, or Section
   5.13.4 of {{Cplusplus}}; floating-suffix/floating-point-suffix from
   the latter two is not used here).
 
