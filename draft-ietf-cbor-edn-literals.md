@@ -324,8 +324,10 @@ configured to some basic output format, which:
   pretty-printing, but does use common blank spaces such as after `,`
   and `:`.
 
-Additional features such as ensuring deterministic map ordering
-({{Section 4.2 of RFC8949@-cbor}}) on output, or even deviating from the basic
+Additional features such as consistently selecting the unescaped or an
+escaped (ASCII equivalent) forms of characters in strings, ensuring
+deterministic map ordering ({{Section 4.2 of RFC8949@-cbor}}) on output,
+or even deviating from the basic
 configuration in some systematic way, can further assist in comparing
 test data.
 Information obtained from a CDDL model can help in choosing
