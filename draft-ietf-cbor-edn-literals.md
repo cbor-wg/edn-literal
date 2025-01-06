@@ -1405,7 +1405,7 @@ specification.
 These grammars describe the *decoded* content of the `sqstr` components that
 combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
-Each of these may make integrate ABNF rules defined in {{abnf-grammar}},
+Each of these may integrate ABNF rules defined in {{abnf-grammar}},
 which are not always repeated here.
 
 ### h: ABNF Definition of Hexadecimal representation of a byte string {#h-grammar}
@@ -1591,7 +1591,7 @@ The initial content of the registry is shown in {{tab-iana}}; all
 initial entries have the Change Controller "IETF".
 
 | Application-extension Identifier | Description       | Reference |
-|----------------------------------+-------------------+-----------|
+|----------------------------------|-------------------|-----------|
 | h                                | Reserved          | RFC8949   |
 | b32                              | Reserved          | RFC8949   |
 | h32                              | Reserved          | RFC8949   |
