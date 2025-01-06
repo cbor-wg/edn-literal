@@ -110,7 +110,7 @@ Diagnostic Notation (EDN) of the Concise Binary Object Representation
 (CBOR), addressing implementer experience.
 
 Replacing EDN's previous informal descriptions, it updates
-RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+RFC 8949, obsoleting its Section 8, and RFC 8610, obsoleting its
 Appendix G.
 
 It also specifies and uses registry-based extension points, using one
