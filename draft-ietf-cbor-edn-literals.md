@@ -466,7 +466,12 @@ brace/bracket for `map` and `array` ({{ei-container}}): strings have a special s
 cases ''_ and ""_ ({{ei-string}}).)
 
 The encoding indicators `_0` to `_3` can be used to indicate `ai=24`
-to `ai=27`, respectively.
+to `ai=27`, respectively; they therefore stand for 1, 2, 4, and 8
+bytes of additional information (ai) following the initial byte in the
+head of the data item.
+(The abbreviation of `_7` into `_` was discussed above.
+`_4` to `_6` are not currently used in CBOR, but will be available if
+and when CBOR is extended to make use of `ai=28` to `ai=30`.)
 
 Surprisingly, {{Section 8.1 of RFC8949@-cbor}} does not address `ai=0` to
 `ai=23` — the assumption seems to have been that preferred serialization
@@ -1642,14 +1647,18 @@ Reference:
 The initial content of the registry is shown in {{tab-iana-ei}}; all
 initial entries have the Change Controller "IETF".
 
-| Encoding Indicator | Description                        | Reference        |
-|--------------------|------------------------------------|------------------|
+| Encoding Indicator | Description                        | Reference         |
+|--------------------|------------------------------------|-------------------|
 | _                  | Indefinite Length Encoding (ai=31) | RFC8949, RFC-XXXX |
 | _i                 | ai=0 to ai=23                      | RFC-XXXX          |
 | _0                 | ai=24                              | RFC8949, RFC-XXXX |
 | _1                 | ai=25                              | RFC8949, RFC-XXXX |
 | _2                 | ai=26                              | RFC8949, RFC-XXXX |
 | _3                 | ai=27                              | RFC8949, RFC-XXXX |
+| _4                 | Reserved (for ai=28)               | RFC-XXXX          |
+| _5                 | Reserved (for ai=29)               | RFC-XXXX          |
+| _6                 | Reserved (for ai=30)               | RFC-XXXX          |
+| _7                 | Reserved (see _)                   | RFC8949, RFC-XXXX |
 {: #tab-iana-ei title="Initial Content of Encoding Indicator Registry"}
 
 
