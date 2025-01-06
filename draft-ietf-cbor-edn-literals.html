@@ -11,7 +11,7 @@
 Diagnostic Notation (EDN) of the Concise Binary Object Representation
 (CBOR), addressing implementer experience. 
        Replacing EDN's previous informal descriptions, it updates
-RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+RFC 8949, obsoleting its Section 8, and RFC 8610, obsoleting its
 Appendix G. 
        It also specifies and uses registry-based extension points, using one
 to support text representations of epoch-based dates/times and of IP
@@ -1056,7 +1056,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 9 July 2025</td>
+<td class="center">Expires 10 July 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-01-05" class="published">5 January 2025</time>
+<time datetime="2025-01-06" class="published">6 January 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-07-09">9 July 2025</time></dd>
+<dd class="expires"><time datetime="2025-07-10">10 July 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1094,7 +1094,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 Diagnostic Notation (EDN) of the Concise Binary Object Representation
 (CBOR), addressing implementer experience.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">Replacing EDN's previous informal descriptions, it updates
-RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+RFC 8949, obsoleting its Section 8, and RFC 8610, obsoleting its
 Appendix G.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3">It also specifies and uses registry-based extension points, using one
 to support text representations of epoch-based dates/times and of IP
@@ -1135,7 +1135,7 @@ addresses and prefixes.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 9 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 10 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1541,8 +1541,10 @@ pretty-printing, but does use common blank spaces such as after <code>,</code>
 and <code>:</code>.<a href="#section-1.3-7.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.3-8">Additional features such as ensuring deterministic map ordering
-(Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">4.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) on output, or even deviating from the basic
+<p id="section-1.3-8">Additional features such as consistently selecting the unescaped or an
+escaped (ASCII equivalent) forms of characters in strings, ensuring
+deterministic map ordering (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">4.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) on output,
+or even deviating from the basic
 configuration in some systematic way, can further assist in comparing
 test data.
 Information obtained from a CDDL model can help in choosing
@@ -1679,7 +1681,12 @@ brace/bracket for <code>map</code> and <code>array</code> (<a href="#ei-containe
 <code>streamstring</code> for indefinite length encoding except for the special
 cases ''_ and ""_ (<a href="#ei-string" class="auto internal xref">Section 2.4.2</a>).)<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <p id="section-2.2-6">The encoding indicators <code>_0</code> to <code>_3</code> can be used to indicate <code>ai=24</code>
-to <code>ai=27</code>, respectively.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+to <code>ai=27</code>, respectively; they therefore stand for 1, 2, 4, and 8
+bytes of additional information (ai) following the initial byte in the
+head of the data item.
+(The abbreviation of <code>_7</code> into <code>_</code> was discussed above.
+<code>_4</code> to <code>_6</code> are not currently used in CBOR, but will be available if
+and when CBOR is extended to make use of <code>ai=28</code> to <code>ai=30</code>.)<a href="#section-2.2-6" class="pilcrow">¶</a></p>
 <p id="section-2.2-7">Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
 <code>ai=23</code> — the assumption seems to have been that preferred serialization
 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
@@ -1725,7 +1732,8 @@ interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
 A leading "<code>+</code>" sign is a no-op, and a leading "<code>-</code>" sign inverts the
 sign of the number.
-So <code>0</code>, <code>000</code>, <code>+0</code> all represent the same integer zero, as does <code>-0</code>;
+So <code>0</code>, <code>000</code>, <code>+0</code> all represent the same integer zero, as does <code>-0</code>.
+Similarly,
 <code>1</code>, <code>001</code>, <code>+1</code> and <code>+0001</code> all stand for the same integer one, and
 <code>-1</code> and <code>-0001</code> both designate the same integer minus one.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.3-7">Using a decimal point (<code>.</code>) and/or an exponent (<code>e</code> for decimal, <code>p</code>
@@ -1770,7 +1778,7 @@ string literal are not copied into the resulting string (see <a href="#cr" class
 No other control characters can occur directly in a string literal,
 and the handling of escaped characters (<code>\r</code> etc.) is as in JSON.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-3">JSON's escape scheme for characters that are not on Unicode's basic
-multilingual plane (BMP) is cumbersome.
+multilingual plane (BMP) is cumbersome (see Section <a href="https://rfc-editor.org/rfc/rfc8259#section-7" class="relref">7</a> of RFC 8259 <span>[<a href="#STD90" class="cite xref">STD90</a>]</span>).
 EDN keeps it, but also adds the syntax <code>\u{NNN}</code> where NNN is the
 Unicode scalar value as a hexadecimal number.
 This means the following are equivalent (the first <code>o</code> is escaped as
@@ -1935,6 +1943,16 @@ implementations <span class="bcp14">MAY</span> support generation and possibly i
 for CBOR data items that are well-formed but not valid; when this is
 enabled, such implementations <span class="bcp14">MAY</span> relax the requirement on text
 strings to be valid UTF-8.<a href="#section-2.4.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.4.5-3">Note that neither CBOR about its text strings nor EDN about its source
+language make any requirements except for conformance to <span>[<a href="#STD63" class="cite xref">STD63</a>]</span>.
+No additional Unicode processing or validation such as normalization
+or checking whether a scalar value is actually assigned is foreseen by
+EDN, particularly not any processing that is dependent on a specific
+Unicode version.
+Such processing, if offered, <span class="bcp14">MUST NOT</span> get in the way of processing the
+data item represented in EDN (i.e., it may be appropriate to issue
+warnings but not to error out or generate output that does not match
+the input at the UTF-8 level).<a href="#section-2.4.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2128,6 +2146,7 @@ in a tag number 1.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-3.1-5">
 <pre>
 dt'1969-07-21T02:56:16Z',
+dt'1969-07-21T02:56:16.0Z',
 dt'1969-07-21T02:56:16.5Z',
 DT'1969-07-21T02:56:16Z'
 </pre><a href="#section-3.1-5" class="pilcrow">¶</a>
@@ -2136,6 +2155,7 @@ DT'1969-07-21T02:56:16Z'
 <div class="lang-cbor-diag sourcecode" id="section-3.1-7">
 <pre>
 -14159024,
+-14159024.0,
 -14159023.5,
 1(-14159024)
 </pre><a href="#section-3.1-7" class="pilcrow">¶</a>
@@ -3101,6 +3121,26 @@ initial entries have the Change Controller "IETF".<a href="#section-6.2-5" class
             <tr>
               <td class="text-left" rowspan="1" colspan="1">_3</td>
               <td class="text-left" rowspan="1" colspan="1">ai=27</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_4</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved (for ai=28)</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_5</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved (for ai=29)</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_6</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved (for ai=30)</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">_7</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved (see _)</td>
               <td class="text-left" rowspan="1" colspan="1">RFC8949, RFC-XXXX</td>
             </tr>
           </tbody>
