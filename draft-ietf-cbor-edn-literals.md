@@ -722,6 +722,17 @@ for CBOR data items that are well-formed but not valid; when this is
 enabled, such implementations MAY relax the requirement on text
 strings to be valid UTF-8.
 
+Note that neither CBOR about its text strings nor EDN about its source
+language make any requirements except for conformance to {{-utf8}}.
+No additional Unicode processing or validation such as normalization
+or checking whether a scalar value is actually assigned is foreseen by
+EDN, particularly not any processing that is dependent on a specific
+Unicode version.
+Such processing, if offered, MUST NOT get in the way of processing the
+data item represented in EDN (i.e., it may be appropriate to issue
+warnings but not to error out or generate output that does not match
+the input at the UTF-8 level).
+
 <!--
 ## Concatenated Strings {#concatenated-strings}
 
