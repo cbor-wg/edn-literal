@@ -110,7 +110,7 @@ Diagnostic Notation (EDN) of the Concise Binary Object Representation
 (CBOR), addressing implementer experience.
 
 Replacing EDN's previous informal descriptions, it updates
-RFC8949, obsoleting its Section 8, and RFC 8610, obsoleting its
+RFC 8949, obsoleting its Section 8, and RFC 8610, obsoleting its
 Appendix G.
 
 It also specifies and uses registry-based extension points, using one
@@ -324,8 +324,10 @@ configured to some basic output format, which:
   pretty-printing, but does use common blank spaces such as after `,`
   and `:`.
 
-Additional features such as ensuring deterministic map ordering
-({{Section 4.2 of RFC8949@-cbor}}) on output, or even deviating from the basic
+Additional features such as consistently selecting the unescaped or an
+escaped (ASCII equivalent) forms of characters in strings, ensuring
+deterministic map ordering ({{Section 4.2 of RFC8949@-cbor}}) on output,
+or even deviating from the basic
 configuration in some systematic way, can further assist in comparing
 test data.
 Information obtained from a CDDL model can help in choosing
@@ -464,7 +466,12 @@ brace/bracket for `map` and `array` ({{ei-container}}): strings have a special s
 cases ''_ and ""_ ({{ei-string}}).)
 
 The encoding indicators `_0` to `_3` can be used to indicate `ai=24`
-to `ai=27`, respectively.
+to `ai=27`, respectively; they therefore stand for 1, 2, 4, and 8
+bytes of additional information (ai) following the initial byte in the
+head of the data item.
+(The abbreviation of `_7` into `_` was discussed above.
+`_4` to `_6` are not currently used in CBOR, but will be available if
+and when CBOR is extended to make use of `ai=28` to `ai=30`.)
 
 Surprisingly, {{Section 8.1 of RFC8949@-cbor}} does not address `ai=0` to
 `ai=23` — the assumption seems to have been that preferred serialization
@@ -515,7 +522,8 @@ interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
 A leading "`+`" sign is a no-op, and a leading "`-`" sign inverts the
 sign of the number.
-So `0`, `000`, `+0` all represent the same integer zero, as does `-0`;
+So `0`, `000`, `+0` all represent the same integer zero, as does `-0`.
+Similarly,
 `1`, `001`, `+1` and `+0001` all stand for the same integer one, and
 `-1` and `-0001` both designate the same integer minus one.
 
@@ -562,7 +570,7 @@ No other control characters can occur directly in a string literal,
 and the handling of escaped characters (`\r` etc.) is as in JSON.
 
 JSON's escape scheme for characters that are not on Unicode's basic
-multilingual plane (BMP) is cumbersome.
+multilingual plane (BMP) is cumbersome (see {{Section 7 of RFC8259@-json}}).
 EDN keeps it, but also adds the syntax `\u{NNN}` where NNN is the
 Unicode scalar value as a hexadecimal number.
 This means the following are equivalent (the first `o` is escaped as
@@ -713,6 +721,17 @@ implementations MAY support generation and possibly ingestion of EDN
 for CBOR data items that are well-formed but not valid; when this is
 enabled, such implementations MAY relax the requirement on text
 strings to be valid UTF-8.
+
+Note that neither CBOR about its text strings nor EDN about its source
+language make any requirements except for conformance to {{-utf8}}.
+No additional Unicode processing or validation such as normalization
+or checking whether a scalar value is actually assigned is foreseen by
+EDN, particularly not any processing that is dependent on a specific
+Unicode version.
+Such processing, if offered, MUST NOT get in the way of processing the
+data item represented in EDN (i.e., it may be appropriate to issue
+warnings but not to error out or generate output that does not match
+the input at the UTF-8 level).
 
 <!--
 ## Concatenated Strings {#concatenated-strings}
@@ -949,6 +968,7 @@ As an example, the CBOR diagnostic notation
 
 ~~~ cbor-diag
 dt'1969-07-21T02:56:16Z',
+dt'1969-07-21T02:56:16.0Z',
 dt'1969-07-21T02:56:16.5Z',
 DT'1969-07-21T02:56:16Z'
 ~~~
@@ -957,6 +977,7 @@ is equivalent to
 
 ~~~ cbor-diag
 -14159024,
+-14159024.0,
 -14159023.5,
 1(-14159024)
 ~~~
@@ -1640,14 +1661,18 @@ Reference:
 The initial content of the registry is shown in {{tab-iana-ei}}; all
 initial entries have the Change Controller "IETF".
 
-| Encoding Indicator | Description                        | Reference        |
-|--------------------|------------------------------------|------------------|
+| Encoding Indicator | Description                        | Reference         |
+|--------------------|------------------------------------|-------------------|
 | _                  | Indefinite Length Encoding (ai=31) | RFC8949, RFC-XXXX |
 | _i                 | ai=0 to ai=23                      | RFC-XXXX          |
 | _0                 | ai=24                              | RFC8949, RFC-XXXX |
 | _1                 | ai=25                              | RFC8949, RFC-XXXX |
 | _2                 | ai=26                              | RFC8949, RFC-XXXX |
 | _3                 | ai=27                              | RFC8949, RFC-XXXX |
+| _4                 | Reserved (for ai=28)               | RFC-XXXX          |
+| _5                 | Reserved (for ai=29)               | RFC-XXXX          |
+| _6                 | Reserved (for ai=30)               | RFC-XXXX          |
+| _7                 | Reserved (see _)                   | RFC8949, RFC-XXXX |
 {: #tab-iana-ei title="Initial Content of Encoding Indicator Registry"}
 
 
