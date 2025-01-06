@@ -570,7 +570,7 @@ No other control characters can occur directly in a string literal,
 and the handling of escaped characters (`\r` etc.) is as in JSON.
 
 JSON's escape scheme for characters that are not on Unicode's basic
-multilingual plane (BMP) is cumbersome.
+multilingual plane (BMP) is cumbersome (see {{Section 7 of RFC8259@-json}}).
 EDN keeps it, but also adds the syntax `\u{NNN}` where NNN is the
 Unicode scalar value as a hexadecimal number.
 This means the following are equivalent (the first `o` is escaped as
