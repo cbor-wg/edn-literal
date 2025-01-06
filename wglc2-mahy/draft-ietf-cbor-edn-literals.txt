@@ -119,7 +119,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    4.  Stand-in Representations in Binary CBOR . . . . . . . . . . .  20
      4.1.  Handling unknown application-extension identifiers  . . .  21
      4.2.  Handling information deliberately elided from an EDN
-           document  . . . . . . . . . . . . . . . . . . . . . . . .  21
+           document  . . . . . . . . . . . . . . . . . . . . . . . .  22
    5.  ABNF Definitions  . . . . . . . . . . . . . . . . . . . . . .  23
      5.1.  Overall ABNF Definition for Extended Diagnostic
            Notation  . . . . . . . . . . . . . . . . . . . . . . . .  24
@@ -1017,17 +1017,22 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    value is an integer number otherwise.  In the all-upper-case variant
    of the app-prefix, the value is enclosed in a tag number 1.
 
-   As an example, the CBOR diagnostic notation
+   Each row of Table 1 shows an example of "dt" notation and equivalent
+   notation not using an application-extension identifier.
 
-   dt'1969-07-21T02:56:16Z',
-   dt'1969-07-21T02:56:16.5Z',
-   DT'1969-07-21T02:56:16Z'
+               +============================+==============+
+               | dt literal                 | plain EDN    |
+               +============================+==============+
+               | dt'1969-07-21T02:56:16Z'   | -14159024    |
+               +----------------------------+--------------+
+               | dt'1969-07-21T02:56:16.0Z' | -14159024.0  |
+               +----------------------------+--------------+
+               | dt'1969-07-21T02:56:16.5Z' | -14159023.5  |
+               +----------------------------+--------------+
+               | DT'1969-07-21T02:56:16Z'   | 1(-14159024) |
+               +----------------------------+--------------+
 
-   is equivalent to
-
-   -14159024,
-   -14159023.5,
-   1(-14159024)
+                 Table 1: dt and DT literals vs. plain EDN
 
    See Section 5.2.3 for an ABNF definition for the content of dt
    literals.
@@ -1053,11 +1058,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    representations of address prefixes need to implement the truncation
    of the address byte string as described in Section 4.2 of [RFC9164];
    see example below.)  For completeness, the lower-case variant
-   ip'2001:db8::/56' or ip'192.0.2.0/24' stands for an unwrapped
-   [56,h'20010db8'] or [24,h'c00002']; however, in this case the
-   information on whether an address is IPv4 or IPv6 often needs to come
-   from the context.
-
 
 
 
@@ -1066,28 +1066,36 @@ Bormann                   Expires 10 July 2025                 [Page 19]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+   ip'2001:db8::/56' or ip'192.0.2.0/24' stands for an unwrapped
+   [56,h'20010db8'] or [24,h'c00002']; however, in this case the
+   information on whether an address is IPv4 or IPv6 often needs to come
+   from the context.
+
    Note that there is no direct representation of the "Interface format"
    defined in Section 3.1.3 of [RFC9164], an address combined with an
    optional prefix length and an optional zone identifier.  This can be
    represented as in 52([ip'192.0.2.42',24]), if needed.
 
-   Examples: the CBOR diagnostic notation
+   Each row of Table 2 shows an example of "ip" notation and equivalent
+   notation not using an application-extension identifier.
 
-   ip'192.0.2.42',
-   IP'192.0.2.42',
-   IP'192.0.2.0/24',
-   ip'2001:db8::42',
-   IP'2001:db8::42',
-   IP'2001:db8::/64'
+      +===================+=========================================+
+      | ip literal        | plain EDN                               |
+      +===================+=========================================+
+      | ip'192.0.2.42'    | h'c000022a'                             |
+      +-------------------+-----------------------------------------+
+      | IP'192.0.2.42'    | 52(h'c000022a')                         |
+      +-------------------+-----------------------------------------+
+      | IP'192.0.2.0/24'  | 52([24,h'c00002'])                      |
+      +-------------------+-----------------------------------------+
+      | ip'2001:db8::42'  | h'20010db8000000000000000000000042'     |
+      +-------------------+-----------------------------------------+
+      | IP'2001:db8::42'  | 54(h'20010db8000000000000000000000042') |
+      +-------------------+-----------------------------------------+
+      | IP'2001:db8::/64' | 54([64,h'20010db8'])                    |
+      +-------------------+-----------------------------------------+
 
-   is equivalent to
-
-   h'c000022a',
-   52(h'c000022a'),
-   52([24,h'c00002']),
-   h'20010db8000000000000000000000042',
-   54(h'20010db8000000000000000000000042'),
-   54([64,h'20010db8'])
+                 Table 2: ip and IP literals vs. plain EDN
 
    See Section 5.2.4 for an ABNF definition for the content of ip
    literals.
@@ -1103,14 +1111,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
       (Section 4.1) but wants to preserve the information for a later
       processor.
 
-   *  The generator of some EDN intended for human consumption (such as
-      in a specification document) may not want to include parts of the
-      final data item, destructively replacing complete subtrees or
-      possibly just parts of a lengthy string by _elisions_
-      (Section 4.2).
-
-
-
 
 
 
@@ -1121,6 +1121,12 @@ Bormann                   Expires 10 July 2025                 [Page 20]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   *  The generator of some EDN intended for human consumption (such as
+      in a specification document) may not want to include parts of the
+      final data item, destructively replacing complete subtrees or
+      possibly just parts of a lengthy string by _elisions_
+      (Section 4.2).
 
    Implementation note: Typically, the ultimate applications will fail
    if they encounter tags unknown to them, which the ones defined in
@@ -1165,18 +1171,18 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    // occurrences of the prefix "CPA" in the document.  Finally, please
    // remove this note.
 
-4.2.  Handling information deliberately elided from an EDN document
-
-   When using EDN for exposition in a document or on a whiteboard, it is
-   often useful to be able to leave out parts of an EDN document that
-   are not of interest at that point of the exposition.
-
 
 
 Bormann                   Expires 10 July 2025                 [Page 21]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+4.2.  Handling information deliberately elided from an EDN document
+
+   When using EDN for exposition in a document or on a whiteboard, it is
+   often useful to be able to leave out parts of an EDN document that
+   are not of interest at that point of the exposition.
 
    To facilitate this, this specification supports the use of an
    _ellipsis_ (notated as three or more dots in a row, as in ...) to
@@ -1218,13 +1224,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    Subtree elisions can be represented in a CBOR data item by using
    /CPA/888(null) as the stand-in:
 
-   [1, 2, 888(null), 3]
-   { "a": 1,
-     "b": 888(null),
-     888(null): 888(null)
-   }
 
-   Elisions also can be used as part of a (text or byte) string:
 
 
 
@@ -1233,6 +1233,14 @@ Bormann                   Expires 10 July 2025                 [Page 22]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   [1, 2, 888(null), 3]
+   { "a": 1,
+     "b": 888(null),
+     888(null): 888(null)
+   }
+
+   Elisions also can be used as part of a (text or byte) string:
 
    { "contract": "Herewith I buy" + ... + "gned: Alice & Bob",
      "bytes_in_IRI": 'https://a.example/' + ... + '&q=Übergrößenträger',
@@ -1273,14 +1281,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    [RFC7405]) that serve to define the syntax of EDN and some
    application-oriented literals.
 
-   Implementation note: The ABNF definitions in this section are
-   intended to be useful in a Parsing Expression Grammar (PEG) parser
-   interpretation (see Appendix A of [RFC8610] for an introduction into
-   PEG).  Appendix B briefly discusses implementation considerations for
-   when it is desired to integrate some specific ABNF grammars into
-   overall ABNF grammar.
-
-
 
 
 
@@ -1289,6 +1289,13 @@ Bormann                   Expires 10 July 2025                 [Page 23]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   Implementation note: The ABNF definitions in this section are
+   intended to be useful in a Parsing Expression Grammar (PEG) parser
+   interpretation (see Appendix A of [RFC8610] for an introduction into
+   PEG).  Appendix B briefly discusses implementation considerations for
+   when it is desired to integrate some specific ABNF grammars into
+   overall ABNF grammar.
 
 5.1.  Overall ABNF Definition for Extended Diagnostic Notation
 
@@ -1331,13 +1338,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    string          = string1e *(S "+" S string1e)
 
    number          = (hexfloat / hexint / octint / binint
-                      / decnumber / nonfin) spec
-   sign            = "+" / "-"
-   decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
-                            ["e" [sign] 1*DIGIT]
-   hexfloat        = [sign] "0x" (1*HEXDIG ["." *HEXDIG] / "." 1*HEXDIG)
-                            "p" [sign] 1*DIGIT
-   hexint          = [sign] "0x" 1*HEXDIG
 
 
 
@@ -1346,6 +1346,13 @@ Bormann                   Expires 10 July 2025                 [Page 24]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+                      / decnumber / nonfin) spec
+   sign            = "+" / "-"
+   decnumber       = [sign] (1*DIGIT ["." *DIGIT] / "." 1*DIGIT)
+                            ["e" [sign] 1*DIGIT]
+   hexfloat        = [sign] "0x" (1*HEXDIG ["." *HEXDIG] / "." 1*HEXDIG)
+                            "p" [sign] 1*DIGIT
+   hexint          = [sign] "0x" 1*HEXDIG
    octint          = [sign] "0o" 1*ODIGIT
    binint          = [sign] "0b" 1*BDIGIT
    nonfin          = %s"Infinity"
@@ -1388,13 +1395,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    streamstring    = "(_" S string S *(OC string S) OC ")"
    spec            = ["_" *wordchar]
 
-   double-quoted   = unescaped
-                   / SQUOTE
-                   / "\" DQUOTE
-                   / "\" escapable
-
-   single-quoted   = unescaped
-
 
 
 Bormann                   Expires 10 July 2025                 [Page 25]
@@ -1402,6 +1402,12 @@ Bormann                   Expires 10 July 2025                 [Page 25]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+   double-quoted   = unescaped
+                   / SQUOTE
+                   / "\" DQUOTE
+                   / "\" escapable
+
+   single-quoted   = unescaped
                    / DQUOTE
                    / "\" SQUOTE
                    / "\" escapable
@@ -1444,12 +1450,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    ODIGIT          = %x30-37 ; 0-7
    BDIGIT          = %x30-31 ; 0-1
    HEXDIG          = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
-   HEXDIG1         = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
-   ; Note: double-quoted strings as in "A" are case-insensitive in ABNF
-   lcalpha         = %x61-7A ; a-z
-   lcalnum         = lcalpha / DIGIT
-   ucalpha         = %x41-5A ; A-Z
-   ucalnum         = ucalpha / DIGIT
 
 
 
@@ -1458,6 +1458,12 @@ Bormann                   Expires 10 July 2025                 [Page 26]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+   HEXDIG1         = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
+   ; Note: double-quoted strings as in "A" are case-insensitive in ABNF
+   lcalpha         = %x61-7A ; a-z
+   lcalnum         = lcalpha / DIGIT
+   ucalpha         = %x41-5A ; A-Z
+   ucalnum         = ucalpha / DIGIT
    wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
 
                Figure 1: Overall ABNF Definition of CBOR EDN
@@ -1499,12 +1505,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        point below); implementers are advised that some platform numeric
        parsers accept only a subset of the floating point syntax in this
        document and may require some preprocessing to use here.
-
-
-
-
-
-
 
 
 
@@ -1649,7 +1649,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    literals.  Each of these may integrate ABNF rules defined in
    Figure 1, which are not always repeated here.
 
-   Table 1 summarizes the app-prefix values defined in this document.
+   Table 3 summarizes the app-prefix values defined in this document.
 
 
 
@@ -1711,7 +1711,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        |            |                           | the above       |
        +------------+---------------------------+-----------------+
 
-           Table 1: App-prefix Values Defined in this Document
+           Table 3: App-prefix Values Defined in this Document
 
 5.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
         string
@@ -1937,7 +1937,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
       a reference document that provides a description of the
       application-extension identifier
 
-   The initial content of the registry is shown in Table 2; all initial
+   The initial content of the registry is shown in Table 4; all initial
    entries have the Change Controller "IETF".
 
 
@@ -1986,7 +1986,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    | ip                               | IP Address/Prefix | RFC-XXXX  |
    +----------------------------------+-------------------+-----------+
 
-       Table 2: Initial Content of Application-extension Identifier
+       Table 4: Initial Content of Application-extension Identifier
                                  Registry
 
 6.2.  Encoding Indicators
@@ -2036,7 +2036,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
       a reference document that provides a description of the
       application-extension identifier
 
-   The initial content of the registry is shown in Table 3; all initial
+   The initial content of the registry is shown in Table 5; all initial
    entries have the Change Controller "IETF".
 
           +====================+===================+===========+
@@ -2060,7 +2060,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
           |                    |                   | RFC-XXXX  |
           +--------------------+-------------------+-----------+
 
-              Table 3: Initial Content of Encoding Indicator
+              Table 5: Initial Content of Encoding Indicator
                                  Registry
 
 
@@ -2091,7 +2091,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    |                 |                             | Section 6.3 |
    +-----------------+-----------------------------+-------------+
 
-         Table 4: New Media Type application/cbor-diagnostic
+         Table 6: New Media Type application/cbor-diagnostic
 
    Type name:  application
    Subtype name:  cbor-diagnostic
@@ -2152,7 +2152,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    | application/cbor-diagnostic | -              | TBD1 | RFC-XXXX  |
    +-----------------------------+----------------+------+-----------+
 
-                       Table 5: New Content-Format
+                       Table 7: New Content-Format
 
    TBD1 is to be assigned from the space 256..9999, according to the
    procedure "IETF Review or IESG Approval", preferably a number less
@@ -2170,7 +2170,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    // remove this note.
 
    In the "CBOR Tags" registry [IANA.cbor-tags], IANA is requested to
-   assign the tags in Table 6 from the "specification required" space
+   assign the tags in Table 8 from the "specification required" space
    (suggested assignments: 888 and 999), with the present document as
    the specification reference.
 
@@ -2197,7 +2197,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    |        |           | Unresolved Application-Extension |           |
    +--------+-----------+----------------------------------+-----------+
 
-                          Table 6: Values for Tags
+                          Table 8: Values for Tags
 
 7.  Security considerations
 

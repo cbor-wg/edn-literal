@@ -2124,23 +2124,57 @@ If fractional seconds are given in the text (production
 floating-point number; the value is an integer number otherwise.
 In the all-upper-case variant of the app-prefix, the value is enclosed
 in a tag number 1.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">As an example, the CBOR diagnostic notation<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.1-5">
-<pre>
-dt'1969-07-21T02:56:16Z',
-dt'1969-07-21T02:56:16.5Z',
-DT'1969-07-21T02:56:16Z'
-</pre><a href="#section-3.1-5" class="pilcrow">¶</a>
+<p id="section-3.1-4">Each row of <a href="#tab-equiv-dt" class="auto internal xref">Table 1</a> shows an example of "dt" notation and
+equivalent notation not using an application-extension identifier.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<span id="name-dt-and-dt-literals-vs-plain"></span><div id="tab-equiv-dt">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-dt-and-dt-literals-vs-plain" class="selfRef">dt and DT literals vs. plain EDN</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">dt literal</th>
+              <th class="text-left" rowspan="1" colspan="1">plain EDN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>dt'1969-07-21T02:56:16Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-14159024</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>dt'1969-07-21T02:56:16.0Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-14159024.0</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>dt'1969-07-21T02:56:16.5Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-14159023.5</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>DT'1969-07-21T02:56:16Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>1(-14159024)</code>
+</td>
+            </tr>
+          </tbody>
+        </table>
 </div>
-<p id="section-3.1-6">is equivalent to<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.1-7">
-<pre>
--14159024,
--14159023.5,
-1(-14159024)
-</pre><a href="#section-3.1-7" class="pilcrow">¶</a>
-</div>
-<p id="section-3.1-8">See <a href="#dt-grammar" class="auto internal xref">Section 5.2.3</a> for an ABNF definition for the content of <code>dt</code> literals.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">See <a href="#dt-grammar" class="auto internal xref">Section 5.2.3</a> for an ABNF definition for the content of <code>dt</code> literals.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ip">
@@ -2169,29 +2203,73 @@ on whether an address is IPv4 or IPv6 often needs to come from the context.<a hr
 defined in <span><a href="https://rfc-editor.org/rfc/rfc9164#section-3.1.3" class="relref">Section 3.1.3</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>, an address combined with an
 optional prefix length and an optional zone identifier.
 This can be represented as in <code>52([ip'192.0.2.42',24])</code>, if needed.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.2-6">Examples: the CBOR diagnostic notation<a href="#section-3.2-6" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.2-7">
-<pre>
-ip'192.0.2.42',
-IP'192.0.2.42',
-IP'192.0.2.0/24',
-ip'2001:db8::42',
-IP'2001:db8::42',
-IP'2001:db8::/64'
-</pre><a href="#section-3.2-7" class="pilcrow">¶</a>
+<p id="section-3.2-6">Each row of <a href="#tab-equiv-ip" class="auto internal xref">Table 2</a> shows an example of "ip" notation and
+equivalent notation not using an application-extension identifier.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<span id="name-ip-and-ip-literals-vs-plain"></span><div id="tab-equiv-ip">
+<table class="center" id="table-2">
+          <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-ip-and-ip-literals-vs-plain" class="selfRef">ip and IP literals vs. plain EDN</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">ip literal</th>
+              <th class="text-left" rowspan="1" colspan="1">plain EDN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>ip'192.0.2.42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>h'c000022a'</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'192.0.2.42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>52(h'c000022a')</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'192.0.2.0/24'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>52([24,h'c00002'])</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>ip'2001:db8::42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>h'20010db8000000000000000000000042'</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'2001:db8::42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>54(h'20010db8000000000000000000000042')</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'2001:db8::/64'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>54([64,h'20010db8'])</code>
+</td>
+            </tr>
+          </tbody>
+        </table>
 </div>
-<p id="section-3.2-8">is equivalent to<a href="#section-3.2-8" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.2-9">
-<pre>
-h'c000022a',
-52(h'c000022a'),
-52([24,h'c00002']),
-h'20010db8000000000000000000000042',
-54(h'20010db8000000000000000000000042'),
-54([64,h'20010db8'])
-</pre><a href="#section-3.2-9" class="pilcrow">¶</a>
-</div>
-<p id="section-3.2-10">See <a href="#ip-grammar" class="auto internal xref">Section 5.2.4</a> for an ABNF definition for the content of <code>ip</code> literals.<a href="#section-3.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.2-8">See <a href="#ip-grammar" class="auto internal xref">Section 5.2.4</a> for an ABNF definition for the content of <code>ip</code> literals.<a href="#section-3.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2725,11 +2803,11 @@ combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
 Each of these may integrate ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>,
 which are not always repeated here.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 1</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 3</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <span id="name-app-prefix-values-defined-i"></span><div id="tab-prefixes">
-<table class="center" id="table-1">
+<table class="center" id="table-3">
           <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#table-3" class="selfRef">Table 3</a>:
 <a href="#name-app-prefix-values-defined-i" class="selfRef">App-prefix Values Defined in this Document</a>
           </caption>
 <thead>
@@ -3000,12 +3078,12 @@ application-extension identifier<a href="#section-6.1-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 2</a>; all
+<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 4</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-applicat"></span><div id="tab-iana">
-<table class="center" id="table-2">
+<table class="center" id="table-4">
           <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-initial-content-of-applicat" class="selfRef">Initial Content of Application-extension Identifier Registry</a>
           </caption>
 <thead>
@@ -3119,12 +3197,12 @@ application-extension identifier<a href="#section-6.2-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 3</a>; all
+<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 5</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.2-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-encoding"></span><div id="tab-iana-ei">
-<table class="center" id="table-3">
+<table class="center" id="table-5">
           <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#table-5" class="selfRef">Table 5</a>:
 <a href="#name-initial-content-of-encoding" class="selfRef">Initial Content of Encoding Indicator Registry</a>
           </caption>
 <thead>
@@ -3184,9 +3262,9 @@ present document.<a href="#section-6.2-7.1" class="pilcrow">¶</a></p>
 <p id="section-6.3-1">IANA is requested to add the following Media-Type to the "Media Types"
 registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <span id="name-new-media-type-application-"></span><div id="new-media-type">
-<table class="left" id="table-4">
+<table class="left" id="table-6">
           <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-new-media-type-application-" class="selfRef">New Media Type application/cbor-diagnostic</a>
           </caption>
 <thead>
@@ -3330,9 +3408,9 @@ data edited by humans, often under source-code control.<a href="#section-6.3-3.2
 <a href="https://www.iana.org/assignments/core-parameters#content-formats" class="relref">"CoAP Content-Formats"</a>
 sub-registry, within the "Constrained RESTful Environments (CoRE)
 Parameters" Registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<span id="name-new-content-format"></span><table class="left" id="table-5">
+<span id="name-new-content-format"></span><table class="left" id="table-7">
           <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-new-content-format" class="selfRef">New Content-Format</a>
           </caption>
 <thead>
@@ -3370,13 +3448,13 @@ than 1000.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
   occurrences of the prefix "CPA" in the document.  Finally,
   please remove this note.</span><a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.5-2">In the "CBOR Tags" registry <span>[<a href="#IANA.cbor-tags" class="cite xref">IANA.cbor-tags</a>]</span>, IANA is requested to assign the
-tags in <a href="#tab-tag-values" class="auto internal xref">Table 6</a> from the "specification required" space
+tags in <a href="#tab-tag-values" class="auto internal xref">Table 8</a> from the "specification required" space
 (suggested assignments: 888 and 999), with the present document as the
 specification reference.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 <span id="name-values-for-tags"></span><div id="tab-tag-values">
-<table class="center" id="table-6">
+<table class="center" id="table-8">
           <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-values-for-tags" class="selfRef">Values for Tags</a>
           </caption>
 <thead>
