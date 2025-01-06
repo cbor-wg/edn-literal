@@ -522,7 +522,8 @@ interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
 A leading "`+`" sign is a no-op, and a leading "`-`" sign inverts the
 sign of the number.
-So `0`, `000`, `+0` all represent the same integer zero, as does `-0`;
+So `0`, `000`, `+0` all represent the same integer zero, as does `-0`.
+Similarly,
 `1`, `001`, `+1` and `+0001` all stand for the same integer one, and
 `-1` and `-0001` both designate the same integer minus one.
 
