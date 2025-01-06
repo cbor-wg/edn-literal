@@ -953,21 +953,16 @@ floating-point number; the value is an integer number otherwise.
 In the all-upper-case variant of the app-prefix, the value is enclosed
 in a tag number 1.
 
-As an example, the CBOR diagnostic notation
+Each row of {{tab-equiv-dt}} shows an example of "dt" notation and
+equivalent notation not using an application-extension identifier.
 
-~~~ cbor-diag
-dt'1969-07-21T02:56:16Z',
-dt'1969-07-21T02:56:16.5Z',
-DT'1969-07-21T02:56:16Z'
-~~~
-
-is equivalent to
-
-~~~ cbor-diag
--14159024,
--14159023.5,
-1(-14159024)
-~~~
+| dt literal                   | plain EDN      |
+|------------------------------|----------------|
+| `dt'1969-07-21T02:56:16Z'`   | `-14159024`    |
+| `dt'1969-07-21T02:56:16.0Z'` | `-14159024.0`  |
+| `dt'1969-07-21T02:56:16.5Z'` | `-14159023.5`  |
+| `DT'1969-07-21T02:56:16Z'`   | `1(-14159024)` |
+{: #tab-equiv-dt title="dt and DT literals vs. plain EDN"}
 
 See {{dt-grammar}} for an ABNF definition for the content of `dt` literals.
 
@@ -1002,27 +997,18 @@ defined in {{Section 3.1.3 of -iptag}}, an address combined with an
 optional prefix length and an optional zone identifier.
 This can be represented as in `52([ip'192.0.2.42',24])`, if needed.
 
-Examples: the CBOR diagnostic notation
+Each row of {{tab-equiv-ip}} shows an example of "ip" notation and
+equivalent notation not using an application-extension identifier.
 
-~~~ cbor-diag
-ip'192.0.2.42',
-IP'192.0.2.42',
-IP'192.0.2.0/24',
-ip'2001:db8::42',
-IP'2001:db8::42',
-IP'2001:db8::/64'
-~~~
-
-is equivalent to
-
-~~~ cbor-diag
-h'c000022a',
-52(h'c000022a'),
-52([24,h'c00002']),
-h'20010db8000000000000000000000042',
-54(h'20010db8000000000000000000000042'),
-54([64,h'20010db8'])
-~~~
+| ip literal          | plain EDN                                 |
+|---------------------|-------------------------------------------|
+| `ip'192.0.2.42'`    | `h'c000022a'`                             |
+| `IP'192.0.2.42'`    | `52(h'c000022a')`                         |
+| `IP'192.0.2.0/24'`  | `52([24,h'c00002'])`                      |
+| `ip'2001:db8::42'`  | `h'20010db8000000000000000000000042'`     |
+| `IP'2001:db8::42'`  | `54(h'20010db8000000000000000000000042')` |
+| `IP'2001:db8::/64'` | `54([64,h'20010db8'])`                    |
+{: #tab-equiv-ip title="ip and IP literals vs. plain EDN"}
 
 See {{ip-grammar}} for an ABNF definition for the content of `ip` literals.
 
