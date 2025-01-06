@@ -1408,6 +1408,21 @@ application-oriented extension literals.
 Each of these may integrate ABNF rules defined in {{abnf-grammar}},
 which are not always repeated here.
 
+{{tab-prefixes}} summarizes the app-prefix values defined in this document.
+
+| app-prefix | content of single-quoted string | result type                                       |
+|------------|---------------------------------|---------------------------------------------------|
+| h          | hexadecimal form of binary data | byte string                                       |
+| H          | (not used)                      |                                                   |
+| b64        | base64 forms (classic or base64url) of binary data | byte string                                       |
+| B64        | (not used)                      |                                                   |
+| dt         | RFC 3339 date/time              | number (int or float)                             |
+| DT         | "                               | Tag 1 on the above                                |
+| ip         | IP address or prefix            | byte string, <br/>array of length and byte string |
+| IP         | "                               | Tag 54 (IPv6) or 52 (IPv4) on the above           |
+{: #tab-prefixes title="App-prefix Values Defined in this Document"}
+
+
 ### h: ABNF Definition of Hexadecimal representation of a byte string {#h-grammar}
 
 
