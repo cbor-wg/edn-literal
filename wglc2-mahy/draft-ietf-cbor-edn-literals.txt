@@ -1362,7 +1362,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    app-prefix      = lcalpha *lcalnum ; including h and b64
                    / ucalpha *ucalnum ; tagged variant, if defined
    app-string      = app-prefix sqstr
-   sqstr           = "'" *single-quoted "'"
+   sqstr           = SQUOTE *single-quoted SQUOTE
    bstr            = app-string / sqstr / embedded
                      ; app-string could be any type
    tstr            = DQUOTE *double-quoted DQUOTE
@@ -1389,7 +1389,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    spec            = ["_" *wordchar]
 
    double-quoted   = unescaped
-                   / "'"
+                   / SQUOTE
                    / "\" DQUOTE
                    / "\" escapable
 
@@ -1403,7 +1403,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
                    / DQUOTE
-                   / "\" "'"
+                   / "\" SQUOTE
                    / "\" escapable
 
    escapable       = %s"b" ; BS backspace U+0008
@@ -1438,6 +1438,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                    / %xE000-10FFFF
 
    DQUOTE          = %x22    ; " double quote
+   SQUOTE          = "'"     ; ' single quote
    DIGIT           = %x30-39 ; 0-9
    DIGIT1          = %x31-39 ; 1-9
    ODIGIT          = %x30-37 ; 0-7
@@ -1449,7 +1450,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    lcalnum         = lcalpha / DIGIT
    ucalpha         = %x41-5A ; A-Z
    ucalnum         = ucalpha / DIGIT
-   wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
 
 
 
@@ -1457,6 +1457,8 @@ Bormann                   Expires 10 July 2025                 [Page 26]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
 
                Figure 1: Overall ABNF Definition of CBOR EDN
 
@@ -1498,6 +1500,20 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        parsers accept only a subset of the floating point syntax in this
        document and may require some preprocessing to use here.
 
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 10 July 2025                 [Page 27]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
    4.  hexint, octint, and binint stand for an integer in the usual base
        16/hexadecimal ("0x"), base 8/octal ("0o"), or base 2/binary
        ("0b") notation.  hexfloat stands for a floating point number in
@@ -1506,13 +1522,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        Section 5.12.3 of [IEEE754], Section 6.4.4.3 of [C], or
        Section 5.13.4 of [Cplusplus]; floating-suffix/floating-point-
        suffix from the latter two is not used here).
-
-
-
-Bormann                   Expires 10 July 2025                 [Page 27]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
 
    5.  For hexint, octint, binint, and when decnumber stands for an
        integer, the corresponding CBOR data item is represented using
@@ -1553,15 +1562,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        chunks, and (2) the use of ellipses to represent elisions
        (Section 4.2).
 
-       Note that the syntax defined here for concatenation of components
-       uses an explicit + operator between the components to be
-       concatenated (Appendix G.4 of [RFC8610] used simple
-       juxtaposition, which was not widely implemented and got in the
-       way of making the use of commas optional in other places via the
-       rule OC).
-
-
-
 
 
 
@@ -1569,6 +1569,13 @@ Bormann                   Expires 10 July 2025                 [Page 28]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+       Note that the syntax defined here for concatenation of components
+       uses an explicit + operator between the components to be
+       concatenated (Appendix G.4 of [RFC8610] used simple
+       juxtaposition, which was not widely implemented and got in the
+       way of making the use of commas optional in other places via the
+       rule OC).
 
        Text strings and byte strings do not mix within such a
        concatenation, except that byte string literal notation can be
@@ -1611,13 +1618,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
           simply joined together, proceeding from left to right.  If the
           left hand side of a concatenation is a text string, the
           joining operation results in a text string, and that result
-          needs to be valid UTF-8 except for implementations that
-          support and are enabled for generation/ingestion of EDN for
-          CBOR data items that are well-formed but not valid.  If the
-          left hand side is a byte string, the right hand side also
-          needs to be a byte string.
-
-
 
 
 
@@ -1625,6 +1625,12 @@ Bormann                   Expires 10 July 2025                 [Page 29]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+          needs to be valid UTF-8 except for implementations that
+          support and are enabled for generation/ingestion of EDN for
+          CBOR data items that are well-formed but not valid.  If the
+          left hand side is a byte string, the right hand side also
+          needs to be a byte string.
 
        *  Some of the strings may be app-strings.  If the result type of
           the app-string is an actual (text or byte) string, joining of
@@ -1644,12 +1650,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    Figure 1, which are not always repeated here.
 
    Table 1 summarizes the app-prefix values defined in this document.
-
-
-
-
-
-
 
 
 
