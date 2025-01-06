@@ -2326,6 +2326,7 @@ not be valid.)<a href="#section-4.2-8" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-4.2-12">
 <pre>
 { "contract": "Herewith I buy" + ... + "gned: Alice &amp; Bob",
+  "bytes_in_IRI": 'https://a.example/' + ... + '&amp;q=Übergrößenträger',
   "signature": h'4711...0815',
 }
 </pre><a href="#section-4.2-12" class="pilcrow">¶</a>
@@ -2342,6 +2343,8 @@ indicators:<a href="#section-4.2-14" class="pilcrow">¶</a></p>
 <pre>
 { "contract": /CPA/888(["Herewith I buy", 888(null),
                         "gned: Alice &amp; Bob"]),
+  "bytes_in_IRI": 888(['https://a.example/', 888(null),
+                       '&amp;q=Übergrößenträger']),
   "signature": 888([h'4711', 888(null), h'0815']),
 }
 </pre><a href="#section-4.2-15" class="pilcrow">¶</a>

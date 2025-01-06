@@ -122,7 +122,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
            document  . . . . . . . . . . . . . . . . . . . . . . . .  21
    5.  ABNF Definitions  . . . . . . . . . . . . . . . . . . . . . .  23
      5.1.  Overall ABNF Definition for Extended Diagnostic
-           Notation  . . . . . . . . . . . . . . . . . . . . . . . .  23
+           Notation  . . . . . . . . . . . . . . . . . . . . . . . .  24
      5.2.  ABNF Definitions for app-string Content . . . . . . . . .  30
        5.2.1.  h: ABNF Definition of Hexadecimal representation of a
                byte string . . . . . . . . . . . . . . . . . . . . .  31
@@ -1235,6 +1235,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
    { "contract": "Herewith I buy" + ... + "gned: Alice & Bob",
+     "bytes_in_IRI": 'https://a.example/' + ... + '&q=Übergrößenträger',
      "signature": h'4711...0815',
    }
 
@@ -1249,6 +1250,8 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
    { "contract": /CPA/888(["Herewith I buy", 888(null),
                            "gned: Alice & Bob"]),
+     "bytes_in_IRI": 888(['https://a.example/', 888(null),
+                          '&q=Übergrößenträger']),
      "signature": 888([h'4711', 888(null), h'0815']),
    }
 
@@ -1277,10 +1280,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    when it is desired to integrate some specific ABNF grammars into
    overall ABNF grammar.
 
-5.1.  Overall ABNF Definition for Extended Diagnostic Notation
 
-   This subsection provides an overall ABNF definition for the syntax of
-   CBOR extended diagnostic notation.
 
 
 
@@ -1289,6 +1289,11 @@ Bormann                   Expires 10 July 2025                 [Page 23]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+5.1.  Overall ABNF Definition for Extended Diagnostic Notation
+
+   This subsection provides an overall ABNF definition for the syntax of
+   CBOR extended diagnostic notation.
 
       |  This ABNF definition treats all single-quoted strings the same,
       |  whether they are unprefixed and constitute byte string
@@ -1333,11 +1338,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    hexfloat        = [sign] "0x" (1*HEXDIG ["." *HEXDIG] / "." 1*HEXDIG)
                             "p" [sign] 1*DIGIT
    hexint          = [sign] "0x" 1*HEXDIG
-   octint          = [sign] "0o" 1*ODIGIT
-   binint          = [sign] "0b" 1*BDIGIT
-   nonfin          = %s"Infinity"
-                   / %s"-Infinity"
-                   / %s"NaN"
 
 
 
@@ -1346,6 +1346,11 @@ Bormann                   Expires 10 July 2025                 [Page 24]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+   octint          = [sign] "0o" 1*ODIGIT
+   binint          = [sign] "0b" 1*BDIGIT
+   nonfin          = %s"Infinity"
+                   / %s"-Infinity"
+                   / %s"NaN"
    simple          = %s"false"
                    / %s"true"
                    / %s"null"
@@ -1389,11 +1394,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                    / "\" escapable
 
    single-quoted   = unescaped
-                   / DQUOTE
-                   / "\" "'"
-                   / "\" escapable
-
-   escapable       = %s"b" ; BS backspace U+0008
 
 
 
@@ -1402,6 +1402,11 @@ Bormann                   Expires 10 July 2025                 [Page 25]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+                   / DQUOTE
+                   / "\" "'"
+                   / "\" escapable
+
+   escapable       = %s"b" ; BS backspace U+0008
                    / %s"f" ; FF form feed U+000C
                    / %s"n" ; LF line feed U+000A
                    / %s"r" ; CR carriage return U+000D
@@ -1446,17 +1451,14 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    ucalnum         = ucalpha / DIGIT
    wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
 
-               Figure 1: Overall ABNF Definition of CBOR EDN
-
-
-
-
 
 
 Bormann                   Expires 10 July 2025                 [Page 26]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+               Figure 1: Overall ABNF Definition of CBOR EDN
 
    While an ABNF grammar defines the set of character strings that are
    considered to be valid EDN by this ABNF, the mapping of these
@@ -1504,8 +1506,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        Section 5.12.3 of [IEEE754], Section 6.4.4.3 of [C], or
        Section 5.13.4 of [Cplusplus]; floating-suffix/floating-point-
        suffix from the latter two is not used here).
-
-
 
 
 
