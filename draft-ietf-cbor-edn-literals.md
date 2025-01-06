@@ -968,6 +968,7 @@ As an example, the CBOR diagnostic notation
 
 ~~~ cbor-diag
 dt'1969-07-21T02:56:16Z',
+dt'1969-07-21T02:56:16.0Z',
 dt'1969-07-21T02:56:16.5Z',
 DT'1969-07-21T02:56:16Z'
 ~~~
@@ -976,6 +977,7 @@ is equivalent to
 
 ~~~ cbor-diag
 -14159024,
+-14159024.0,
 -14159023.5,
 1(-14159024)
 ~~~
