@@ -1819,24 +1819,7 @@ indefinite length strings and in <a href="#ei-container" class="auto internal xr
 <p id="section-2.3-1">In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
 and binary number literals in the usual C-language notation (octal with 0o
 prefix present only).<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-<p id="section-2.3-2">The following are equivalent:<a href="#section-2.3-2" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-2.3-3">
-<pre>
-   4711
-   0x1267
-   0o11147
-   0b1001001100111
-</pre><a href="#section-2.3-3" class="pilcrow">¶</a>
-</div>
-<p id="section-2.3-4">As are:<a href="#section-2.3-4" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-2.3-5">
-<pre>
-   1.5
-   0x1.8p0
-   0x18p-4
-</pre><a href="#section-2.3-5" class="pilcrow">¶</a>
-</div>
-<p id="section-2.3-6">Numbers composed only of digits (of the respective base) are
+<p id="section-2.3-2">Numbers composed only of digits (of the respective base) are
 interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
 A leading "<code>+</code>" sign is a no-op, and a leading "<code>-</code>" sign inverts the
@@ -1844,23 +1827,77 @@ sign of the number.
 So <code>0</code>, <code>000</code>, <code>+0</code> all represent the same integer zero, as does <code>-0</code>.
 Similarly,
 <code>1</code>, <code>001</code>, <code>+1</code> and <code>+0001</code> all stand for the same integer one, and
-<code>-1</code> and <code>-0001</code> both designate the same integer minus one.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
-<p id="section-2.3-7">Using a decimal point (<code>.</code>) and/or an exponent (<code>e</code> for decimal, <code>p</code>
+<code>-1</code> and <code>-0001</code> both designate the same integer minus one.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">Using a decimal point (<code>.</code>) and/or an exponent (<code>e</code> for decimal, <code>p</code>
 for hexadecimal) turns the number into a floating point number (major
 type 7) instead, irrespective of whether it is an integral number
 mathematically.
 Note that, in floating point numbers, <code>0.0</code> is not the same number as
-<code>-0.0</code>, even if they are mathematically equal.<a href="#section-2.3-7" class="pilcrow">¶</a></p>
-<p id="section-2.3-8">The non-finite floating-point numbers <code>Infinity</code>, <code>-Infinity</code>, and <code>NaN</code> are
+<code>-0.0</code>, even if they are mathematically equal.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<p id="section-2.3-4">In <a href="#tab-numbers" class="auto internal xref">Table 2</a>, all the items on a row are the same number (also
+shown in CBOR, hexadecimally), but they are distinct from items in a
+different row.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
+<span id="name-example-sets-of-equivalent-"></span><div id="tab-numbers">
+<table class="center" id="table-2">
+          <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-example-sets-of-equivalent-" class="selfRef">Example Sets of Equivalent Notations for Some Numbers</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">EDN</th>
+              <th class="text-left" rowspan="1" colspan="1">CBOR hex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>4711</code>, <code>0x1267</code>, <code>0o11147</code>, <code>0b1001001100111</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>19 1267</code> # uint</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>1.5</code>, <code>0.15e1</code>, <code>15e-1</code>, <code>0x1.8p0</code>, <code>0x18p-4</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>F9 3E00</code> # float16</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>0</code>, <code>+0</code>, <code>-0</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>00     </code> # uint</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>0.0</code>, <code>+0.0</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>F9 0000</code> # float16</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-0.0</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>F9 8000</code> # float16</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-2.3-6">The non-finite floating-point numbers <code>Infinity</code>, <code>-Infinity</code>, and <code>NaN</code> are
 written exactly as in this sentence (this is also a way they can be
-written in JavaScript, although JSON does not allow them).<a href="#section-2.3-8" class="pilcrow">¶</a></p>
-<p id="section-2.3-9">See <a href="#decnumber" class="auto internal xref">Section 5.1, Paragraph 7, Item 3</a> for additional details of the EDN number syntax.<a href="#section-2.3-9" class="pilcrow">¶</a></p>
-<p id="section-2.3-10">(Note that literals for further number formats, e.g., for representing
+written in JavaScript, although JSON does not allow them).<a href="#section-2.3-6" class="pilcrow">¶</a></p>
+<p id="section-2.3-7">See <a href="#decnumber" class="auto internal xref">Section 5.1, Paragraph 7, Item 3</a> for additional details of the EDN number syntax.<a href="#section-2.3-7" class="pilcrow">¶</a></p>
+<p id="section-2.3-8">(Note that literals for further number formats, e.g., for representing
 rational numbers as fractions, or for NaNs with non-zero payloads, can
 be added as application-oriented literals.
 Background information beyond that in <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> about the representation
 of numbers in CBOR can be found in the informational document
-<span>[<a href="#I-D.bormann-cbor-numbers" class="cite xref">I-D.bormann-cbor-numbers</a>]</span>.)<a href="#section-2.3-10" class="pilcrow">¶</a></p>
+<span>[<a href="#I-D.bormann-cbor-numbers" class="cite xref">I-D.bormann-cbor-numbers</a>]</span>.)<a href="#section-2.3-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="strings">
@@ -2258,12 +2295,12 @@ If fractional seconds are given in the text (production
 floating-point number; the value is an integer number otherwise.
 In the all-upper-case variant of the app-prefix, the value is enclosed
 in a tag number 1.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">Each row of <a href="#tab-equiv-dt" class="auto internal xref">Table 2</a> shows an example of "dt" notation and
+<p id="section-3.1-4">Each row of <a href="#tab-equiv-dt" class="auto internal xref">Table 3</a> shows an example of "dt" notation and
 equivalent notation not using an application-extension identifier.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <span id="name-dt-and-dt-literals-vs-plain"></span><div id="tab-equiv-dt">
-<table class="center" id="table-2">
+<table class="center" id="table-3">
           <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-3" class="selfRef">Table 3</a>:
 <a href="#name-dt-and-dt-literals-vs-plain" class="selfRef">dt and DT literals vs. plain EDN</a>
           </caption>
 <thead>
@@ -2337,12 +2374,12 @@ on whether an address is IPv4 or IPv6 often needs to come from the context.<a hr
 defined in <span><a href="https://rfc-editor.org/rfc/rfc9164#section-3.1.3" class="relref">Section 3.1.3</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>, an address combined with an
 optional prefix length and an optional zone identifier.
 This can be represented as in <code>52([ip'192.0.2.42',24])</code>, if needed.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.2-6">Each row of <a href="#tab-equiv-ip" class="auto internal xref">Table 3</a> shows an example of "ip" notation and
+<p id="section-3.2-6">Each row of <a href="#tab-equiv-ip" class="auto internal xref">Table 4</a> shows an example of "ip" notation and
 equivalent notation not using an application-extension identifier.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 <span id="name-ip-and-ip-literals-vs-plain"></span><div id="tab-equiv-ip">
-<table class="center" id="table-3">
+<table class="center" id="table-4">
           <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-ip-and-ip-literals-vs-plain" class="selfRef">ip and IP literals vs. plain EDN</a>
           </caption>
 <thead>
@@ -2940,11 +2977,11 @@ combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
 Each of these may integrate ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>,
 which are not always repeated here.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 4</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 5</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <span id="name-app-prefix-values-defined-i"></span><div id="tab-prefixes">
-<table class="center" id="table-4">
+<table class="center" id="table-5">
           <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-5" class="selfRef">Table 5</a>:
 <a href="#name-app-prefix-values-defined-i" class="selfRef">App-prefix Values Defined in this Document</a>
           </caption>
 <thead>
@@ -3215,12 +3252,12 @@ application-extension identifier<a href="#section-6.1-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 5</a>; all
+<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 6</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-applicat"></span><div id="tab-iana">
-<table class="center" id="table-5">
+<table class="center" id="table-6">
           <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-initial-content-of-applicat" class="selfRef">Initial Content of Application-extension Identifier Registry</a>
           </caption>
 <thead>
@@ -3334,12 +3371,12 @@ application-extension identifier<a href="#section-6.2-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 6</a>; all
+<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 7</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.2-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-encoding"></span><div id="tab-iana-ei">
-<table class="center" id="table-6">
+<table class="center" id="table-7">
           <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-initial-content-of-encoding" class="selfRef">Initial Content of Encoding Indicator Registry</a>
           </caption>
 <thead>
@@ -3419,9 +3456,9 @@ present document.<a href="#section-6.2-7.1" class="pilcrow">¶</a></p>
 <p id="section-6.3-1">IANA is requested to add the following Media-Type to the "Media Types"
 registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <span id="name-new-media-type-application-"></span><div id="new-media-type">
-<table class="left" id="table-7">
+<table class="left" id="table-8">
           <caption>
-<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-new-media-type-application-" class="selfRef">New Media Type application/cbor-diagnostic</a>
           </caption>
 <thead>
@@ -3565,9 +3602,9 @@ data edited by humans, often under source-code control.<a href="#section-6.3-3.2
 <a href="https://www.iana.org/assignments/core-parameters#content-formats" class="relref">"CoAP Content-Formats"</a>
 sub-registry, within the "Constrained RESTful Environments (CoRE)
 Parameters" Registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<span id="name-new-content-format"></span><table class="left" id="table-8">
+<span id="name-new-content-format"></span><table class="left" id="table-9">
           <caption>
-<a href="#table-8" class="selfRef">Table 8</a>:
+<a href="#table-9" class="selfRef">Table 9</a>:
 <a href="#name-new-content-format" class="selfRef">New Content-Format</a>
           </caption>
 <thead>
@@ -3605,13 +3642,13 @@ than 1000.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
   occurrences of the prefix "CPA" in the document.  Finally,
   please remove this note.</span><a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.5-2">In the "CBOR Tags" registry <span>[<a href="#IANA.cbor-tags" class="cite xref">IANA.cbor-tags</a>]</span>, IANA is requested to assign the
-tags in <a href="#tab-tag-values" class="auto internal xref">Table 9</a> from the "specification required" space
+tags in <a href="#tab-tag-values" class="auto internal xref">Table 10</a> from the "specification required" space
 (suggested assignments: 888 and 999), with the present document as the
 specification reference.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 <span id="name-values-for-tags"></span><div id="tab-tag-values">
-<table class="center" id="table-9">
+<table class="center" id="table-10">
           <caption>
-<a href="#table-9" class="selfRef">Table 9</a>:
+<a href="#table-10" class="selfRef">Table 10</a>:
 <a href="#name-values-for-tags" class="selfRef">Values for Tags</a>
           </caption>
 <thead>
