@@ -447,8 +447,8 @@ The convention for encoding indicators is that anything starting with
 an underscore and all immediately following characters that are alphanumeric or
 underscore is an encoding indicator, and can be ignored by anyone not
 interested in this information.  For example, `_` or `_3`.
-Encoding indicators are always
-optional.
+
+Encoding indicators are always optional.
 
 Encoding indicators are placed immediately to the right of the data
 item or of a syntactic feature that can stand for the data item the
@@ -470,13 +470,20 @@ Items (mt = major type)"}
 
 (In the following, an abbreviation of the form `ai=`nn gives nn as
 the numeric value of the field _additional information_, the low-order 5
-bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.)
+bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.
+This field is used in encoding the "argument", i.e., the value, tag, or
+length; `ai=0` to `ai=23` mean that the value of the `ai` field
+immediately *is* the argument, `ai=24` to `ai=27` mean that the
+argument is carried in 2<sup>ai-24</sup> (1, 2, 4, or 8)
+additional bytes, and `ai=31` means that indefinite length
+encoding is used.)
 
 An underscore followed by a decimal digit `n` indicates that the
 preceding item (or, for arrays and maps, the item starting with the
 preceding bracket or brace) was encoded with an additional information
 value of `ai=`24+`n`.  For example, `1.5_1` is a half-precision floating-point
-number, while `1.5_3` is encoded as double precision.
+number (2<sup>1</sup> = 2 additional bytes or 16 bits), while `1.5_3` is encoded as
+double precision (2<sup>3</sup> = 8 additional bytes or 64 bits).
 <!--
 This encoding
 indicator is not shown in {{examples}}.
@@ -507,7 +514,9 @@ encoding indicator for a data item with a preferred serialization
 will implicitly use `ai=0` to `ai=23` if that is possible.
 The present specification allows making this explicit:
 
-`_i` ("immediate") stands for encoding with `ai=0` to `ai=23`.
+`_i` ("immediate") stands for encoding with `ai=0` to `ai=23`, i.e.,
+it indicates that the argument is encoded directly in the initial byte
+of the CBOR item.
 
 While no pressing use for further values for encoding indicators
 comes to mind, this is an extension point for EDN; {{reg-ei}} defines
