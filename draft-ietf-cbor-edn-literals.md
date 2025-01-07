@@ -1439,6 +1439,9 @@ The following additional items should help in the interpretation:
       directly notated as string literals; otherwise the occurrence of more than
       one app-string or an app-string together with a directly notated
       string cannot be processed.
+      (This determination must be made at the time the app-string is
+      interpreted; see {{unknown}} for how this may not be immediately
+      during parsing.)
 
 ABNF Definitions for app-string Content {#app-grammars}
 ---------------------------------------
