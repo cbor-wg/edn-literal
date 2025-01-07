@@ -2029,7 +2029,8 @@ and therefore is not directly included in this specification.
 These and further byte string formats now can easily be added back as
 application-oriented extension literals.)<a href="#section-2.4.3-2" class="pilcrow">¶</a></p>
 <p id="section-2.4.3-3">Examples often benefit from some blank space (spaces, line breaks) in
-byte strings.  In EDN, blank space is ignored in prefixed byte strings; for
+byte strings.
+In certain EDN prefixed byte strings, blank space is ignored; for
 instance, the following are equivalent:<a href="#section-2.4.3-3" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-2.4.3-4">
 <pre>
@@ -2040,9 +2041,7 @@ instance, the following are equivalent:<a href="#section-2.4.3-3" class="pilcrow
 </pre><a href="#section-2.4.3-4" class="pilcrow">¶</a>
 </div>
 <p id="section-2.4.3-5">Note that the internal syntax of prefixed single-quote literals such
-as h'' and b64'' can allow comments as blank space (see <a href="#comments" class="auto internal xref">Section 2.1</a>).
-Since slash characters are allowed in b64'', only inline comments are
-available in b64 string literals.<a href="#section-2.4.3-5" class="pilcrow">¶</a></p>
+as <code>h''</code> and <code>b64''</code> can allow comments as blank space (see <a href="#comments" class="auto internal xref">Section 2.1</a>).<a href="#section-2.4.3-5" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-2.4.3-6">
 <pre>
    h'68656c6c6f20776f726c64'
@@ -2051,6 +2050,20 @@ available in b64 string literals.<a href="#section-2.4.3-5" class="pilcrow">¶</
      77 6f 72 6c 64' /world/
 </pre><a href="#section-2.4.3-6" class="pilcrow">¶</a>
 </div>
+<p id="section-2.4.3-7">Slash characters are part of the base64 classic alphabet (see
+Table 1 in <span><a href="https://rfc-editor.org/rfc/rfc4648#section-4" class="relref">Section 4</a> of [<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>), and they therefore need be in the
+<code>b64''</code> set of characters that contribute to the byte string.
+Therefore, only end-of-line comments are available in b64 byte string
+literals.<a href="#section-2.4.3-7" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.4.3-8">
+<pre>
+   b64'/base64 not a comment/ but one follows # comment'
+   h'FDB6AC 7BAE27A2D69CA2699E9EDFDBBADA2779FA25 968C2C'
+</pre><a href="#section-2.4.3-8" class="pilcrow">¶</a>
+</div>
+<p id="section-2.4.3-9">These two byte strings are the same; the base64 content starts with
+<code>b64'/bas'</code> which is the same as h'FDB6AC' and ends with b64'lows'
+which is the same as <code>h'968C2C'</code>.<a href="#section-2.4.3-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="embedded-cbor-and-cbor-sequences-in-byte-strings">

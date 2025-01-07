@@ -818,8 +818,8 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    application-oriented extension literals.)
 
    Examples often benefit from some blank space (spaces, line breaks) in
-   byte strings.  In EDN, blank space is ignored in prefixed byte
-   strings; for instance, the following are equivalent:
+   byte strings.  In certain EDN prefixed byte strings, blank space is
+   ignored; for instance, the following are equivalent:
 
       h'48656c6c6f20776f726c64'
       h'48 65 6c 6c 6f 20 77 6f 72 6c 64'
@@ -828,11 +828,11 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
    Note that the internal syntax of prefixed single-quote literals such
    as h'' and b64'' can allow comments as blank space (see Section 2.1).
-   Since slash characters are allowed in b64'', only inline comments are
-   available in b64 string literals.
 
-
-
+      h'68656c6c6f20776f726c64'
+      h'68 65 6c /doubled l!/ 6c 6f # hello
+        20 /space/
+        77 6f 72 6c 64' /world/
 
 
 
@@ -842,10 +842,17 @@ Bormann                   Expires 11 July 2025                 [Page 15]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
-      h'68656c6c6f20776f726c64'
-      h'68 65 6c /doubled l!/ 6c 6f # hello
-        20 /space/
-        77 6f 72 6c 64' /world/
+   Slash characters are part of the base64 classic alphabet (see Table 1
+   in Section 4 of [RFC4648]), and they therefore need be in the b64''
+   set of characters that contribute to the byte string.  Therefore,
+   only end-of-line comments are available in b64 byte string literals.
+
+      b64'/base64 not a comment/ but one follows # comment'
+      h'FDB6AC 7BAE27A2D69CA2699E9EDFDBBADA2779FA25 968C2C'
+
+   These two byte strings are the same; the base64 content starts with
+   b64'/bas' which is the same as h'FDB6AC' and ends with b64'lows'
+   which is the same as h'968C2C'.
 
 2.4.4.  Embedded CBOR and CBOR Sequences in Byte Strings
 
@@ -882,13 +889,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    that are well-formed but not valid; when this is enabled, such
    implementations MAY relax the requirement on text strings to be valid
    UTF-8.
-
-
-
-
-
-
-
 
 
 
