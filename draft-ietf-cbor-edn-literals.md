@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2025-01-05
+# date: 2025-01-06
 
 keyword: Internet-Draft
 cat: std
@@ -55,27 +55,35 @@ normative:
       IEEE Std: 754-2019
       DOI: 10.1109/IEEESTD.2019.8766229
   C:
-    target: https://www.iso.org/standard/74528.html
+    target: https://www.iso.org/standard/82075.html
     title: Information technology — Programming languages — C
     author:
     - org: International Organization for Standardization
-    date: 2018-06
+    date: 2024-10
     seriesinfo:
-      ISO/IEC: 9899:2018
+      ISO/IEC: 9899:2024
     refcontent:
-    - Fourth Edition
-    annotation: The text of the standard is also available via https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2310.pdf
+    - Edition 5
+    annotation: >
+       
+      The standard is widely known as C23.
+      Its technical content is also available via
+      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf>.
   Cplusplus:
-    target: https://www.iso.org/standard/79358.html
+    target: https://www.iso.org/standard/83626.html
     title: Programming languages — C++
     author:
     - org: International Organization for Standardization
-    date: 2020-12
+    date: 2024-10
     seriesinfo:
-      ISO/IEC: 14882:2020
+      ISO/IEC: 14882:2024
     refcontent:
-    - Sixth Edition
-    annotation: The text of the standard is also available via https://isocpp.org/files/papers/N4860.pdf
+    - Edition 7
+    annotation: >
+       
+      The standard is widely known as C++23.
+      Its technical content is also available via
+      <https://open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf>.
 informative:
   RFC8610: cddl
   RFC7049: old-cbor
@@ -964,23 +972,16 @@ floating-point number; the value is an integer number otherwise.
 In the all-upper-case variant of the app-prefix, the value is enclosed
 in a tag number 1.
 
-As an example, the CBOR diagnostic notation
+Each row of {{tab-equiv-dt}} shows an example of "dt" notation and
+equivalent notation not using an application-extension identifier.
 
-~~~ cbor-diag
-dt'1969-07-21T02:56:16Z',
-dt'1969-07-21T02:56:16.0Z',
-dt'1969-07-21T02:56:16.5Z',
-DT'1969-07-21T02:56:16Z'
-~~~
-
-is equivalent to
-
-~~~ cbor-diag
--14159024,
--14159024.0,
--14159023.5,
-1(-14159024)
-~~~
+| dt literal                   | plain EDN      |
+|------------------------------|----------------|
+| `dt'1969-07-21T02:56:16Z'`   | `-14159024`    |
+| `dt'1969-07-21T02:56:16.0Z'` | `-14159024.0`  |
+| `dt'1969-07-21T02:56:16.5Z'` | `-14159023.5`  |
+| `DT'1969-07-21T02:56:16Z'`   | `1(-14159024)` |
+{: #tab-equiv-dt title="dt and DT literals vs. plain EDN"}
 
 See {{dt-grammar}} for an ABNF definition for the content of `dt` literals.
 
@@ -1015,27 +1016,18 @@ defined in {{Section 3.1.3 of -iptag}}, an address combined with an
 optional prefix length and an optional zone identifier.
 This can be represented as in `52([ip'192.0.2.42',24])`, if needed.
 
-Examples: the CBOR diagnostic notation
+Each row of {{tab-equiv-ip}} shows an example of "ip" notation and
+equivalent notation not using an application-extension identifier.
 
-~~~ cbor-diag
-ip'192.0.2.42',
-IP'192.0.2.42',
-IP'192.0.2.0/24',
-ip'2001:db8::42',
-IP'2001:db8::42',
-IP'2001:db8::/64'
-~~~
-
-is equivalent to
-
-~~~ cbor-diag
-h'c000022a',
-52(h'c000022a'),
-52([24,h'c00002']),
-h'20010db8000000000000000000000042',
-54(h'20010db8000000000000000000000042'),
-54([64,h'20010db8'])
-~~~
+| ip literal          | plain EDN                                 |
+|---------------------|-------------------------------------------|
+| `ip'192.0.2.42'`    | `h'c000022a'`                             |
+| `IP'192.0.2.42'`    | `52(h'c000022a')`                         |
+| `IP'192.0.2.0/24'`  | `52([24,h'c00002'])`                      |
+| `ip'2001:db8::42'`  | `h'20010db8000000000000000000000042'`     |
+| `IP'2001:db8::42'`  | `54(h'20010db8000000000000000000000042')` |
+| `IP'2001:db8::/64'` | `54([64,h'20010db8'])`                    |
+{: #tab-equiv-ip title="ip and IP literals vs. plain EDN"}
 
 See {{ip-grammar}} for an ABNF definition for the content of `ip` literals.
 
@@ -1171,6 +1163,7 @@ Elisions also can be used as part of a (text or byte) string:
 
 ~~~ cbor-diag
 { "contract": "Herewith I buy" + ... + "gned: Alice & Bob",
+  "bytes_in_IRI": 'https://a.example/' + ... + '&q=Übergrößenträger',
   "signature": h'4711...0815',
 }
 ~~~
@@ -1188,6 +1181,8 @@ indicators:
 ~~~ cbor-diag
 { "contract": /CPA/888(["Herewith I buy", 888(null),
                         "gned: Alice & Bob"]),
+  "bytes_in_IRI": 888(['https://a.example/', 888(null),
+                       '&q=Übergrößenträger']),
   "signature": 888([h'4711', 888(null), h'0815']),
 }
 ~~~
@@ -1309,7 +1304,7 @@ The following additional items should help in the interpretation:
   `hexfloat` stands
   for a floating point number in the usual hexadecimal notation (which
   uses a mantissa in hexadecimal and an exponent in decimal notation,
-  see Section 5.12.3 of {{IEEE754}}, Section 6.4.4.2 of {{C}}, or Section
+  see Section 5.12.3 of {{IEEE754}}, Section 6.4.4.3 of {{C}}, or Section
   5.13.4 of {{Cplusplus}}; floating-suffix/floating-point-suffix from
   the latter two is not used here).
 
@@ -1418,8 +1413,23 @@ specification.
 These grammars describe the *decoded* content of the `sqstr` components that
 combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
-Each of these may make integrate ABNF rules defined in {{abnf-grammar}},
+Each of these may integrate ABNF rules defined in {{abnf-grammar}},
 which are not always repeated here.
+
+{{tab-prefixes}} summarizes the app-prefix values defined in this document.
+
+| app-prefix | content of single-quoted string | result type                                       |
+|------------|---------------------------------|---------------------------------------------------|
+| h          | hexadecimal form of binary data | byte string                                       |
+| H          | (not used)                      |                                                   |
+| b64        | base64 forms (classic or base64url) of binary data | byte string                                       |
+| B64        | (not used)                      |                                                   |
+| dt         | RFC 3339 date/time              | number (int or float)                             |
+| DT         | "                               | Tag 1 on the above                                |
+| ip         | IP address or prefix            | byte string, <br/>array of length and byte string |
+| IP         | "                               | Tag 54 (IPv6) or 52 (IPv4) on the above           |
+{: #tab-prefixes title="App-prefix Values Defined in this Document"}
+
 
 ### h: ABNF Definition of Hexadecimal representation of a byte string {#h-grammar}
 
@@ -1604,7 +1614,7 @@ The initial content of the registry is shown in {{tab-iana}}; all
 initial entries have the Change Controller "IETF".
 
 | Application-extension Identifier | Description       | Reference |
-|----------------------------------+-------------------+-----------|
+|----------------------------------|-------------------|-----------|
 | h                                | Reserved          | RFC8949   |
 | b32                              | Reserved          | RFC8949   |
 | h32                              | Reserved          | RFC8949   |
