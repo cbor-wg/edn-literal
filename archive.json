@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-05T01:05:24.256453+00:00",
+  "timestamp": "2025-01-07T01:00:53.276240+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -576,21 +576,21 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> Rohan proposes that:\r\n\r\nFYI, this is proposed in #49 ",
           "createdAt": "2024-07-03T23:32:30Z",
           "updatedAt": "2024-07-03T23:32:30Z"
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> I'm not sure I understand the implications of a 1-layer approach correctly:\r\n> \r\n> Currently, `h'00 / ' / 11'` is a syntax error, and `h'00 / \\' / 11'` is allowed (and the comment contains no backslash), and `h'00 # foo\\n 11'` is two bytes because the comment terminates. Would a single-pass grammar change anything about that? \r\n\r\nAs the ABNF has been written it does not. I recently added a commit after Joe brought up that bare single quotes in comments had not been allowed even outside of single-quoted strings. That has been fixed.\r\n\r\n>If so, can a processor still transform `999(\"unknown\", \"a ' b\")` into whichever is the legal form, both if it knows and if it does not know the rules of unknown?\r\n\r\nDepending on the rules for quoting a 999-tagged value, an implementation could still turn various tagged CBOR back into app-strings. So I don't think your question is quite correct. The CBOR tstr \r\n78 22 # text(34)\r\n74657374696E67202274657374225C277465737427202F746573742F202374657374\r\nis literally the string `testing \"test\"\\'test' /test/ #test` to encode that in EDN as a double quoted string you would need to write:\r\n`999(\"unknown\",\"testing \\\"test\\\"\\\\'test' /test/ #test\")` or\r\n`unknown'testing \"test\"\\\\\\'test\\' /test/ #test'`",
           "createdAt": "2024-08-21T13:24:30Z",
           "updatedAt": "2024-08-21T13:24:30Z"
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> The problem here is that it is not that hard to write a single-level grammar that captures _most_ of the cases. It is harder to do this in a correct way, and I am not aware of ready-made tools that would support this. Replacing the two-level grammar by an authoritative single-level grammar would create risk that I think we do not need. I'd rather take up the formulation of a single-level grammar as a desirable implementation project (destination: a github repo or another draft) than slow down this specification while trying to manage that risk.\r\n\r\nYou are saying that the convenience of the writer of extension specs of EDN is more important that the usability of the grammar for implementers. I think this is a terrible trade off. \r\n\r\nI also happen to disagree with your assessment. There are currently only 2 more proposed app strings that I am aware of (e and ref). Neither had a proposed inner ABNF until I took 15 minutes to write one for the single-layer ABNF in [edn-e-ref issue #1](https://github.com/cbor-wg/edn-e-ref/issues/1). The effort required to make this compatible was to add a single boilerplate `known-app-str =/ e / ref` line and to take the working ABNF for the inside and remove bare single quotes from the allowable characters. The bulk of the work was actually fixing the ABNF to remove unused productions, which would have been required regardless how many layers of ABNF were required. \r\n\r\nIn summary, there is currently exactly one data point available and it contradicts your argument.",
           "createdAt": "2024-08-21T13:33:25Z",
           "updatedAt": "2024-08-21T13:33:25Z"
@@ -694,7 +694,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> > * `\"Herewith I buy\" ... \"gned: Alice & Bob\"` implicit string concatenation with a string elision.\r\n> > * `[ 0, 1 ... 8, 9]` implicit list concatenation with a list elision.\r\n> \r\n> We could give \"...\" some additional syntactic sugar. The array example already works, anyway:\r\n\r\nI don't think we want to be making the rules for elision more complicated. Another option is to make elision only work inside `h''` and `b64''`.\r\n\r\n`\"Herewith I buy\" + h'...' + \"gned: Alice & Bob\"`\r\n\r\nAlso, I want to point out that \"...\" is a map key for selective disclosure JWTs and possibly for selective disclosure CWTs as well. That could make misreading really ugly.",
           "createdAt": "2024-06-24T13:49:07Z",
           "updatedAt": "2024-06-24T13:51:05Z"
@@ -860,7 +860,7 @@
       "url": "https://github.com/cbor-wg/edn-literal/issues/62",
       "state": "OPEN",
       "author": "rohanmahy",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "RFC6874 extends IP-literal URIs to support IPv6 zone IDs. the 'IP' app-string defines a bare address with an optional subnet mask (app-string-ip as IPaddress plus an optional slash and mask). IPaddress includes a regular IPv4 or IPv6 address but does not include IPv6 addresses with a zone ID:\r\n\r\n`fe80::bd0f:a8bc:6480:2389%en1`\r\n\r\nwhile there is no direct representation of a zone ID for a lower case 'ip', the IPv6 tagged array (tag 54) could be extended to include the zone ID with 'IP':\r\n\r\n`54([128,h'fe80 0000 0000 0000 bd0f a8bc 6480 238b', \"en1\"])\r\n\r\nIf we don't want 'IP' to support zone IDs I think we should explicitly mention that in the draft.",
@@ -877,7 +877,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Hi, proposed a change to PR#63 that addresses my concern:\r\n\r\n\"If we don't want 'IP' to support zone IDs I think we should explicitly mention that in the draft.\"",
           "createdAt": "2024-08-22T13:54:41Z",
           "updatedAt": "2024-08-22T13:54:41Z"
@@ -903,32 +903,48 @@
       "id": "I_kwDOGLBEBs6UOOHs",
       "title": "Trim down abstract to a minimum?",
       "url": "https://github.com/cbor-wg/edn-literal/issues/66",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> I think a lot of the material in the Abstract is more appropriate in the Introduction. For the Abstract, I propose the following radically shorter text:\r\n>\r\n> \"The Compact Binary Object Representation (CBOR) specification includes an informal description of a diagnostic notation, which was augmented over time and is now know as Extended Diagnostic Notation (EDN). This document consolidates previous descriptions of EDN into a formal specification, preserves backwards compatibility with most instance documents, adds requested features which are already implemented, and introduces a limited extensibility mechanism.\"\r\n\r\n_Originally posted by @rohanmahy in https://github.com/cbor-wg/edn-literal/issues/65#issuecomment-2308897484_\r\n            ",
       "createdAt": "2024-08-26T12:33:30Z",
-      "updatedAt": "2024-08-26T12:35:35Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-01-05T19:21:46Z",
+      "closedAt": "2025-01-05T19:21:46Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by #70",
+          "createdAt": "2025-01-05T19:21:46Z",
+          "updatedAt": "2025-01-05T19:21:46Z"
+        }
+      ]
     },
     {
       "number": 67,
       "id": "I_kwDOGLBEBs6UOO4-",
       "title": "Restructure introduction?",
       "url": "https://github.com/cbor-wg/edn-literal/issues/67",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> Then I think the Introduction would be best split into the material that explains the goals of EDN, how it is related to CBOR, where it is used, that JSON is a strict subset, and summarizes the features in the current incarnation. I would put the \"how we got here\" material into an \"Historical Background\" subsection of the Introduction.\r\n\r\n_Originally posted by @rohanmahy in https://github.com/cbor-wg/edn-literal/issues/65#issuecomment-2308897484_\r\n            ",
       "createdAt": "2024-08-26T12:34:51Z",
-      "updatedAt": "2024-08-26T12:34:51Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-01-05T19:21:21Z",
+      "closedAt": "2025-01-05T19:21:21Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by #70 \r\n",
+          "createdAt": "2025-01-05T19:21:21Z",
+          "updatedAt": "2025-01-05T19:21:21Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2423,7 +2439,7 @@
       "url": "https://github.com/cbor-wg/edn-literal/pull/49",
       "state": "OPEN",
       "author": "rohanmahy",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Hi,\r\nI believe this PR contains the changes that would be needed to make a single ABNF for EDN. A future app-string that had no requirement for interior comments could just define its ABNF (with any unquoted characters from unescaped and DQUOTE), and append the app-string to the `known-app-str` production. A future app-string that wanted comments could add safely either slash-comment or hash-comment to its whitespace as long as \"/\" or \"#\" respectively did not have meaning in the interior grammar.\r\n\r\nHope this helps.\r\nThanks,\r\n-rohan\r\n\r\n",
@@ -2449,7 +2465,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> I tend to prefer a single ABNF, and clear guidance and examples for extensions.\r\n\r\nMe too. I'm sorry that I didn't provide more text about what that guidance would be. Basically, someone writing a new app-string, writes the grammar using as many of the productions in the base/existing ABNF as possible. If they allow whitespace and want both slash and hash comment, insert the `S` production (see the example below for e). If they want hash comments only (because / is meaningful inside), insert the `B` production (see the example below for ip). \r\n\r\nRegardless if comments are used inside the app-string, the new app-string definition is added to the end of the `known-app-str` production.\r\n\r\nThat's it.\r\n\r\n> I don't fully follow the comments regarding extensions to support comments, is the suggestion that if a single ABNF is provided then it must not define support for comments and leave that to extension? I don't like that.\r\n\r\nComments are supposed to be treated like whitespace in EDN.\r\nWithout this PR, the four app strings defined in this draft have the following characteristics:\r\n\r\n- h: allows whitespace, # comments, and / / comments.\r\n- b64: allow whitespace, and # comments. Slash (/) is a legal character inside base64.\r\n- ip: does not allow whitespace in -09. Slash (/) is a legal character inside the grammar (to separate ip addresses from prefixes lengths).\r\n- dt: does not allow whitespace in -09. Carsten has used some examples with a textual timezone (ex: America/Los Angeles ) which has both non-fungible whitespace and slashes (/) in the timezone names.\r\n\r\nWhile I see no reason to add comments inside an ip address, If you were willing to make the application ignorine all whitespace and wanted to extend ip to support # comments, you could add the `B` production into the lowest levels of the BNF (h16, colon, double colon, decoctet, uint/prefix). for example:\r\n\r\n`h16 = 1*4(HEXDIG / B)`\r\n\r\nIncluding https://www.ietf.org/archive/id/draft-ietf-cbor-edn-e-ref-00.html , there is no formal grammar defined, but the intent of e'' seems to be to allow anything that is valid as the `id` production in CDDL; and the intent of ref'' seems to be to allow anything compatible with the generic URI syntax and literal filenames. Literal filenames don't have fungible whitespace, often contain slashes and could contain arbitrary characters such as #. URIs don't allow any whitespace and the / and # characters are used in their BNFs. The `id` production allows [A-Za-z0-9@_$.-]. If the author wanted to allow comments and whitespace anywhere in e'', he could add the `S` production inside the BNF of enum:\r\n\r\n```\r\n; app-string e\r\ne              = (%s\"e\" / %s\"E\") SQUOTE enum SQUOTE\r\nenum       = S EALPHA *(*(\"-\" / \".\") (EALPHA / DIGIT/ S))\r\nEALPHA  = ALPHA / \"@\" / \"_\" / \"$\"\r\n```\r\n\r\nPersonally, I think the fact that the current grammars for ip and dt don't allow comments, and none of the examples for e or ref have comments is a strong indicator that nobody is going to bother incorporating comments in future app strings, largely because every new app string so far doesn't allow whitespace.\r\n\r\n> If comments are just used as an example here, can we use a new app specific literal as an example instead?\r\n\r\nI'm not sure what you mean @OR13 . Hopefully I answered your questions somewhere else in this reply.\r\n\r\n\r\n",
           "createdAt": "2024-06-29T14:32:44Z",
           "updatedAt": "2024-06-29T14:34:23Z"
@@ -2470,7 +2486,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> This currently has the `ellipsis` rule defined twice, and the inside-h rule has `\"ellipsis\"` instead of `ellipsis`.\r\n\r\nThanks Joe!",
           "createdAt": "2024-08-19T02:00:15Z",
           "updatedAt": "2024-08-19T02:00:15Z"
@@ -2484,7 +2500,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> OK, here are some more issues then:\r\n> \r\n>     * `uint` defined more than once\r\n> \r\n>     * `S` defined more than once\r\n> \r\n>     * Rule names according to RFC 5234 are `ALPHA *(ALPHA / DIGIT / \"-\")`, which means b64_4 (etc) are invalid.\r\n> \r\n>     * There are a bunch of \\xa0 non-breaking spaces scattered around, I bet unintentionally\r\n> \r\n>     * `SQOUTE` is a typo\r\n> \r\n>     * `b64dig` is not defined\r\n> \r\n>     * `ALPHA` is not defined\r\n> \r\n> \r\n> With these changes, I was able to at least parse this.\r\n\r\nOK, all fixed now. Not sure how the \\xA0 got in there. :-\\",
           "createdAt": "2024-08-19T15:07:47Z",
           "updatedAt": "2024-08-19T15:07:47Z"
@@ -2505,14 +2521,14 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> There's also going to need a bunch of rework in the comment rules used in inside-*. None of them should accept an SQUOTE, I think. `h'12 /'/ 34'` shouldn't work, for example.\r\n\r\nBy my read, it does not allow /'/, since safe-unescaped specifically excludes <'> unless it is backslash escaped (see `slash-escaped` and `hash-escaped`). So `h'12 / wasn\\'t a problem / 34'` is OK.",
           "createdAt": "2024-08-19T19:07:27Z",
           "updatedAt": "2024-08-19T19:19:49Z"
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "As an existence proof that extending a single-layer ABNF is straightforward, [edn-e-ref issue #1](https://github.com/cbor-wg/edn-e-ref/issues/1) shows an ABNF for e'' and ref'' that works with the ABNF in this PR. The changes specifically needed to make this work in a single layer were:\r\n- add `known-app-str   =/ e / ref`\r\n- remove bare single quotes from `sub-delims` (a five character change)\r\n\r\nThe bulk of the work was fixing removing duplicate or unused productions.",
           "createdAt": "2024-08-19T19:25:11Z",
           "updatedAt": "2024-08-19T19:25:11Z"
@@ -2525,7 +2541,7 @@
             "abbreviatedOid": "3515631"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-06-13T11:09:44Z",
@@ -2545,7 +2561,7 @@
             "abbreviatedOid": "18aeb29"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-06-13T11:15:16Z",
@@ -2565,7 +2581,7 @@
             "abbreviatedOid": "9eca672"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-08-19T01:55:41Z",
@@ -2585,7 +2601,7 @@
             "abbreviatedOid": "9eca672"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-08-19T01:57:57Z",
@@ -2974,7 +2990,7 @@
       "comments": [
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "The paragraph before the added text says: \r\n\r\n>\"The content of this tag is an array of two text strings: The application-extension identifier, and the (escape-processed) content of the single-quoted string.\"\r\n\r\n1) It would be worth mentioning here that the identifier is case sensitive.\r\n\r\n2) As both the single-quoted string and double-quoted strings need to be escaped for mostly the same characters, I would instead say:\r\n\r\n\"The content of this tag is an array of two text strings. The first is the case-sensitive application-extension identifier. The second is the contents of the single-quoted string, with any escaped single quote (ASCII 0x5c 0x27) replaced with a single quote (ASCII 0x27), and any unescaped double-quote (ASCII 0x22) replaced with backslash double-quote (ASCII 0x5c 0x22).\"\r\n",
           "createdAt": "2024-07-03T23:08:59Z",
           "updatedAt": "2024-07-03T23:08:59Z"
@@ -2988,7 +3004,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> There already is text about the case of application-extension identifiers; we don't need to repeat this here. I also don't think we benefit from restating the handling of strings in an abbreviated, ultimately incorrect way; simply saying that the escape processing applies here as well should suffice.\r\n\r\nSaying that the contents is \"the (escape-processed) content of the single-quoted string.\" is also wrong and likely to be misinterpreted. It is the (double-quote) escape-processed content of the (single-quote) unescaped single-quoted string.\r\n",
           "createdAt": "2024-07-04T20:48:02Z",
           "updatedAt": "2024-07-04T20:48:02Z"
@@ -3002,7 +3018,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> > Saying that the contents is \"the (escape-processed) content of the single-quoted string.\" is also wrong and likely to be misinterpreted. It is the (double-quote) escape-processed content of the (single-quote) unescaped single-quoted string.\r\n> \r\n> Can you elaborate? I don't follow. How do double quotes enter the picture?\r\n\r\nIf I understand the intent, `foo'don\\'t \"worry\"\\n \\\\ be happy'` needs to become `999(\"foo\", \"don't \\\"worry\\\"\\n \\\\ be happy\")`. the string inside the single-quotes needs to be unescaped, then needs to be re-escaped as a the contents of a double-quoted string. The original text could mean double escaping to 999(\"foo\", \"don\\\\'t \\\"worry\\\"\\\\n \\\\\\\\ be happy\") which is not wanted.",
           "createdAt": "2024-07-05T03:11:12Z",
           "updatedAt": "2024-07-05T03:11:12Z"
@@ -3321,7 +3337,7 @@
             "abbreviatedOid": "887d866"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "CHANGES_REQUESTED",
           "body": "",
           "createdAt": "2024-08-22T13:51:52Z",
@@ -3361,7 +3377,7 @@
             "abbreviatedOid": "887d866"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-08-22T17:32:37Z",
@@ -3448,7 +3464,7 @@
       "comments": [
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Hi, Thank you Carsten for getting the ball rolling on this. I have not had time go over this in detail yet, but I think getting consensus on an outline/document flow is great. I was pleased with the discussion between you and Joe H on that topic and feel that that work is yielding good results. \r\n\r\nOn a separate note, I think a lot of the material in the Abstract is more appropriate in the Introduction. For the Abstract, I propose the following radically shorter text:\r\n\r\n\"The Compact Binary Object Representation (CBOR) specification includes an informal description of a diagnostic notation, which was augmented over time and is now know as Extended Diagnostic Notation (EDN). This document consolidates previous descriptions of EDN into a formal specification, preserves backwards compatibility with most instance documents, adds requested features which are already implemented, and introduces a limited extensibility mechanism.\"\r\n\r\nThen I think the Introduction would be best split into the material that explains the goals of EDN, how it is related to CBOR, where it is used, that JSON is a strict subset, and summarizes the features in the current incarnation. I would put the \"how we got here\" material into an \"Historical Background\" subsection of the Introduction.\r\n\r\nI hope this helps.\r\nthanks,\r\n-rohan",
           "createdAt": "2024-08-25T15:32:09Z",
           "updatedAt": "2024-08-25T15:33:32Z"
@@ -3666,20 +3682,90 @@
       "id": "PR_kwDOGLBEBs6GszrF",
       "title": "Rewrite Abstract and Introduction",
       "url": "https://github.com/cbor-wg/edn-literal/pull/70",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "rohanmahy",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Make the Abstract confirm to the IETF style guidelines for an Abstract, and somewhat streamline the Introduction.",
       "createdAt": "2025-01-03T23:30:35Z",
-      "updatedAt": "2025-01-03T23:30:36Z",
+      "updatedAt": "2025-01-05T19:20:43Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "7d7673435e15fdc37f3c42c07b4cd82fbb78577b",
       "headRepository": "rohanmahy/edn-literal",
       "headRefName": "patch-1",
-      "headRefOid": "5a20ca78b99b1affa5f0281de8f19b23c6e34363",
+      "headRefOid": "9c622a6c0e37d6f6429c670df41511de25fc92c1",
+      "closedAt": "2025-01-05T19:20:43Z",
+      "mergedAt": "2025-01-05T19:20:43Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "197cad0494126cabeaad68c60e8684f54ef49867"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 71,
+      "id": "PR_kwDOGLBEBs6Gz2VE",
+      "title": "Address some Wglc2 comments from Michael Richardson",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/71",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-06T11:09:36Z",
+      "updatedAt": "2025-01-06T17:35:36Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "197cad0494126cabeaad68c60e8684f54ef49867",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "wglc2-mcr",
+      "headRefOid": "35b4f689744111b98220b8c37f8cb61ec0af3f4f",
+      "closedAt": "2025-01-06T17:35:36Z",
+      "mergedAt": "2025-01-06T17:35:36Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "730af9dd3703074ddc1a33a1c28972582f3b4745"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6W9O67",
+          "commit": {
+            "abbreviatedOid": "35b4f68"
+          },
+          "author": "mcr",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-06T17:31:31Z",
+          "updatedAt": "2025-01-06T17:31:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 72,
+      "id": "PR_kwDOGLBEBs6G2WCo",
+      "title": "Address Wglc2 Comments from Rohan Mahy",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/72",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-06T17:53:26Z",
+      "updatedAt": "2025-01-06T17:53:26Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "730af9dd3703074ddc1a33a1c28972582f3b4745",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "wglc2-mahy",
+      "headRefOid": "dd3298df744bc94e3feb62db6841fd45161a415c",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
