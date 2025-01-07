@@ -450,6 +450,24 @@ interested in this information.  For example, `_` or `_3`.
 Encoding indicators are always
 optional.
 
+Encoding indicators are placed immediately to the right of the data
+item or of a syntactic feature that can stand for the data item the
+encoding of which the encoding indicator is controlling.
+{{tab-ei}} provides examples for encoding indicators used with various
+kinds of data items.
+
+| mt | examples                |
+|  0 | `1_1`, `0x4711_3`       |
+|  1 | `-1_1`                  |
+|  2 | `'A'_1`                 |
+|  3 | `"A"_1`                 |
+|  4 | `[_1 "bar"]`            |
+|  5 | `{_1 "bar": 1}`         |
+|  6 | `1_1(4711)`             |
+|  7 | `1.5_2`, `0x4711p+03_3` |
+{: #tab-ei title="Examples of Encoding Indicators for Different Data
+Items (mt = major type)"}
+
 (In the following, an abbreviation of the form `ai=`nn gives nn as
 the numeric value of the field _additional information_, the low-order 5
 bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.)
