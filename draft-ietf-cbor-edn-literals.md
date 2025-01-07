@@ -450,7 +450,7 @@ This reduces to `{1: 4, 3: 5, -1: h'6684523AB17337F173500E5728C628547CB37DFE6844
 
 Sometimes it is useful to indicate in the diagnostic notation which of
 several alternative representations were actually used; for example, a
-data item written >1.5\< by a diagnostic decoder might have been
+data item written »1.5« by a diagnostic decoder might have been
 encoded as a half-, single-, or double-precision float.
 
 The convention for encoding indicators is that anything starting with
@@ -648,7 +648,7 @@ backslash and `\'` stands for a single quote.
 Single-quoted string literals can be prefixed by a sequence of ASCII
 letters and digits, starting with a letter, and using either lower
 case or upper case throughout.
-\>false\<, >true\<, >null\<, and >undefined\< cannot be used as such
+»false«, »true«, »null«, and »undefined« cannot be used as such
 prefixes.
 This means that the text string value (the "content") of the single-quoted string
 literal is not used directly as a byte string, but is further
@@ -695,14 +695,14 @@ Besides the unprefixed byte string literals that are analogous to JSON text
 string literals, EDN provides base-encoded byte string literals.
 These are notated as prefixed string literals that carry one of the base encodings {{-base}}, without
 padding, i.e., the base encoding is
-enclosed in a single-quoted string literal, prefixed by >h\< for base16 or
->b64\< for base64 or base64url (the actual encodings of the latter do
+enclosed in a single-quoted string literal, prefixed by »h« for base16 or
+»b64« for base64 or base64url (the actual encodings of the latter do
 not overlap, so the string remains unambiguous).
 For example, the byte string consisting of the four bytes `12 34 56 78`
 (given in hexadecimal here) could be written `h'12345678'` or `b64'EjRWeA'`.
 
-(Note that {{Section 8 of RFC8949@-cbor}} also mentions >b32\< for
-base32 and >h32\< for base32hex.
+(Note that {{Section 8 of RFC8949@-cbor}} also mentions »b32« for
+base32 and »h32« for base32hex.
 This has not been implemented widely
 and therefore is not directly included in this specification.
 These and further byte string formats now can easily be added back as
@@ -949,14 +949,14 @@ d9 0001        # tag(1)
 
 ## Simple values
 
-EDN uses JSON syntax for the simple values True (>`true`\<), False
-(>`false`\<), and Null (>`null`\<).
-Undefined is written >`undefined`\< as in JavaScript.
+EDN uses JSON syntax for the simple values True (»`true`«), False
+(»`false`«), and Null (»`null`«).
+Undefined is written »`undefined`« as in JavaScript.
 
 These and all other simple values can be given as "simple()" with the
-appropriate integer in the parentheses.  For example, >`simple(42)`\<
-indicates major type 7, value 42, and >`simple(0x14)`\< indicates
->`false`\<, as does >`simple(20)`\< or >`simple(0b10100)`\<.
+appropriate integer in the parentheses.  For example, »`simple(42)`«
+indicates major type 7, value 42, and »`simple(0x14)`« indicates
+»`false`«, as does »`simple(20)`« or »`simple(0b10100)`«.
 
 
 
