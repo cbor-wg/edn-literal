@@ -1056,7 +1056,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 10 July 2025</td>
+<td class="center">Expires 11 July 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-01-06" class="published">6 January 2025</time>
+<time datetime="2025-01-07" class="published">7 January 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-07-10">10 July 2025</time></dd>
+<dd class="expires"><time datetime="2025-07-11">11 July 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1135,7 +1135,7 @@ addresses and prefixes.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2142,25 +2142,57 @@ If fractional seconds are given in the text (production
 floating-point number; the value is an integer number otherwise.
 In the all-upper-case variant of the app-prefix, the value is enclosed
 in a tag number 1.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">As an example, the CBOR diagnostic notation<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.1-5">
-<pre>
-dt'1969-07-21T02:56:16Z',
-dt'1969-07-21T02:56:16.0Z',
-dt'1969-07-21T02:56:16.5Z',
-DT'1969-07-21T02:56:16Z'
-</pre><a href="#section-3.1-5" class="pilcrow">¶</a>
+<p id="section-3.1-4">Each row of <a href="#tab-equiv-dt" class="auto internal xref">Table 1</a> shows an example of "dt" notation and
+equivalent notation not using an application-extension identifier.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<span id="name-dt-and-dt-literals-vs-plain"></span><div id="tab-equiv-dt">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-dt-and-dt-literals-vs-plain" class="selfRef">dt and DT literals vs. plain EDN</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">dt literal</th>
+              <th class="text-left" rowspan="1" colspan="1">plain EDN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>dt'1969-07-21T02:56:16Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-14159024</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>dt'1969-07-21T02:56:16.0Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-14159024.0</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>dt'1969-07-21T02:56:16.5Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-14159023.5</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>DT'1969-07-21T02:56:16Z'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>1(-14159024)</code>
+</td>
+            </tr>
+          </tbody>
+        </table>
 </div>
-<p id="section-3.1-6">is equivalent to<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.1-7">
-<pre>
--14159024,
--14159024.0,
--14159023.5,
-1(-14159024)
-</pre><a href="#section-3.1-7" class="pilcrow">¶</a>
-</div>
-<p id="section-3.1-8">See <a href="#dt-grammar" class="auto internal xref">Section 5.2.3</a> for an ABNF definition for the content of <code>dt</code> literals.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">See <a href="#dt-grammar" class="auto internal xref">Section 5.2.3</a> for an ABNF definition for the content of <code>dt</code> literals.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ip">
@@ -2189,29 +2221,73 @@ on whether an address is IPv4 or IPv6 often needs to come from the context.<a hr
 defined in <span><a href="https://rfc-editor.org/rfc/rfc9164#section-3.1.3" class="relref">Section 3.1.3</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>, an address combined with an
 optional prefix length and an optional zone identifier.
 This can be represented as in <code>52([ip'192.0.2.42',24])</code>, if needed.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.2-6">Examples: the CBOR diagnostic notation<a href="#section-3.2-6" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.2-7">
-<pre>
-ip'192.0.2.42',
-IP'192.0.2.42',
-IP'192.0.2.0/24',
-ip'2001:db8::42',
-IP'2001:db8::42',
-IP'2001:db8::/64'
-</pre><a href="#section-3.2-7" class="pilcrow">¶</a>
+<p id="section-3.2-6">Each row of <a href="#tab-equiv-ip" class="auto internal xref">Table 2</a> shows an example of "ip" notation and
+equivalent notation not using an application-extension identifier.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<span id="name-ip-and-ip-literals-vs-plain"></span><div id="tab-equiv-ip">
+<table class="center" id="table-2">
+          <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-ip-and-ip-literals-vs-plain" class="selfRef">ip and IP literals vs. plain EDN</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">ip literal</th>
+              <th class="text-left" rowspan="1" colspan="1">plain EDN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>ip'192.0.2.42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>h'c000022a'</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'192.0.2.42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>52(h'c000022a')</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'192.0.2.0/24'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>52([24,h'c00002'])</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>ip'2001:db8::42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>h'20010db8000000000000000000000042'</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'2001:db8::42'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>54(h'20010db8000000000000000000000042')</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>IP'2001:db8::/64'</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>54([64,h'20010db8'])</code>
+</td>
+            </tr>
+          </tbody>
+        </table>
 </div>
-<p id="section-3.2-8">is equivalent to<a href="#section-3.2-8" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-3.2-9">
-<pre>
-h'c000022a',
-52(h'c000022a'),
-52([24,h'c00002']),
-h'20010db8000000000000000000000042',
-54(h'20010db8000000000000000000000042'),
-54([64,h'20010db8'])
-</pre><a href="#section-3.2-9" class="pilcrow">¶</a>
-</div>
-<p id="section-3.2-10">See <a href="#ip-grammar" class="auto internal xref">Section 5.2.4</a> for an ABNF definition for the content of <code>ip</code> literals.<a href="#section-3.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.2-8">See <a href="#ip-grammar" class="auto internal xref">Section 5.2.4</a> for an ABNF definition for the content of <code>ip</code> literals.<a href="#section-3.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2346,6 +2422,7 @@ not be valid.)<a href="#section-4.2-8" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-4.2-12">
 <pre>
 { "contract": "Herewith I buy" + ... + "gned: Alice &amp; Bob",
+  "bytes_in_IRI": 'https://a.example/' + ... + '&amp;q=Übergrößenträger',
   "signature": h'4711...0815',
 }
 </pre><a href="#section-4.2-12" class="pilcrow">¶</a>
@@ -2362,6 +2439,8 @@ indicators:<a href="#section-4.2-14" class="pilcrow">¶</a></p>
 <pre>
 { "contract": /CPA/888(["Herewith I buy", 888(null),
                         "gned: Alice &amp; Bob"]),
+  "bytes_in_IRI": 888(['https://a.example/', 888(null),
+                       '&amp;q=Übergrößenträger']),
   "signature": 888([h'4711', 888(null), h'0815']),
 }
 </pre><a href="#section-4.2-15" class="pilcrow">¶</a>
@@ -2466,7 +2545,7 @@ tagged          = uint spec "(" S item S ")"
 app-prefix      = lcalpha *lcalnum ; including h and b64
                 / ucalpha *ucalnum ; tagged variant, if defined
 app-string      = app-prefix sqstr
-sqstr           = "'" *single-quoted "'"
+sqstr           = SQUOTE *single-quoted SQUOTE
 bstr            = app-string / sqstr / embedded
                   ; app-string could be any type
 tstr            = DQUOTE *double-quoted DQUOTE
@@ -2493,13 +2572,13 @@ streamstring    = "(_" S string S *(OC string S) OC ")"
 spec            = ["_" *wordchar]
 
 double-quoted   = unescaped
-                / "'"
+                / SQUOTE
                 / "\" DQUOTE
                 / "\" escapable
 
 single-quoted   = unescaped
                 / DQUOTE
-                / "\" "'"
+                / "\" SQUOTE
                 / "\" escapable
 
 escapable       = %s"b" ; BS backspace U+0008
@@ -2534,6 +2613,7 @@ unescaped       = %x0A ; new line
                 / %xE000-10FFFF
 
 DQUOTE          = %x22    ; " double quote
+SQUOTE          = "'"     ; ' single quote
 DIGIT           = %x30-39 ; 0-9
 DIGIT1          = %x31-39 ; 1-9
 ODIGIT          = %x30-37 ; 0-7
@@ -2604,7 +2684,7 @@ obvious.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
   <code>hexfloat</code> stands
   for a floating point number in the usual hexadecimal notation (which
   uses a mantissa in hexadecimal and an exponent in decimal notation,
-  see Section 5.12.3 of <span>[<a href="#IEEE754" class="cite xref">IEEE754</a>]</span>, Section 6.4.4.2 of <span>[<a href="#C" class="cite xref">C</a>]</span>, or Section
+  see Section 5.12.3 of <span>[<a href="#IEEE754" class="cite xref">IEEE754</a>]</span>, Section 6.4.4.3 of <span>[<a href="#C" class="cite xref">C</a>]</span>, or Section
   5.13.4 of <span>[<a href="#Cplusplus" class="cite xref">Cplusplus</a>]</span>; floating-suffix/floating-point-suffix from
   the latter two is not used here).<a href="#section-5.1-7.4.1" class="pilcrow">¶</a></p>
 </li>
@@ -2739,8 +2819,66 @@ specification.
 These grammars describe the <em>decoded</em> content of the <code>sqstr</code> components that
 combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
-Each of these may make integrate ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>,
+Each of these may integrate ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>,
 which are not always repeated here.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 3</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<span id="name-app-prefix-values-defined-i"></span><div id="tab-prefixes">
+<table class="center" id="table-3">
+          <caption>
+<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-app-prefix-values-defined-i" class="selfRef">App-prefix Values Defined in this Document</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">app-prefix</th>
+              <th class="text-left" rowspan="1" colspan="1">content of single-quoted string</th>
+              <th class="text-left" rowspan="1" colspan="1">result type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">h</td>
+              <td class="text-left" rowspan="1" colspan="1">hexadecimal form of binary data</td>
+              <td class="text-left" rowspan="1" colspan="1">byte string</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">H</td>
+              <td class="text-left" rowspan="1" colspan="1">(not used)</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">b64</td>
+              <td class="text-left" rowspan="1" colspan="1">base64 forms (classic or base64url) of binary data</td>
+              <td class="text-left" rowspan="1" colspan="1">byte string</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">B64</td>
+              <td class="text-left" rowspan="1" colspan="1">(not used)</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dt</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC 3339 date/time</td>
+              <td class="text-left" rowspan="1" colspan="1">number (int or float)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DT</td>
+              <td class="text-left" rowspan="1" colspan="1">"</td>
+              <td class="text-left" rowspan="1" colspan="1">Tag 1 on the above</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ip</td>
+              <td class="text-left" rowspan="1" colspan="1">IP address or prefix</td>
+              <td class="text-left" rowspan="1" colspan="1">byte string, <br>array of length and byte string</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">IP</td>
+              <td class="text-left" rowspan="1" colspan="1">"</td>
+              <td class="text-left" rowspan="1" colspan="1">Tag 54 (IPv6) or 52 (IPv4) on the above</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
 <div id="h-grammar">
 <section id="section-5.2.1">
           <h4 id="name-h-abnf-definition-of-hexade">
@@ -2958,12 +3096,12 @@ application-extension identifier<a href="#section-6.1-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 1</a>; all
+<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 4</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-applicat"></span><div id="tab-iana">
-<table class="center" id="table-1">
+<table class="center" id="table-4">
           <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-initial-content-of-applicat" class="selfRef">Initial Content of Application-extension Identifier Registry</a>
           </caption>
 <thead>
@@ -3077,12 +3215,12 @@ application-extension identifier<a href="#section-6.2-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 2</a>; all
+<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 5</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.2-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-encoding"></span><div id="tab-iana-ei">
-<table class="center" id="table-2">
+<table class="center" id="table-5">
           <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-5" class="selfRef">Table 5</a>:
 <a href="#name-initial-content-of-encoding" class="selfRef">Initial Content of Encoding Indicator Registry</a>
           </caption>
 <thead>
@@ -3162,9 +3300,9 @@ present document.<a href="#section-6.2-7.1" class="pilcrow">¶</a></p>
 <p id="section-6.3-1">IANA is requested to add the following Media-Type to the "Media Types"
 registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <span id="name-new-media-type-application-"></span><div id="new-media-type">
-<table class="left" id="table-3">
+<table class="left" id="table-6">
           <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-new-media-type-application-" class="selfRef">New Media Type application/cbor-diagnostic</a>
           </caption>
 <thead>
@@ -3308,9 +3446,9 @@ data edited by humans, often under source-code control.<a href="#section-6.3-3.2
 <a href="https://www.iana.org/assignments/core-parameters#content-formats" class="relref">"CoAP Content-Formats"</a>
 sub-registry, within the "Constrained RESTful Environments (CoRE)
 Parameters" Registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<span id="name-new-content-format"></span><table class="left" id="table-4">
+<span id="name-new-content-format"></span><table class="left" id="table-7">
           <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-new-content-format" class="selfRef">New Content-Format</a>
           </caption>
 <thead>
@@ -3348,13 +3486,13 @@ than 1000.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
   occurrences of the prefix "CPA" in the document.  Finally,
   please remove this note.</span><a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.5-2">In the "CBOR Tags" registry <span>[<a href="#IANA.cbor-tags" class="cite xref">IANA.cbor-tags</a>]</span>, IANA is requested to assign the
-tags in <a href="#tab-tag-values" class="auto internal xref">Table 5</a> from the "specification required" space
+tags in <a href="#tab-tag-values" class="auto internal xref">Table 8</a> from the "specification required" space
 (suggested assignments: 888 and 999), with the present document as the
 specification reference.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 <span id="name-values-for-tags"></span><div id="tab-tag-values">
-<table class="center" id="table-5">
+<table class="center" id="table-8">
           <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-values-for-tags" class="selfRef">Values for Tags</a>
           </caption>
 <thead>
@@ -3440,12 +3578,14 @@ parameters controlling such an extension.<a href="#section-7-2" class="pilcrow">
 <dd class="break"></dd>
 <dt id="C">[C]</dt>
         <dd>
-<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Information technology — Programming languages — C"</span>, <span class="refContent">Fourth Edition</span>, <span class="seriesInfo">ISO/IEC 9899:2018</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.iso.org/standard/74528.html">https://www.iso.org/standard/74528.html</a>&gt;</span>. <span class="annotation">The text of the standard is also available via https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2310.pdf</span>
+<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Information technology — Programming languages — C"</span>, <span class="refContent">Edition 5</span>, <span class="seriesInfo">ISO/IEC 9899:2024</span>, <time datetime="2024-10" class="refDate">October 2024</time>, <span>&lt;<a href="https://www.iso.org/standard/82075.html">https://www.iso.org/standard/82075.html</a>&gt;</span>. <span class="annotation"><br>
+The standard is widely known as C23. Its technical content is also available via <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf">https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf</a>.</span>
           </dd>
 <dd class="break"></dd>
 <dt id="Cplusplus">[Cplusplus]</dt>
         <dd>
-<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Programming languages — C++"</span>, <span class="refContent">Sixth Edition</span>, <span class="seriesInfo">ISO/IEC 14882:2020</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.iso.org/standard/79358.html">https://www.iso.org/standard/79358.html</a>&gt;</span>. <span class="annotation">The text of the standard is also available via https://isocpp.org/files/papers/N4860.pdf</span>
+<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Programming languages — C++"</span>, <span class="refContent">Edition 7</span>, <span class="seriesInfo">ISO/IEC 14882:2024</span>, <time datetime="2024-10" class="refDate">October 2024</time>, <span>&lt;<a href="https://www.iso.org/standard/83626.html">https://www.iso.org/standard/83626.html</a>&gt;</span>. <span class="annotation"><br>
+The standard is widely known as C++23. Its technical content is also available via <a href="https://open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf">https://open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf</a>.</span>
           </dd>
 <dd class="break"></dd>
 <dt id="IANA.cbor-tags">[IANA.cbor-tags]</dt>
