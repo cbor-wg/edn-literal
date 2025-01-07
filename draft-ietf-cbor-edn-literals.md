@@ -292,6 +292,8 @@ In particular, it states:
 {:quote}
 > All actual interchange always happens in the binary format.
 
+### For Humans
+
 One important application of EDN is the notation of CBOR data for
 humans: in specifications, on whiteboards, and for entering test data.
 A number of features, such as comments inside prefixed string literals, are mainly
@@ -299,6 +301,8 @@ useful for people-to-people communication via EDN.
 Programs also often output EDN for diagnostic purposes, such as in
 error messages or to enable comparison (including generation of diffs
 via tools) with test data.
+
+### Determinism?
 
 For comparison with test data, it is often useful if different
 implementations generate the same (or similar) output for the same
@@ -319,6 +323,8 @@ CBOR and back, i.e., for an ability
 to convert EDN to binary CBOR and back to EDN while achieving exactly
 the same result as the original input EDN — the original EDN possibly
 was created by humans or by a different EDN generator.
+
+### Basic Output Format
 
 However, there is a certain expectation that EDN generators can be
 configured to some basic output format, which:
