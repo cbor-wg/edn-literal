@@ -1174,7 +1174,18 @@ addresses and prefixes.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
                 <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
-                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-non-objectives-of-this-docu" class="internal xref">(Non-)Objectives of this Document</a></p>
+                <p id="section-toc.1-1.1.2.3.1"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-non-objectives-of-this-docu" class="internal xref">(Non-)Objectives of this Document</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.1">
+                    <p id="section-toc.1-1.1.2.3.2.1.1" class="keepWithNext"><a href="#section-1.3.1" class="auto internal xref">1.3.1</a>.  <a href="#name-for-humans" class="internal xref">For Humans</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.2">
+                    <p id="section-toc.1-1.1.2.3.2.2.1"><a href="#section-1.3.2" class="auto internal xref">1.3.2</a>.  <a href="#name-determinism" class="internal xref">Determinism?</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.3">
+                    <p id="section-toc.1-1.1.2.3.2.3.1"><a href="#section-1.3.3" class="auto internal xref">1.3.3</a>.  <a href="#name-basic-output-format" class="internal xref">Basic Output Format</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1496,14 +1507,26 @@ In particular, it states:<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 <blockquote id="section-1.3-2">
           <p id="section-1.3-2.1">All actual interchange always happens in the binary format.<a href="#section-1.3-2.1" class="pilcrow">¶</a></p>
 </blockquote>
-<p id="section-1.3-3">One important application of EDN is the notation of CBOR data for
+<div id="for-humans">
+<section id="section-1.3.1">
+          <h4 id="name-for-humans">
+<a href="#section-1.3.1" class="section-number selfRef">1.3.1. </a><a href="#name-for-humans" class="section-name selfRef">For Humans</a>
+          </h4>
+<p id="section-1.3.1-1">One important application of EDN is the notation of CBOR data for
 humans: in specifications, on whiteboards, and for entering test data.
 A number of features, such as comments inside prefixed string literals, are mainly
 useful for people-to-people communication via EDN.
 Programs also often output EDN for diagnostic purposes, such as in
 error messages or to enable comparison (including generation of diffs
-via tools) with test data.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
-<p id="section-1.3-4">For comparison with test data, it is often useful if different
+via tools) with test data.<a href="#section-1.3.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="determinism">
+<section id="section-1.3.2">
+          <h4 id="name-determinism">
+<a href="#section-1.3.2" class="section-number selfRef">1.3.2. </a><a href="#name-determinism" class="section-name selfRef">Determinism?</a>
+          </h4>
+<p id="section-1.3.2-1">For comparison with test data, it is often useful if different
 implementations generate the same (or similar) output for the same
 CBOR data items.
 This is comparable to the objectives of deterministic serialization
@@ -1514,34 +1537,41 @@ single variant as "deterministic" when other variants may be more
 useful for human understanding, e.g., the <code>&lt;&lt; &gt;&gt;</code> notation as
 opposed to <code>h''</code>; an EDN generator may have quite a few options
 that control what presentation variant is most desirable for the
-application that it is being used for.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
-<p id="section-1.3-5">Because of this, a deterministic representation is not defined for
+application that it is being used for.<a href="#section-1.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.3.2-2">Because of this, a deterministic representation is not defined for
 EDN, and there is no expectation for "roundtripping" from EDN to
 CBOR and back, i.e., for an ability
 to convert EDN to binary CBOR and back to EDN while achieving exactly
 the same result as the original input EDN — the original EDN possibly
-was created by humans or by a different EDN generator.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
-<p id="section-1.3-6">However, there is a certain expectation that EDN generators can be
-configured to some basic output format, which:<a href="#section-1.3-6" class="pilcrow">¶</a></p>
+was created by humans or by a different EDN generator.<a href="#section-1.3.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="basic-output-format">
+<section id="section-1.3.3">
+          <h4 id="name-basic-output-format">
+<a href="#section-1.3.3" class="section-number selfRef">1.3.3. </a><a href="#name-basic-output-format" class="section-name selfRef">Basic Output Format</a>
+          </h4>
+<p id="section-1.3.3-1">However, there is a certain expectation that EDN generators can be
+configured to some basic output format, which:<a href="#section-1.3.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.3-7.1">
-            <p id="section-1.3-7.1.1">looks like JSON where that is possible;<a href="#section-1.3-7.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-1.3.3-2.1">
+              <p id="section-1.3.3-2.1.1">looks like JSON where that is possible;<a href="#section-1.3.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-7.2">
-            <p id="section-1.3-7.2.1">inserts encoding indicators only where the binary form differs from
-preferred encoding;<a href="#section-1.3-7.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-1.3.3-2.2">
+              <p id="section-1.3.3-2.2.1">inserts encoding indicators only where the binary form differs from
+preferred encoding;<a href="#section-1.3.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-7.3">
-            <p id="section-1.3-7.3.1">uses hexadecimal representation (<code>h''</code>) for byte strings, not
-<code>b64''</code> or embedded CBOR (<code>&lt;&lt;&gt;&gt;</code>);<a href="#section-1.3-7.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-1.3.3-2.3">
+              <p id="section-1.3.3-2.3.1">uses hexadecimal representation (<code>h''</code>) for byte strings, not
+<code>b64''</code> or embedded CBOR (<code>&lt;&lt;&gt;&gt;</code>);<a href="#section-1.3.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-7.4">
-            <p id="section-1.3-7.4.1">does not generate elaborate blank space (newlines, indentation) for
+            <li class="normal" id="section-1.3.3-2.4">
+              <p id="section-1.3.3-2.4.1">does not generate elaborate blank space (newlines, indentation) for
 pretty-printing, but does use common blank spaces such as after <code>,</code>
-and <code>:</code>.<a href="#section-1.3-7.4.1" class="pilcrow">¶</a></p>
+and <code>:</code>.<a href="#section-1.3.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
-        </ul>
-<p id="section-1.3-8">Additional features such as consistently selecting the unescaped or an
+          </ul>
+<p id="section-1.3.3-3">Additional features such as consistently selecting the unescaped or an
 escaped (ASCII equivalent) forms of characters in strings, ensuring
 deterministic map ordering (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.2" class="relref">4.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) on output,
 or even deviating from the basic
@@ -1549,7 +1579,9 @@ configuration in some systematic way, can further assist in comparing
 test data.
 Information obtained from a CDDL model can help in choosing
 application-oriented literals or specific string representations such
-as embedded CBOR or <code>b64''</code> in the appropriate places.<a href="#section-1.3-8" class="pilcrow">¶</a></p>
+as embedded CBOR or <code>b64''</code> in the appropriate places.<a href="#section-1.3.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -2884,7 +2916,10 @@ If the result type of the app-string is an actual (text or byte)
 string, joining of those string chunks occurs as with chunks
 directly notated as string literals; otherwise the occurrence of more than
 one app-string or an app-string together with a directly notated
-string cannot be processed.<a href="#section-5.1-7.7.9.5.1" class="pilcrow">¶</a></p>
+string cannot be processed.
+(This determination must be made at the time the app-string is
+interpreted; see <a href="#unknown" class="auto internal xref">Section 4.1</a> for how this may not be immediately
+during parsing.)<a href="#section-5.1-7.7.9.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </div>

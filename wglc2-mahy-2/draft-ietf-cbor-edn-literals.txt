@@ -90,11 +90,14 @@ Table of Contents
      1.1.  Structure of This Document  . . . . . . . . . . . . . . .   5
      1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   6
      1.3.  (Non-)Objectives of this Document . . . . . . . . . . . .   6
+       1.3.1.  For Humans  . . . . . . . . . . . . . . . . . . . . .   7
+       1.3.2.  Determinism?  . . . . . . . . . . . . . . . . . . . .   7
+       1.3.3.  Basic Output Format . . . . . . . . . . . . . . . . .   7
    2.  Overview over CBOR Extended Diagnostic Notation (EDN) . . . .   8
      2.1.  Comments  . . . . . . . . . . . . . . . . . . . . . . . .   9
-     2.2.  Encoding Indicators . . . . . . . . . . . . . . . . . . .   9
-     2.3.  Numbers . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     2.4.  Strings . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     2.2.  Encoding Indicators . . . . . . . . . . . . . . . . . . .  10
+     2.3.  Numbers . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     2.4.  Strings . . . . . . . . . . . . . . . . . . . . . . . . .  13
        2.4.1.  Prefixed String Literals  . . . . . . . . . . . . . .  14
        2.4.2.  Encoding Indicators of Strings  . . . . . . . . . . .  14
        2.4.3.  Base-Encoded Byte String Literals . . . . . . . . . .  15
@@ -103,9 +106,6 @@ Table of Contents
      2.5.  Arrays and Maps . . . . . . . . . . . . . . . . . . . . .  16
        2.5.1.  Encoding Indicators of Arrays and Maps  . . . . . . .  17
        2.5.2.  Validity of Maps  . . . . . . . . . . . . . . . . . .  18
-     2.6.  Tags  . . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     2.7.  Simple values . . . . . . . . . . . . . . . . . . . . . .  18
-   3.  Application-Oriented Extension Literals . . . . . . . . . . .  19
 
 
 
@@ -114,6 +114,9 @@ Bormann                   Expires 11 July 2025                  [Page 2]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+     2.6.  Tags  . . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     2.7.  Simple values . . . . . . . . . . . . . . . . . . . . . .  18
+   3.  Application-Oriented Extension Literals . . . . . . . . . . .  19
      3.1.  The "dt" Extension  . . . . . . . . . . . . . . . . . . .  20
      3.2.  The "ip" Extension  . . . . . . . . . . . . . . . . . . .  20
    4.  Stand-in Representations in Binary CBOR . . . . . . . . . . .  22
@@ -159,9 +162,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    based "diagnostic notation" (Section 6 of [RFC7049], now Section 8 of
    RFC 8949 [STD94]), in order to be able to converse about CBOR data
    items without having to resort to binary data.  Appendix G of
-   [RFC8610] extended this into what is also known as Extended
-   Diagnostic Notation (EDN).
-
 
 
 
@@ -169,6 +169,9 @@ Bormann                   Expires 11 July 2025                  [Page 3]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   [RFC8610] extended this into what is also known as Extended
+   Diagnostic Notation (EDN).
 
    Diagnostic notation syntax is based on JSON, with extensions for
    representing CBOR constructs such as binary data and tags.
@@ -215,9 +218,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
       |  type names that can be used in RFCs for including CBOR data
       |  items and CBOR-related languages:
       |  
-      |     *  cbor (which is actually not useful, as CBOR is a binary
-      |        format and cannot be used in textual examples in an RFC),
-      |  
 
 
 
@@ -226,6 +226,9 @@ Bormann                   Expires 11 July 2025                  [Page 4]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+      |     *  cbor (which is actually not useful, as CBOR is a binary
+      |        format and cannot be used in textual examples in an RFC),
+      |  
       |     *  cbor-diag (which is another name for EDN, as defined in
       |        the present document),
       |  
@@ -270,9 +273,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    comparison of EDN with CDDL follows in Appendix A, and some
    implementation considerations for integrating specific ABNF grammars
    into the overall ABNF grammar in Appendix B.
-
-
-
 
 
 
@@ -338,6 +338,8 @@ Bormann                   Expires 11 July 2025                  [Page 6]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+1.3.1.  For Humans
+
    One important application of EDN is the notation of CBOR data for
    humans: in specifications, on whiteboards, and for entering test
    data.  A number of features, such as comments inside prefixed string
@@ -345,6 +347,8 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    EDN.  Programs also often output EDN for diagnostic purposes, such as
    in error messages or to enable comparison (including generation of
    diffs via tools) with test data.
+
+1.3.2.  Determinism?
 
    For comparison with test data, it is often useful if different
    implementations generate the same (or similar) output for the same
@@ -366,6 +370,8 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    EDN — the original EDN possibly was created by humans or by a
    different EDN generator.
 
+1.3.3.  Basic Output Format
+
    However, there is a certain expectation that EDN generators can be
    configured to some basic output format, which:
 
@@ -381,12 +387,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
       for pretty-printing, but does use common blank spaces such as
       after , and :.
 
-   Additional features such as consistently selecting the unescaped or
-   an escaped (ASCII equivalent) forms of characters in strings,
-   ensuring deterministic map ordering (Section 4.2 of RFC 8949 [STD94])
-   on output, or even deviating from the basic configuration in some
-   systematic way, can further assist in comparing test data.
-
 
 
 Bormann                   Expires 11 July 2025                  [Page 7]
@@ -394,6 +394,11 @@ Bormann                   Expires 11 July 2025                  [Page 7]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
+   Additional features such as consistently selecting the unescaped or
+   an escaped (ASCII equivalent) forms of characters in strings,
+   ensuring deterministic map ordering (Section 4.2 of RFC 8949 [STD94])
+   on output, or even deviating from the basic configuration in some
+   systematic way, can further assist in comparing test data.
    Information obtained from a CDDL model can help in choosing
    application-oriented literals or specific string representations such
    as embedded CBOR or b64'' in the appropriate places.
@@ -436,11 +441,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    validity (for text strings and for maps) are addressed in Sections
    2.4.5 and 2.5.2 under the heading of _validity_.
 
-   The rest of this section provides an overview over specific features
-   of EDN, starting with certain common syntactical features and then
-   going through kinds of CBOR data items roughly in the order of CBOR
-   major types.  Any additional detailed syntax discussion needed has
-   been deferred to Section 5.1.
 
 
 
@@ -449,6 +449,12 @@ Bormann                   Expires 11 July 2025                  [Page 8]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   The rest of this section provides an overview over specific features
+   of EDN, starting with certain common syntactical features and then
+   going through kinds of CBOR data items roughly in the order of CBOR
+   major types.  Any additional detailed syntax discussion needed has
+   been deferred to Section 5.1.
 
 2.1.  Comments
 
@@ -488,12 +494,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                 e68449c65f885d1b73b49eae1'
    }
 
-2.2.  Encoding Indicators
-
-   Sometimes it is useful to indicate in the diagnostic notation which
-   of several alternative representations were actually used; for
-   example, a data item written >1.5< by a diagnostic decoder might have
-   been encoded as a half-, single-, or double-precision float.
 
 
 
@@ -505,6 +505,13 @@ Bormann                   Expires 11 July 2025                  [Page 9]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+2.2.  Encoding Indicators
+
+   Sometimes it is useful to indicate in the diagnostic notation which
+   of several alternative representations were actually used; for
+   example, a data item written >1.5< by a diagnostic decoder might have
+   been encoded as a half-, single-, or double-precision float.
 
    The convention for encoding indicators is that anything starting with
    an underscore and all immediately following characters that are
@@ -545,14 +552,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                          Different Data Items (mt
                               = major type)
 
-   (In the following, an abbreviation of the form ai=nn gives nn as the
-   numeric value of the field _additional information_, the low-order 5
-   bits of the initial byte: see Section 3 of RFC 8949 [STD94].  This
-   field is used in encoding the "argument", i.e., the value, tag, or
-   length; ai=0 to ai=23 mean that the value of the ai field immediately
-   _is_ the argument, ai=24 to ai=27 mean that the argument is carried
-   in 2^(ai-24) (1, 2, 4, or 8) additional bytes, and ai=31 means that
-   indefinite length encoding is used.)
+
 
 
 
@@ -561,6 +561,15 @@ Bormann                   Expires 11 July 2025                 [Page 10]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   (In the following, an abbreviation of the form ai=nn gives nn as the
+   numeric value of the field _additional information_, the low-order 5
+   bits of the initial byte: see Section 3 of RFC 8949 [STD94].  This
+   field is used in encoding the "argument", i.e., the value, tag, or
+   length; ai=0 to ai=23 mean that the value of the ai field immediately
+   _is_ the argument, ai=24 to ai=27 mean that the argument is carried
+   in 2^(ai-24) (1, 2, 4, or 8) additional bytes, and ai=31 means that
+   indefinite length encoding is used.)
 
    An underscore followed by a decimal digit n indicates that the
    preceding item (or, for arrays and maps, the item starting with the
@@ -601,6 +610,14 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    comes to mind, this is an extension point for EDN; Section 6.2
    defines a registry for additional values.
 
+
+
+
+Bormann                   Expires 11 July 2025                 [Page 11]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
    Encoding Indicators are discussed in further detail in Section 2.4.2
    for indefinite length strings and in Section 2.5.1 for arrays and
    maps.
@@ -610,13 +627,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    In addition to JSON's decimal number literals, EDN provides
    hexadecimal, octal, and binary number literals in the usual
    C-language notation (octal with 0o prefix present only).
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 11]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
 
    The following are equivalent:
 
@@ -656,6 +666,14 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    (Note that literals for further number formats, e.g., for
    representing rational numbers as fractions, or for NaNs with non-zero
    payloads, can be added as application-oriented literals.  Background
+
+
+
+Bormann                   Expires 11 July 2025                 [Page 12]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
    information beyond that in [STD94] about the representation of
    numbers in CBOR can be found in the informational document
    [I-D.bormann-cbor-numbers].)
@@ -666,13 +684,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    the string constitute UTF-8 [STD63] text, major type 3), and byte
    strings (CBOR does not further characterize the bytes that constitute
    the string, major type 2).
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 12]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
 
    EDN notates text strings in a form compatible to that of notating
    text strings in JSON (i.e., as a double-quoted string literal), with
@@ -710,17 +721,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    'hello world'
    h'68656c6c6f20776f726c64'
 
-   The escaping rules of JSON strings are applied equivalently for text-
-   based byte string literals, e.g., \\ stands for a single backslash
-   and \' stands for a single quote.  (See Section 5.1, Paragraph 7,
-   Item 7 for details.)
-
-
-
-
-
-
-
 
 
 
@@ -729,6 +729,11 @@ Bormann                   Expires 11 July 2025                 [Page 13]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   The escaping rules of JSON strings are applied equivalently for text-
+   based byte string literals, e.g., \\ stands for a single backslash
+   and \' stands for a single quote.  (See Section 5.1, Paragraph 7,
+   Item 7 for details.)
 
 2.4.1.  Prefixed String Literals
 
@@ -773,11 +778,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    not really useful) encodings with only empty chunks, which need to be
    notated as (_ ''), (_ ""), etc., when it is desired to preserve the
    chunk structure.
-
-
-
-
-
 
 
 
@@ -1712,7 +1712,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
           those string chunks occurs as with chunks directly notated as
           string literals; otherwise the occurrence of more than one
           app-string or an app-string together with a directly notated
-          string cannot be processed.
+          string cannot be processed.  (This determination must be made
+          at the time the app-string is interpreted; see Section 4.1 for
+          how this may not be immediately during parsing.)
 
 5.2.  ABNF Definitions for app-string Content
 
@@ -1725,8 +1727,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    Figure 1, which are not always repeated here.
 
    Table 4 summarizes the app-prefix values defined in this document.
-
-
 
 
 
