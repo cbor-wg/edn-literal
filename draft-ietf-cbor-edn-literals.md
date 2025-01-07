@@ -541,23 +541,6 @@ In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
 and binary number literals in the usual C-language notation (octal with 0o
 prefix present only).
 
-The following are equivalent:
-
-~~~~ cbor-diag
-   4711
-   0x1267
-   0o11147
-   0b1001001100111
-~~~~
-
-As are:
-
-~~~~ cbor-diag
-   1.5
-   0x1.8p0
-   0x18p-4
-~~~~
-
 Numbers composed only of digits (of the respective base) are
 interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
@@ -574,6 +557,19 @@ type 7) instead, irrespective of whether it is an integral number
 mathematically.
 Note that, in floating point numbers, `0.0` is not the same number as
 `-0.0`, even if they are mathematically equal.
+
+In {{tab-numbers}}, all the items on a row are the same number (also
+shown in CBOR, hexadecimally), but they are distinct from items in a
+different row.
+
+| EDN                                            | CBOR hex            |
+|------------------------------------------------|---------------------|
+| `4711`, `0x1267`, `0o11147`, `0b1001001100111` | `19 1267` # uint    |
+| `1.5`, `0.15e1`, `15e-1`, `0x1.8p0`, `0x18p-4` | `F9 3E00` # float16 |
+| `0`, `+0`, `-0`                                | `00     ` # uint     |
+| `0.0`, `+0.0`                                  | `F9 0000` # float16 |
+| `-0.0`                                         | `F9 8000` # float16 |
+{: #tab-numbers title="Example Sets of Equivalent Notations for Some Numbers"}
 
 The non-finite floating-point numbers `Infinity`, `-Infinity`, and `NaN` are
 written exactly as in this sentence (this is also a way they can be
