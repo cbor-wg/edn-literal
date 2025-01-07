@@ -709,7 +709,8 @@ These and further byte string formats now can easily be added back as
 application-oriented extension literals.)
 
 Examples often benefit from some blank space (spaces, line breaks) in
-byte strings.  In EDN, blank space is ignored in prefixed byte strings; for
+byte strings.
+In certain EDN prefixed byte strings, blank space is ignored; for
 instance, the following are equivalent:
 
 ~~~~ cbor-diag
@@ -720,9 +721,7 @@ instance, the following are equivalent:
 ~~~~
 
 Note that the internal syntax of prefixed single-quote literals such
-as h'' and b64'' can allow comments as blank space (see {{comments}}).
-Since slash characters are allowed in b64'', only inline comments are
-available in b64 string literals.
+as `h''` and `b64''` can allow comments as blank space (see {{comments}}).
 
 ~~~~ cbor-diag
    h'68656c6c6f20776f726c64'
@@ -730,6 +729,22 @@ available in b64 string literals.
      20 /space/
      77 6f 72 6c 64' /world/
 ~~~~
+
+Slash characters are part of the base64 classic alphabet (see
+Table 1 in {{Section 4 of RFC4648}}), and they therefore need be in the
+`b64''` set of characters that contribute to the byte string.
+Therefore, only end-of-line comments are available in b64 byte string
+literals.
+
+~~~~ cbor-diag
+   b64'/base64 not a comment/ but one follows # comment'
+   h'FDB6AC 7BAE27A2D69CA2699E9EDFDBBADA2779FA25 968C2C'
+~~~~
+
+These two byte strings are the same; the base64 content starts with
+`b64'/bas'` which is the same as h'FDB6AC' and ends with b64'lows'
+which is the same as `h'968C2C'`.
+
 
 ### Embedded CBOR and CBOR Sequences in Byte Strings {#embedded-cbor-and-cbor-sequences-in-byte-strings}
 
