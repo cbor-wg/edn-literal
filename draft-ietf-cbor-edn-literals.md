@@ -430,7 +430,10 @@ Comments can be used to annotate a CBOR structure as in:
                               /D, N, S/ 7, /loop-count/ 105]]
 ~~~~
 
-or, combining the use of inline and end-of-line comments:
+This reduces to `[1, 10584416, ["opsonize", 7, 105]]`.
+
+Another example, combining
+the use of inline and end-of-line comments:
 
 ~~~ cbor-diag
 {
@@ -441,6 +444,7 @@ or, combining the use of inline and end-of-line comments:
 }
 ~~~
 
+This reduces to `{1: 4, 3: 5, -1: h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}`.
 
 ## Encoding Indicators {#encoding-indicators}
 
