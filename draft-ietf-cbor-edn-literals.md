@@ -471,7 +471,7 @@ encoding (`ai=31`).
 (Note that this encoding indicator is only available behind the opening
 brace/bracket for `map` and `array` ({{ei-container}}): strings have a special syntax
 `streamstring` for indefinite length encoding except for the special
-cases ''_ and ""_ ({{ei-string}}).)
+cases `''_` and `""_` ({{ei-string}}).)
 
 The encoding indicators `_0` to `_3` can be used to indicate `ai=24`
 to `ai=27`, respectively; they therefore stand for 1, 2, 4, and 8
@@ -634,17 +634,26 @@ future extension literal prefixes.)
 
 ### Encoding Indicators of Strings {#ei-string}
 
-The detailed chunk structure of byte and text strings encoded with
-indefinite length can be
-notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
-However, for an indefinite-length string with no chunks inside, (_ )
+For indefinite length encoding, strings (byte and text strings) have a
+special syntax `streamstring`.
+This is used (except for the special cases `''_` and `""_` below) to
+notate their detailed composition into individual "chunks" ({{Section
+3.2.3 of RFC8949@-cbor}}), by representing the individual chunks in
+sequence within parentheses, each optionally followed by a comma, with
+an encoding indicator `_` immediately after the opening parenthesis:
+e.g., `(_ h'0123', h'4567')` or `(_ "foo", "bar")`.
+The overall type (byte string or text string) of the string is
+provided by the types of the individual chunks, which all need to be
+of the same type ({{Section 3.2.3 of RFC8949@-cbor}}).
+
+For an indefinite-length string with no chunks inside, `(_ )`
 would be ambiguous as to whether a byte string (encoded 0x5fff) or a text string
 (encoded 0x7fff) is meant and is therefore not used.
 The basic forms `''_` and `""_` can be used instead and are reserved for
 the case of no chunks only --- not as short forms for the (permitted,
 but not really useful) encodings with only empty chunks, which
-need to be notated as (_ ''), (_ ""), etc.,
-to preserve the chunk structure.
+need to be notated as `(_ '')`, `(_ "")`, etc.,
+when it is desired to preserve the chunk structure.
 
 
 ### Base-Encoded Byte String Literals {#encoded-byte-strings}
