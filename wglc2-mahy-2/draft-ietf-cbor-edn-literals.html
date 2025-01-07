@@ -1664,42 +1664,111 @@ underscore is an encoding indicator, and can be ignored by anyone not
 interested in this information.  For example, <code>_</code> or <code>_3</code>.
 Encoding indicators are always
 optional.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2-3">(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
+<p id="section-2.2-3">Encoding indicators are placed immediately to the right of the data
+item or of a syntactic feature that can stand for the data item the
+encoding of which the encoding indicator is controlling.
+<a href="#tab-ei" class="auto internal xref">Table 1</a> provides examples for encoding indicators used with various
+kinds of data items.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<span id="name-examples-of-encoding-indica"></span><div id="tab-ei">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-examples-of-encoding-indica" class="selfRef">Examples of Encoding Indicators for Different Data Items<br>(mt = major type)</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">mt</th>
+              <th class="text-left" rowspan="1" colspan="1">examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">0</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>1_1</code>, <code>0x4711_3</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>-1_1</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">2</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>'A'_1</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">3</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>"A"_1</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">4</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>[_1 "bar"]</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">5</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>{_1 "bar": 1}</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">6</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>1_1(4711)</code>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">7</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <code>1.5_2</code>, <code>0x4711p+03_3</code>
+</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-2.2-5">(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
 the numeric value of the field <em>additional information</em>, the low-order 5
-bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2-4">An underscore followed by a decimal digit <code>n</code> indicates that the
+bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">An underscore followed by a decimal digit <code>n</code> indicates that the
 preceding item (or, for arrays and maps, the item starting with the
 preceding bracket or brace) was encoded with an additional information
 value of <code>ai=</code>24+<code>n</code>.  For example, <code>1.5_1</code> is a half-precision floating-point
-number, while <code>1.5_3</code> is encoded as double precision.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
-<p id="section-2.2-5">The encoding indicator <code>_</code> is an abbreviation of what would in full
+number, while <code>1.5_3</code> is encoded as double precision.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.2-7">The encoding indicator <code>_</code> is an abbreviation of what would in full
 form be <code>_7</code>, which is not used.
 Therefore, an underscore <code>_</code> on its own stands for indefinite length
 encoding (<code>ai=31</code>).
 (Note that this encoding indicator is only available behind the opening
 brace/bracket for <code>map</code> and <code>array</code> (<a href="#ei-container" class="auto internal xref">Section 2.5.1</a>): strings have a special syntax
 <code>streamstring</code> for indefinite length encoding except for the special
-cases <code>''_</code> and <code>""_</code> (<a href="#ei-string" class="auto internal xref">Section 2.4.2</a>).)<a href="#section-2.2-5" class="pilcrow">¶</a></p>
-<p id="section-2.2-6">The encoding indicators <code>_0</code> to <code>_3</code> can be used to indicate <code>ai=24</code>
+cases <code>''_</code> and <code>""_</code> (<a href="#ei-string" class="auto internal xref">Section 2.4.2</a>).)<a href="#section-2.2-7" class="pilcrow">¶</a></p>
+<p id="section-2.2-8">The encoding indicators <code>_0</code> to <code>_3</code> can be used to indicate <code>ai=24</code>
 to <code>ai=27</code>, respectively; they therefore stand for 1, 2, 4, and 8
 bytes of additional information (ai) following the initial byte in the
 head of the data item.
 (The abbreviation of <code>_7</code> into <code>_</code> was discussed above.
 <code>_4</code> to <code>_6</code> are not currently used in CBOR, but will be available if
-and when CBOR is extended to make use of <code>ai=28</code> to <code>ai=30</code>.)<a href="#section-2.2-6" class="pilcrow">¶</a></p>
-<p id="section-2.2-7">Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
+and when CBOR is extended to make use of <code>ai=28</code> to <code>ai=30</code>.)<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
 <code>ai=23</code> — the assumption seems to have been that preferred serialization
 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
 diagnostic notation to an encoded CBOR data item, so leaving out the
 encoding indicator for a data item with a preferred serialization
 will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
-The present specification allows making this explicit:<a href="#section-2.2-7" class="pilcrow">¶</a></p>
-<p id="section-2.2-8"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
-<p id="section-2.2-9">While no pressing use for further values for encoding indicators
+The present specification allows making this explicit:<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<p id="section-2.2-10"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+<p id="section-2.2-11">While no pressing use for further values for encoding indicators
 comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 6.2</a> defines
-a registry for additional values.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
-<p id="section-2.2-10">Encoding Indicators are discussed in further detail in <a href="#ei-string" class="auto internal xref">Section 2.4.2</a> for
-indefinite length strings and in <a href="#ei-container" class="auto internal xref">Section 2.5.1</a> for arrays and maps.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+a registry for additional values.<a href="#section-2.2-11" class="pilcrow">¶</a></p>
+<p id="section-2.2-12">Encoding Indicators are discussed in further detail in <a href="#ei-string" class="auto internal xref">Section 2.4.2</a> for
+indefinite length strings and in <a href="#ei-container" class="auto internal xref">Section 2.5.1</a> for arrays and maps.<a href="#section-2.2-12" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="numbers">
@@ -2149,12 +2218,12 @@ If fractional seconds are given in the text (production
 floating-point number; the value is an integer number otherwise.
 In the all-upper-case variant of the app-prefix, the value is enclosed
 in a tag number 1.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">Each row of <a href="#tab-equiv-dt" class="auto internal xref">Table 1</a> shows an example of "dt" notation and
+<p id="section-3.1-4">Each row of <a href="#tab-equiv-dt" class="auto internal xref">Table 2</a> shows an example of "dt" notation and
 equivalent notation not using an application-extension identifier.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <span id="name-dt-and-dt-literals-vs-plain"></span><div id="tab-equiv-dt">
-<table class="center" id="table-1">
+<table class="center" id="table-2">
           <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#table-2" class="selfRef">Table 2</a>:
 <a href="#name-dt-and-dt-literals-vs-plain" class="selfRef">dt and DT literals vs. plain EDN</a>
           </caption>
 <thead>
@@ -2228,12 +2297,12 @@ on whether an address is IPv4 or IPv6 often needs to come from the context.<a hr
 defined in <span><a href="https://rfc-editor.org/rfc/rfc9164#section-3.1.3" class="relref">Section 3.1.3</a> of [<a href="#RFC9164" class="cite xref">RFC9164</a>]</span>, an address combined with an
 optional prefix length and an optional zone identifier.
 This can be represented as in <code>52([ip'192.0.2.42',24])</code>, if needed.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.2-6">Each row of <a href="#tab-equiv-ip" class="auto internal xref">Table 2</a> shows an example of "ip" notation and
+<p id="section-3.2-6">Each row of <a href="#tab-equiv-ip" class="auto internal xref">Table 3</a> shows an example of "ip" notation and
 equivalent notation not using an application-extension identifier.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 <span id="name-ip-and-ip-literals-vs-plain"></span><div id="tab-equiv-ip">
-<table class="center" id="table-2">
+<table class="center" id="table-3">
           <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-3" class="selfRef">Table 3</a>:
 <a href="#name-ip-and-ip-literals-vs-plain" class="selfRef">ip and IP literals vs. plain EDN</a>
           </caption>
 <thead>
@@ -2828,11 +2897,11 @@ combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
 Each of these may integrate ABNF rules defined in <a href="#abnf-grammar" class="auto internal xref">Figure 1</a>,
 which are not always repeated here.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 3</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2"><a href="#tab-prefixes" class="auto internal xref">Table 4</a> summarizes the app-prefix values defined in this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <span id="name-app-prefix-values-defined-i"></span><div id="tab-prefixes">
-<table class="center" id="table-3">
+<table class="center" id="table-4">
           <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-app-prefix-values-defined-i" class="selfRef">App-prefix Values Defined in this Document</a>
           </caption>
 <thead>
@@ -3103,12 +3172,12 @@ application-extension identifier<a href="#section-6.1-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 4</a>; all
+<p id="section-6.1-5">The initial content of the registry is shown in <a href="#tab-iana" class="auto internal xref">Table 5</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-applicat"></span><div id="tab-iana">
-<table class="center" id="table-4">
+<table class="center" id="table-5">
           <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-5" class="selfRef">Table 5</a>:
 <a href="#name-initial-content-of-applicat" class="selfRef">Initial Content of Application-extension Identifier Registry</a>
           </caption>
 <thead>
@@ -3222,12 +3291,12 @@ application-extension identifier<a href="#section-6.2-4.8.1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 5</a>; all
+<p id="section-6.2-5">The initial content of the registry is shown in <a href="#tab-iana-ei" class="auto internal xref">Table 6</a>; all
 initial entries have the Change Controller "IETF".<a href="#section-6.2-5" class="pilcrow">¶</a></p>
 <span id="name-initial-content-of-encoding"></span><div id="tab-iana-ei">
-<table class="center" id="table-5">
+<table class="center" id="table-6">
           <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-initial-content-of-encoding" class="selfRef">Initial Content of Encoding Indicator Registry</a>
           </caption>
 <thead>
@@ -3307,9 +3376,9 @@ present document.<a href="#section-6.2-7.1" class="pilcrow">¶</a></p>
 <p id="section-6.3-1">IANA is requested to add the following Media-Type to the "Media Types"
 registry <span>[<a href="#IANA.media-types" class="cite xref">IANA.media-types</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <span id="name-new-media-type-application-"></span><div id="new-media-type">
-<table class="left" id="table-6">
+<table class="left" id="table-7">
           <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-new-media-type-application-" class="selfRef">New Media Type application/cbor-diagnostic</a>
           </caption>
 <thead>
@@ -3453,9 +3522,9 @@ data edited by humans, often under source-code control.<a href="#section-6.3-3.2
 <a href="https://www.iana.org/assignments/core-parameters#content-formats" class="relref">"CoAP Content-Formats"</a>
 sub-registry, within the "Constrained RESTful Environments (CoRE)
 Parameters" Registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<span id="name-new-content-format"></span><table class="left" id="table-7">
+<span id="name-new-content-format"></span><table class="left" id="table-8">
           <caption>
-<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-new-content-format" class="selfRef">New Content-Format</a>
           </caption>
 <thead>
@@ -3493,13 +3562,13 @@ than 1000.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
   occurrences of the prefix "CPA" in the document.  Finally,
   please remove this note.</span><a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.5-2">In the "CBOR Tags" registry <span>[<a href="#IANA.cbor-tags" class="cite xref">IANA.cbor-tags</a>]</span>, IANA is requested to assign the
-tags in <a href="#tab-tag-values" class="auto internal xref">Table 8</a> from the "specification required" space
+tags in <a href="#tab-tag-values" class="auto internal xref">Table 9</a> from the "specification required" space
 (suggested assignments: 888 and 999), with the present document as the
 specification reference.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 <span id="name-values-for-tags"></span><div id="tab-tag-values">
-<table class="center" id="table-8">
+<table class="center" id="table-9">
           <caption>
-<a href="#table-8" class="selfRef">Table 8</a>:
+<a href="#table-9" class="selfRef">Table 9</a>:
 <a href="#name-values-for-tags" class="selfRef">Values for Tags</a>
           </caption>
 <thead>
