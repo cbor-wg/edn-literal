@@ -485,7 +485,10 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                     /objective/ [/objective-name/ "opsonize",
                                  /D, N, S/ 7, /loop-count/ 105]]
 
-   or, combining the use of inline and end-of-line comments:
+   This reduces to [1, 10584416, ["opsonize", 7, 105]].
+
+   Another example, combining the use of inline and end-of-line
+   comments:
 
    {
     /kty/ 1 : 4, # Symmetric
@@ -498,13 +501,13 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-
-
-
 Bormann                   Expires 11 July 2025                  [Page 9]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   This reduces to {1: 4, 3: 5, -1:
+   h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}.
 
 2.2.  Encoding Indicators
 
@@ -551,9 +554,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                          Encoding Indicators for
                          Different Data Items (mt
                               = major type)
-
-
-
 
 
 

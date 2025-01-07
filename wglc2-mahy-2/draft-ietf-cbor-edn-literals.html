@@ -1668,8 +1668,10 @@ a pair of a "<code>#</code>" and the end of the line is considered blank space
                               /D, N, S/ 7, /loop-count/ 105]]
 </pre><a href="#section-2.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-2.1-6">or, combining the use of inline and end-of-line comments:<a href="#section-2.1-6" class="pilcrow">¶</a></p>
-<div class="lang-cbor-diag sourcecode" id="section-2.1-7">
+<p id="section-2.1-6">This reduces to <code>[1, 10584416, ["opsonize", 7, 105]]</code>.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">Another example, combining
+the use of inline and end-of-line comments:<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-2.1-8">
 <pre>
 {
  /kty/ 1 : 4, # Symmetric
@@ -1677,8 +1679,9 @@ a pair of a "<code>#</code>" and the end of the line is considered blank space
   /k/ -1 : h'6684523ab17337f173500e5728c628547cb37df
              e68449c65f885d1b73b49eae1'
 }
-</pre><a href="#section-2.1-7" class="pilcrow">¶</a>
+</pre><a href="#section-2.1-8" class="pilcrow">¶</a>
 </div>
+<p id="section-2.1-9">This reduces to <code>{1: 4, 3: 5, -1: h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}</code>.<a href="#section-2.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="encoding-indicators">
