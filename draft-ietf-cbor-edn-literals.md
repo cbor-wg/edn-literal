@@ -381,7 +381,7 @@ As EDN is used for truly diagnostic purposes, its implementations MAY
 support generation and possibly ingestion of EDN for CBOR data items
 that are well-formed but not valid.
 It is RECOMMENDED that an implementation enables such usage only
-explicitly by an API flag.
+explicitly by configuration (such as an API or CLI flag).
 Validity of CBOR data items is discussed in {{Section 5.3 of RFC8949@-cbor}},
 with basic validity discussed in {{Section 5.3.1 of RFC8949@-cbor}}, and
 tag validity discussed in {{Section 5.3.2 of RFC8949@-cbor}}.
