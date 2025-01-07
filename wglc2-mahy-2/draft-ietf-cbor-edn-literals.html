@@ -1661,14 +1661,13 @@ encoded as a half-, single-, or double-precision float.<a href="#section-2.2-1" 
 <p id="section-2.2-2">The convention for encoding indicators is that anything starting with
 an underscore and all immediately following characters that are alphanumeric or
 underscore is an encoding indicator, and can be ignored by anyone not
-interested in this information.  For example, <code>_</code> or <code>_3</code>.
-Encoding indicators are always
-optional.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2-3">Encoding indicators are placed immediately to the right of the data
+interested in this information.  For example, <code>_</code> or <code>_3</code>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">Encoding indicators are always optional.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">Encoding indicators are placed immediately to the right of the data
 item or of a syntactic feature that can stand for the data item the
 encoding of which the encoding indicator is controlling.
 <a href="#tab-ei" class="auto internal xref">Table 1</a> provides examples for encoding indicators used with various
-kinds of data items.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+kinds of data items.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <span id="name-examples-of-encoding-indica"></span><div id="tab-ei">
 <table class="center" id="table-1">
           <caption>
@@ -1733,42 +1732,51 @@ kinds of data items.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
           </tbody>
         </table>
 </div>
-<p id="section-2.2-5">(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
+<p id="section-2.2-6">(In the following, an abbreviation of the form <code>ai=</code>nn gives nn as
 the numeric value of the field <em>additional information</em>, the low-order 5
-bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.)<a href="#section-2.2-5" class="pilcrow">¶</a></p>
-<p id="section-2.2-6">An underscore followed by a decimal digit <code>n</code> indicates that the
+bits of the initial byte: see Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3" class="relref">3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>.
+This field is used in encoding the "argument", i.e., the value, tag, or
+length; <code>ai=0</code> to <code>ai=23</code> mean that the value of the <code>ai</code> field
+immediately <em>is</em> the argument, <code>ai=24</code> to <code>ai=27</code> mean that the
+argument is carried in 2<sup>ai-24</sup> (1, 2, 4, or 8)
+additional bytes, and <code>ai=31</code> means that indefinite length
+encoding is used.)<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.2-7">An underscore followed by a decimal digit <code>n</code> indicates that the
 preceding item (or, for arrays and maps, the item starting with the
 preceding bracket or brace) was encoded with an additional information
 value of <code>ai=</code>24+<code>n</code>.  For example, <code>1.5_1</code> is a half-precision floating-point
-number, while <code>1.5_3</code> is encoded as double precision.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
-<p id="section-2.2-7">The encoding indicator <code>_</code> is an abbreviation of what would in full
+number (2<sup>1</sup> = 2 additional bytes or 16 bits), while <code>1.5_3</code> is encoded as
+double precision (2<sup>3</sup> = 8 additional bytes or 64 bits).<a href="#section-2.2-7" class="pilcrow">¶</a></p>
+<p id="section-2.2-8">The encoding indicator <code>_</code> is an abbreviation of what would in full
 form be <code>_7</code>, which is not used.
 Therefore, an underscore <code>_</code> on its own stands for indefinite length
 encoding (<code>ai=31</code>).
 (Note that this encoding indicator is only available behind the opening
 brace/bracket for <code>map</code> and <code>array</code> (<a href="#ei-container" class="auto internal xref">Section 2.5.1</a>): strings have a special syntax
 <code>streamstring</code> for indefinite length encoding except for the special
-cases <code>''_</code> and <code>""_</code> (<a href="#ei-string" class="auto internal xref">Section 2.4.2</a>).)<a href="#section-2.2-7" class="pilcrow">¶</a></p>
-<p id="section-2.2-8">The encoding indicators <code>_0</code> to <code>_3</code> can be used to indicate <code>ai=24</code>
+cases <code>''_</code> and <code>""_</code> (<a href="#ei-string" class="auto internal xref">Section 2.4.2</a>).)<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">The encoding indicators <code>_0</code> to <code>_3</code> can be used to indicate <code>ai=24</code>
 to <code>ai=27</code>, respectively; they therefore stand for 1, 2, 4, and 8
 bytes of additional information (ai) following the initial byte in the
 head of the data item.
 (The abbreviation of <code>_7</code> into <code>_</code> was discussed above.
 <code>_4</code> to <code>_6</code> are not currently used in CBOR, but will be available if
-and when CBOR is extended to make use of <code>ai=28</code> to <code>ai=30</code>.)<a href="#section-2.2-8" class="pilcrow">¶</a></p>
-<p id="section-2.2-9">Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
+and when CBOR is extended to make use of <code>ai=28</code> to <code>ai=30</code>.)<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<p id="section-2.2-10">Surprisingly, Section <a href="https://rfc-editor.org/rfc/rfc8949#section-8.1" class="relref">8.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> does not address <code>ai=0</code> to
 <code>ai=23</code> — the assumption seems to have been that preferred serialization
 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-4.1" class="relref">4.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) will be used when converting CBOR
 diagnostic notation to an encoded CBOR data item, so leaving out the
 encoding indicator for a data item with a preferred serialization
 will implicitly use <code>ai=0</code> to <code>ai=23</code> if that is possible.
-The present specification allows making this explicit:<a href="#section-2.2-9" class="pilcrow">¶</a></p>
-<p id="section-2.2-10"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
-<p id="section-2.2-11">While no pressing use for further values for encoding indicators
+The present specification allows making this explicit:<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+<p id="section-2.2-11"><code>_i</code> ("immediate") stands for encoding with <code>ai=0</code> to <code>ai=23</code>, i.e.,
+it indicates that the argument is encoded directly in the initial byte
+of the CBOR item.<a href="#section-2.2-11" class="pilcrow">¶</a></p>
+<p id="section-2.2-12">While no pressing use for further values for encoding indicators
 comes to mind, this is an extension point for EDN; <a href="#reg-ei" class="auto internal xref">Section 6.2</a> defines
-a registry for additional values.<a href="#section-2.2-11" class="pilcrow">¶</a></p>
-<p id="section-2.2-12">Encoding Indicators are discussed in further detail in <a href="#ei-string" class="auto internal xref">Section 2.4.2</a> for
-indefinite length strings and in <a href="#ei-container" class="auto internal xref">Section 2.5.1</a> for arrays and maps.<a href="#section-2.2-12" class="pilcrow">¶</a></p>
+a registry for additional values.<a href="#section-2.2-12" class="pilcrow">¶</a></p>
+<p id="section-2.2-13">Encoding Indicators are discussed in further detail in <a href="#ei-string" class="auto internal xref">Section 2.4.2</a> for
+indefinite length strings and in <a href="#ei-container" class="auto internal xref">Section 2.5.1</a> for arrays and maps.<a href="#section-2.2-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="numbers">
