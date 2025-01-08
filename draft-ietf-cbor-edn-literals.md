@@ -129,7 +129,7 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present revision (–15) addresses the first half of the WGLC
+    The present revision (–16) addresses the first half of the WGLC
     comments, except for the issues around the specific way how to best
     achieve pluggable ABNF grammars for application-extensions.
     It is intended for use as a reference document for the mid-WGLC
