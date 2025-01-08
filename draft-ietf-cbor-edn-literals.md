@@ -125,6 +125,16 @@ It also specifies and uses registry-based extension points, using one
 to support text representations of epoch-based dates/times and of IP
 addresses and prefixes.
 
+[^status]
+
+[^status]:
+    (This cref will be removed by the RFC editor:)\\
+    The present revision (–15) addresses the first half of the WGLC
+    comments, except for the issues around the specific way how to best
+    achieve pluggable ABNF grammars for application-extensions.
+    It is intended for use as a reference document for the mid-WGLC
+    CBOR WG interim meeting on 2025-01-08.
+
 --- middle
 
 Introduction        {#intro}
