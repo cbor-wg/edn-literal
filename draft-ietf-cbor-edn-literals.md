@@ -302,6 +302,8 @@ In particular, it states:
 {:quote}
 > All actual interchange always happens in the binary format.
 
+### For Humans
+
 One important application of EDN is the notation of CBOR data for
 humans: in specifications, on whiteboards, and for entering test data.
 A number of features, such as comments inside prefixed string literals, are mainly
@@ -309,6 +311,8 @@ useful for people-to-people communication via EDN.
 Programs also often output EDN for diagnostic purposes, such as in
 error messages or to enable comparison (including generation of diffs
 via tools) with test data.
+
+### Determinism?
 
 For comparison with test data, it is often useful if different
 implementations generate the same (or similar) output for the same
@@ -329,6 +333,8 @@ CBOR and back, i.e., for an ability
 to convert EDN to binary CBOR and back to EDN while achieving exactly
 the same result as the original input EDN — the original EDN possibly
 was created by humans or by a different EDN generator.
+
+### Basic Output Format
 
 However, there is a certain expectation that EDN generators can be
 configured to some basic output format, which:
@@ -385,7 +391,7 @@ As EDN is used for truly diagnostic purposes, its implementations MAY
 support generation and possibly ingestion of EDN for CBOR data items
 that are well-formed but not valid.
 It is RECOMMENDED that an implementation enables such usage only
-explicitly by an API flag.
+explicitly by configuration (such as an API or CLI flag).
 Validity of CBOR data items is discussed in {{Section 5.3 of RFC8949@-cbor}},
 with basic validity discussed in {{Section 5.3.1 of RFC8949@-cbor}}, and
 tag validity discussed in {{Section 5.3.2 of RFC8949@-cbor}}.
@@ -434,7 +440,10 @@ Comments can be used to annotate a CBOR structure as in:
                               /D, N, S/ 7, /loop-count/ 105]]
 ~~~~
 
-or, combining the use of inline and end-of-line comments:
+This reduces to `[1, 10584416, ["opsonize", 7, 105]]`.
+
+Another example, combining
+the use of inline and end-of-line comments:
 
 ~~~ cbor-diag
 {
@@ -445,30 +454,56 @@ or, combining the use of inline and end-of-line comments:
 }
 ~~~
 
+This reduces to `{1: 4, 3: 5, -1: h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}`.
 
 ## Encoding Indicators {#encoding-indicators}
 
 Sometimes it is useful to indicate in the diagnostic notation which of
 several alternative representations were actually used; for example, a
-data item written >1.5\< by a diagnostic decoder might have been
+data item written »1.5« by a diagnostic decoder might have been
 encoded as a half-, single-, or double-precision float.
 
 The convention for encoding indicators is that anything starting with
 an underscore and all immediately following characters that are alphanumeric or
 underscore is an encoding indicator, and can be ignored by anyone not
 interested in this information.  For example, `_` or `_3`.
-Encoding indicators are always
-optional.
+
+Encoding indicators are always optional.
+
+Encoding indicators are placed immediately to the right of the data
+item or of a syntactic feature that can stand for the data item the
+encoding of which the encoding indicator is controlling.
+{{tab-ei}} provides examples for encoding indicators used with various
+kinds of data items.
+
+| mt | examples                |
+|  0 | `1_1`, `0x4711_3`       |
+|  1 | `-1_1`                  |
+|  2 | `'A'_1`                 |
+|  3 | `"A"_1`                 |
+|  4 | `[_1 "bar"]`            |
+|  5 | `{_1 "bar": 1}`         |
+|  6 | `1_1(4711)`             |
+|  7 | `1.5_2`, `0x4711p+03_3` |
+{: #tab-ei title="Examples of Encoding Indicators for Different Data
+Items (mt = major type)"}
 
 (In the following, an abbreviation of the form `ai=`nn gives nn as
 the numeric value of the field _additional information_, the low-order 5
-bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.)
+bits of the initial byte: see {{Section 3 of RFC8949@-cbor}}.
+This field is used in encoding the "argument", i.e., the value, tag, or
+length; `ai=0` to `ai=23` mean that the value of the `ai` field
+immediately *is* the argument, `ai=24` to `ai=27` mean that the
+argument is carried in 2<sup>ai-24</sup> (1, 2, 4, or 8)
+additional bytes, and `ai=31` means that indefinite length
+encoding is used.)
 
 An underscore followed by a decimal digit `n` indicates that the
 preceding item (or, for arrays and maps, the item starting with the
 preceding bracket or brace) was encoded with an additional information
 value of `ai=`24+`n`.  For example, `1.5_1` is a half-precision floating-point
-number, while `1.5_3` is encoded as double precision.
+number (2<sup>1</sup> = 2 additional bytes or 16 bits), while `1.5_3` is encoded as
+double precision (2<sup>3</sup> = 8 additional bytes or 64 bits).
 <!--
 This encoding
 indicator is not shown in {{examples}}.
@@ -481,7 +516,7 @@ encoding (`ai=31`).
 (Note that this encoding indicator is only available behind the opening
 brace/bracket for `map` and `array` ({{ei-container}}): strings have a special syntax
 `streamstring` for indefinite length encoding except for the special
-cases ''_ and ""_ ({{ei-string}}).)
+cases `''_` and `""_` ({{ei-string}}).)
 
 The encoding indicators `_0` to `_3` can be used to indicate `ai=24`
 to `ai=27`, respectively; they therefore stand for 1, 2, 4, and 8
@@ -499,7 +534,9 @@ encoding indicator for a data item with a preferred serialization
 will implicitly use `ai=0` to `ai=23` if that is possible.
 The present specification allows making this explicit:
 
-`_i` ("immediate") stands for encoding with `ai=0` to `ai=23`.
+`_i` ("immediate") stands for encoding with `ai=0` to `ai=23`, i.e.,
+it indicates that the argument is encoded directly in the initial byte
+of the CBOR item.
 
 While no pressing use for further values for encoding indicators
 comes to mind, this is an extension point for EDN; {{reg-ei}} defines
@@ -518,23 +555,6 @@ In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
 and binary number literals in the usual C-language notation (octal with 0o
 prefix present only).
 
-The following are equivalent:
-
-~~~~ cbor-diag
-   4711
-   0x1267
-   0o11147
-   0b1001001100111
-~~~~
-
-As are:
-
-~~~~ cbor-diag
-   1.5
-   0x1.8p0
-   0x18p-4
-~~~~
-
 Numbers composed only of digits (of the respective base) are
 interpreted as CBOR integers (major type 0/1, or where the number
 cannot be represented in this way, major type 6 with tag 2/3).
@@ -551,6 +571,19 @@ type 7) instead, irrespective of whether it is an integral number
 mathematically.
 Note that, in floating point numbers, `0.0` is not the same number as
 `-0.0`, even if they are mathematically equal.
+
+In {{tab-numbers}}, all the items on a row are the same number (also
+shown in CBOR, hexadecimally), but they are distinct from items in a
+different row.
+
+| EDN                                            | CBOR hex            |
+|------------------------------------------------|---------------------|
+| `4711`, `0x1267`, `0o11147`, `0b1001001100111` | `19 1267` # uint    |
+| `1.5`, `0.15e1`, `15e-1`, `0x1.8p0`, `0x18p-4` | `F9 3E00` # float16 |
+| `0`, `+0`, `-0`                                | `00     ` # uint     |
+| `0.0`, `+0.0`                                  | `F9 0000` # float16 |
+| `-0.0`                                         | `F9 8000` # float16 |
+{: #tab-numbers title="Example Sets of Equivalent Notations for Some Numbers"}
 
 The non-finite floating-point numbers `Infinity`, `-Infinity`, and `NaN` are
 written exactly as in this sentence (this is also a way they can be
@@ -625,7 +658,7 @@ backslash and `\'` stands for a single quote.
 Single-quoted string literals can be prefixed by a sequence of ASCII
 letters and digits, starting with a letter, and using either lower
 case or upper case throughout.
-\>false\<, >true\<, >null\<, and >undefined\< cannot be used as such
+»false«, »true«, »null«, and »undefined« cannot be used as such
 prefixes.
 This means that the text string value (the "content") of the single-quoted string
 literal is not used directly as a byte string, but is further
@@ -644,17 +677,26 @@ future extension literal prefixes.)
 
 ### Encoding Indicators of Strings {#ei-string}
 
-The detailed chunk structure of byte and text strings encoded with
-indefinite length can be
-notated in the form (_ h'0123', h'4567') and (_ "foo", "bar").
-However, for an indefinite-length string with no chunks inside, (_ )
+For indefinite length encoding, strings (byte and text strings) have a
+special syntax `streamstring`.
+This is used (except for the special cases `''_` and `""_` below) to
+notate their detailed composition into individual "chunks" ({{Section
+3.2.3 of RFC8949@-cbor}}), by representing the individual chunks in
+sequence within parentheses, each optionally followed by a comma, with
+an encoding indicator `_` immediately after the opening parenthesis:
+e.g., `(_ h'0123', h'4567')` or `(_ "foo", "bar")`.
+The overall type (byte string or text string) of the string is
+provided by the types of the individual chunks, which all need to be
+of the same type ({{Section 3.2.3 of RFC8949@-cbor}}).
+
+For an indefinite-length string with no chunks inside, `(_ )`
 would be ambiguous as to whether a byte string (encoded 0x5fff) or a text string
 (encoded 0x7fff) is meant and is therefore not used.
 The basic forms `''_` and `""_` can be used instead and are reserved for
 the case of no chunks only --- not as short forms for the (permitted,
 but not really useful) encodings with only empty chunks, which
-need to be notated as (_ ''), (_ ""), etc.,
-to preserve the chunk structure.
+need to be notated as `(_ '')`, `(_ "")`, etc.,
+when it is desired to preserve the chunk structure.
 
 
 ### Base-Encoded Byte String Literals {#encoded-byte-strings}
@@ -663,21 +705,22 @@ Besides the unprefixed byte string literals that are analogous to JSON text
 string literals, EDN provides base-encoded byte string literals.
 These are notated as prefixed string literals that carry one of the base encodings {{-base}}, without
 padding, i.e., the base encoding is
-enclosed in a single-quoted string literal, prefixed by >h\< for base16 or
->b64\< for base64 or base64url (the actual encodings of the latter do
+enclosed in a single-quoted string literal, prefixed by »h« for base16 or
+»b64« for base64 or base64url (the actual encodings of the latter do
 not overlap, so the string remains unambiguous).
 For example, the byte string consisting of the four bytes `12 34 56 78`
 (given in hexadecimal here) could be written `h'12345678'` or `b64'EjRWeA'`.
 
-(Note that {{Section 8 of RFC8949@-cbor}} also mentions >b32\< for
-base32 and >h32\< for base32hex.
+(Note that {{Section 8 of RFC8949@-cbor}} also mentions »b32« for
+base32 and »h32« for base32hex.
 This has not been implemented widely
 and therefore is not directly included in this specification.
 These and further byte string formats now can easily be added back as
 application-oriented extension literals.)
 
 Examples often benefit from some blank space (spaces, line breaks) in
-byte strings.  In EDN, blank space is ignored in prefixed byte strings; for
+byte strings.
+In certain EDN prefixed byte strings, blank space is ignored; for
 instance, the following are equivalent:
 
 ~~~~ cbor-diag
@@ -688,9 +731,7 @@ instance, the following are equivalent:
 ~~~~
 
 Note that the internal syntax of prefixed single-quote literals such
-as h'' and b64'' can allow comments as blank space (see {{comments}}).
-Since slash characters are allowed in b64'', only inline comments are
-available in b64 string literals.
+as `h''` and `b64''` can allow comments as blank space (see {{comments}}).
 
 ~~~~ cbor-diag
    h'68656c6c6f20776f726c64'
@@ -698,6 +739,22 @@ available in b64 string literals.
      20 /space/
      77 6f 72 6c 64' /world/
 ~~~~
+
+Slash characters are part of the base64 classic alphabet (see
+Table 1 in {{Section 4 of RFC4648}}), and they therefore need be in the
+`b64''` set of characters that contribute to the byte string.
+Therefore, only end-of-line comments are available in b64 byte string
+literals.
+
+~~~~ cbor-diag
+   b64'/base64 not a comment/ but one follows # comment'
+   h'FDB6AC 7BAE27A2D69CA2699E9EDFDBBADA2779FA25 968C2C'
+~~~~
+
+These two byte strings are the same; the base64 content starts with
+`b64'/bas'` which is the same as h'FDB6AC' and ends with b64'lows'
+which is the same as `h'968C2C'`.
+
 
 ### Embedded CBOR and CBOR Sequences in Byte Strings {#embedded-cbor-and-cbor-sequences-in-byte-strings}
 
@@ -902,14 +959,14 @@ d9 0001        # tag(1)
 
 ## Simple values
 
-EDN uses JSON syntax for the simple values True (>`true`\<), False
-(>`false`\<), and Null (>`null`\<).
-Undefined is written >`undefined`\< as in JavaScript.
+EDN uses JSON syntax for the simple values True (»`true`«), False
+(»`false`«), and Null (»`null`«).
+Undefined is written »`undefined`« as in JavaScript.
 
 These and all other simple values can be given as "simple()" with the
-appropriate integer in the parentheses.  For example, >`simple(42)`\<
-indicates major type 7, value 42, and >`simple(0x14)`\< indicates
->`false`\<, as does >`simple(20)`\< or >`simple(0b10100)`\<.
+appropriate integer in the parentheses.  For example, »`simple(42)`«
+indicates major type 7, value 42, and »`simple(0x14)`« indicates
+»`false`«, as does »`simple(20)`« or »`simple(0b10100)`«.
 
 
 
@@ -1413,6 +1470,9 @@ The following additional items should help in the interpretation:
       directly notated as string literals; otherwise the occurrence of more than
       one app-string or an app-string together with a directly notated
       string cannot be processed.
+      (This determination must be made at the time the app-string is
+      interpreted; see {{unknown}} for how this may not be immediately
+      during parsing.)
 
 ABNF Definitions for app-string Content {#app-grammars}
 ---------------------------------------
