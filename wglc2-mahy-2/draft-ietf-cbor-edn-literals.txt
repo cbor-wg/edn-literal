@@ -4,9 +4,9 @@
 
 Network Working Group                                         C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610, 8949 (if approved)                         7 January 2025
+Updates: 8610, 8949 (if approved)                         8 January 2025
 Intended status: Standards Track                                        
-Expires: 11 July 2025
+Expires: 12 July 2025
 
 
                 CBOR Extended Diagnostic Notation (EDN)
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 1]
+Bormann                   Expires 12 July 2025                  [Page 1]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -68,7 +68,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 July 2025.
+   This Internet-Draft will expire on 12 July 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 2]
+Bormann                   Expires 12 July 2025                  [Page 2]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -165,7 +165,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 3]
+Bormann                   Expires 12 July 2025                  [Page 3]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -221,7 +221,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 4]
+Bormann                   Expires 12 July 2025                  [Page 4]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -277,7 +277,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 5]
+Bormann                   Expires 12 July 2025                  [Page 5]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -333,7 +333,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 6]
+Bormann                   Expires 12 July 2025                  [Page 6]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -389,7 +389,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 7]
+Bormann                   Expires 12 July 2025                  [Page 7]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -445,7 +445,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 8]
+Bormann                   Expires 12 July 2025                  [Page 8]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -501,7 +501,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                  [Page 9]
+Bormann                   Expires 12 July 2025                  [Page 9]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -557,7 +557,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 10]
+Bormann                   Expires 12 July 2025                 [Page 10]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -613,7 +613,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 11]
+Bormann                   Expires 12 July 2025                 [Page 11]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -669,7 +669,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 12]
+Bormann                   Expires 12 July 2025                 [Page 12]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -725,7 +725,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 13]
+Bormann                   Expires 12 July 2025                 [Page 13]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -781,7 +781,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 14]
+Bormann                   Expires 12 July 2025                 [Page 14]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -837,7 +837,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 15]
+Bormann                   Expires 12 July 2025                 [Page 15]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -893,7 +893,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 16]
+Bormann                   Expires 12 July 2025                 [Page 16]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -949,7 +949,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 17]
+Bormann                   Expires 12 July 2025                 [Page 17]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 18]
+Bormann                   Expires 12 July 2025                 [Page 18]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 19]
+Bormann                   Expires 12 July 2025                 [Page 19]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 20]
+Bormann                   Expires 12 July 2025                 [Page 20]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 21]
+Bormann                   Expires 12 July 2025                 [Page 21]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 22]
+Bormann                   Expires 12 July 2025                 [Page 22]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 23]
+Bormann                   Expires 12 July 2025                 [Page 23]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 24]
+Bormann                   Expires 12 July 2025                 [Page 24]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1397,7 +1397,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 25]
+Bormann                   Expires 12 July 2025                 [Page 25]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1426,7 +1426,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    b32'' and h32'' are not in wide use and an ABNF definition in this
    document could therefore not be based on implementation experience.
 
-   seq             = S [item S *(OC item S) OC]
+   seq             = S [item *(MSC item) SOC]
    one-item        = S item S
    item            = map / array / tagged
                    / number / simple
@@ -1453,7 +1453,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 26]
+Bormann                   Expires 12 July 2025                 [Page 26]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1475,25 +1475,30 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    tstr            = DQUOTE *double-quoted DQUOTE
    embedded        = "<<" seq ">>"
 
-   array           = "[" spec S [item S *(OC item S) OC] "]"
-   map             = "{" spec S [kp S *(OC kp S) OC] "}"
-   kp              = item S ":" S item
+   array           = "[" (specms S item *(MSC item) SOC / spec S) "]"
+   map             = "{" (specms S keyp *(MSC keyp) SOC / spec S) "}"
+   keyp            = item S ":" S item
 
    ; We allow %x09 HT in prose, but not in strings
    blank           = %x09 / %x0A / %x0D / %x20
    non-slash       = blank / %x21-2e / %x30-D7FF / %xE000-10FFFF
    non-lf          = %x09 / %x0D / %x20-D7FF / %xE000-10FFFF
-   S               = *blank *(comment *blank)
    comment         = "/" *non-slash "/"
                    / "#" *non-lf %x0A
-
-   ; optional comma (ignored)
-   OC              = ["," S]
+   ; optional space
+   S               = *blank *(comment *blank)
+   ; mandatory space
+   MS              = (blank/comment) S
+   ; mandatory comma and/or space
+   MSC             = ("," S) / (MS ["," S])
+   ; optional comma and/or space
+   SOC             = S ["," S]
 
    ; check semantically that strings are either all text or all bytes
    ; note that there must be at least one string to distinguish
-   streamstring    = "(_" S string S *(OC string S) OC ")"
+   streamstring    = "(_" MS string *(MSC string) SOC ")"
    spec            = ["_" *wordchar]
+   specms          = ["_" *wordchar MS]
 
    double-quoted   = unescaped
                    / SQUOTE
@@ -1501,19 +1506,19 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
                    / "\" escapable
 
    single-quoted   = unescaped
+
+
+
+Bormann                   Expires 12 July 2025                 [Page 27]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
                    / DQUOTE
                    / "\" SQUOTE
                    / "\" escapable
 
    escapable       = %s"b" ; BS backspace U+0008
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 27]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
-
                    / %s"f" ; FF form feed U+000C
                    / %s"n" ; LF line feed U+000A
                    / %s"r" ; CR carriage return U+000D
@@ -1557,18 +1562,17 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
    lcalnum         = lcalpha / DIGIT
    ucalpha         = %x41-5A ; A-Z
    ucalnum         = ucalpha / DIGIT
-   wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
-
-               Figure 1: Overall ABNF Definition of CBOR EDN
 
 
 
-
-
-Bormann                   Expires 11 July 2025                 [Page 28]
+Bormann                   Expires 12 July 2025                 [Page 28]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
+
+   wordchar        = "_" / lcalnum / ucalpha ; [_a-z0-9A-Z]
+
+               Figure 1: Overall ABNF Definition of CBOR EDN
 
    While an ABNF grammar defines the set of character strings that are
    considered to be valid EDN by this ABNF, the mapping of these
@@ -1608,6 +1612,20 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        parsers accept only a subset of the floating point syntax in this
        document and may require some preprocessing to use here.
 
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 12 July 2025                 [Page 29]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
    4.  hexint, octint, and binint stand for an integer in the usual base
        16/hexadecimal ("0x"), base 8/octal ("0o"), or base 2/binary
        ("0b") notation.  hexfloat stands for a floating point number in
@@ -1616,15 +1634,6 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        Section 5.12.3 of [IEEE754], Section 6.4.4.3 of [C], or
        Section 5.13.4 of [Cplusplus]; floating-suffix/floating-point-
        suffix from the latter two is not used here).
-
-
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 29]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
 
    5.  For hexint, octint, binint, and when decnumber stands for an
        integer, the corresponding CBOR data item is represented using
@@ -1665,22 +1674,20 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
        chunks, and (2) the use of ellipses to represent elisions
        (Section 4.2).
 
+
+
+
+Bormann                   Expires 12 July 2025                 [Page 30]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
        Note that the syntax defined here for concatenation of components
        uses an explicit + operator between the components to be
        concatenated (Appendix G.4 of [RFC8610] used simple
        juxtaposition, which was not widely implemented and got in the
        way of making the use of commas optional in other places via the
        rule OC).
-
-
-
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 30]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
 
        Text strings and byte strings do not mix within such a
        concatenation, except that byte string literal notation can be
@@ -1723,20 +1730,19 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
           simply joined together, proceeding from left to right.  If the
           left hand side of a concatenation is a text string, the
           joining operation results in a text string, and that result
+
+
+
+Bormann                   Expires 12 July 2025                 [Page 31]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
+
+
           needs to be valid UTF-8 except for implementations that
           support and are enabled for generation/ingestion of EDN for
           CBOR data items that are well-formed but not valid.  If the
           left hand side is a byte string, the right hand side also
           needs to be a byte string.
-
-
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 31]
-
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
-
 
        *  Some of the strings may be app-strings.  If the result type of
           the app-string is an actual (text or byte) string, joining of
@@ -1783,13 +1789,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-
-
-
-
-
-
-Bormann                   Expires 11 July 2025                 [Page 32]
+Bormann                   Expires 12 July 2025                 [Page 32]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1845,7 +1845,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 33]
+Bormann                   Expires 12 July 2025                 [Page 33]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1901,7 +1901,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 34]
+Bormann                   Expires 12 July 2025                 [Page 34]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -1957,7 +1957,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 35]
+Bormann                   Expires 12 July 2025                 [Page 35]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2013,7 +2013,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 36]
+Bormann                   Expires 12 July 2025                 [Page 36]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2069,7 +2069,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 37]
+Bormann                   Expires 12 July 2025                 [Page 37]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2125,7 +2125,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 38]
+Bormann                   Expires 12 July 2025                 [Page 38]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2181,7 +2181,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 39]
+Bormann                   Expires 12 July 2025                 [Page 39]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2237,7 +2237,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 40]
+Bormann                   Expires 12 July 2025                 [Page 40]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2293,7 +2293,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 41]
+Bormann                   Expires 12 July 2025                 [Page 41]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2349,7 +2349,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 42]
+Bormann                   Expires 12 July 2025                 [Page 42]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2405,7 +2405,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 43]
+Bormann                   Expires 12 July 2025                 [Page 43]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2461,7 +2461,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 44]
+Bormann                   Expires 12 July 2025                 [Page 44]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2517,7 +2517,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 45]
+Bormann                   Expires 12 July 2025                 [Page 45]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2573,7 +2573,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 46]
+Bormann                   Expires 12 July 2025                 [Page 46]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2629,7 +2629,7 @@ Appendix A.  EDN and CDDL
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 47]
+Bormann                   Expires 12 July 2025                 [Page 47]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2685,7 +2685,7 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 48]
+Bormann                   Expires 12 July 2025                 [Page 48]
 
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)    January 2025
 
@@ -2741,4 +2741,4 @@ Author's Address
 
 
 
-Bormann                   Expires 11 July 2025                 [Page 49]
+Bormann                   Expires 12 July 2025                 [Page 49]
