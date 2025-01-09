@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-07T01:00:53.276240+00:00",
+  "timestamp": "2025-01-09T01:00:25.838936+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3752,25 +3752,126 @@
       "id": "PR_kwDOGLBEBs6G2WCo",
       "title": "Address Wglc2 Comments from Rohan Mahy",
       "url": "https://github.com/cbor-wg/edn-literal/pull/72",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-06T17:53:26Z",
-      "updatedAt": "2025-01-06T17:53:26Z",
+      "updatedAt": "2025-01-07T09:57:07Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "730af9dd3703074ddc1a33a1c28972582f3b4745",
       "headRepository": "cbor-wg/edn-literal",
       "headRefName": "wglc2-mahy",
-      "headRefOid": "dd3298df744bc94e3feb62db6841fd45161a415c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "50be634ee91ee810b7c73c87f4f372c90d290bd6",
+      "closedAt": "2025-01-07T09:57:07Z",
+      "mergedAt": "2025-01-07T09:57:07Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "03619b108bba25b730eda9d466f6a01dbc6a3aa8"
+      },
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 73,
+      "id": "PR_kwDOGLBEBs6G-YSF",
+      "title": "Address second batch of Wglc2 Comments from Rohan Mahy",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/73",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-07T18:51:49Z",
+      "updatedAt": "2025-01-08T13:05:01Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "e69e788a0d5192349edf51c42c5d72c152659be0",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "wglc2-mahy-2",
+      "headRefOid": "e91327e478d2bb60c603ffbfcf45242ec39eb3d4",
+      "closedAt": "2025-01-08T13:05:01Z",
+      "mergedAt": "2025-01-08T13:05:01Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "b64dfa61dc61237e774d3caba69975d611be419c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 74,
+      "id": "PR_kwDOGLBEBs6G_63e",
+      "title": "Mandatory space/comma",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/74",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-08T00:13:38Z",
+      "updatedAt": "2025-01-08T19:11:37Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "03619b108bba25b730eda9d466f6a01dbc6a3aa8",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "mandatory-space",
+      "headRefOid": "48a5bfba8cd67e440e7420caaa8f7ea295528a1a",
+      "closedAt": "2025-01-08T09:18:09Z",
+      "mergedAt": "2025-01-08T09:18:09Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "e69e788a0d5192349edf51c42c5d72c152659be0"
+      },
+      "comments": [
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "It would have been nice to discuss the specifics of this grammar in the PR before merge.\r\n\r\nI have a  requirements question, and a proposed ABNF snippet.\r\n\r\nrequirements:\r\nDo we want only comments to be a valid separator? Which of these does the WG want to be valid?\r\n- [2/foo/3]\r\n- [2 /foo/3]\r\n- [2/foo/ 3]\r\n- [2 /foo/ 3]\r\n\r\nAssuming the first is not desirable but the last 3 are, my MSC production is different from the one in -16, but it could be substituted with the one in -16 without any problem.\r\n\r\n```\r\n; mandatory whitespace\r\nMS   = (1*blank *(comment *blank)) / (*(*blank comment) 1*blank)\r\n; mandatory blank or comma\r\nMSC   = (MS [\",\" S]) / (\",\" S)\r\n; optional comma\r\nOC    = [MSC]\r\n\r\nseq = S [item *(MSC item) OC]\r\narray = (\"[\" spec \"]\")    /     (\"[\" [spec MS] [item *(MSC item) OC] \"]\")\r\nmap = (\"{\" spec \"}\")      /     (\"{\" [spec MS] [kp *(MSC kp) OC] \"}\")\r\nstreamstring = \"(_\" [MS string *(MSC string) OC] \")\"\r\n```\r\n(edited)",
+          "createdAt": "2025-01-08T15:21:27Z",
+          "updatedAt": "2025-01-08T16:19:26Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "Allowing `[2/foo/3]` is palatable (if not preferred by me); that would mean it's up to authors to make their EDN readable by not doing that.  I don't think it's useful, but it does likely simplify the ABNF.",
+          "createdAt": "2025-01-08T16:03:33Z",
+          "updatedAt": "2025-01-08T16:03:33Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> MSC   = (MS [\",\" S]) / (\",\" MS)\r\n\r\nFYI: Json allows `[1,1,1,1]` which this doesn't.",
+          "createdAt": "2025-01-08T16:09:18Z",
+          "updatedAt": "2025-01-08T16:09:18Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Allowing `[2/foo/3]` is palatable (if not preferred by me); that would mean it's up to authors to make their EDN readable by not doing that. I don't think it's useful, but it does likely simplify the ABNF.\r\n\r\nThe only change in the ABNF would be the MS production:\r\n\r\n```\r\nMS = (1*blank *(comment *blank)) / (*(*blank comment) 1*blank)\r\n```\r\nvs.\r\n```\r\nMS = (blank/comment) S\r\n```",
+          "createdAt": "2025-01-08T16:10:23Z",
+          "updatedAt": "2025-01-08T16:11:03Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> > MSC   = (MS [\",\" S]) / (\",\" MS)\r\n> \r\n> FYI: Json allows `[1,1,1,1]` which this doesn't.\r\n\r\nTypo. should have been:\r\n\r\nMSC = (MS [\",\" S]) / (\",\" S)",
+          "createdAt": "2025-01-08T16:14:10Z",
+          "updatedAt": "2025-01-08T16:14:10Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I don't have a strong preference on whether `[2/foo/3]` is legal or not, as long as it does not mean `[23]` -- as long as the ABNF is simple, and ideally (for the concrete library I maintain for it), a structure that follows the AST is also easy to manipulate.",
+          "createdAt": "2025-01-08T19:11:35Z",
+          "updatedAt": "2025-01-08T19:11:35Z"
+        }
+      ],
       "reviews": []
     }
   ]
