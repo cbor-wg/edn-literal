@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-04T01:03:00.825286+00:00",
+  "timestamp": "2025-03-06T01:02:49.708690+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -2444,7 +2444,7 @@
       "labels": [],
       "body": "Hi,\r\nI believe this PR contains the changes that would be needed to make a single ABNF for EDN. A future app-string that had no requirement for interior comments could just define its ABNF (with any unquoted characters from unescaped and DQUOTE), and append the app-string to the `known-app-str` production. A future app-string that wanted comments could add safely either slash-comment or hash-comment to its whitespace as long as \"/\" or \"#\" respectively did not have meaning in the interior grammar.\r\n\r\nHope this helps.\r\nThanks,\r\n-rohan\r\n\r\n",
       "createdAt": "2024-06-13T10:10:50Z",
-      "updatedAt": "2024-08-23T18:56:08Z",
+      "updatedAt": "2025-03-05T15:14:20Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "d4b9742e63c22b38f637e506f7a0ffa77440a25b",
@@ -2532,6 +2532,20 @@
           "body": "As an existence proof that extending a single-layer ABNF is straightforward, [edn-e-ref issue #1](https://github.com/cbor-wg/edn-e-ref/issues/1) shows an ABNF for e'' and ref'' that works with the ABNF in this PR. The changes specifically needed to make this work in a single layer were:\r\n- add `known-app-str   =/ e / ref`\r\n- remove bare single quotes from `sub-delims` (a five character change)\r\n\r\nThe bulk of the work was fixing removing duplicate or unused productions.",
           "createdAt": "2024-08-19T19:25:11Z",
           "updatedAt": "2024-08-19T19:25:11Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "whats the intended status for this PR?",
+          "createdAt": "2025-03-05T15:06:09Z",
+          "updatedAt": "2025-03-05T15:06:09Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> whats the intended status for this PR?\r\n\r\nI can have a new PR based on the BNF in the latest edn-literals draft by the hackathon",
+          "createdAt": "2025-03-05T15:14:19Z",
+          "updatedAt": "2025-03-05T15:14:19Z"
         }
       ],
       "reviews": [
