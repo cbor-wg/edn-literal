@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-30T01:10:07.533218+00:00",
+  "timestamp": "2025-04-01T01:13:08.336256+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -536,15 +536,15 @@
       "id": "I_kwDOGLBEBs6L_bI3",
       "title": "ABNF approach: Special casing h'' and b64'' to be single-layer?",
       "url": "https://github.com/cbor-wg/edn-literal/issues/41",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Rohan proposes that:\r\n\r\n> The ABNF have all known app strings parsed in a single pass with the rest of the EDN document\r\n\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/yLhPGvXKC4uBmCEwAb3Kq3ExGGM\r\n\r\n\"All known app strings\" sounds like an extensibility nightmare -- we put in a registry to make this easy to extend.\r\nIt is also much easier to build a mental model where all foo'' constructs are treated the same way.\r\n\r\nMore discussion in:\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/iDsBOW-2nKSPPfiIgGWtAmSVWTw>\r\n",
       "createdAt": "2024-06-12T12:33:11Z",
-      "updatedAt": "2024-08-21T13:33:26Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-31T15:54:07Z",
+      "closedAt": "2025-03-31T15:54:05Z",
       "comments": [
         {
           "author": "chrysn",
@@ -594,6 +594,13 @@
           "body": "> The problem here is that it is not that hard to write a single-level grammar that captures _most_ of the cases. It is harder to do this in a correct way, and I am not aware of ready-made tools that would support this. Replacing the two-level grammar by an authoritative single-level grammar would create risk that I think we do not need. I'd rather take up the formulation of a single-level grammar as a desirable implementation project (destination: a github repo or another draft) than slow down this specification while trying to manage that risk.\r\n\r\nYou are saying that the convenience of the writer of extension specs of EDN is more important that the usability of the grammar for implementers. I think this is a terrible trade off. \r\n\r\nI also happen to disagree with your assessment. There are currently only 2 more proposed app strings that I am aware of (e and ref). Neither had a proposed inner ABNF until I took 15 minutes to write one for the single-layer ABNF in [edn-e-ref issue #1](https://github.com/cbor-wg/edn-e-ref/issues/1). The effort required to make this compatible was to add a single boilerplate `known-app-str =/ e / ref` line and to take the working ABNF for the inside and remove bare single quotes from the allowable characters. The bulk of the work was actually fixing the ABNF to remove unused productions, which would have been required regardless how many layers of ABNF were required. \r\n\r\nIn summary, there is currently exactly one data point available and it contradicts your argument.",
           "createdAt": "2024-08-21T13:33:25Z",
           "updatedAt": "2024-08-21T13:33:25Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Overtaken by events.\nThe proposals being discussed are way more radical now.\n",
+          "createdAt": "2025-03-31T15:54:05Z",
+          "updatedAt": "2025-03-31T15:54:05Z"
         }
       ]
     },
@@ -858,15 +865,15 @@
       "id": "I_kwDOGLBEBs6TcgfT",
       "title": "Include IPv6 zone IDs in 'IP' BNF?",
       "url": "https://github.com/cbor-wg/edn-literal/issues/62",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rohanmahy",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "RFC6874 extends IP-literal URIs to support IPv6 zone IDs. the 'IP' app-string defines a bare address with an optional subnet mask (app-string-ip as IPaddress plus an optional slash and mask). IPaddress includes a regular IPv4 or IPv6 address but does not include IPv6 addresses with a zone ID:\r\n\r\n`fe80::bd0f:a8bc:6480:2389%en1`\r\n\r\nwhile there is no direct representation of a zone ID for a lower case 'ip', the IPv6 tagged array (tag 54) could be extended to include the zone ID with 'IP':\r\n\r\n`54([128,h'fe80 0000 0000 0000 bd0f a8bc 6480 238b', \"en1\"])\r\n\r\nIf we don't want 'IP' to support zone IDs I think we should explicitly mention that in the draft.",
       "createdAt": "2024-08-19T16:13:46Z",
-      "updatedAt": "2024-08-23T16:44:53Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-31T15:52:28Z",
+      "closedAt": "2025-03-31T15:52:26Z",
       "comments": [
         {
           "author": "cabo",
@@ -895,6 +902,13 @@
           "body": "See also the thread under\r\nArchived-At: <https://mailarchive.ietf.org/arch/msg/cbor/oTnpnDt-Rl4K51L-OeLJ2LgEIDQ>\r\n",
           "createdAt": "2024-08-23T16:44:52Z",
           "updatedAt": "2024-08-23T16:44:52Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Since 2024-08-22 we mention that the RFC 9164 format with zone identifiers is not supported (very little would be added by supporting it), and we had a little discussion (see link above), which didn't expand.\nIt seems to me we can close this now.\n",
+          "createdAt": "2025-03-31T15:52:26Z",
+          "updatedAt": "2025-03-31T15:52:26Z"
         }
       ]
     },
