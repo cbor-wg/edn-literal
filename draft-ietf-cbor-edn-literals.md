@@ -1080,8 +1080,8 @@ on whether an address is IPv4 or IPv6 often needs to come from the context.
 
 Note that there is no direct representation of the "Interface format"
 defined in {{Section 3.1.3 of -iptag}}, an address combined with an
-optional prefix length and an optional zone identifier, and no way 
-to reference a zone identifier. An interface format without a zone identifier 
+optional prefix length and an optional zone identifier, and no way
+to reference a zone identifier. An interface format without a zone identifier
 can be represented as in `52([ip'192.0.2.42',24])`, if needed.
 
 Each row of {{tab-equiv-ip}} shows an example of "ip" notation and
