@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T01:13:08.336256+00:00",
+  "timestamp": "2025-04-17T01:06:27.643310+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -872,7 +872,7 @@
       "labels": [],
       "body": "RFC6874 extends IP-literal URIs to support IPv6 zone IDs. the 'IP' app-string defines a bare address with an optional subnet mask (app-string-ip as IPaddress plus an optional slash and mask). IPaddress includes a regular IPv4 or IPv6 address but does not include IPv6 addresses with a zone ID:\r\n\r\n`fe80::bd0f:a8bc:6480:2389%en1`\r\n\r\nwhile there is no direct representation of a zone ID for a lower case 'ip', the IPv6 tagged array (tag 54) could be extended to include the zone ID with 'IP':\r\n\r\n`54([128,h'fe80 0000 0000 0000 bd0f a8bc 6480 238b', \"en1\"])\r\n\r\nIf we don't want 'IP' to support zone IDs I think we should explicitly mention that in the draft.",
       "createdAt": "2024-08-19T16:13:46Z",
-      "updatedAt": "2025-03-31T15:52:28Z",
+      "updatedAt": "2025-04-16T15:29:15Z",
       "closedAt": "2025-03-31T15:52:26Z",
       "comments": [
         {
@@ -909,6 +909,20 @@
           "body": "Since 2024-08-22 we mention that the RFC 9164 format with zone identifiers is not supported (very little would be added by supporting it), and we had a little discussion (see link above), which didn't expand.\nIt seems to me we can close this now.\n",
           "createdAt": "2025-03-31T15:52:26Z",
           "updatedAt": "2025-03-31T15:52:26Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Carsten asked on the mailing list \"it was wrong to close [this issue]\". \n\nYes. Either please merge #75 or reopen the issue. The current text implies that you can represent a zone id with tag 52.\n\nProposed rewording from #75 : \n\u00abNote that there is no direct representation of the \"Interface format\" defined in {{Section 3.1.3 of -iptag}}, an address combined with an optional prefix length and an optional zone identifier, and no way to reference a zone identifier. An interface format without a zone identifier can be represented as\u00bb",
+          "createdAt": "2025-04-16T15:28:05Z",
+          "updatedAt": "2025-04-16T15:28:05Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you!",
+          "createdAt": "2025-04-16T15:29:14Z",
+          "updatedAt": "2025-04-16T15:29:14Z"
         }
       ]
     },
@@ -3898,6 +3912,47 @@
           "body": "I don't have a strong preference on whether `[2/foo/3]` is legal or not, as long as it does not mean `[23]` -- as long as the ABNF is simple, and ideally (for the concrete library I maintain for it), a structure that follows the AST is also easy to manipulate.",
           "createdAt": "2025-01-08T19:11:35Z",
           "updatedAt": "2025-01-08T19:11:35Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 75,
+      "id": "PR_kwDOGLBEBs6S2_Bx",
+      "title": "Clarify that there is no way to reference a zone identifier",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/75",
+      "state": "OPEN",
+      "author": "rohanmahy",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-04-16T15:25:21Z",
+      "updatedAt": "2025-04-16T16:48:48Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "b64dfa61dc61237e774d3caba69975d611be419c",
+      "headRepository": "rohanmahy/edn-literal",
+      "headRefName": "patch-2",
+      "headRefOid": "392f9d83eb47a24223b45ce1fb2e4df4d8d93257",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I added some text.  Can't ask for a review from the original author...",
+          "createdAt": "2025-04-16T16:00:44Z",
+          "updatedAt": "2025-04-16T16:00:44Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I added some text. Can't ask for a review from the original author...\r\n\r\n@cabo please revert your commit. The text is no longer clear. Specifically the sentence from my first commit \"An interface format without a zone identifier can be represented as...\" is exactly the wording we want.\r\n\r\n- The format of the 'ip' app-string doesn't natively support zone ids\r\n- You can represent the components of an interface format without a zone id using a tagged array.\r\n",
+          "createdAt": "2025-04-16T16:48:46Z",
+          "updatedAt": "2025-04-16T16:48:46Z"
         }
       ],
       "reviews": []
