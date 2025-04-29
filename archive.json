@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-27T01:11:26.333206+00:00",
+  "timestamp": "2025-04-29T01:07:32.963733+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3944,7 +3944,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-16T15:25:21Z",
-      "updatedAt": "2025-04-16T16:48:48Z",
+      "updatedAt": "2025-04-28T13:37:54Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "b64dfa61dc61237e774d3caba69975d611be419c",
@@ -3969,6 +3969,13 @@
           "body": "> I added some text. Can't ask for a review from the original author...\r\n\r\n@cabo please revert your commit. The text is no longer clear. Specifically the sentence from my first commit \"An interface format without a zone identifier can be represented as...\" is exactly the wording we want.\r\n\r\n- The format of the 'ip' app-string doesn't natively support zone ids\r\n- You can represent the components of an interface format without a zone id using a tagged array.\r\n",
           "createdAt": "2025-04-16T16:48:46Z",
           "updatedAt": "2025-04-16T16:48:46Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > I added some text. Can't ask for a review from the original author...\r\n> \r\n> @cabo please revert your commit. The text is no longer clear. Specifically the sentence from my first commit \"An interface format without a zone identifier can be represented as...\" is exactly the wording we want.\r\n\r\nThat sentence is still there.\r\n\r\n> * The format of the 'ip' app-string doesn't natively support zone ids\r\n\r\n```\r\nNote that this application-extension provides no direct representation\r\nof the \"Interface format\"[...]\r\nand therefore\r\nno way to reference a zone identifier at all.\r\n```\r\n\r\n> * You can represent the components of an interface format without a zone id using a tagged array.\r\n\r\nor with a zone id:\r\n\r\n```\r\n(If needed, this format can be put together by building their\r\nstructures explicitly, e.g., an interface format without a zone\r\nidentifier can be represented as in `52([ip'192.0.2.42',24])`, or an\r\ninterface format with zone identifier 42 as in\r\n`54([ip'fe80::0202:02ff:ffff:fe03:0303',64,42])`.)\r\n```\r\n\r\nPlease explain some more.",
+          "createdAt": "2025-04-28T13:37:53Z",
+          "updatedAt": "2025-04-28T13:37:53Z"
         }
       ],
       "reviews": []
