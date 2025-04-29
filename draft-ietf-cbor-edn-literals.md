@@ -716,17 +716,23 @@ h'68656c6c6f20776f726c64'
 The escaping rules of JSON strings are applied equivalently for
 text-based byte string literals, e.g., `\\` stands for a single
 backslash and `\'` stands for a single quote.
-(See {{concat}} for details.)
+However, to facilitate parsing, in single-quoted strings EDN excludes
+certain escaping mechanisms available for double-quoted strings:
 
-### Prefixed String Literals {#prefixed-lit}
+* `\/` is an escape in JSON that is available for EDN text strings as
+  well to ensure all JSON texts are EDN literals.
+  Since EDN's single-quoted strings to not occur in JSON, this legacy
+  compatibility feature is not available for them.
+* `\u`-based escapes are not available for characters in the range
+  from U+0020 to U+007e (essentially, printable ASCII).
 
-Single-quoted string literals can be prefixed by a sequence of ASCII
-letters and digits, starting with a letter, and using either lower
-case or upper case throughout.
-»false«, »true«, »null«, and »undefined« cannot be used as such
-prefixes.
-This means that the text string value (the "content") of the single-quoted string
-literal is not used directly as a byte string, but is further
+Single-quoted string literals can occur unprefixed and stand for the
+byte string that encodes its text string value (the "content"), or be
+prefixed by what looks like an application-extension prefix (see
+{{app-lit}}).
+
+In a prefixed string literal, the text content of the single-quoted
+string literal is not used directly as a byte string, but is further
 processed in a way that is defined by the meaning given to the prefix.
 Depending on the prefix, the result of that processing can, but need
 not be, a byte string value.
