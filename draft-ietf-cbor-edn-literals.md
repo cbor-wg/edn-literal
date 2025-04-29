@@ -40,6 +40,7 @@ normative:
   RFC3339: datetime
   RFC3986: uri
   RFC9164: iptag
+  RFC9485: iregexp
   IANA.cose: cose-reg
   IANA.cbor-tags: tags
   IANA.media-types:
@@ -283,6 +284,8 @@ popular and is more sharply distinguishable from other meanings than
 In a similar vein, the term "ABNF" in this document refers to the
 language defined in {{-abnf}} as extended in {{-abnfcs}}, where the
 "characters" of {{Section 2.3 of RFC5234@-abnf}} are Unicode scalar values.
+Brief snippets of grammar may be given in the text as I-Regexp regular
+expressions {{-iregexp}}.
 
 The term "CDDL" (Concise Data Definition Language) refers to the data
 definition language defined in
