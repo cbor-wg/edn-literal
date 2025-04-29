@@ -40,6 +40,7 @@ normative:
   RFC3339: datetime
   RFC3986: uri
   RFC9164: iptag
+  IANA.cose: cose-reg
   IANA.cbor-tags: tags
   IANA.media-types:
   IANA.core-parameters:
@@ -236,9 +237,9 @@ Similarly, this notation could be extended in a separate document to
 provide documentation for NaN payloads, which are not covered in this document.
 -->
 
-After introductory material, {{app-lit}}
-introduces the concept of application-oriented extension literals and
-defines the "dt" and "ip" extensions.
+After introductory material, {{app-ext}}
+illustrates the concept of application-oriented extension literals by
+defining the "dt", "ip", and "hash" extensions.
 {{stand-in}} defines mechanisms
 for dealing with unknown application-oriented literals and
 deliberately elided information.
@@ -1117,6 +1118,36 @@ equivalent notation not using an application-extension identifier.
 
 See {{ip-grammar}} for an ABNF definition for the content of `ip` literals.
 
+
+The "hash" Extension {#hash}
+--------------------
+
+The application-extension identifier "hash" is used to notate the
+input to a cryptographic hash function as well as identify such a hash
+function to obtain a byte string that represents the output of that
+hash function.
+
+The content of the literal is a string, optionally followed by either
+an integer or a text string that identifies the hash function in the
+COSE Algorithms registry of the CBOR Object Signing and Encryption
+(COSE) registry group {{IANA.cose}}, either by the identifier (value:
+integer or string), or, if no algorithm is registered with this value,
+by its name used in the registry.
+If the second item is not given, the default algorithm used is -16
+("SHA-256").
+
+No uppercase variant prefix is defined for the application-extension
+identifier "hash".
+
+| hash literal               | plain EDN                                                                                                                              |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `hash<<'foo'>>`            | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash'foo'`                | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash<<'foo', -16>>`       | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash<<'foo', "SHA-256">>` | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash<<'foo', -44>>`       | h'F7FBBA6E0636F890E56FBBF3283E524C<br>6FA3204AE298382D624741D0DC663832<br>6E282C41BE5E4254D8820772C5518A2C<br>5A8C0C7F7EDA19594A7EB539453E1ED7' |
+| `hash<<'foo', "SHA-512">>` | h'F7FBBA6E0636F890E56FBBF3283E524C<br>6FA3204AE298382D624741D0DC663832<br>6E282C41BE5E4254D8820772C5518A2C<br>5A8C0C7F7EDA19594A7EB539453E1ED7' |
+{: #tab-equiv-hash title="hash literals vs. plain EDN"}
 
 
 Stand-in Representations in Binary CBOR {#stand-in}
