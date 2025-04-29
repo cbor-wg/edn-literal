@@ -407,6 +407,56 @@ types.
 Any additional detailed syntax discussion needed has been deferred to
 {{grammar}}.
 
+## Application-Oriented Extension Literals {#app-lit}
+
+EDN provides _literals_ that represent CBOR data items textually.
+Many of the forms of literals provided are predefined by this
+document, but it also defines an extension point that enables defining
+_application-oriented extension literals_, or _extension literals_ for short.
+
+Extension literals start with a _prefix_ that identifies the
+application-oriented extension, immediately followed by a sequence
+literal ({{embedded}}) or a single-quoted string literal ({{strings}}).
+The latter form uses its single-quoted string literal as a shorthand
+form for a sequence literal representing a sequence with exactly that
+one string data item.
+
+{:aside}
+> This notation is generalized from
+{{Section 8 of RFC8949@-cbor}}, which provides for notating byte
+strings in a number of {{-base}} base encodings, where the encoded text
+is enclosed in single quotes, prefixed by a prefix (»h« for
+base16, »b32« for base32, »h32« for base32hex, »b64« for base64 or
+base64url).
+> 
+> This syntax can be thought to establish a name space, with the names
+"h", "b32", "h32", and "b64" taken, but other names being unallocated.
+The present specification allows registering additional names for this namespace,
+which we call *application-extension identifiers*.
+
+More precisely, an *application-extension identifier* is a name consisting of a
+lower-case ASCII letter (`[a-z]`) and zero or more additional ASCII
+characters that are either lower-case letters, digits, or hyphens (`[a-z0-9-]`).
+»false«, »true«, »null«, and »undefined« cannot be used as such
+identifiers and are reserved.
+
+Application-extension identifiers are registered in a registry
+({{appext-iana}}).
+
+An application-extension (such as `dt`) MAY also define the meaning of
+a variant prefix derived from its application-extension identifier by
+replacing each lower-case character by its upper-case counterpart (such
+as `DT`).
+As a convention for such definitions, using the all-uppercase variant
+implies making use of a tag appropriate for this application-oriented
+extension (such as tag number 1 for `DT`, where `dt` stands for the
+unwrapped number).
+
+This specification defines a number of generally applicable
+application-oriented extensions ({{app-ext}}), both to motivate
+making these extensions generally available, and to illustrate the
+concept.
+
 ## Comments {#comments}
 
 For presentation to humans, EDN text may benefit from comments.
@@ -750,21 +800,33 @@ literals.
    h'FDB6AC 7BAE27A2D69CA2699E9EDFDBBADA2779FA25 968C2C'
 ~~~~
 
-These two byte strings are the same; the base64 content starts with
+These two byte string literals stand for the same byte string; the
+deliberately confusing base64 content starts with
 `b64'/bas'` which is the same as h'FDB6AC' and ends with b64'lows'
 which is the same as `h'968C2C'`.
 
 
-### Embedded CBOR and CBOR Sequences in Byte Strings {#embedded-cbor-and-cbor-sequences-in-byte-strings}
+### CBOR Sequence Literals {#embedded}
 
-Where a byte string is to carry an embedded CBOR-encoded item, or more
-generally a sequence of zero or more such items, the diagnostic
-notation for these zero or more CBOR data items, separated by commas,
-can be enclosed in `<<` and `>>` to notate the byte string
-resulting from encoding the data items and concatenating the result.
-For
-instance, each pair of columns in the following are equivalent:
+In diagnostic notation, a sequence of zero or more CBOR data item literals can
+be enclosed in `<<` and `>>`, optionally prefixed by an
+application-extension prefix; we speak of *sequence literals*.
+EDN mainly deals with individual data items, not with CBOR sequences
+{{-seq}}, so the CBOR sequence represented by the sequence literal needs
+to be further processed to obtain the value of the literal.
 
+Prefixed sequence literals refer to the application extension (see
+{{app-lit}}) identified by the prefix and apply the extension to its
+sequence content, resulting in a single data item.
+This data item may be a string or may not (always) be, depending on
+the definition of the application extension.
+
+An unprefixed sequence literal applies CBOR encoding to the
+data items in its content, taken as a CBOR sequence.
+The value of the
+literal thus is a byte string with the encoded content; we also speak of
+*embedded CBOR*.
+For instance, each pair of columns in the following are equivalent:
 
 ~~~~ cbor-diag
    <<1>>              h'01'
@@ -969,54 +1031,12 @@ indicates major type 7, value 42, and »`simple(0x14)`« indicates
 
 
 
-Application-Oriented Extension Literals {#app-lit}
+Application-Oriented Extension Literals {#app-ext}
 =======================================
 
-This document extends the syntax used in diagnostic notation for byte
-string literals to also be available for application-oriented extensions.
-
-As per {{Section 8 of RFC8949@-cbor}}, the diagnostic notation can notate byte
-strings in a number of {{-base}} base encodings, where the encoded text
-is enclosed in single quotes, prefixed by an identifier (»h« for
-base16, »b32« for base32, »h32« for base32hex, »b64« for base64 or
-base64url).
-
-This syntax can be thought to establish a name space, with the names
-"h", "b32", "h32", and "b64" taken, but other names being unallocated.
-The present specification defines additional names for this namespace,
-which we call *application-extension identifiers*.
-For the quoted string, the same rules apply as for byte strings.
-In particular, the escaping rules that were adapted from JSON strings
-are applied
-equivalently for application-oriented extensions, e.g., within the
-quoted string `\\` stands
-for a single backslash and `\'` stands for a single quote.
-
-An application-extension identifier is a name consisting of a
-lower-case ASCII letter (a-z) and zero or more additional ASCII
-characters that are either lower-case letters or digits (a-z0-9).
-
-Application-extension identifiers are registered in a registry
-({{appext-iana}}).
-
-Prefixing a single-quoted string, an application-extension identifier
-is used to build an application-oriented extension literal, which
-stands for a CBOR data item the value of which is derived from the
-text given in the single-quoted string using a procedure defined in
-the specification for an application-extension identifier.
-
-An application-extension (such as `dt`) MAY also define the meaning of
-a variant prefix built out of the application-extension identifier by
-replacing each lower-case character by its upper-case counterpart (such
-as `DT`), for building an application-oriented extension literal using
-that all-uppercase variant as the prefix of a single-quoted string.
-
-As a convention for such definitions, using the all-uppercase variant
-implies making use of a tag appropriate for this application-oriented
-extension (such as tag number 1 for `DT`).
-
-Examples for application-oriented extensions to CBOR diagnostic
-notation can be found in the following sections.
+This document extends the syntax used in diagnostic notation to also
+enable application-oriented extensions.
+This section defines a number of application-oriented extensions.
 
 
 The "dt" Extension {#dt}
