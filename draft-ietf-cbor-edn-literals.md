@@ -444,7 +444,7 @@ strings in a number of {{-base}} base encodings, where the encoded text
 is enclosed in single quotes, prefixed by a prefix (»h« for
 base16, »b32« for base32, »h32« for base32hex, »b64« for base64 or
 base64url).
-> 
+>
 > This syntax can be thought to establish a name space, with the names
 "h", "b32", "h32", and "b64" taken, but other names being unallocated.
 The present specification allows registering additional names for this namespace,
