@@ -351,8 +351,20 @@ configured to some basic output format, which:
   pretty-printing, but does use common blank spaces such as after `,`
   and `:`.
 
-Additional features such as consistently selecting the unescaped or an
-escaped (ASCII equivalent) forms of characters in strings, ensuring
+EDN generators may provide configuration to consistently select either
+the unescaped (directly readable) or an escaped (ASCII equivalent) form of
+characters in string literals; the latter allows EDN to be used when the
+diagnostic value of fully escaped characters may be desired or in
+environments where non-ASCII characters may not enjoy full data
+transparency.
+Similar to JSON, EDN is designed to allow a simple tool to convert any
+EDN (including EDN with application extensions unknown to the tool)
+into fully escaped (printable ASCII and newlines only) form, as well
+as to inversely recover unescaped characters for all escapes where
+this is possible or for certain subsets of the characters (such as
+Unicode categories L, M, N, P, S, plus Zs or just ASCII space).
+
+Additional features such as ensuring
 deterministic map ordering ({{Section 4.2 of RFC8949@-cbor}}) on output,
 or even deviating from the basic
 configuration in some systematic way, can further assist in comparing
