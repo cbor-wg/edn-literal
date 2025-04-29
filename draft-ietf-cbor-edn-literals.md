@@ -1644,6 +1644,116 @@ uint          = "0" / DIGIT1 *DIGIT
 {: #abnf-grammar-ip sourcecode-name="cbor-edn-ip.abnf"
 title="ABNF Definition of Textual Representation of an IP Address"}
 
+ABNF Definitions for Integrated Extension Parsers {#integrated-grammars}
+-------------------------------------------------
+
+For some applications of EDN, it is an optimization to integrate
+parsers for the content of some prefixed single-quoted string literals into
+the main parser, handling both the string literal syntax (e.g., escapes such
+as `\'` and `\\`) and the syntax of the extension content in one go.
+
+For application-extensions that only use printable ASCII characters
+(from U+0020 to U+007E) minus single-quote `'` and backslash `\`, the ABNF
+such as that given in {{app-grammars}} can be directly used as an
+integrated parser, after adding some glue ABNF.
+For instance, for app-string-dt, add an alternative to `bstr` that
+points to a rule for prefixed single-quoted string literals ({{abnf-grammar-sq-glue}}).
+
+~~~ abnf
+bstr            = sq-app-string-dt /
+                  app-string / sqstr / app-sequence / embedded
+sq-app-string-dt = (%s"dt'"/%s"DT'") app-string-dt "'"
+~~~
+{: #abnf-grammar-sq-glue sourcecode-name="cbor-edn-glue.abnf"
+title="Glue Code for Integrated DT Parser"
+}
+
+To facilitate writing integrated ABNF for more complex prefixed
+string literals, the ABNF definitions in {{abnf-grammar-sq}} may
+be useful and are used in the rest of this section.
+
+~~~ abnf
+i-HT =        %s"\t" / %s"\u" ("0009" / "{" *("0") "9}")
+i-LF = %x0a / %s"\n" / %s"\u" ("000A" / "{" *("0") "A}")
+i-CR = %x0d / %s"\r" / %s"\u" ("000D" / "{" *("0") "D}")
+
+i-blank = i-LF / i-CR / " "
+i-non-lf = i-HT / i-CR / %x20-26 / "\'" / %x28-5b
+         / "\\" / %x5d-7f / i-NONASCII
+
+i-NONASCII = NONASCII / %s"\u" ESCGE7F
+
+; hex escaping for U+007F or greater
+ESCGE7F = "D" ("8"/"9"/"A"/"B") 2HEXDIG
+          %s"\u" "D" ("C"/"D"/"E"/"F") 2HEXDIG
+        / FOURHEX1 / "0" HEXDIG1 2HEXDIG / "00" TWOHEX1
+        / "{" *("0")
+          ("10" 4HEXDIG / HEXDIG1 4HEXDIG
+           / FOURHEX1 / HEXDIG1 2HEXDIG / TWOHEX1)
+          "}"
+
+; xxxx - 0xxx - Dhigh\uDloow
+FOURHEX1 = (DIGIT1 / "A"/"B"/"C" / "E"/"F") 3HEXDIG
+         / "D" ODIGIT 2HEXDIG
+; 00xx - ASCII + 007F
+TWOHEX1  = ("8"/"9" / HEXDIGA) HEXDIG / "7F"
+~~~
+{: #abnf-grammar-sq sourcecode-name="cbor-edn-bricklets.abnf"
+title="ABNF Definitions Useful for Integrated Extension Parsers"}
+
+Two subsections with ABNF for integrated parsers follow, one for `h''`,
+and one for `b64''`.
+There is no requirement for a new application-extension to supply ABNF
+for an integrated parser (or any ABNF at all!), in particular if the
+parsing function is likely to be fulfilled by a platform library.
+If ABNF for the content of a single-quoted string is available in an
+application-extension specification, ABNF for an integrated parser can
+be written as a separate activity or also automatically derived.
+At the time of writing, one example for a tool performing such a
+derivation is available as open-source software {{ABNFROB}}.
+
+### h: ABNF Definition of Integrated Parser {#sq-h-grammar}
+
+With glue code similar to that in {{abnf-grammar-sq-glue}}, ABNF such as
+that shown in {{abnf-grammar-sq-h}} can be used as an integrated parser
+for `h''` prefixed single-quote strings.
+
+~~~ abnf
+sq-app-string-h = %s"h'" app-string-h "'"
+app-string-h = h-S *(HEXDIG h-S HEXDIG h-S / ellipsis h-S)
+    ["#" *(i-non-lf)]
+
+h-S = *(i-blank) *(h-comment *(i-blank))
+h-non-slash = i-blank / %x21-26 / "\'" / %x28-2e
+            / %x30-5b / "\\" / %x5d-7f / i-NONASCII
+h-comment = "/" *(h-non-slash) "/"
+          / "#" *(i-non-lf) i-LF
+~~~
+{: #abnf-grammar-sq-h sourcecode-name="cbor-edn-h.abnf"
+title="ABNF Definition for Integrated Hex Parser"
+}
+
+
+### b64: ABNF Definition of Integrated Parser {#sq-b64-grammar}
+
+With glue code similar to that in {{abnf-grammar-sq-glue}}, ABNF such as
+that shown in {{abnf-grammar-sq-b64}} can be used as an integrated parser
+for `h''` prefixed single-quote strings.
+
+~~~ abnf
+sq-app-string-b64 = %s"b64'" app-string-b64 "'"
+app-string-b64  = b64-S *(4(b64dig b64-S))
+                  [b64dig b64-S b64dig b64-S
+                   ["=" b64-S "=" / b64dig b64-S ["="]] b64-S]
+                  ["#" *i-non-lf]
+b64dig          = ALPHA / DIGIT / "-" / "_" / "+" / "/"
+b64-S           = *i-blank *(b64-comment *i-blank)
+b64-comment     = "#" *i-non-lf %x0A
+~~~
+{: #abnf-grammar-sq-b64 sourcecode-name="cbor-edn-b64.abnf"
+title="ABNF Definition for Integrated Base64 Parser"
+}
+
 
 IANA Considerations {#sec-iana}
 ===================
