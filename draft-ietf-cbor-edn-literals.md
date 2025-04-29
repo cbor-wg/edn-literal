@@ -131,11 +131,10 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present revision (–16) addresses the first half of the WGLC
-    comments, except for the issues around the specific way how to best
-    achieve pluggable ABNF grammars for application-extensions.
-    It is intended for use as a reference document for the mid-WGLC
-    CBOR WG interim meeting on 2025-01-08.
+    The present PR builds on -16 to fully address the WGLC
+    comments.
+    It is intended for use as a reference document for the
+    CBOR WG interim meeting on 2025-04-30.
 
 --- middle
 
@@ -184,9 +183,10 @@ one for additional encoding indicators, and
 one for adding application-oriented literal forms.
 It uses these registries to add encoding indicators for a more
 complete coverage of encoding variation,
-and to add two application-oriented literal forms that enhance EDN with text
+and to add application-oriented literal forms that enhance EDN with text
 representations of epoch-based date/times and of IP addresses
-and prefixes {{-iptag}}.
+and prefixes {{-iptag}} as well as an application-oriented literal that
+represents cryptographic hash values computed from byte strings.
 
 In addition, this document registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
@@ -670,6 +670,8 @@ the string constitute UTF-8 {{-utf8}} text, major type 3), and byte strings
 (CBOR does not further characterize the bytes that constitute the
 string, major type 2).
 
+### Text String Literals
+
 EDN notates text strings in a form compatible to that of notating text
 strings in JSON (i.e., as a double-quoted string literal), with a
 number of usability extensions.
@@ -698,11 +700,16 @@ This means the following are equivalent (the first `o` is escaped as
 "Domino's 🁳 + ⌘"                       # unescaped
 ~~~
 
+### Byte String Literals
+
 EDN adds a number of ways to notate byte strings, some of which
 provide detailed access to the bits within those bytes (see
 {{encoded-byte-strings}}).
 However, quite often, byte strings carry bytes that can be meaningfully
-notated as UTF-8 text.
+notated as UTF-8 text ({{sq-lit}}).
+
+### Single-Quoted String Literals {#sq-lit}
+
 Analogously to text string literals delimited by double quotes, EDN
 allows the use of single quotes (without a prefix) to express byte
 string literals with UTF-8 text; for instance, the following are
@@ -740,7 +747,7 @@ not be, a byte string value.
 Prefixed string literals (which are always single-quoted after the
 prefix) are used both for base-encoded byte string literals (see {{encoded-byte-strings}}) and for
 application-oriented extension literals (see {{app-lit}}, called app-string).
-(Additional base-encoded string literals can be defined as
+(Additional kinds of base-encoded string literals can be defined as
 application-oriented extension literals by registering their prefixes;
 there is no fundamental difference between the two predefined
 base-encoded string literal prefixes (`h`, `b64`) and any such potential
@@ -782,6 +789,8 @@ not overlap, so the string remains unambiguous).
 For example, the byte string consisting of the four bytes `12 34 56 78`
 (given in hexadecimal here) could be written `h'12345678'` or `b64'EjRWeA'`.
 
+{:aside}
+>
 (Note that {{Section 8 of RFC8949@-cbor}} also mentions »b32« for
 base32 and »h32« for base32hex.
 This has not been implemented widely
@@ -790,8 +799,8 @@ These and further byte string formats now can easily be added back as
 application-oriented extension literals.)
 
 Examples often benefit from some blank space (spaces, line breaks) in
-byte strings.
-In certain EDN prefixed byte strings, blank space is ignored; for
+byte strings literals.
+In certain EDN prefixed byte string literals, blank space is ignored; for
 instance, the following are equivalent:
 
 ~~~~ cbor-diag
@@ -801,8 +810,8 @@ instance, the following are equivalent:
      20776 f726c64'
 ~~~~
 
-Note that the internal syntax of prefixed single-quote literals such
-as `h''` and `b64''` can allow comments as blank space (see {{comments}}).
+The internal syntax of prefixed single-quote literals such
+as `h''` and `b64''` can also allow comments as blank space (see {{comments}}).
 
 ~~~~ cbor-diag
    h'68656c6c6f20776f726c64'
@@ -872,7 +881,9 @@ Both double-quoted and single-quoted string literals have been defined
 such that they lead to byte sequences that are UTF-8: the source
 language of EDN is UTF-8, and all escaping mechanisms lead only to
 adding further UTF-8 characters.
-Only prefixed string literals can generate non-UTF-8 byte sequences.
+Only prefixed string literals, other application-extensions, or
+in certain cases concatenation ({{concat}}) can generate non-UTF-8 byte
+sequences.
 
 As discussed at the start of {{diagnostic-notation}}, EDN
 implementations MAY support generation and possibly ingestion of EDN
@@ -888,7 +899,7 @@ EDN, particularly not any processing that is dependent on a specific
 Unicode version.
 Such processing, if offered, MUST NOT get in the way of processing the
 data item represented in EDN (i.e., it may be appropriate to issue
-warnings but not to error out or generate output that does not match
+warnings but not to error out or to generate output that does not match
 the input at the UTF-8 level).
 
 <!--
@@ -1002,7 +1013,7 @@ used to specify the encoding of the array `[false, true]` as `98 02 f4 f5`.
 
 As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
 generation and possibly ingestion of EDN for CBOR data items that are
-well-formed but not valid.
+well-formed but not valid ({{Section 5.3 of RFC8949@-cbor}}).
 
 For maps, this is relevant for map keys that occur more than once, as in:
 
@@ -1068,8 +1079,8 @@ The application-extension identifier "dt" is used to notate a
 date/time literal that can be used as an Epoch-Based Date/Time as per
 {{Section 3.4.2 of RFC8949@-cbor}}.
 
-The text of the literal is a Standard Date/Time String as per
-{{Section 3.4.1 of RFC8949@-cbor}}.
+The content of the literal is a single Standard Date/Time String as per
+{{Section 3.4.1 of RFC8949@-cbor}}, as a text or byte string.
 
 The value of the literal is a number representing the result of a
 conversion of the given Standard Date/Time String to an Epoch-Based
@@ -1088,6 +1099,8 @@ equivalent notation not using an application-extension identifier.
 | `dt'1969-07-21T02:56:16Z'`   | `-14159024`    |
 | `dt'1969-07-21T02:56:16.0Z'` | `-14159024.0`  |
 | `dt'1969-07-21T02:56:16.5Z'` | `-14159023.5`  |
+| `dt<<'1969-07-21T02:56:16.5Z'>>` | `-14159023.5`  |
+| `dt<<"1969-07-21T02:56:16.5Z">>` | `-14159023.5`  |
 | `DT'1969-07-21T02:56:16Z'`   | `1(-14159024)` |
 {: #tab-equiv-dt title="dt and DT literals vs. plain EDN"}
 
@@ -1101,8 +1114,8 @@ The application-extension identifier "ip" is used to notate an IP
 address literal that can be used as an IP address as per {{Section 3 of
 -iptag}}.
 
-The text of the literal is an IPv4address or IPv6address as per
-{{Section 3.2.2 of -uri}}.
+The content of the literal is a single IPv4address or IPv6address as per
+{{Section 3.2.2 of -uri}}, as a text or byte string.
 
 With the lower-case app-string prefix `ip`, the value of the literal is a
 byte string representing the binary IP address.
@@ -1130,6 +1143,7 @@ equivalent notation not using an application-extension identifier.
 | ip literal          | plain EDN                                 |
 |---------------------|-------------------------------------------|
 | `ip'192.0.2.42'`    | `h'c000022a'`                             |
+| `ip<<'192.0.2.42'>>` | `h'c000022a'`                             |
 | `IP'192.0.2.42'`    | `52(h'c000022a')`                         |
 | `IP'192.0.2.0/24'`  | `52([24,h'c00002'])`                      |
 | `ip'2001:db8::42'`  | `h'20010db8000000000000000000000042'`     |
@@ -1215,15 +1229,11 @@ stage of ingestion.
 This specification defines a CBOR Tag for this purpose:
 The Diagnostic Notation Unresolved Application-Extension Tag, tag
 number CPA999 ({{iana-standin}}).
-The content of this tag is an array of two text strings: The
-application-extension identifier, and the (escape-processed) content
-of the single-quoted string.
-<!--
-For example, `dt'1969-07-21T02:56:16Z'` can be provisionally represented as
-`/CPA/ 999(["dt", "1969-07-21T02:56:16Z"])`.
- -->
+The content of this tag is an array of a text string for the
+application-extension identifier, and another array, carrying the zero
+or more content items of the sequence literal given (possibly just the value of the single-quoted string given).
 For example, `cri'https://example.com'` can be provisionally represented as
-`/CPA/ 999(["cri", "https://example.com"])`.
+`/CPA/ 999(["cri", ["https://example.com"]])`.
 
 If a stage of ingestion is not prepared to handle the Unresolved
 Application-Extension Tag, this is an error and processing has to
@@ -1416,7 +1426,7 @@ The following additional items should help in the interpretation:
   that input generated or processed on either of these kinds of
   platforms will generate the same bytes in the CBOR data items
   created from that input.
-  (Platforms that use just a CARRIAGE RETURN to signify an end of line
+  (Platforms that use just a CARRIAGE RETURN by itself to signify an end of line
   are no longer relevant and the files they produce are out of scope
   for this document.)
   If a carriage return is needed in the CBOR data item, it can be
@@ -1540,12 +1550,12 @@ The following additional items should help in the interpretation:
       interpreted; see {{unknown}} for how this may not be immediately
       during parsing.)
 
-ABNF Definitions for app-string Content {#app-grammars}
+ABNF Definitions for Application Extension Content {#app-grammars}
 ---------------------------------------
 
 This subsection provides ABNF definitions for the content of
 application-oriented extension literals defined in {{-cbor}} and in this
-specification.
+specification, where applicable.
 These grammars describe the *decoded* content of the `sqstr` components that
 combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
@@ -1565,6 +1575,12 @@ which are not always repeated here.
 | ip         | IP address or prefix            | byte string, <br/>array of length and byte string |
 | IP         | "                               | Tag 54 (IPv6) or 52 (IPv4) on the above           |
 {: #tab-prefixes title="App-prefix Values Defined in this Document"}
+
+Note that implementation platforms may already provide implementations
+of grammars used in application-extensions, such as of RFC 3339 for
+`dt''` and of IP address syntax for `ip''`.
+EDN-based tools may want to use these implementation libraries instead
+of using the grammars that are provided here as a reference.
 
 
 ### h: ABNF Definition of Hexadecimal representation of a byte string {#h-grammar}
