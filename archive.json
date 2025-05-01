@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-29T01:07:32.963733+00:00",
+  "timestamp": "2025-05-01T01:14:09.051709+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -3978,6 +3978,32 @@
           "updatedAt": "2025-04-28T13:37:53Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 77,
+      "id": "PR_kwDOGLBEBs6UZO60",
+      "title": "Integrated Parsers and other preparation for 2025-04-30 CBOR interim meeting",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/77",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-04-29T18:37:28Z",
+      "updatedAt": "2025-04-29T18:39:36Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "aacce85de7c779c2bbc7106d0a26c5e03c9eaed6",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "integrated",
+      "headRefOid": "c26f9df5ce37de7c0cf8951e9298f776661eac6e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
