@@ -1970,7 +1970,7 @@ registry {{IANA.media-types}}.
 
 | Name            | Template                    | Reference              |
 | cbor-diagnostic | application/cbor-diagnostic | RFC-XXXX, {{media-type}} |
-{: #new-media-type align="left" title="New Media Type application/cbor-diagnostic"}
+{: #new-media-type title="New Media Type application/cbor-diagnostic"}
 
 {:compact}
 Type name:
@@ -2051,7 +2051,7 @@ Parameters" Registry {{IANA.core-parameters}}, as follows:
 
 | Content-Type                | Content Coding | ID   | Reference |
 | application/cbor-diagnostic | -              | TBD1 | RFC-XXXX  |
-{: align="left" title="New Content-Format"}
+{: #tab-content-format title="New Content-Format for application/cbor-diagnostic"}
 
 TBD1 is to be assigned from the space 256..9999, according to the
 procedure "IETF Review or IESG Approval", preferably a number less
