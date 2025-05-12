@@ -1078,10 +1078,16 @@ For completeness, the lower-case variant `ip'2001:db8::/56'` or  `ip'192.0.2.0/2
 an unwrapped `[56,h'20010db8']` or `[24,h'c00002']`; however, in this case the information
 on whether an address is IPv4 or IPv6 often needs to come from the context.
 
-Note that there is no direct representation of the "Interface format"
+Note that this application-extension provides no direct representation
+of the "Interface format"
 defined in {{Section 3.1.3 of -iptag}}, an address combined with an
-optional prefix length and an optional zone identifier.
-This can be represented as in `52([ip'192.0.2.42',24])`, if needed.
+optional prefix length and an optional zone identifier, and therefore
+no way to reference a zone identifier at all.
+(If needed, this format can be put together by building their
+structures explicitly, e.g., an interface format without a zone
+identifier can be represented as in `52([ip'192.0.2.42',24])`, or an
+interface format with zone identifier 42 as in
+`54([ip'fe80::0202:02ff:ffff:fe03:0303',64,42])`.)
 
 Each row of {{tab-equiv-ip}} shows an example of "ip" notation and
 equivalent notation not using an application-extension identifier.
