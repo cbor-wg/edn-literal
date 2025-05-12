@@ -40,6 +40,8 @@ normative:
   RFC3339: datetime
   RFC3986: uri
   RFC9164: iptag
+  RFC9485: iregexp
+  IANA.cose: cose-reg
   IANA.cbor-tags: tags
   IANA.media-types:
   IANA.core-parameters:
@@ -129,11 +131,10 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present revision (–16) addresses the first half of the WGLC
-    comments, except for the issues around the specific way how to best
-    achieve pluggable ABNF grammars for application-extensions.
-    It is intended for use as a reference document for the mid-WGLC
-    CBOR WG interim meeting on 2025-01-08.
+    The present PR builds on -16 to fully address the WGLC
+    comments.
+    It is intended for use as a reference document for the
+    CBOR WG interim meeting on 2025-04-30.
 
 --- middle
 
@@ -182,9 +183,10 @@ one for additional encoding indicators, and
 one for adding application-oriented literal forms.
 It uses these registries to add encoding indicators for a more
 complete coverage of encoding variation,
-and to add two application-oriented literal forms that enhance EDN with text
+and to add application-oriented literal forms that enhance EDN with text
 representations of epoch-based date/times and of IP addresses
-and prefixes {{-iptag}}.
+and prefixes {{-iptag}} as well as an application-oriented literal that
+represents cryptographic hash values computed from byte strings.
 
 In addition, this document registers a media type identifier
 and a content-format for CBOR diagnostic notation.  This does not
@@ -236,9 +238,9 @@ Similarly, this notation could be extended in a separate document to
 provide documentation for NaN payloads, which are not covered in this document.
 -->
 
-After introductory material, {{app-lit}}
-introduces the concept of application-oriented extension literals and
-defines the "dt" and "ip" extensions.
+After introductory material, {{app-ext}}
+illustrates the concept of application-oriented extension literals by
+defining the "dt", "ip", and "hash" extensions.
 {{stand-in}} defines mechanisms
 for dealing with unknown application-oriented literals and
 deliberately elided information.
@@ -252,8 +254,7 @@ for
 {{<<seccons}} ({{<seccons}}),
 and References ({{<sec-normative-references}}, {{<sec-informative-references}}).
 An informational comparison of EDN with CDDL follows in
-{{edn-and-cddl}}, and some implementation considerations for integrating
-specific ABNF grammars into the overall ABNF grammar in {{squash}}.
+{{edn-and-cddl}}
 
 ## Terminology
 
@@ -283,6 +284,8 @@ popular and is more sharply distinguishable from other meanings than
 In a similar vein, the term "ABNF" in this document refers to the
 language defined in {{-abnf}} as extended in {{-abnfcs}}, where the
 "characters" of {{Section 2.3 of RFC5234@-abnf}} are Unicode scalar values.
+Brief snippets of grammar may be given in the text as I-Regexp regular
+expressions {{-iregexp}}.
 
 The term "CDDL" (Concise Data Definition Language) refers to the data
 definition language defined in
@@ -348,8 +351,20 @@ configured to some basic output format, which:
   pretty-printing, but does use common blank spaces such as after `,`
   and `:`.
 
-Additional features such as consistently selecting the unescaped or an
-escaped (ASCII equivalent) forms of characters in strings, ensuring
+EDN generators may provide configuration to consistently select either
+the unescaped (directly readable) or an escaped (ASCII equivalent) form of
+characters in string literals; the latter allows EDN to be used when the
+diagnostic value of fully escaped characters may be desired or in
+environments where non-ASCII characters may not enjoy full data
+transparency.
+Similar to JSON, EDN is designed to allow a simple tool to convert any
+EDN (including EDN with application extensions unknown to the tool)
+into fully escaped (printable ASCII and newlines only) form, as well
+as to inversely recover unescaped characters for all escapes where
+this is possible or for certain subsets of the characters (such as
+Unicode categories L, M, N, P, S, plus Zs or just ASCII space).
+
+Additional features such as ensuring
 deterministic map ordering ({{Section 4.2 of RFC8949@-cbor}}) on output,
 or even deviating from the basic
 configuration in some systematic way, can further assist in comparing
@@ -407,6 +422,56 @@ going through kinds of CBOR data items roughly in the order of CBOR major
 types.
 Any additional detailed syntax discussion needed has been deferred to
 {{grammar}}.
+
+## Application-Oriented Extension Literals {#app-lit}
+
+EDN provides _literals_ that represent CBOR data items textually.
+Many of the forms of literals provided are predefined by this
+document, but it also defines an extension point that enables defining
+_application-oriented extension literals_, or _extension literals_ for short.
+
+Extension literals start with a _prefix_ that identifies the
+application-oriented extension, immediately followed by a sequence
+literal ({{embedded}}) or a single-quoted string literal ({{strings}}).
+The latter form uses its single-quoted string literal as a shorthand
+form for a sequence literal representing a sequence with exactly that
+one string data item.
+
+{:aside}
+> This notation is generalized from
+{{Section 8 of RFC8949@-cbor}}, which provides for notating byte
+strings in a number of {{-base}} base encodings, where the encoded text
+is enclosed in single quotes, prefixed by a prefix (»h« for
+base16, »b32« for base32, »h32« for base32hex, »b64« for base64 or
+base64url).
+>
+> This syntax can be thought to establish a name space, with the names
+"h", "b32", "h32", and "b64" taken, but other names being unallocated.
+The present specification allows registering additional names for this namespace,
+which we call *application-extension identifiers*.
+
+More precisely, an *application-extension identifier* is a name consisting of a
+lower-case ASCII letter (`[a-z]`) and zero or more additional ASCII
+characters that are either lower-case letters, digits, or hyphens (`[a-z0-9-]`).
+»false«, »true«, »null«, and »undefined« cannot be used as such
+identifiers and are reserved.
+
+Application-extension identifiers are registered in a registry
+({{appext-iana}}).
+
+An application-extension (such as `dt`) MAY also define the meaning of
+a variant prefix derived from its application-extension identifier by
+replacing each lower-case character by its upper-case counterpart (such
+as `DT`).
+As a convention for such definitions, using the all-uppercase variant
+implies making use of a tag appropriate for this application-oriented
+extension (such as tag number 1 for `DT`, where `dt` stands for the
+unwrapped number).
+
+This specification defines a number of generally applicable
+application-oriented extensions ({{app-ext}}), both to motivate
+making these extensions generally available, and to illustrate the
+concept.
 
 ## Comments {#comments}
 
@@ -605,6 +670,8 @@ the string constitute UTF-8 {{-utf8}} text, major type 3), and byte strings
 (CBOR does not further characterize the bytes that constitute the
 string, major type 2).
 
+### Text String Literals
+
 EDN notates text strings in a form compatible to that of notating text
 strings in JSON (i.e., as a double-quoted string literal), with a
 number of usability extensions.
@@ -633,11 +700,16 @@ This means the following are equivalent (the first `o` is escaped as
 "Domino's 🁳 + ⌘"                       # unescaped
 ~~~
 
+### Byte String Literals
+
 EDN adds a number of ways to notate byte strings, some of which
 provide detailed access to the bits within those bytes (see
 {{encoded-byte-strings}}).
 However, quite often, byte strings carry bytes that can be meaningfully
-notated as UTF-8 text.
+notated as UTF-8 text ({{sq-lit}}).
+
+### Single-Quoted String Literals {#sq-lit}
+
 Analogously to text string literals delimited by double quotes, EDN
 allows the use of single quotes (without a prefix) to express byte
 string literals with UTF-8 text; for instance, the following are
@@ -651,17 +723,23 @@ h'68656c6c6f20776f726c64'
 The escaping rules of JSON strings are applied equivalently for
 text-based byte string literals, e.g., `\\` stands for a single
 backslash and `\'` stands for a single quote.
-(See {{concat}} for details.)
+However, to facilitate parsing, in single-quoted strings EDN excludes
+certain escaping mechanisms available for double-quoted strings:
 
-### Prefixed String Literals {#prefixed-lit}
+* `\/` is an escape in JSON that is available for EDN text strings as
+  well to ensure all JSON texts are EDN literals.
+  Since EDN's single-quoted strings to not occur in JSON, this legacy
+  compatibility feature is not available for them.
+* `\u`-based escapes are not available for characters in the range
+  from U+0020 to U+007e (essentially, printable ASCII).
 
-Single-quoted string literals can be prefixed by a sequence of ASCII
-letters and digits, starting with a letter, and using either lower
-case or upper case throughout.
-»false«, »true«, »null«, and »undefined« cannot be used as such
-prefixes.
-This means that the text string value (the "content") of the single-quoted string
-literal is not used directly as a byte string, but is further
+Single-quoted string literals can occur unprefixed and stand for the
+byte string that encodes its text string value (the "content"), or be
+prefixed by what looks like an application-extension prefix (see
+{{app-lit}}).
+
+In a prefixed string literal, the text content of the single-quoted
+string literal is not used directly as a byte string, but is further
 processed in a way that is defined by the meaning given to the prefix.
 Depending on the prefix, the result of that processing can, but need
 not be, a byte string value.
@@ -669,7 +747,7 @@ not be, a byte string value.
 Prefixed string literals (which are always single-quoted after the
 prefix) are used both for base-encoded byte string literals (see {{encoded-byte-strings}}) and for
 application-oriented extension literals (see {{app-lit}}, called app-string).
-(Additional base-encoded string literals can be defined as
+(Additional kinds of base-encoded string literals can be defined as
 application-oriented extension literals by registering their prefixes;
 there is no fundamental difference between the two predefined
 base-encoded string literal prefixes (`h`, `b64`) and any such potential
@@ -711,6 +789,8 @@ not overlap, so the string remains unambiguous).
 For example, the byte string consisting of the four bytes `12 34 56 78`
 (given in hexadecimal here) could be written `h'12345678'` or `b64'EjRWeA'`.
 
+{:aside}
+>
 (Note that {{Section 8 of RFC8949@-cbor}} also mentions »b32« for
 base32 and »h32« for base32hex.
 This has not been implemented widely
@@ -719,8 +799,8 @@ These and further byte string formats now can easily be added back as
 application-oriented extension literals.)
 
 Examples often benefit from some blank space (spaces, line breaks) in
-byte strings.
-In certain EDN prefixed byte strings, blank space is ignored; for
+byte strings literals.
+In certain EDN prefixed byte string literals, blank space is ignored; for
 instance, the following are equivalent:
 
 ~~~~ cbor-diag
@@ -730,8 +810,8 @@ instance, the following are equivalent:
      20776 f726c64'
 ~~~~
 
-Note that the internal syntax of prefixed single-quote literals such
-as `h''` and `b64''` can allow comments as blank space (see {{comments}}).
+The internal syntax of prefixed single-quote literals such
+as `h''` and `b64''` can also allow comments as blank space (see {{comments}}).
 
 ~~~~ cbor-diag
    h'68656c6c6f20776f726c64'
@@ -751,21 +831,33 @@ literals.
    h'FDB6AC 7BAE27A2D69CA2699E9EDFDBBADA2779FA25 968C2C'
 ~~~~
 
-These two byte strings are the same; the base64 content starts with
+These two byte string literals stand for the same byte string; the
+deliberately confusing base64 content starts with
 `b64'/bas'` which is the same as h'FDB6AC' and ends with b64'lows'
 which is the same as `h'968C2C'`.
 
 
-### Embedded CBOR and CBOR Sequences in Byte Strings {#embedded-cbor-and-cbor-sequences-in-byte-strings}
+### CBOR Sequence Literals {#embedded}
 
-Where a byte string is to carry an embedded CBOR-encoded item, or more
-generally a sequence of zero or more such items, the diagnostic
-notation for these zero or more CBOR data items, separated by commas,
-can be enclosed in `<<` and `>>` to notate the byte string
-resulting from encoding the data items and concatenating the result.
-For
-instance, each pair of columns in the following are equivalent:
+In diagnostic notation, a sequence of zero or more CBOR data item literals can
+be enclosed in `<<` and `>>`, optionally prefixed by an
+application-extension prefix; we speak of *sequence literals*.
+EDN mainly deals with individual data items, not with CBOR sequences
+{{-seq}}, so the CBOR sequence represented by the sequence literal needs
+to be further processed to obtain the value of the literal.
 
+Prefixed sequence literals refer to the application extension (see
+{{app-lit}}) identified by the prefix and apply the extension to its
+sequence content, resulting in a single data item.
+This data item may be a string or may not (always) be, depending on
+the definition of the application extension.
+
+An unprefixed sequence literal applies CBOR encoding to the
+data items in its content, taken as a CBOR sequence.
+The value of the
+literal thus is a byte string with the encoded content; we also speak of
+*embedded CBOR*.
+For instance, each pair of columns in the following are equivalent:
 
 ~~~~ cbor-diag
    <<1>>              h'01'
@@ -789,7 +881,9 @@ Both double-quoted and single-quoted string literals have been defined
 such that they lead to byte sequences that are UTF-8: the source
 language of EDN is UTF-8, and all escaping mechanisms lead only to
 adding further UTF-8 characters.
-Only prefixed string literals can generate non-UTF-8 byte sequences.
+Only prefixed string literals, other application-extensions, or
+in certain cases concatenation ({{concat}}) can generate non-UTF-8 byte
+sequences.
 
 As discussed at the start of {{diagnostic-notation}}, EDN
 implementations MAY support generation and possibly ingestion of EDN
@@ -805,7 +899,7 @@ EDN, particularly not any processing that is dependent on a specific
 Unicode version.
 Such processing, if offered, MUST NOT get in the way of processing the
 data item represented in EDN (i.e., it may be appropriate to issue
-warnings but not to error out or generate output that does not match
+warnings but not to error out or to generate output that does not match
 the input at the UTF-8 level).
 
 <!--
@@ -919,7 +1013,7 @@ used to specify the encoding of the array `[false, true]` as `98 02 f4 f5`.
 
 As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
 generation and possibly ingestion of EDN for CBOR data items that are
-well-formed but not valid.
+well-formed but not valid ({{Section 5.3 of RFC8949@-cbor}}).
 
 For maps, this is relevant for map keys that occur more than once, as in:
 
@@ -970,54 +1064,12 @@ indicates major type 7, value 42, and »`simple(0x14)`« indicates
 
 
 
-Application-Oriented Extension Literals {#app-lit}
+Application-Oriented Extension Literals {#app-ext}
 =======================================
 
-This document extends the syntax used in diagnostic notation for byte
-string literals to also be available for application-oriented extensions.
-
-As per {{Section 8 of RFC8949@-cbor}}, the diagnostic notation can notate byte
-strings in a number of {{-base}} base encodings, where the encoded text
-is enclosed in single quotes, prefixed by an identifier (»h« for
-base16, »b32« for base32, »h32« for base32hex, »b64« for base64 or
-base64url).
-
-This syntax can be thought to establish a name space, with the names
-"h", "b32", "h32", and "b64" taken, but other names being unallocated.
-The present specification defines additional names for this namespace,
-which we call *application-extension identifiers*.
-For the quoted string, the same rules apply as for byte strings.
-In particular, the escaping rules that were adapted from JSON strings
-are applied
-equivalently for application-oriented extensions, e.g., within the
-quoted string `\\` stands
-for a single backslash and `\'` stands for a single quote.
-
-An application-extension identifier is a name consisting of a
-lower-case ASCII letter (a-z) and zero or more additional ASCII
-characters that are either lower-case letters or digits (a-z0-9).
-
-Application-extension identifiers are registered in a registry
-({{appext-iana}}).
-
-Prefixing a single-quoted string, an application-extension identifier
-is used to build an application-oriented extension literal, which
-stands for a CBOR data item the value of which is derived from the
-text given in the single-quoted string using a procedure defined in
-the specification for an application-extension identifier.
-
-An application-extension (such as `dt`) MAY also define the meaning of
-a variant prefix built out of the application-extension identifier by
-replacing each lower-case character by its upper-case counterpart (such
-as `DT`), for building an application-oriented extension literal using
-that all-uppercase variant as the prefix of a single-quoted string.
-
-As a convention for such definitions, using the all-uppercase variant
-implies making use of a tag appropriate for this application-oriented
-extension (such as tag number 1 for `DT`).
-
-Examples for application-oriented extensions to CBOR diagnostic
-notation can be found in the following sections.
+This document extends the syntax used in diagnostic notation to also
+enable application-oriented extensions.
+This section defines a number of application-oriented extensions.
 
 
 The "dt" Extension {#dt}
@@ -1027,8 +1079,8 @@ The application-extension identifier "dt" is used to notate a
 date/time literal that can be used as an Epoch-Based Date/Time as per
 {{Section 3.4.2 of RFC8949@-cbor}}.
 
-The text of the literal is a Standard Date/Time String as per
-{{Section 3.4.1 of RFC8949@-cbor}}.
+The content of the literal is a single Standard Date/Time String as per
+{{Section 3.4.1 of RFC8949@-cbor}}, as a text or byte string.
 
 The value of the literal is a number representing the result of a
 conversion of the given Standard Date/Time String to an Epoch-Based
@@ -1047,6 +1099,8 @@ equivalent notation not using an application-extension identifier.
 | `dt'1969-07-21T02:56:16Z'`   | `-14159024`    |
 | `dt'1969-07-21T02:56:16.0Z'` | `-14159024.0`  |
 | `dt'1969-07-21T02:56:16.5Z'` | `-14159023.5`  |
+| `dt<<'1969-07-21T02:56:16.5Z'>>` | `-14159023.5`  |
+| `dt<<"1969-07-21T02:56:16.5Z">>` | `-14159023.5`  |
 | `DT'1969-07-21T02:56:16Z'`   | `1(-14159024)` |
 {: #tab-equiv-dt title="dt and DT literals vs. plain EDN"}
 
@@ -1060,8 +1114,8 @@ The application-extension identifier "ip" is used to notate an IP
 address literal that can be used as an IP address as per {{Section 3 of
 -iptag}}.
 
-The text of the literal is an IPv4address or IPv6address as per
-{{Section 3.2.2 of -uri}}.
+The content of the literal is a single IPv4address or IPv6address as per
+{{Section 3.2.2 of -uri}}, as a text or byte string.
 
 With the lower-case app-string prefix `ip`, the value of the literal is a
 byte string representing the binary IP address.
@@ -1095,6 +1149,7 @@ equivalent notation not using an application-extension identifier.
 | ip literal          | plain EDN                                 |
 |---------------------|-------------------------------------------|
 | `ip'192.0.2.42'`    | `h'c000022a'`                             |
+| `ip<<'192.0.2.42'>>` | `h'c000022a'`                             |
 | `IP'192.0.2.42'`    | `52(h'c000022a')`                         |
 | `IP'192.0.2.0/24'`  | `52([24,h'c00002'])`                      |
 | `ip'2001:db8::42'`  | `h'20010db8000000000000000000000042'`     |
@@ -1104,6 +1159,36 @@ equivalent notation not using an application-extension identifier.
 
 See {{ip-grammar}} for an ABNF definition for the content of `ip` literals.
 
+
+The "hash" Extension {#hash}
+--------------------
+
+The application-extension identifier "hash" is used to notate the
+input to a cryptographic hash function as well as identify such a hash
+function to obtain a byte string that represents the output of that
+hash function.
+
+The content of the literal is a string, optionally followed by either
+an integer or a text string that identifies the hash function in the
+COSE Algorithms registry of the CBOR Object Signing and Encryption
+(COSE) registry group {{IANA.cose}}, either by the identifier (value:
+integer or string), or, if no algorithm is registered with this value,
+by its name used in the registry.
+If the second item is not given, the default algorithm used is -16
+("SHA-256").
+
+No uppercase variant prefix is defined for the application-extension
+identifier "hash".
+
+| hash literal               | plain EDN                                                                                                                              |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `hash<<'foo'>>`            | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash'foo'`                | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash<<'foo', -16>>`       | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash<<'foo', "SHA-256">>` | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
+| `hash<<'foo', -44>>`       | h'F7FBBA6E0636F890E56FBBF3283E524C<br>6FA3204AE298382D624741D0DC663832<br>6E282C41BE5E4254D8820772C5518A2C<br>5A8C0C7F7EDA19594A7EB539453E1ED7' |
+| `hash<<'foo', "SHA-512">>` | h'F7FBBA6E0636F890E56FBBF3283E524C<br>6FA3204AE298382D624741D0DC663832<br>6E282C41BE5E4254D8820772C5518A2C<br>5A8C0C7F7EDA19594A7EB539453E1ED7' |
+{: #tab-equiv-hash title="hash literals vs. plain EDN"}
 
 
 Stand-in Representations in Binary CBOR {#stand-in}
@@ -1150,15 +1235,11 @@ stage of ingestion.
 This specification defines a CBOR Tag for this purpose:
 The Diagnostic Notation Unresolved Application-Extension Tag, tag
 number CPA999 ({{iana-standin}}).
-The content of this tag is an array of two text strings: The
-application-extension identifier, and the (escape-processed) content
-of the single-quoted string.
-<!--
-For example, `dt'1969-07-21T02:56:16Z'` can be provisionally represented as
-`/CPA/ 999(["dt", "1969-07-21T02:56:16Z"])`.
- -->
+The content of this tag is an array of a text string for the
+application-extension identifier, and another array, carrying the zero
+or more content items of the sequence literal given (possibly just the value of the single-quoted string given).
 For example, `cri'https://example.com'` can be provisionally represented as
-`/CPA/ 999(["cri", "https://example.com"])`.
+`/CPA/ 999(["cri", ["https://example.com"]])`.
 
 If a stage of ingestion is not prepared to handle the Unresolved
 Application-Extension Tag, this is an error and processing has to
@@ -1287,8 +1368,6 @@ Implementation note: The ABNF definitions in this section are
 intended to be useful in a Parsing Expression Grammar (PEG) parser
 interpretation (see {{Appendix A
 of -cddl}} for an introduction into PEG).
-{{squash}} briefly discusses implementation considerations for when it is
-desired to integrate some specific ABNF grammars into overall ABNF grammar.
 
 Overall ABNF Definition for Extended Diagnostic Notation {#grammar}
 --------------------------------------------------------
@@ -1298,23 +1377,20 @@ CBOR extended diagnostic notation.
 
 <aside markdown="1">
 
-This ABNF definition treats all single-quoted strings the same,
+This ABNF definition treats all single-quoted string literals the same,
 whether they are unprefixed and constitute byte string literals, or
 prefixed and their content subject to further processing.
 The text string value of the single-quoted strings that goes into that
 further processing is described using separate ABNF definitions in
 {{app-grammars}}; as a convention, the grammar for the content of an
-app-string` with  prefix, say, `p`, is described by an ABNF definition
+app-string with prefix, say, `p`, is described by an ABNF definition
 with the rule name `app-string-p`.
 
 As an implementation note, some implementations may want to integrate
-the parsing and processing of app-string content with the overall
-grammar.
-Such an integrated syntax is not provided with this specification, but
-it can be derived from the overall ABNF definition and the
-prefix-specific app-string ABNF definitions by performing an automated
-transformation; see {{squash}}.
-
+the parsing and processing of app-string content for certain
+application extensions with the overall grammar.
+Example grammars for such integrated parsers are provided with this
+specification in {{integrated-grammars}}.
 </aside>
 
 For simplicity, the internal parsing for the built-in EDN prefixes is
@@ -1356,7 +1432,7 @@ The following additional items should help in the interpretation:
   that input generated or processed on either of these kinds of
   platforms will generate the same bytes in the CBOR data items
   created from that input.
-  (Platforms that use just a CARRIAGE RETURN to signify an end of line
+  (Platforms that use just a CARRIAGE RETURN by itself to signify an end of line
   are no longer relevant and the files they produce are out of scope
   for this document.)
   If a carriage return is needed in the CBOR data item, it can be
@@ -1480,12 +1556,12 @@ The following additional items should help in the interpretation:
       interpreted; see {{unknown}} for how this may not be immediately
       during parsing.)
 
-ABNF Definitions for app-string Content {#app-grammars}
+ABNF Definitions for Application Extension Content {#app-grammars}
 ---------------------------------------
 
 This subsection provides ABNF definitions for the content of
 application-oriented extension literals defined in {{-cbor}} and in this
-specification.
+specification, where applicable.
 These grammars describe the *decoded* content of the `sqstr` components that
 combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
@@ -1505,6 +1581,12 @@ which are not always repeated here.
 | ip         | IP address or prefix            | byte string, <br/>array of length and byte string |
 | IP         | "                               | Tag 54 (IPv6) or 52 (IPv4) on the above           |
 {: #tab-prefixes title="App-prefix Values Defined in this Document"}
+
+Note that implementation platforms may already provide implementations
+of grammars used in application-extensions, such as of RFC 3339 for
+`dt''` and of IP address syntax for `ip''`.
+EDN-based tools may want to use these implementation libraries instead
+of using the grammars that are provided here as a reference.
 
 
 ### h: ABNF Definition of Hexadecimal representation of a byte string {#h-grammar}
@@ -1636,6 +1718,116 @@ uint          = "0" / DIGIT1 *DIGIT
 {: #abnf-grammar-ip sourcecode-name="cbor-edn-ip.abnf"
 title="ABNF Definition of Textual Representation of an IP Address"}
 
+ABNF Definitions for Integrated Extension Parsers {#integrated-grammars}
+-------------------------------------------------
+
+For some applications of EDN, it is an optimization to integrate
+parsers for the content of some prefixed single-quoted string literals into
+the main parser, handling both the string literal syntax (e.g., escapes such
+as `\'` and `\\`) and the syntax of the extension content in one go.
+
+For application-extensions that only use printable ASCII characters
+(from U+0020 to U+007E) minus single-quote `'` and backslash `\`, the ABNF
+such as that given in {{app-grammars}} can be directly used as an
+integrated parser, after adding some glue ABNF.
+For instance, for app-string-dt, add an alternative to `bstr` that
+points to a rule for prefixed single-quoted string literals ({{abnf-grammar-sq-glue}}).
+
+~~~ abnf
+bstr            = sq-app-string-dt /
+                  app-string / sqstr / app-sequence / embedded
+sq-app-string-dt = (%s"dt'"/%s"DT'") app-string-dt "'"
+~~~
+{: #abnf-grammar-sq-glue sourcecode-name="cbor-edn-glue.abnf"
+title="Glue Code for Integrated DT Parser"
+}
+
+To facilitate writing integrated ABNF for more complex prefixed
+string literals, the ABNF definitions in {{abnf-grammar-sq}} may
+be useful and are used in the rest of this section.
+
+~~~ abnf
+i-HT =        %s"\t" / %s"\u" ("0009" / "{" *("0") "9}")
+i-LF = %x0a / %s"\n" / %s"\u" ("000A" / "{" *("0") "A}")
+i-CR = %x0d / %s"\r" / %s"\u" ("000D" / "{" *("0") "D}")
+
+i-blank = i-LF / i-CR / " "
+i-non-lf = i-HT / i-CR / %x20-26 / "\'" / %x28-5b
+         / "\\" / %x5d-7f / i-NONASCII
+
+i-NONASCII = NONASCII / %s"\u" ESCGE7F
+
+; hex escaping for U+007F or greater
+ESCGE7F = "D" ("8"/"9"/"A"/"B") 2HEXDIG
+          %s"\u" "D" ("C"/"D"/"E"/"F") 2HEXDIG
+        / FOURHEX1 / "0" HEXDIG1 2HEXDIG / "00" TWOHEX1
+        / "{" *("0")
+          ("10" 4HEXDIG / HEXDIG1 4HEXDIG
+           / FOURHEX1 / HEXDIG1 2HEXDIG / TWOHEX1)
+          "}"
+
+; xxxx - 0xxx - Dhigh\uDloow
+FOURHEX1 = (DIGIT1 / "A"/"B"/"C" / "E"/"F") 3HEXDIG
+         / "D" ODIGIT 2HEXDIG
+; 00xx - ASCII + 007F
+TWOHEX1  = ("8"/"9" / HEXDIGA) HEXDIG / "7F"
+~~~
+{: #abnf-grammar-sq sourcecode-name="cbor-edn-bricklets.abnf"
+title="ABNF Definitions Useful for Integrated Extension Parsers"}
+
+Two subsections with ABNF for integrated parsers follow, one for `h''`,
+and one for `b64''`.
+There is no requirement for a new application-extension to supply ABNF
+for an integrated parser (or any ABNF at all!), in particular if the
+parsing function is likely to be fulfilled by a platform library.
+If ABNF for the content of a single-quoted string is available in an
+application-extension specification, ABNF for an integrated parser can
+be written as a separate activity or also automatically derived.
+At the time of writing, one example for a tool performing such a
+derivation is available as open-source software {{ABNFROB}}.
+
+### h: ABNF Definition of Integrated Parser {#sq-h-grammar}
+
+With glue code similar to that in {{abnf-grammar-sq-glue}}, ABNF such as
+that shown in {{abnf-grammar-sq-h}} can be used as an integrated parser
+for `h''` prefixed single-quote strings.
+
+~~~ abnf
+sq-app-string-h = %s"h'" app-string-h "'"
+app-string-h = h-S *(HEXDIG h-S HEXDIG h-S / ellipsis h-S)
+    ["#" *(i-non-lf)]
+
+h-S = *(i-blank) *(h-comment *(i-blank))
+h-non-slash = i-blank / %x21-26 / "\'" / %x28-2e
+            / %x30-5b / "\\" / %x5d-7f / i-NONASCII
+h-comment = "/" *(h-non-slash) "/"
+          / "#" *(i-non-lf) i-LF
+~~~
+{: #abnf-grammar-sq-h sourcecode-name="cbor-edn-h.abnf"
+title="ABNF Definition for Integrated Hex Parser"
+}
+
+
+### b64: ABNF Definition of Integrated Parser {#sq-b64-grammar}
+
+With glue code similar to that in {{abnf-grammar-sq-glue}}, ABNF such as
+that shown in {{abnf-grammar-sq-b64}} can be used as an integrated parser
+for `h''` prefixed single-quote strings.
+
+~~~ abnf
+sq-app-string-b64 = %s"b64'" app-string-b64 "'"
+app-string-b64  = b64-S *(4(b64dig b64-S))
+                  [b64dig b64-S b64dig b64-S
+                   ["=" b64-S "=" / b64dig b64-S ["="]] b64-S]
+                  ["#" *i-non-lf]
+b64dig          = ALPHA / DIGIT / "-" / "_" / "+" / "/"
+b64-S           = *i-blank *(b64-comment *i-blank)
+b64-comment     = "#" *i-non-lf %x0A
+~~~
+{: #abnf-grammar-sq-b64 sourcecode-name="cbor-edn-b64.abnf"
+title="ABNF Definition for Integrated Base64 Parser"
+}
+
 
 IANA Considerations {#sec-iana}
 ===================
@@ -1672,8 +1864,9 @@ Each entry in the registry must include:
 {:vspace}
 Application-Extension Identifier:
 : a lower case ASCII {{-ascii}} string that starts with a letter and can
-  contain letters and digits after that (`[a-z][a-z0-9]*`). No other
-  entry in the registry can have the same application-extension identifier.
+  contain letters, digits, and hyphens after that (`[a-z][a-z0-9-]*`).
+  No other entry in the registry can have the same
+  application-extension identifier.
 
 Description:
 : a brief description
@@ -1982,36 +2175,6 @@ Important differences include:
   CDDL:
   : `serialized_map = bytes .cbor header_map`
 
-Integrating Specific ABNF Grammars into the Overall Grammar {#squash}
-================================================================
-
-This appendix is for information.
-
-It discusses an implementation strategy that integrates the parsing
-and processing of certain app-string content into the overall ABNF
-grammar.
-Such an integrated grammar is not provided with this specification,
-but it can be automatically derived from the overall ABNF definition
-and the prefix-specific app-string ABNF definitions (such as those
-provided in {{app-grammars}} or as later extensions).
-
-At the time of writing, one example a tool performing such a
-derivation is available as open-source software {{ABNFROB}}.
-As an extension to the existing tool `abnftt` for converting ABNF
-grammars into PEG parsers, an ABNF processing tool, `abnfrob`, was
-added that can mechanically replace each character in the supplied
-grammar for an app-string definition by the ways that this character
-can be represented in the overall ABNF.
-
-Such an ABNF processing tool can be used while building an EDN tool,
-by converting some of the app-string grammars for integration into the
-overall grammar, combining the processing into a single pass.
-Other app-string grammars (including future ones still to be defined
-and possibly added as a runtime extension) might be kept separate from
-the overall grammar.
-The latter approach can be particularly useful if the platform already
-has parsers for the app-specific grammar, which is quite likely for
-instance for IP addresses (`ip''`) and {{RFC3339}} date/time strings (`dt''`).
 
 Acknowledgements
 ================
