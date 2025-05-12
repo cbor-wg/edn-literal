@@ -131,10 +131,10 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present PR builds on -16 to fully address the WGLC
+    The present -17 is intended to fully address the WGLC
     comments.
     It is intended for use as a reference document for the
-    CBOR WG interim meeting on 2025-04-30.
+    CBOR WG interim meeting on 2025-05-14.
 
 --- middle
 
@@ -2174,6 +2174,9 @@ Important differences include:
 
   CDDL:
   : `serialized_map = bytes .cbor header_map`
+
+
+{::include-all lists.md}
 
 
 Acknowledgements
