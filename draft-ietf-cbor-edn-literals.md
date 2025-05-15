@@ -1239,7 +1239,11 @@ The content of this tag is an array of a text string for the
 application-extension identifier, and another array, carrying the zero
 or more content items of the sequence literal given (possibly just the value of the single-quoted string given).
 For example, `cri'https://example.com'` can be provisionally represented as
-`/CPA/ 999(["cri", ["https://example.com"]])`.
+`/CPA/ 999(["cri", ["https://example.com"]])`, or
+`hash<<"data", -44>>` as `/CPA/ 999(["hash", ["data", -44]])`.
+
+<!-- edn-abnf -fe "cri'https://example.com'" -->
+<!-- edn-abnf -fe 'hash<<"data", -44>>' -->
 
 If a stage of ingestion is not prepared to handle the Unresolved
 Application-Extension Tag, this is an error and processing has to
