@@ -1236,9 +1236,16 @@ This specification defines a CBOR Tag for this purpose:
 The Diagnostic Notation Unresolved Application-Extension Tag, tag
 number CPA999 ({{iana-standin}}).
 The content of this tag is an array of a text string for the
-application-extension identifier, and another array, carrying the zero
-or more content items of the sequence literal given (possibly just the value of the single-quoted string given).
-For example, `cri'https://example.com'` can be provisionally represented as
+application-extension identifier, and another array:
+
+* For app-strings, the second array contains a single item, a text
+string containing the text notated by the single-quoted string in the
+app-string.
+* For app-sequences, the second array contains zero or more items,
+which represent each item in the sequence contained in the
+app-sequence.
+
+For example, `cri'https://example.com'` can be represented as
 `/CPA/ 999(["cri", ["https://example.com"]])`, or
 `hash<<"data", -44>>` as `/CPA/ 999(["hash", ["data", -44]])`.
 
