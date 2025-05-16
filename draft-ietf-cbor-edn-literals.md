@@ -131,10 +131,10 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present PR builds on -16 to fully address the WGLC
+    The present -17 is intended to fully address the WGLC
     comments.
     It is intended for use as a reference document for the
-    CBOR WG interim meeting on 2025-04-30.
+    CBOR WG interim meeting on 2025-05-14.
 
 --- middle
 
@@ -1236,10 +1236,21 @@ This specification defines a CBOR Tag for this purpose:
 The Diagnostic Notation Unresolved Application-Extension Tag, tag
 number CPA999 ({{iana-standin}}).
 The content of this tag is an array of a text string for the
-application-extension identifier, and another array, carrying the zero
-or more content items of the sequence literal given (possibly just the value of the single-quoted string given).
-For example, `cri'https://example.com'` can be provisionally represented as
-`/CPA/ 999(["cri", ["https://example.com"]])`.
+application-extension identifier, and another array:
+
+* For app-strings, the second array contains a single item, a text
+string containing the text notated by the single-quoted string in the
+app-string.
+* For app-sequences, the second array contains zero or more items,
+which represent each item in the sequence contained in the
+app-sequence.
+
+For example, `cri'https://example.com'` can be represented as
+`/CPA/ 999(["cri", ["https://example.com"]])`, or
+`hash<<"data", -44>>` as `/CPA/ 999(["hash", ["data", -44]])`.
+
+<!-- edn-abnf -fe "cri'https://example.com'" -->
+<!-- edn-abnf -fe 'hash<<"data", -44>>' -->
 
 If a stage of ingestion is not prepared to handle the Unresolved
 Application-Extension Tag, this is an error and processing has to
@@ -1970,7 +1981,7 @@ registry {{IANA.media-types}}.
 
 | Name            | Template                    | Reference              |
 | cbor-diagnostic | application/cbor-diagnostic | RFC-XXXX, {{media-type}} |
-{: #new-media-type align="left" title="New Media Type application/cbor-diagnostic"}
+{: #new-media-type title="New Media Type application/cbor-diagnostic"}
 
 {:compact}
 Type name:
@@ -2051,7 +2062,7 @@ Parameters" Registry {{IANA.core-parameters}}, as follows:
 
 | Content-Type                | Content Coding | ID   | Reference |
 | application/cbor-diagnostic | -              | TBD1 | RFC-XXXX  |
-{: align="left" title="New Content-Format"}
+{: #tab-content-format title="New Content-Format for application/cbor-diagnostic"}
 
 TBD1 is to be assigned from the space 256..9999, according to the
 procedure "IETF Review or IESG Approval", preferably a number less
@@ -2174,6 +2185,9 @@ Important differences include:
 
   CDDL:
   : `serialized_map = bytes .cbor header_map`
+
+
+{::include-all lists.md}
 
 
 Acknowledgements

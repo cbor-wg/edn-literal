@@ -1,6 +1,6 @@
 # CBOR Extended Diagnostic Notation (EDN)
 
-This is the working area for the IETF [CBOR Working Group](https://datatracker.ietf.org/wg/cbor/documents/) Internet-Draft, "CBOR Extended Diagnostic Notation (EDN)".
+This is the working area for the IETF [CBOR Working Group](https://datatracker.ietf.org/group/cbor/documents/) Internet-Draft, "CBOR Extended Diagnostic Notation (EDN)".
 
 * [Editor's Copy](https://cbor-wg.github.io/edn-literal/#go.draft-ietf-cbor-edn-literals.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-cbor-edn-literals)
