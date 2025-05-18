@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-13T01:10:17.297350+00:00",
+  "timestamp": "2025-05-18T01:14:18.730541+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -4033,6 +4033,63 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 78,
+      "id": "PR_kwDOGLBEBs6WU9O4",
+      "title": "Add a tag 999 example for an app-seq with two arguments",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/78",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-05-15T13:13:54Z",
+      "updatedAt": "2025-05-16T14:55:22Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "71900b74ed7d51bddcc71dd004df5af4dc7c8b55",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "app-seq-999-example",
+      "headRefOid": "485335dadc155f37ee2715d18b889dcc392421ef",
+      "closedAt": "2025-05-16T14:55:21Z",
+      "mergedAt": "2025-05-16T14:55:21Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "0cdef972c98b25a332d49a10a2a908afa61ebf6d"
+      },
+      "comments": [
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "The 999 text is close.  Can you rework the word \"possibly\" in the sentence before, please?  Declarative would be better:\r\n\r\n```\r\nFor app-strings, the array consists of a single item, a tstr containing the original text from the tag.  For app-sequences, the array consists of multiple items, one each for the original unencoded forms of the items in the sequence.\r\n```\r\n\r\n(when we finish our discussion on the list, this text will need to be tweaked to be more precise, but that's a starting point)",
+          "createdAt": "2025-05-15T15:58:45Z",
+          "updatedAt": "2025-05-15T15:58:45Z"
+        },
+        {
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "body": "+1 to that change.",
+          "createdAt": "2025-05-15T17:17:00Z",
+          "updatedAt": "2025-05-15T17:17:00Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs6psBUv",
+          "commit": {
+            "abbreviatedOid": "485335d"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-16T14:54:07Z",
+          "updatedAt": "2025-05-16T14:54:07Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
