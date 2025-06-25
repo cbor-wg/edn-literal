@@ -170,7 +170,7 @@ Bormann                 Expires 27 December 2025                [Page 3]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  55
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  54
 
 1.  Introduction
 
@@ -2979,36 +2979,32 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 List of Figures
 
-   1.  Overall ABNF Definition of CBOR EDN (Figure 1)
-   2.  ABNF Definition of Hexadecimal Representation of a Byte String
-       (Figure 2)
-   3.  ABNF definition of Base64 Representation of a Byte String
-       (Figure 3)
-   4.  ABNF Definition of RFC3339 Representation of a Date/Time
-       (Figure 4)
-   5.  ABNF Definition of Textual Representation of an IP Address
-       (Figure 5)
-   6.  Glue Code for Integrated DT Parser (Figure 6)
-   7.  ABNF Definitions Useful for Integrated Extension Parsers
-       (Figure 7)
-   8.  ABNF Definition for Integrated Hex Parser (Figure 8)
-   9.  ABNF Definition for Integrated Base64 Parser (Figure 9)
+   Figure 1:  Overall ABNF Definition of CBOR EDN
+   Figure 2:  ABNF Definition of Hexadecimal Representation of a Byte
+              String
+   Figure 3:  ABNF definition of Base64 Representation of a Byte String
+   Figure 4:  ABNF Definition of RFC3339 Representation of a Date/Time
+   Figure 5:  ABNF Definition of Textual Representation of an IP Address
+   Figure 6:  Glue Code for Integrated DT Parser
+   Figure 7:  ABNF Definitions Useful for Integrated Extension Parsers
+   Figure 8:  ABNF Definition for Integrated Hex Parser
+   Figure 9:  ABNF Definition for Integrated Base64 Parser
 
 List of Tables
 
-   1.   Examples of Encoding Indicators for Different Data Items
-        (Table 1)
-   2.   Example Sets of Equivalent Notations for Some Numbers (Table 2)
-   3.   dt and DT literals vs. plain EDN (Table 3)
-   4.   ip and IP literals vs. plain EDN (Table 4)
-   5.   hash literals vs. plain EDN (Table 5)
-   6.   App-prefix Values Defined in this Document (Table 6)
-   7.   Initial Content of Application-extension Identifier Registry
-        (Table 7)
-   8.   Initial Content of Encoding Indicator Registry (Table 8)
-   9.   New Media Type application/cbor-diagnostic (Table 9)
-   10.  New Content-Format for application/cbor-diagnostic (Table 10)
-   11.  Values for Tags (Table 11)
+   Table 1:   Examples of Encoding Indicators for Different Data Items
+              (mt = major type)
+   Table 2:   Example Sets of Equivalent Notations for Some Numbers
+   Table 3:   dt and DT literals vs. plain EDN
+   Table 4:   ip and IP literals vs. plain EDN
+   Table 5:   hash literals vs. plain EDN
+   Table 6:   App-prefix Values Defined in this Document
+   Table 7:   Initial Content of Application-extension Identifier
+              Registry
+   Table 8:   Initial Content of Encoding Indicator Registry
+   Table 9:   New Media Type application/cbor-diagnostic
+   Table 10:  New Content-Format for application/cbor-diagnostic
+   Table 11:  Values for Tags
 
 Acknowledgements
 
@@ -3018,6 +3014,10 @@ Acknowledgements
 
    (TBD)
 
+Author's Address
+
+
+
 
 
 
@@ -3026,8 +3026,6 @@ Bormann                 Expires 27 December 2025               [Page 54]
 Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
-Author's Address
-
    Carsten Bormann
    Universität Bremen TZI
    Postfach 330440
@@ -3035,6 +3033,8 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
+
+
 
 
 
