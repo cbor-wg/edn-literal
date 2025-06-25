@@ -22,22 +22,22 @@ comments.
 It is intended for use as a reference document for the
 CBOR WG interim meeting on 2025-05-14. 
     " name="description">
-<meta content="xml2rfc 3.28.1" name="generator">
+<meta content="xml2rfc 3.29.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-cbor-edn-literals-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.1
-    Python 3.12.10
+  xml2rfc 3.29.0
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
-    lxml 5.3.0
-    platformdirs 4.3.7
+    lxml 5.3.1
+    platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
-    setuptools 70.3.0
+    requests 2.32.4
+    setuptools 80.9.0
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-cbor-edn-literals.xml" rel="alternate" type="application/rfc+xml">
@@ -1057,11 +1057,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CBOR Extended Diagnostic Notation (EDN)</td>
-<td class="right">May 2025</td>
+<td class="right">June 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 17 November 2025</td>
+<td class="center">Expires 27 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1077,12 +1077,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-05-16" class="published">16 May 2025</time>
+<time datetime="2025-06-25" class="published">25 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-11-17">17 November 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-27">27 December 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1145,7 +1145,7 @@ CBOR WG interim meeting on 2025-05-14.</span><a href="#section-abstract-4" class
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1358,10 +1358,16 @@ CBOR WG interim meeting on 2025-05-14.</span><a href="#section-abstract-4" class
             <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-edn-and-cddl" class="internal xref">EDN and CDDL</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-list-of-figures" class="internal xref">List of Figures</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-list-of-tables" class="internal xref">List of Tables</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -3713,6 +3719,11 @@ initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class
               <td class="text-left" rowspan="1" colspan="1">IP Address/Prefix</td>
               <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
             </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">hash</td>
+              <td class="text-left" rowspan="1" colspan="1">Cryptographic Hash</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
           </tbody>
         </table>
 </div>
@@ -4402,19 +4413,97 @@ these with a control operator, which looks very different.<a href="#appendix-A-7
       </ul>
 </section>
 </div>
-<div id="acknowledgements">
+<div id="list-of-figures">
 <section id="appendix-B">
+      <h2 id="name-list-of-figures">
+<a href="#name-list-of-figures" class="section-name selfRef">List of Figures</a>
+      </h2>
+<ol start="1" type="1" class="compact type-1" id="appendix-B-1">
+<li id="appendix-B-1.1">
+          <p id="appendix-B-1.1.1"><span><a href="#abnf-grammar" class="internal xref">Overall ABNF Definition of CBOR EDN</a> (<a href="#abnf-grammar" class="auto internal xref">Figure 1</a>)</span><a href="#appendix-B-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.2">
+          <p id="appendix-B-1.2.1"><span><a href="#abnf-grammar-h" class="internal xref">ABNF Definition of Hexadecimal Representation of a Byte String</a> (<a href="#abnf-grammar-h" class="auto internal xref">Figure 2</a>)</span><a href="#appendix-B-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.3">
+          <p id="appendix-B-1.3.1"><span><a href="#abnf-grammar-b64" class="internal xref">ABNF definition of Base64 Representation of a Byte String</a> (<a href="#abnf-grammar-b64" class="auto internal xref">Figure 3</a>)</span><a href="#appendix-B-1.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.4">
+          <p id="appendix-B-1.4.1"><span><a href="#abnf-grammar-dt" class="internal xref">ABNF Definition of RFC3339 Representation of a Date/Time</a> (<a href="#abnf-grammar-dt" class="auto internal xref">Figure 4</a>)</span><a href="#appendix-B-1.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.5">
+          <p id="appendix-B-1.5.1"><span><a href="#abnf-grammar-ip" class="internal xref">ABNF Definition of Textual Representation of an IP Address</a> (<a href="#abnf-grammar-ip" class="auto internal xref">Figure 5</a>)</span><a href="#appendix-B-1.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.6">
+          <p id="appendix-B-1.6.1"><span><a href="#abnf-grammar-sq-glue" class="internal xref">Glue Code for Integrated DT Parser</a> (<a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 6</a>)</span><a href="#appendix-B-1.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.7">
+          <p id="appendix-B-1.7.1"><span><a href="#abnf-grammar-sq" class="internal xref">ABNF Definitions Useful for Integrated Extension Parsers</a> (<a href="#abnf-grammar-sq" class="auto internal xref">Figure 7</a>)</span><a href="#appendix-B-1.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.8">
+          <p id="appendix-B-1.8.1"><span><a href="#abnf-grammar-sq-h" class="internal xref">ABNF Definition for Integrated Hex Parser</a> (<a href="#abnf-grammar-sq-h" class="auto internal xref">Figure 8</a>)</span><a href="#appendix-B-1.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.9">
+          <p id="appendix-B-1.9.1"><span><a href="#abnf-grammar-sq-b64" class="internal xref">ABNF Definition for Integrated Base64 Parser</a> (<a href="#abnf-grammar-sq-b64" class="auto internal xref">Figure 9</a>)</span><a href="#appendix-B-1.9.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+</section>
+</div>
+<div id="list-of-tables">
+<section id="appendix-C">
+      <h2 id="name-list-of-tables">
+<a href="#name-list-of-tables" class="section-name selfRef">List of Tables</a>
+      </h2>
+<ol start="1" type="1" class="compact type-1" id="appendix-C-1">
+<li id="appendix-C-1.1">
+          <p id="appendix-C-1.1.1"><span><a href="#tab-ei" class="internal xref">Examples of Encoding Indicators for Different Data Items</a> (<a href="#tab-ei" class="auto internal xref">Table 1</a>)</span><a href="#appendix-C-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.2">
+          <p id="appendix-C-1.2.1"><span><a href="#tab-numbers" class="internal xref">Example Sets of Equivalent Notations for Some Numbers</a> (<a href="#tab-numbers" class="auto internal xref">Table 2</a>)</span><a href="#appendix-C-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.3">
+          <p id="appendix-C-1.3.1"><span><a href="#tab-equiv-dt" class="internal xref">dt and DT literals vs. plain EDN</a> (<a href="#tab-equiv-dt" class="auto internal xref">Table 3</a>)</span><a href="#appendix-C-1.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.4">
+          <p id="appendix-C-1.4.1"><span><a href="#tab-equiv-ip" class="internal xref">ip and IP literals vs. plain EDN</a> (<a href="#tab-equiv-ip" class="auto internal xref">Table 4</a>)</span><a href="#appendix-C-1.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.5">
+          <p id="appendix-C-1.5.1"><span><a href="#tab-equiv-hash" class="internal xref">hash literals vs. plain EDN</a> (<a href="#tab-equiv-hash" class="auto internal xref">Table 5</a>)</span><a href="#appendix-C-1.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.6">
+          <p id="appendix-C-1.6.1"><span><a href="#tab-prefixes" class="internal xref">App-prefix Values Defined in this Document</a> (<a href="#tab-prefixes" class="auto internal xref">Table 6</a>)</span><a href="#appendix-C-1.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.7">
+          <p id="appendix-C-1.7.1"><span><a href="#tab-iana" class="internal xref">Initial Content of Application-extension Identifier Registry</a> (<a href="#tab-iana" class="auto internal xref">Table 7</a>)</span><a href="#appendix-C-1.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.8">
+          <p id="appendix-C-1.8.1"><span><a href="#tab-iana-ei" class="internal xref">Initial Content of Encoding Indicator Registry</a> (<a href="#tab-iana-ei" class="auto internal xref">Table 8</a>)</span><a href="#appendix-C-1.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.9">
+          <p id="appendix-C-1.9.1"><span><a href="#new-media-type" class="internal xref">New Media Type application/cbor-diagnostic</a> (<a href="#new-media-type" class="auto internal xref">Table 9</a>)</span><a href="#appendix-C-1.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.10">
+          <p id="appendix-C-1.10.1"><span><a href="#tab-content-format" class="internal xref">New Content-Format for application/cbor-diagnostic</a> (<a href="#tab-content-format" class="auto internal xref">Table 10</a>)</span><a href="#appendix-C-1.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-C-1.11">
+          <p id="appendix-C-1.11.1"><span><a href="#tab-tag-values" class="internal xref">Values for Tags</a> (<a href="#tab-tag-values" class="auto internal xref">Table 11</a>)</span><a href="#appendix-C-1.11.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-D">
       <h2 id="name-acknowledgements">
 <a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-B-1">The concept of application-oriented extensions to diagnostic notation,
+<p id="appendix-D-1">The concept of application-oriented extensions to diagnostic notation,
 as well as the definition for the "dt" extension, were inspired by the
-CoRAL work by Klaus Hartke.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">(TBD)<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+CoRAL work by Klaus Hartke.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-2">(TBD)<a href="#appendix-D-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-C">
+<section id="appendix-E">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>

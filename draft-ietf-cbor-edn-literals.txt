@@ -4,9 +4,9 @@
 
 Network Working Group                                         C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610, 8949 (if approved)                            16 May 2025
+Updates: 8610, 8949 (if approved)                           25 June 2025
 Intended status: Standards Track                                        
-Expires: 17 November 2025
+Expires: 27 December 2025
 
 
                 CBOR Extended Diagnostic Notation (EDN)
@@ -53,9 +53,9 @@ About This Document
 
 
 
-Bormann                 Expires 17 November 2025                [Page 1]
+Bormann                 Expires 27 December 2025                [Page 1]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 Status of This Memo
@@ -73,7 +73,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 November 2025.
+   This Internet-Draft will expire on 27 December 2025.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Bormann                 Expires 17 November 2025                [Page 2]
+Bormann                 Expires 27 December 2025                [Page 2]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
        2.5.3.  Single-Quoted String Literals . . . . . . . . . . . .  15
@@ -159,16 +159,18 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  48
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  51
    Appendix A.  EDN and CDDL . . . . . . . . . . . . . . . . . . . .  52
+   List of Figures . . . . . . . . . . . . . . . . . . . . . . . . .  54
+   List of Tables  . . . . . . . . . . . . . . . . . . . . . . . . .  54
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  54
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  54
 
 
 
-
-Bormann                 Expires 17 November 2025                [Page 3]
+Bormann                 Expires 27 December 2025                [Page 3]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
+
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  55
 
 1.  Introduction
 
@@ -219,11 +221,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-
-
-Bormann                 Expires 17 November 2025                [Page 4]
+Bormann                 Expires 27 December 2025                [Page 4]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    In addition, this document registers a media type identifier and a
@@ -277,9 +277,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025                [Page 5]
+Bormann                 Expires 27 December 2025                [Page 5]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    After introductory material, Section 3 illustrates the concept of
@@ -333,9 +333,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025                [Page 6]
+Bormann                 Expires 27 December 2025                [Page 6]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -389,9 +389,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025                [Page 7]
+Bormann                 Expires 27 December 2025                [Page 7]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 1.3.3.  Basic Output Format
@@ -445,9 +445,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025                [Page 8]
+Bormann                 Expires 27 December 2025                [Page 8]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    Note that diagnostic notation truly was designed as a diagnostic
@@ -501,9 +501,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025                [Page 9]
+Bormann                 Expires 27 December 2025                [Page 9]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    (Section 2.5).  The latter form uses its single-quoted string literal
@@ -557,9 +557,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 10]
+Bormann                 Expires 27 December 2025               [Page 10]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    *  inline comments, delimited by slashes ("/"):
@@ -613,9 +613,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 11]
+Bormann                 Expires 27 December 2025               [Page 11]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    Encoding indicators are placed immediately to the right of the data
@@ -669,9 +669,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 12]
+Bormann                 Expires 27 December 2025               [Page 12]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    The encoding indicator _ is an abbreviation of what would in full
@@ -725,9 +725,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 13]
+Bormann                 Expires 27 December 2025               [Page 13]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    Numbers composed only of digits (of the respective base) are
@@ -781,9 +781,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 14]
+Bormann                 Expires 27 December 2025               [Page 14]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 2.5.  Strings
@@ -837,9 +837,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 15]
+Bormann                 Expires 27 December 2025               [Page 15]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    'hello world'
@@ -893,9 +893,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 16]
+Bormann                 Expires 27 December 2025               [Page 16]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    of the string is provided by the types of the individual chunks,
@@ -949,9 +949,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 17]
+Bormann                 Expires 27 December 2025               [Page 17]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
       h'68656c6c6f20776f726c64'
@@ -1005,9 +1005,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 18]
+Bormann                 Expires 27 December 2025               [Page 18]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 2.5.7.  Validity of Text Strings
@@ -1061,9 +1061,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 19]
+Bormann                 Expires 27 December 2025               [Page 19]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    In addition, EDN also allows, but does not require, a trailing comma
@@ -1117,9 +1117,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 20]
+Bormann                 Expires 27 December 2025               [Page 20]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    For maps, this is relevant for map keys that occur more than once, as
@@ -1173,9 +1173,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 21]
+Bormann                 Expires 27 December 2025               [Page 21]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 3.1.  The "dt" Extension
@@ -1229,9 +1229,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 22]
+Bormann                 Expires 27 December 2025               [Page 22]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    With the lower-case app-string prefix ip, the value of the literal is
@@ -1285,9 +1285,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 23]
+Bormann                 Expires 27 December 2025               [Page 23]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
      +====================+=========================================+
@@ -1341,9 +1341,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 24]
+Bormann                 Expires 27 December 2025               [Page 24]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
           +===============+====================================+
@@ -1397,9 +1397,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 25]
+Bormann                 Expires 27 December 2025               [Page 25]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    processing EDN, it may be useful to fail earlier than at the ultimate
@@ -1453,9 +1453,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 26]
+Bormann                 Expires 27 December 2025               [Page 26]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 4.2.  Handling information deliberately elided from an EDN document
@@ -1509,9 +1509,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 27]
+Bormann                 Expires 27 December 2025               [Page 27]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    [1, 2, 888(null), 3]
@@ -1565,9 +1565,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 28]
+Bormann                 Expires 27 December 2025               [Page 28]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    Implementation note: The ABNF definitions in this section are
@@ -1621,9 +1621,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 29]
+Bormann                 Expires 27 December 2025               [Page 29]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    hexfloat        = [sign] "0x" (1*HEXDIG ["." *HEXDIG] / "." 1*HEXDIG)
@@ -1677,9 +1677,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 30]
+Bormann                 Expires 27 December 2025               [Page 30]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    spec            = ["_" *wordchar]
@@ -1733,9 +1733,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 31]
+Bormann                 Expires 27 December 2025               [Page 31]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    hexscalar-s     = "10" 4HEXDIG / HEXDIG1 4HEXDIG
@@ -1789,9 +1789,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 32]
+Bormann                 Expires 27 December 2025               [Page 32]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    1.  As mentioned in the terminology (Section 1.2), the ABNF terminal
@@ -1845,9 +1845,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 33]
+Bormann                 Expires 27 December 2025               [Page 33]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
        might be written as 2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1)
@@ -1901,9 +1901,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 34]
+Bormann                 Expires 27 December 2025               [Page 34]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
       "Hello world"
@@ -1957,9 +1957,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 35]
+Bormann                 Expires 27 December 2025               [Page 35]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 5.2.  ABNF Definitions for Application Extension Content
@@ -2013,9 +2013,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 36]
+Bormann                 Expires 27 December 2025               [Page 36]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 5.2.1.  h: ABNF Definition of Hexadecimal representation of a byte
@@ -2069,9 +2069,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 37]
+Bormann                 Expires 27 December 2025               [Page 37]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 5.2.3.  dt: ABNF Definition of RFC 3339 Representation of a Date/Time
@@ -2125,9 +2125,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 38]
+Bormann                 Expires 27 December 2025               [Page 38]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    app-string-ip = IPaddress ["/" uint]
@@ -2181,9 +2181,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 39]
+Bormann                 Expires 27 December 2025               [Page 39]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    bstr            = sq-app-string-dt /
@@ -2237,9 +2237,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 40]
+Bormann                 Expires 27 December 2025               [Page 40]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 5.3.1.  h: ABNF Definition of Integrated Parser
@@ -2293,9 +2293,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 41]
+Bormann                 Expires 27 December 2025               [Page 41]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 6.1.  CBOR Diagnostic Notation Application-extension Identifiers
@@ -2349,37 +2349,39 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 42]
+Bormann                 Expires 27 December 2025               [Page 42]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
-   +==================================+===================+===========+
-   | Application-extension Identifier | Description       | Reference |
-   +==================================+===================+===========+
-   | h                                | Reserved          | RFC8949   |
-   +----------------------------------+-------------------+-----------+
-   | b32                              | Reserved          | RFC8949   |
-   +----------------------------------+-------------------+-----------+
-   | h32                              | Reserved          | RFC8949   |
-   +----------------------------------+-------------------+-----------+
-   | b64                              | Reserved          | RFC8949   |
-   +----------------------------------+-------------------+-----------+
-   | false                            | Reserved          | RFC-XXXX  |
-   +----------------------------------+-------------------+-----------+
-   | true                             | Reserved          | RFC-XXXX  |
-   +----------------------------------+-------------------+-----------+
-   | null                             | Reserved          | RFC-XXXX  |
-   +----------------------------------+-------------------+-----------+
-   | undefined                        | Reserved          | RFC-XXXX  |
-   +----------------------------------+-------------------+-----------+
-   | dt                               | Date/Time         | RFC-XXXX  |
-   +----------------------------------+-------------------+-----------+
-   | ip                               | IP Address/Prefix | RFC-XXXX  |
-   +----------------------------------+-------------------+-----------+
+   +==================================+====================+===========+
+   | Application-extension Identifier | Description        | Reference |
+   +==================================+====================+===========+
+   | h                                | Reserved           | RFC8949   |
+   +----------------------------------+--------------------+-----------+
+   | b32                              | Reserved           | RFC8949   |
+   +----------------------------------+--------------------+-----------+
+   | h32                              | Reserved           | RFC8949   |
+   +----------------------------------+--------------------+-----------+
+   | b64                              | Reserved           | RFC8949   |
+   +----------------------------------+--------------------+-----------+
+   | false                            | Reserved           | RFC-XXXX  |
+   +----------------------------------+--------------------+-----------+
+   | true                             | Reserved           | RFC-XXXX  |
+   +----------------------------------+--------------------+-----------+
+   | null                             | Reserved           | RFC-XXXX  |
+   +----------------------------------+--------------------+-----------+
+   | undefined                        | Reserved           | RFC-XXXX  |
+   +----------------------------------+--------------------+-----------+
+   | dt                               | Date/Time          | RFC-XXXX  |
+   +----------------------------------+--------------------+-----------+
+   | ip                               | IP Address/Prefix  | RFC-XXXX  |
+   +----------------------------------+--------------------+-----------+
+   | hash                             | Cryptographic      | RFC-XXXX  |
+   |                                  | Hash               |           |
+   +----------------------------------+--------------------+-----------+
 
-       Table 7: Initial Content of Application-extension Identifier
-                                 Registry
+   Table 7: Initial Content of Application-extension Identifier Registry
 
 6.2.  Encoding Indicators
 
@@ -2403,11 +2405,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-
-
-Bormann                 Expires 17 November 2025               [Page 43]
+Bormann                 Expires 27 December 2025               [Page 43]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
       an ASCII [STD80] string that starts with an underscore letter and
@@ -2461,9 +2461,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 44]
+Bormann                 Expires 27 December 2025               [Page 44]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
           +====================+===================+===========+
@@ -2517,9 +2517,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 45]
+Bormann                 Expires 27 December 2025               [Page 45]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
       +=================+=============================+=============+
@@ -2573,9 +2573,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 46]
+Bormann                 Expires 27 December 2025               [Page 46]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 6.4.  Content-Format
@@ -2629,9 +2629,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 47]
+Bormann                 Expires 27 December 2025               [Page 47]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
 7.  Security considerations
@@ -2685,9 +2685,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 48]
+Bormann                 Expires 27 December 2025               [Page 48]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    [C]        International Organization for Standardization,
@@ -2741,9 +2741,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 49]
+Bormann                 Expires 27 December 2025               [Page 49]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
@@ -2797,9 +2797,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 50]
+Bormann                 Expires 27 December 2025               [Page 50]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    [STD94]    Internet Standard 94,
@@ -2853,9 +2853,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 51]
+Bormann                 Expires 27 December 2025               [Page 51]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    [RFC7493]  Bray, T., Ed., "The I-JSON Message Format", RFC 7493,
@@ -2909,9 +2909,9 @@ Appendix A.  EDN and CDDL
 
 
 
-Bormann                 Expires 17 November 2025               [Page 52]
+Bormann                 Expires 27 December 2025               [Page 52]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
    The two languages share some similarities, not the least because they
@@ -2965,9 +2965,9 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
 
 
-Bormann                 Expires 17 November 2025               [Page 53]
+Bormann                 Expires 27 December 2025               [Page 53]
 
-Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
 
 
       EDN:
@@ -2977,6 +2977,39 @@ Internet-Draft   CBOR Extended Diagnostic Notation (EDN)        May 2025
 
       CDDL:  serialized_map = bytes .cbor header_map
 
+List of Figures
+
+   1.  Overall ABNF Definition of CBOR EDN (Figure 1)
+   2.  ABNF Definition of Hexadecimal Representation of a Byte String
+       (Figure 2)
+   3.  ABNF definition of Base64 Representation of a Byte String
+       (Figure 3)
+   4.  ABNF Definition of RFC3339 Representation of a Date/Time
+       (Figure 4)
+   5.  ABNF Definition of Textual Representation of an IP Address
+       (Figure 5)
+   6.  Glue Code for Integrated DT Parser (Figure 6)
+   7.  ABNF Definitions Useful for Integrated Extension Parsers
+       (Figure 7)
+   8.  ABNF Definition for Integrated Hex Parser (Figure 8)
+   9.  ABNF Definition for Integrated Base64 Parser (Figure 9)
+
+List of Tables
+
+   1.   Examples of Encoding Indicators for Different Data Items
+        (Table 1)
+   2.   Example Sets of Equivalent Notations for Some Numbers (Table 2)
+   3.   dt and DT literals vs. plain EDN (Table 3)
+   4.   ip and IP literals vs. plain EDN (Table 4)
+   5.   hash literals vs. plain EDN (Table 5)
+   6.   App-prefix Values Defined in this Document (Table 6)
+   7.   Initial Content of Application-extension Identifier Registry
+        (Table 7)
+   8.   Initial Content of Encoding Indicator Registry (Table 8)
+   9.   New Media Type application/cbor-diagnostic (Table 9)
+   10.  New Content-Format for application/cbor-diagnostic (Table 10)
+   11.  Values for Tags (Table 11)
+
 Acknowledgements
 
    The concept of application-oriented extensions to diagnostic
@@ -2984,6 +3017,14 @@ Acknowledgements
    inspired by the CoRAL work by Klaus Hartke.
 
    (TBD)
+
+
+
+
+Bormann                 Expires 27 December 2025               [Page 54]
+
+Internet-Draft   CBOR Extended Diagnostic Notation (EDN)       June 2025
+
 
 Author's Address
 
@@ -3021,4 +3062,19 @@ Author's Address
 
 
 
-Bormann                 Expires 17 November 2025               [Page 54]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann                 Expires 27 December 2025               [Page 55]
