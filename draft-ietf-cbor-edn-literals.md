@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2025-01-06
+# date: 2025-06-25
 
 keyword: Internet-Draft
 cat: std
@@ -1893,18 +1893,19 @@ Reference:
 The initial content of the registry is shown in {{tab-iana}}; all
 initial entries have the Change Controller "IETF".
 
-| Application-extension Identifier | Description       | Reference |
-|----------------------------------|-------------------|-----------|
-| h                                | Reserved          | RFC8949   |
-| b32                              | Reserved          | RFC8949   |
-| h32                              | Reserved          | RFC8949   |
-| b64                              | Reserved          | RFC8949   |
-| false                            | Reserved          | RFC-XXXX  |
-| true                             | Reserved          | RFC-XXXX  |
-| null                             | Reserved          | RFC-XXXX  |
-| undefined                        | Reserved          | RFC-XXXX  |
-| dt                               | Date/Time         | RFC-XXXX  |
-| ip                               | IP Address/Prefix | RFC-XXXX  |
+| Application-extension Identifier | Description        | Reference |
+|----------------------------------+--------------------+-----------|
+| h                                | Reserved           | RFC8949   |
+| b32                              | Reserved           | RFC8949   |
+| h32                              | Reserved           | RFC8949   |
+| b64                              | Reserved           | RFC8949   |
+| false                            | Reserved           | RFC-XXXX  |
+| true                             | Reserved           | RFC-XXXX  |
+| null                             | Reserved           | RFC-XXXX  |
+| undefined                        | Reserved           | RFC-XXXX  |
+| dt                               | Date/Time          | RFC-XXXX  |
+| ip                               | IP Address/Prefix  | RFC-XXXX  |
+| hash                             | Cryptographic Hash | RFC-XXXX  |
 {: #tab-iana title="Initial Content of Application-extension
 Identifier Registry"}
 
