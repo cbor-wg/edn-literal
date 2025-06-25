@@ -17,5 +17,5 @@ endif
 
 
 lists.md: draft-ietf-cbor-edn-literals.xml
-	kramdown-rfc-extract-figures-tables $< >$@.new
+	kramdown-rfc-extract-figures-tables -trfc $< >$@.new
 	mv $@.new $@
