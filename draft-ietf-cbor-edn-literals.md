@@ -131,10 +131,10 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present -17 is intended to fully address the WGLC
-    comments.
-    It is intended for use as a reference document for the
-    CBOR WG interim meeting on 2025-05-14.
+    The present `-18` corrects a few omissions from `-17`; it is not
+    intended to make technical changes from `-17`.
+    It is intended for use as an input document for the
+    CBOR WG meeting at IETF 123.
 
 --- middle
 
