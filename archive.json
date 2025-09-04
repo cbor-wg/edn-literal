@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-08T01:13:00.791353+00:00",
+  "timestamp": "2025-09-04T01:02:48.861691+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -988,7 +988,7 @@
       ],
       "body": "Based on a discussion over in COSE:\nWhile we have folding in the h'' and b64'' literals due to their blank space tolerance, we can't fold a simple (single-quoted or double-quoted) string.\n\n```\n{\n  1: \"Asset csystems BATF Blowpipe Soviet South Africa wire transfer. NSA event security Compsec spies benelux Sears Tower airframe red noise. Commecen Steve Case SCUD missile Kosovo quarter bce Bellcore SA\"\n}\n```\n\nThis is a well-known missing feature of JSON that we inherit.\n\nA common way to provide folding within string literals is to escape the newline, e.g.:\n\n```\n{\n  1: \"Asset csystems BATF Blowpipe Soviet South Africa wire transfer. \\\nNSA event security Compsec spies benelux Sears Tower airframe red noise. \\\nCommecen Steve Case SCUD missile Kosovo quarter bce Bellcore SA\"\n}\n```\n\nSwallowing indentation blank space can make this more readable:\n\n```\n{\n  1: \"Asset csystems BATF Blowpipe Soviet South Africa wire transfer. \\\n      NSA event security Compsec spies benelux Sears Tower airframe red noise. \\\n      Commecen Steve Case SCUD missile Kosovo quarter bce Bellcore SA\"\n}\n```\n\n... but can cause problem when a run of horizontal blank space needs to be folded.",
       "createdAt": "2025-04-24T11:05:38Z",
-      "updatedAt": "2025-05-12T19:41:24Z",
+      "updatedAt": "2025-09-02T03:26:02Z",
       "closedAt": "2025-05-12T19:41:22Z",
       "comments": [
         {
@@ -997,6 +997,37 @@
           "body": "It doesn't seem we have a lot of appetite for this addition, probably mainly because of the uncertainty about the best way to handle indentation.\n\nSo the right way to handle this problem in EDN will continue to be\n\n```\n{\n  1: \"Asset csystems BATF Blowpipe Soviet South Africa wire transfer. \" +\n      \"NSA event security Compsec spies benelux Sears Tower airframe red noise. \" +\n      \"Commecen Steve Case SCUD missile Kosovo quarter bce Bellcore SA\"\n}\n```",
           "createdAt": "2025-05-12T19:41:22Z",
           "updatedAt": "2025-05-12T19:41:22Z"
+        },
+        {
+          "author": "cyberphone",
+          "authorAssociation": "NONE",
+          "body": "Millions of JavaScript developers use constructs like this:\n\n```\nlet longLine = \"Hi hjj khh hj hjh hjh j h jhjh jhj keep\\\ntogether\";\n\nconsole.log(longLine);\n```\n'Hi hjj khh hj hjh hjh j h jhjh jhj keeptogether'\n\nIn a CBOR context using embedded auto-generated HTML, it appears quite useful.  PEM-files is also a viable use case.\n\nThe solution in Java is more sophisticated (deals with indentation) but it only works in a new construct called Text-blocks, not in text strings.\n",
+          "createdAt": "2025-09-02T03:26:02Z",
+          "updatedAt": "2025-09-02T03:26:02Z"
+        }
+      ]
+    },
+    {
+      "number": 79,
+      "id": "I_kwDOGLBEBs7JWajY",
+      "title": "Multiple list separator methods - Preferably not",
+      "url": "https://github.com/cbor-wg/edn-literal/issues/79",
+      "state": "OPEN",
+      "author": "cyberphone",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Although dismissed on the mailing-list I believe this topic is important.\nThe rationale for permitting the use of white-space as a separator in arrays and maps appeared to be of two kinds. \n   \n**1. Reduced readability**:\n```\n{\n     \"country\" : \"us\",            / United States /\n     / redacted_claim_keys / simple(59) : [\n         / redacted region /\n         h'0d4b8c6123f287a1698ff2db15764564\n           a976fb742606e8fd00e2140656ba0df3'\n         / redacted postal_code /\n         h'c0b7747f960fc2e201c4d47c64fee141\n           b78e3ab768ce941863dc8914e8f5815f'\n     ]\n}\n```\nUsing comma:\n\n```\n{\n     \"country\" : \"us\",            / United States /\n     / redacted_claim_keys / simple(59) : [\n         / redacted region /\n         h'0d4b8c6123f287a1698ff2db15764564\n           a976fb742606e8fd00e2140656ba0df3',\n         / redacted postal_code /\n         h'c0b7747f960fc2e201c4d47c64fee141\n           b78e3ab768ce941863dc8914e8f5815f'\n     ]\n}\n```\nI don't see a major problem here.\n\n**2. Difficulties creating EDN via scripts**. \nAlthough valid, it should not be a major issue.\n\nArguments for sticking to a comma-only solution:\n- De-facto standard for pretty-printed CBOR\n- Will give future IDE's more problems for automatic syntax analyses\n- Few (any?) precedents \n\n@henkbirkholz \n",
+      "createdAt": "2025-09-03T02:45:29Z",
+      "updatedAt": "2025-09-03T03:49:15Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "CDDL has been using optional commas since 2016. Big relief.\u00a0Sent from\u00a0mobile, sorry for terseOn Sep 3, 2025, at 04:45, Anders Rundgren ***@***.***> wrote:\ufeffcyberphone created an issue (cbor-wg/edn-literal#79)\r\nAlthough dismissed on the mailing-list I believe this topic is important.\r\nThe rationale for permitting the use of white-space as a separator in arrays and maps appeared to be of two kinds.\r\n1. Reduced readability:\r\n{\r\n     \"country\" : \"us\",            / United States /\r\n     / redacted_claim_keys / simple(59) : [\r\n         / redacted region /\r\n         h'0d4b8c6123f287a1698ff2db15764564\r\n           a976fb742606e8fd00e2140656ba0df3'\r\n         / redacted postal_code /\r\n         h'c0b7747f960fc2e201c4d47c64fee141\r\n           b78e3ab768ce941863dc8914e8f5815f'\r\n     ]\r\n}\r\n\r\nUsing comma:\r\n{\r\n     \"country\" : \"us\",            / United States /\r\n     / redacted_claim_keys / simple(59) : [\r\n         / redacted region /\r\n         h'0d4b8c6123f287a1698ff2db15764564\r\n           a976fb742606e8fd00e2140656ba0df3',\r\n         / redacted postal_code /\r\n         h'c0b7747f960fc2e201c4d47c64fee141\r\n           b78e3ab768ce941863dc8914e8f5815f'\r\n     ]\r\n}\r\n\r\nI don't see a major problem here.\r\n2. Difficulties creating EDN via scripts.\r\nAlthough valid, it should not be a major issue.\r\nArguments for sticking to a comma-only solution:\r\n\r\nDe-facto standard for pretty-printed CBOR\r\nWill give future IDE's more problems for automatic syntax analyses\r\nFew (any?) precedents\r\n\r\n@henkbirkholz\r\n\r\n\u2014Reply to this email directly, view it on GitHub, or unsubscribe.You are receiving this because you are subscribed to this thread.Message ID: ***@***.***>",
+          "createdAt": "2025-09-03T03:49:15Z",
+          "updatedAt": "2025-09-03T03:49:15Z"
         }
       ]
     }
