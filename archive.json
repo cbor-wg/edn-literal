@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-04T01:02:48.861691+00:00",
+  "timestamp": "2025-10-16T01:06:14.592784+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -1012,15 +1012,15 @@
       "id": "I_kwDOGLBEBs7JWajY",
       "title": "Multiple list separator methods - Preferably not",
       "url": "https://github.com/cbor-wg/edn-literal/issues/79",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cyberphone",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Although dismissed on the mailing-list I believe this topic is important.\nThe rationale for permitting the use of white-space as a separator in arrays and maps appeared to be of two kinds. \n   \n**1. Reduced readability**:\n```\n{\n     \"country\" : \"us\",            / United States /\n     / redacted_claim_keys / simple(59) : [\n         / redacted region /\n         h'0d4b8c6123f287a1698ff2db15764564\n           a976fb742606e8fd00e2140656ba0df3'\n         / redacted postal_code /\n         h'c0b7747f960fc2e201c4d47c64fee141\n           b78e3ab768ce941863dc8914e8f5815f'\n     ]\n}\n```\nUsing comma:\n\n```\n{\n     \"country\" : \"us\",            / United States /\n     / redacted_claim_keys / simple(59) : [\n         / redacted region /\n         h'0d4b8c6123f287a1698ff2db15764564\n           a976fb742606e8fd00e2140656ba0df3',\n         / redacted postal_code /\n         h'c0b7747f960fc2e201c4d47c64fee141\n           b78e3ab768ce941863dc8914e8f5815f'\n     ]\n}\n```\nI don't see a major problem here.\n\n**2. Difficulties creating EDN via scripts**. \nAlthough valid, it should not be a major issue.\n\nArguments for sticking to a comma-only solution:\n- De-facto standard for pretty-printed CBOR\n- Will give future IDE's more problems for automatic syntax analyses\n- Few (any?) precedents \n\n@henkbirkholz \n",
       "createdAt": "2025-09-03T02:45:29Z",
-      "updatedAt": "2025-09-03T03:49:15Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-15T07:01:19Z",
+      "closedAt": "2025-10-15T07:00:38Z",
       "comments": [
         {
           "author": "cabo",
@@ -1028,6 +1028,13 @@
           "body": "CDDL has been using optional commas since 2016. Big relief.\u00a0Sent from\u00a0mobile, sorry for terseOn Sep 3, 2025, at 04:45, Anders Rundgren ***@***.***> wrote:\ufeffcyberphone created an issue (cbor-wg/edn-literal#79)\r\nAlthough dismissed on the mailing-list I believe this topic is important.\r\nThe rationale for permitting the use of white-space as a separator in arrays and maps appeared to be of two kinds.\r\n1. Reduced readability:\r\n{\r\n     \"country\" : \"us\",            / United States /\r\n     / redacted_claim_keys / simple(59) : [\r\n         / redacted region /\r\n         h'0d4b8c6123f287a1698ff2db15764564\r\n           a976fb742606e8fd00e2140656ba0df3'\r\n         / redacted postal_code /\r\n         h'c0b7747f960fc2e201c4d47c64fee141\r\n           b78e3ab768ce941863dc8914e8f5815f'\r\n     ]\r\n}\r\n\r\nUsing comma:\r\n{\r\n     \"country\" : \"us\",            / United States /\r\n     / redacted_claim_keys / simple(59) : [\r\n         / redacted region /\r\n         h'0d4b8c6123f287a1698ff2db15764564\r\n           a976fb742606e8fd00e2140656ba0df3',\r\n         / redacted postal_code /\r\n         h'c0b7747f960fc2e201c4d47c64fee141\r\n           b78e3ab768ce941863dc8914e8f5815f'\r\n     ]\r\n}\r\n\r\nI don't see a major problem here.\r\n2. Difficulties creating EDN via scripts.\r\nAlthough valid, it should not be a major issue.\r\nArguments for sticking to a comma-only solution:\r\n\r\nDe-facto standard for pretty-printed CBOR\r\nWill give future IDE's more problems for automatic syntax analyses\r\nFew (any?) precedents\r\n\r\n@henkbirkholz\r\n\r\n\u2014Reply to this email directly, view it on GitHub, or unsubscribe.You are receiving this because you are subscribed to this thread.Message ID: ***@***.***>",
           "createdAt": "2025-09-03T03:49:15Z",
           "updatedAt": "2025-09-03T03:49:15Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It seems pretty clear that we do not want to revert the work that has been done on this.",
+          "createdAt": "2025-10-15T07:01:19Z",
+          "updatedAt": "2025-10-15T07:01:19Z"
         }
       ]
     }
@@ -4118,6 +4125,46 @@
           "body": "",
           "createdAt": "2025-05-16T14:54:07Z",
           "updatedAt": "2025-05-16T14:54:07Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 80,
+      "id": "PR_kwDOGLBEBs6t3RPA",
+      "title": "Include CRI definition from draft-ietf-core-href, which overtook",
+      "url": "https://github.com/cbor-wg/edn-literal/pull/80",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-15T11:37:13Z",
+      "updatedAt": "2025-10-15T12:19:07Z",
+      "baseRepository": "cbor-wg/edn-literal",
+      "baseRefName": "main",
+      "baseRefOid": "0a241440393a873e744daf0443b61425004d6c08",
+      "headRepository": "cbor-wg/edn-literal",
+      "headRefName": "include-cri",
+      "headRefOid": "6b5d7376155327d66724e13f030c874ec015a98c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGLBEBs7HFYcX",
+          "commit": {
+            "abbreviatedOid": "6b5d737"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-15T12:19:07Z",
+          "updatedAt": "2025-10-15T12:19:07Z",
           "comments": []
         }
       ]
