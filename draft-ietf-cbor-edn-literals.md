@@ -4,7 +4,7 @@ v: 3
 title: >
   CBOR Extended Diagnostic Notation (EDN)
 docname: draft-ietf-cbor-edn-literals-latest
-# date: 2025-06-25
+# date: 2025-10-16
 
 keyword: Internet-Draft
 cat: std
@@ -133,10 +133,17 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present `-18` corrects a few omissions from `-17`; it is not
-    intended to make technical changes from `-17`.
-    It is intended for use as an input document for the
-    CBOR WG meeting at IETF 123.
+
+    The present `-19` includes the definition of the cri''
+    application-extension.
+    cri'' was previously defined in draft-ietf-core-href; however the
+    latter document overtook the present document in the approval
+    process.
+    As the definition of cri'' is dependent on the present document
+    (and conversely has essentially no dependency on the technical
+    content of draft-ietf-core-href beyond its mere existence), the
+    text (including IANA considerations) has been moved here.
+    `-19` is intended for use at the CBOR WG meeting at IETF 124.
 
 --- middle
 
