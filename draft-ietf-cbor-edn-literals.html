@@ -17,28 +17,34 @@ Appendix G.
 to support text representations of epoch-based dates/times and of IP
 addresses and prefixes. 
        (This cref will be removed by the RFC editor:) 
-The present -17 is intended to fully address the WGLC
-comments.
-It is intended for use as a reference document for the
-CBOR WG interim meeting on 2025-05-14. 
+The present  -19  includes the definition of the cri''
+application-extension.
+cri'' was previously defined in draft-ietf-core-href; however the
+latter document overtook the present document in the approval
+process.
+As the definition of cri'' is dependent on the present document
+(and conversely has essentially no dependency on the technical
+content of draft-ietf-core-href beyond its mere existence), the
+text (including IANA considerations) has been moved here.
+ -19  is intended for use at the CBOR WG meeting at IETF 124. 
     " name="description">
-<meta content="xml2rfc 3.29.0" name="generator">
+<meta content="xml2rfc 3.30.2" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-cbor-edn-literals-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.29.0
+  xml2rfc 3.30.2
     Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
     lxml 5.3.1
-    platformdirs 4.3.8
+    platformdirs 4.4.0
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.4
+    requests 2.32.5
     setuptools 80.9.0
-    wcwidth 0.2.13
+    wcwidth 0.2.14
 -->
 <link href="draft-ietf-cbor-edn-literals.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1057,11 +1063,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CBOR Extended Diagnostic Notation (EDN)</td>
-<td class="right">June 2025</td>
+<td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 27 December 2025</td>
+<td class="center">Expires 19 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1077,12 +1083,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-25" class="published">25 June 2025</time>
+<time datetime="2025-10-16" class="published">16 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-27">27 December 2025</time></dd>
+<dd class="expires"><time datetime="2026-04-19">19 April 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1105,10 +1111,16 @@ Appendix G.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 to support text representations of epoch-based dates/times and of IP
 addresses and prefixes.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 <p id="section-abstract-4"><span class="cref" id="status">(This cref will be removed by the RFC editor:)<br>
-The present -17 is intended to fully address the WGLC
-comments.
-It is intended for use as a reference document for the
-CBOR WG interim meeting on 2025-05-14.</span><a href="#section-abstract-4" class="pilcrow">¶</a></p>
+The present <code>-19</code> includes the definition of the cri''
+application-extension.
+cri'' was previously defined in draft-ietf-core-href; however the
+latter document overtook the present document in the approval
+process.
+As the definition of cri'' is dependent on the present document
+(and conversely has essentially no dependency on the technical
+content of draft-ietf-core-href beyond its mere existence), the
+text (including IANA considerations) has been moved here.
+<code>-19</code> is intended for use at the CBOR WG meeting at IETF 124.</span><a href="#section-abstract-4" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1145,7 +1157,7 @@ CBOR WG interim meeting on 2025-05-14.</span><a href="#section-abstract-4" class
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1271,6 +1283,9 @@ CBOR WG interim meeting on 2025-05-14.</span><a href="#section-abstract-4" class
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-the-hash-extension" class="internal xref">The "hash" Extension</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-the-cri-extension" class="internal xref">The "cri" Extension</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
@@ -1304,6 +1319,9 @@ CBOR WG interim meeting on 2025-05-14.</span><a href="#section-abstract-4" class
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.4">
                     <p id="section-toc.1-1.5.2.2.2.4.1"><a href="#section-5.2.4" class="auto internal xref">5.2.4</a>.  <a href="#name-ip-abnf-definition-of-textu" class="internal xref">ip: ABNF Definition of Textual Representation of an IP Address</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.5">
+                    <p id="section-toc.1-1.5.2.2.2.5.1"><a href="#section-5.2.5" class="auto internal xref">5.2.5</a>.  <a href="#name-cri-abnf-definition-of-uri-" class="internal xref">cri: ABNF Definition of URI Representation of a CRI</a></p>
 </li>
                 </ul>
 </li>
@@ -2666,6 +2684,41 @@ identifier "hash".<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 </div>
 </section>
 </div>
+<div id="cri">
+<section id="section-3.4">
+        <h3 id="name-the-cri-extension">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-the-cri-extension" class="section-name selfRef">The "cri" Extension</a>
+        </h3>
+<p id="section-3.4-1">The
+application-extension identifier "<code>cri</code>" is used to notate
+an EDN literal for a CRI reference as defined in <span>[<a href="#I-D.ietf-core-href" class="cite xref">I-D.ietf-core-href</a>]</span>.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">The text of the literal is a URI Reference as per <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> or an IRI
+Reference as per <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-3">The value of the literal is a CRI reference that can be converted to
+the text of the literal using the procedure of <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-href-25#section-6.1" class="relref">Section 6.1</a> of [<a href="#I-D.ietf-core-href" class="cite xref">I-D.ietf-core-href</a>]</span>.  
+Note that there may be more than one CRI reference that can be
+converted to the URI/IRI reference given; implementations are expected
+to favor the simplest variant available and make non-surprising
+choices otherwise.
+In the all-upper-case variant of the app-prefix, the value is enclosed
+in a tag number CPA99.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+<p id="section-3.4-4">As an example, the CBOR diagnostic notation<a href="#section-3.4-4" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.4-5">
+<pre>
+cri'https://example.com/bottarga/shaved'
+CRI'https://example.com/bottarga/shaved'
+</pre><a href="#section-3.4-5" class="pilcrow">¶</a>
+</div>
+<p id="section-3.4-6">is equivalent to<a href="#section-3.4-6" class="pilcrow">¶</a></p>
+<div class="lang-cbor-diag sourcecode" id="section-3.4-7">
+<pre>
+[-4, ["example", "com"], ["bottarga", "shaved"]]
+CPA99([-4, ["example", "com"], ["bottarga", "shaved"]])
+</pre><a href="#section-3.4-7" class="pilcrow">¶</a>
+</div>
+<p id="section-3.4-8">See <a href="#cri-grammar" class="auto internal xref">Section 5.2.5</a> for an ABNF definition for the content of <code>cri</code> literals.<a href="#section-3.4-8" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="stand-in">
@@ -3458,6 +3511,124 @@ uint          = "0" / DIGIT1 *DIGIT
 </div>
 </section>
 </div>
+<div id="cri-grammar">
+<section id="section-5.2.5">
+          <h4 id="name-cri-abnf-definition-of-uri-">
+<a href="#section-5.2.5" class="section-number selfRef">5.2.5. </a><a href="#name-cri-abnf-definition-of-uri-" class="section-name selfRef">cri: ABNF Definition of URI Representation of a CRI</a>
+          </h4>
+<p id="section-5.2.5-1">It can be expected that implementations of the application-extension
+identifier "<code>cri</code>" will make use of platform-provided URI
+implementations, which will include a URI parser.<a href="#section-5.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.5-2">In case such a URI parser is not available or inconvenient to
+integrate,
+a grammar of the content of <code>cri</code> literals is provided by the
+ABNF for <code>URI-reference</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> with certain
+re-arrangements taken from <a href="#ip-grammar" class="auto internal xref">Section 5.2.4</a>;
+these are reproduced in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 6</a>.
+If the content is not ASCII only (i.e., for IRIs), first apply
+<span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> and apply this grammar to the result.<a href="#section-5.2.5-2" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-uri-repr"></span><div id="abnf-grammar-cri">
+<figure id="figure-6">
+            <div class="breakable lang-abnf sourcecode" id="section-5.2.5-3.1">
+<pre>
+app-string-cri = URI-reference
+; ABNF from RFC 3986:
+
+URI           = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+
+hier-part     = "//" authority path-abempty
+                 / path-absolute
+                 / path-rootless
+                 / path-empty
+
+URI-reference = URI / relative-ref
+
+absolute-URI  = scheme ":" hier-part [ "?" query ]
+
+relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
+
+relative-part = "//" authority path-abempty
+                 / path-absolute
+                 / path-noscheme
+                 / path-empty
+
+scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+
+authority     = [ userinfo "@" ] host [ ":" port ]
+userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+host          = IP-literal / IPv4address / reg-name
+port          = *DIGIT
+
+IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+
+IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+
+; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged
+; for PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+
+IPv6address   =                            6( h16 ":" ) ls32
+              /                       "::" 5( h16 ":" ) ls32
+              / [ h16               ] "::" 4( h16 ":" ) ls32
+              / [ h16 *1( ":" h16 ) ] "::" 3( h16 ":" ) ls32
+              / [ h16 *2( ":" h16 ) ] "::" 2( h16 ":" ) ls32
+              / [ h16 *3( ":" h16 ) ] "::"    h16 ":"   ls32
+              / [ h16 *4( ":" h16 ) ] "::"              ls32
+              / [ h16 *5( ":" h16 ) ] "::"              h16
+              / [ h16 *6( ":" h16 ) ] "::"
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 ":" h16 ) / IPv4address
+IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+dec-octet     = "25" %x30-35         ; 250-255
+              / "2" %x30-34 DIGIT    ; 200-249
+              / "1" 2DIGIT           ; 100-199
+              / %x31-39 DIGIT        ; 10-99
+              / DIGIT                ; 0-9
+ALPHA         = %x41-5a / %x61-7a
+DIGIT         = %x30-39
+HEXDIG        = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+; case insensitive matching, i.e., including lower case
+
+reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+path          = path-abempty    ; begins with "/" or is empty
+                 / path-absolute   ; begins with "/" but not "//"
+                 / path-noscheme   ; begins with a non-colon segment
+                 / path-rootless   ; begins with a segment
+                 / path-empty      ; zero characters
+
+path-abempty  = *( "/" segment )
+path-absolute = "/" [ segment-nz *( "/" segment ) ]
+path-noscheme = segment-nz-nc *( "/" segment )
+path-rootless = segment-nz *( "/" segment )
+path-empty    = 0&lt;pchar&gt;
+
+segment       = *pchar
+segment-nz    = 1*pchar
+segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+                 ; non-zero-length segment without any colon ":"
+
+pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+
+query         = *( pchar / "/" / "?" )
+
+fragment      = *( pchar / "/" / "?" )
+
+pct-encoded   = "%" HEXDIG HEXDIG
+
+unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+reserved      = gen-delims / sub-delims
+gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+sub-delims    = "!" / "$" / "&amp;" / "'" / "(" / ")"
+                 / "*" / "+" / "," / ";" / "="
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-abnf-definition-of-uri-repr" class="selfRef">ABNF Definition of URI Representation of a CRI</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="integrated-grammars">
@@ -3474,9 +3645,9 @@ as <code>\'</code> and <code>\\</code>) and the syntax of the extension content 
 such as that given in <a href="#app-grammars" class="auto internal xref">Section 5.2</a> can be directly used as an
 integrated parser, after adding some glue ABNF.
 For instance, for app-string-dt, add an alternative to <code>bstr</code> that
-points to a rule for prefixed single-quoted string literals (<a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 6</a>).<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+points to a rule for prefixed single-quoted string literals (<a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 7</a>).<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <span id="name-glue-code-for-integrated-dt"></span><div id="abnf-grammar-sq-glue">
-<figure id="figure-6">
+<figure id="figure-7">
           <div class="lang-abnf sourcecode" id="section-5.3-3.1">
 <pre>
 bstr            = sq-app-string-dt /
@@ -3484,15 +3655,15 @@ bstr            = sq-app-string-dt /
 sq-app-string-dt = (%s"dt'"/%s"DT'") app-string-dt "'"
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-glue-code-for-integrated-dt" class="selfRef">Glue Code for Integrated DT Parser</a>
           </figcaption></figure>
 </div>
 <p id="section-5.3-4">To facilitate writing integrated ABNF for more complex prefixed
-string literals, the ABNF definitions in <a href="#abnf-grammar-sq" class="auto internal xref">Figure 7</a> may
+string literals, the ABNF definitions in <a href="#abnf-grammar-sq" class="auto internal xref">Figure 8</a> may
 be useful and are used in the rest of this section.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
 <span id="name-abnf-definitions-useful-for"></span><div id="abnf-grammar-sq">
-<figure id="figure-7">
+<figure id="figure-8">
           <div class="lang-abnf sourcecode" id="section-5.3-5.1">
 <pre>
 i-HT =        %s"\t" / %s"\u" ("0009" / "{" *("0") "9}")
@@ -3521,7 +3692,7 @@ FOURHEX1 = (DIGIT1 / "A"/"B"/"C" / "E"/"F") 3HEXDIG
 TWOHEX1  = ("8"/"9" / HEXDIGA) HEXDIG / "7F"
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-abnf-definitions-useful-for" class="selfRef">ABNF Definitions Useful for Integrated Extension Parsers</a>
           </figcaption></figure>
 </div>
@@ -3540,11 +3711,11 @@ derivation is available as open-source software <span>[<a href="#ABNFROB" class=
           <h4 id="name-h-abnf-definition-of-integr">
 <a href="#section-5.3.1" class="section-number selfRef">5.3.1. </a><a href="#name-h-abnf-definition-of-integr" class="section-name selfRef">h: ABNF Definition of Integrated Parser</a>
           </h4>
-<p id="section-5.3.1-1">With glue code similar to that in <a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 6</a>, ABNF such as
-that shown in <a href="#abnf-grammar-sq-h" class="auto internal xref">Figure 8</a> can be used as an integrated parser
+<p id="section-5.3.1-1">With glue code similar to that in <a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 7</a>, ABNF such as
+that shown in <a href="#abnf-grammar-sq-h" class="auto internal xref">Figure 9</a> can be used as an integrated parser
 for <code>h''</code> prefixed single-quote strings.<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-definition-for-integra"></span><div id="abnf-grammar-sq-h">
-<figure id="figure-8">
+<figure id="figure-9">
             <div class="lang-abnf sourcecode" id="section-5.3.1-2.1">
 <pre>
 sq-app-string-h = %s"h'" app-string-h "'"
@@ -3558,7 +3729,7 @@ h-comment = "/" *(h-non-slash) "/"
           / "#" *(i-non-lf) i-LF
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-abnf-definition-for-integra" class="selfRef">ABNF Definition for Integrated Hex Parser</a>
             </figcaption></figure>
 </div>
@@ -3569,11 +3740,11 @@ h-comment = "/" *(h-non-slash) "/"
           <h4 id="name-b64-abnf-definition-of-inte">
 <a href="#section-5.3.2" class="section-number selfRef">5.3.2. </a><a href="#name-b64-abnf-definition-of-inte" class="section-name selfRef">b64: ABNF Definition of Integrated Parser</a>
           </h4>
-<p id="section-5.3.2-1">With glue code similar to that in <a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 6</a>, ABNF such as
-that shown in <a href="#abnf-grammar-sq-b64" class="auto internal xref">Figure 9</a> can be used as an integrated parser
+<p id="section-5.3.2-1">With glue code similar to that in <a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 7</a>, ABNF such as
+that shown in <a href="#abnf-grammar-sq-b64" class="auto internal xref">Figure 10</a> can be used as an integrated parser
 for <code>h''</code> prefixed single-quote strings.<a href="#section-5.3.2-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-definition-for-integrat"></span><div id="abnf-grammar-sq-b64">
-<figure id="figure-9">
+<figure id="figure-10">
             <div class="lang-abnf sourcecode" id="section-5.3.2-2.1">
 <pre>
 sq-app-string-b64 = %s"b64'" app-string-b64 "'"
@@ -3586,7 +3757,7 @@ b64-S           = *i-blank *(b64-comment *i-blank)
 b64-comment     = "#" *i-non-lf %x0A
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-abnf-definition-for-integrat" class="selfRef">ABNF Definition for Integrated Base64 Parser</a>
             </figcaption></figure>
 </div>
@@ -3723,6 +3894,12 @@ initial entries have the Change Controller "IETF".<a href="#section-6.1-5" class
               <td class="text-left" rowspan="1" colspan="1">hash</td>
               <td class="text-left" rowspan="1" colspan="1">Cryptographic Hash</td>
               <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">cri</td>
+              <td class="text-left" rowspan="1" colspan="1">Constrained Resource Identifier</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX, <span>[<a href="#I-D.ietf-core-href" class="cite xref">I-D.ietf-core-href</a>]</span>
+</td>
             </tr>
           </tbody>
         </table>
@@ -4097,13 +4274,13 @@ specification reference.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 application-extension identifiers (<a href="#appext-iana" class="auto internal xref">Section 6.1</a>) and encoding
 indicators (<a href="#reg-ei" class="auto internal xref">Section 6.2</a>).
 Extensions introduced this way can have their own security
-considerations (see, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01#section-5" class="relref">Section 5</a> of [<a href="#I-D.ietf-cbor-edn-e-ref" class="cite xref">I-D.ietf-cbor-edn-e-ref</a>]</span>).
+considerations (see, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02#section-5" class="relref">Section 5</a> of [<a href="#I-D.ietf-cbor-edn-e-ref" class="cite xref">I-D.ietf-cbor-edn-e-ref</a>]</span>).
 When implementing tools that support the use of EDN extensions, the
 implementer needs to be careful not to inadvertently introduce a
 vector for an attacker to invoke extensions not planned for by the
 tool operator, who might not have considered security considerations
 of specific extensions such as those posed by their use of
-dereferenceable identifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-05#section-6" class="relref">Section 6</a> of [<a href="#I-D.bormann-t2trg-deref-id" class="cite xref">I-D.bormann-t2trg-deref-id</a>]</span>).
+dereferenceable identifiers (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-06#section-6" class="relref">Section 6</a> of [<a href="#I-D.bormann-t2trg-deref-id" class="cite xref">I-D.bormann-t2trg-deref-id</a>]</span>).
 For instance, tools might require explicitly enabling the use of each
 extension that is not on an allowlist.
 This task can possibly be
@@ -4152,6 +4329,10 @@ The standard is widely known as C23. Its technical content is also available via
 The standard is widely known as C++23. Its technical content is also available via <a href="https://open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf">https://open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf</a>.</span>
           </dd>
 <dd class="break"></dd>
+<dt id="I-D.ietf-core-href">[I-D.ietf-core-href]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Constrained Resource Identifiers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-href-25</span>, <time datetime="2025-09-27" class="refDate">27 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-href-25">https://datatracker.ietf.org/doc/html/draft-ietf-core-href-25</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="IANA.cbor-tags">[IANA.cbor-tags]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Tags"</span>, <span>&lt;<a href="https://www.iana.org/assignments/cbor-tags">https://www.iana.org/assignments/cbor-tags</a>&gt;</span>. </dd>
@@ -4179,6 +4360,10 @@ The standard is widely known as C++23. Its technical content is also available v
 <dt id="RFC3986">[RFC3986]</dt>
         <dd>
 <span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3987">[RFC3987]</dt>
+        <dd>
+<span class="refAuthor">Duerst, M.</span> and <span class="refAuthor">M. Suignard</span>, <span class="refTitle">"Internationalized Resource Identifiers (IRIs)"</span>, <span class="seriesInfo">RFC 3987</span>, <span class="seriesInfo">DOI 10.17487/RFC3987</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3987">https://www.rfc-editor.org/rfc/rfc3987</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7405">[RFC7405]</dt>
         <dd>
@@ -4243,15 +4428,15 @@ The standard is widely known as C++23. Its technical content is also available v
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-numbers">[I-D.bormann-cbor-numbers]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"On Numbers in CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-numbers-01</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-numbers-01">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-numbers-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"On Numbers in CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-numbers-02</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-numbers-02">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-numbers-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-t2trg-deref-id">[I-D.bormann-t2trg-deref-id]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">C. Amsüss</span>, <span class="refTitle">"The "dereferenceable identifier" pattern"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-t2trg-deref-id-05</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-05">https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-05</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">C. Amsüss</span>, <span class="refTitle">"The "dereferenceable identifier" pattern"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-t2trg-deref-id-06</span>, <time datetime="2025-08-30" class="refDate">30 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-06">https://datatracker.ietf.org/doc/html/draft-bormann-t2trg-deref-id-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-e-ref">[I-D.ietf-cbor-edn-e-ref]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-01</span>, <time datetime="2024-12-29" class="refDate">29 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-02</span>, <time datetime="2025-07-02" class="refDate">2 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-update-8610-grammar">[I-D.ietf-cbor-update-8610-grammar]</dt>
         <dd>
@@ -4450,27 +4635,33 @@ these with a control operator, which looks very different.<a href="#appendix-A-7
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-B-1.11">
-<a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 6</a>:</dt>
+<a href="#abnf-grammar-cri" class="auto internal xref">Figure 6</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-B-1.12">
-          <p id="appendix-B-1.12.1"><a href="#abnf-grammar-sq-glue" class="internal xref">Glue Code for Integrated DT Parser</a><a href="#appendix-B-1.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-1.12.1"><a href="#abnf-grammar-cri" class="internal xref">ABNF Definition of URI Representation of a CRI</a><a href="#appendix-B-1.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-B-1.13">
-<a href="#abnf-grammar-sq" class="auto internal xref">Figure 7</a>:</dt>
+<a href="#abnf-grammar-sq-glue" class="auto internal xref">Figure 7</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-B-1.14">
-          <p id="appendix-B-1.14.1"><a href="#abnf-grammar-sq" class="internal xref">ABNF Definitions Useful for Integrated Extension Parsers</a><a href="#appendix-B-1.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-1.14.1"><a href="#abnf-grammar-sq-glue" class="internal xref">Glue Code for Integrated DT Parser</a><a href="#appendix-B-1.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-B-1.15">
-<a href="#abnf-grammar-sq-h" class="auto internal xref">Figure 8</a>:</dt>
+<a href="#abnf-grammar-sq" class="auto internal xref">Figure 8</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-B-1.16">
-          <p id="appendix-B-1.16.1"><a href="#abnf-grammar-sq-h" class="internal xref">ABNF Definition for Integrated Hex Parser</a><a href="#appendix-B-1.16.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-1.16.1"><a href="#abnf-grammar-sq" class="internal xref">ABNF Definitions Useful for Integrated Extension Parsers</a><a href="#appendix-B-1.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-B-1.17">
-<a href="#abnf-grammar-sq-b64" class="auto internal xref">Figure 9</a>:</dt>
+<a href="#abnf-grammar-sq-h" class="auto internal xref">Figure 9</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-B-1.18">
-          <p id="appendix-B-1.18.1"><a href="#abnf-grammar-sq-b64" class="internal xref">ABNF Definition for Integrated Base64 Parser</a><a href="#appendix-B-1.18.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-1.18.1"><a href="#abnf-grammar-sq-h" class="internal xref">ABNF Definition for Integrated Hex Parser</a><a href="#appendix-B-1.18.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-B-1.19">
+<a href="#abnf-grammar-sq-b64" class="auto internal xref">Figure 10</a>:</dt>
+        <dd style="margin-left: 5.5em" id="appendix-B-1.20">
+          <p id="appendix-B-1.20.1"><a href="#abnf-grammar-sq-b64" class="internal xref">ABNF Definition for Integrated Base64 Parser</a><a href="#appendix-B-1.20.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
