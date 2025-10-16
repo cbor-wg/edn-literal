@@ -133,7 +133,6 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-
     The present `-19` includes the definition of the cri''
     application-extension.
     cri'' was previously defined in draft-ietf-core-href; however the
