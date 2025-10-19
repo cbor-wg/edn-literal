@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-16T01:06:14.592784+00:00",
+  "timestamp": "2025-10-19T01:13:57.697996+00:00",
   "repo": "cbor-wg/edn-literal",
   "labels": [
     {
@@ -4134,24 +4134,26 @@
       "id": "PR_kwDOGLBEBs6t3RPA",
       "title": "Include CRI definition from draft-ietf-core-href, which overtook",
       "url": "https://github.com/cbor-wg/edn-literal/pull/80",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-10-15T11:37:13Z",
-      "updatedAt": "2025-10-15T12:19:07Z",
+      "updatedAt": "2025-10-16T13:35:28Z",
       "baseRepository": "cbor-wg/edn-literal",
       "baseRefName": "main",
       "baseRefOid": "0a241440393a873e744daf0443b61425004d6c08",
       "headRepository": "cbor-wg/edn-literal",
       "headRefName": "include-cri",
-      "headRefOid": "6b5d7376155327d66724e13f030c874ec015a98c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "40c4c34d46e481e9930bf3a299af32644601a402",
+      "closedAt": "2025-10-16T13:35:27Z",
+      "mergedAt": "2025-10-16T13:35:27Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "4c61dca0b58611d179ce54becb0e1546a74fc390"
+      },
       "comments": [],
       "reviews": [
         {
