@@ -116,6 +116,9 @@ informative:
   ABNFROB:
     target: https://github.com/cabo/abnftt
     title: PEG-parsing using ABNF grammars (via treetop)
+  EDN-WIKI:
+    target: https://github.com/cbor-wg/edn/wiki
+    title: EDN Wiki
 
 --- abstract
 
@@ -135,10 +138,13 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present `-22` is intended to present a complete specification that
-    can be used to confirm the results of the 2026-04-01 CBOR interim.
-    This includes extending inline comments to encompass C-style
-    comments, and end-of-line comments to encompass C++-style comments.
+    The present `-23` is intended as reference material during the
+    2026-04-29 CBOR interim,
+    a complete specification that reacts to discussion on previous
+    draft revisions and that can be used to confirm the results in a WGLC.
+    Among other concerns, the discussion revealed that some additional
+    editorial content was required; the attempt was to address this need
+    without making technical changes.
 
 --- middle
 
@@ -257,7 +263,7 @@ and References ({{<sec-normative-references}}, {{<sec-informative-references}}).
 An informational comparison of EDN with CDDL follows in
 {{edn-and-cddl}}.
 
-## Terminology
+## Terminology and Conventions {#terminology}
 
 {{Section 8 of RFC8949@-cbor}} defines the original CBOR diagnostic notation,
 and {{Appendix G of -cddl}} supplies a number of extensions to the
@@ -294,6 +300,23 @@ definition language defined in
 {{-controls}} and {{-cddlupd}}).
 Additional information about the relationship between the two
 languages EDN and CDDL is captured in {{edn-and-cddl}}.
+
+Examples sometimes need to be quoted in the text, in particular in
+cases where the typewriter font used for example text cannot be
+distinguished in the plaintext rendition of this document.
+ASCII quotes, however, are already taken: `true`, `"true"`, `'true'`,
+and `` `true` `` are all different literals in EDN and should not be
+confused.
+Therefore, a different quoting convention as in »`true`« or »`"true"`«
+is used for examples in the text where this is needed to remain
+unambiguous.
+
+<!-- text adapted from RFC 9581 -->
+Superscript notation denotes exponentiation.
+For example, 2 to the power of 64+1 is notated: 2<sup>64+1</sup>.
+In the plain-text rendition of this specification, superscript
+notation is not available and exponentiation is therefore rendered by
+the surrogate notation seen here in the plain-text rendition.
 
 {::boilerplate bcp14-tagged-bcp14}
 
@@ -338,14 +361,14 @@ to convert EDN to binary CBOR and back to EDN while achieving exactly
 the same result as the original input EDN — the original EDN possibly
 was created by humans or by a different EDN generator.
 
-### Basic Output Format
+### Basic Output Format {#basic}
 
 However, there is a certain expectation that EDN generators can be
 configured to some basic output format, which:
 
 * looks like JSON where that is possible;
 * inserts encoding indicators only where the binary form differs from
-  preferred serialization;
+  Preferred Serialization ({{Section 4.1 of RFC8949@-cbor}});
 * uses hexadecimal representation (`h''`) for byte strings, not
   `b64''` or embedded CBOR (`<<>>`);
 * does not generate elaborate blank space (newlines, indentation) for
@@ -424,6 +447,9 @@ types.
 Any additional detailed syntax discussion needed has been deferred to
 {{grammar}}.
 
+Additional information about implementation and use of EDN is
+continuously being collected by the community in {{EDN-WIKI}}.
+
 ## Application-Oriented Extension Literals {#app-lit}
 
 EDN provides _literals_ that represent CBOR data items textually.
@@ -436,7 +462,7 @@ application-oriented extension, immediately followed by a sequence
 literal ({{embedded}}) or a single-quoted or raw string literal ({{strings}}).
 The latter form uses its string literal as a shorthand
 form for a sequence literal representing a sequence with exactly that
-one string data item.
+one text string data item.
 
 {:aside}
 > This notation is generalized from
@@ -451,23 +477,43 @@ base64url).
 The present specification allows registering additional names for this namespace,
 which it calls *application-extension identifiers*.
 
-More precisely, an *application-extension identifier* is a name consisting of a
+More precisely, an *application-extension identifier* is a registered name consisting of a
 lower-case ASCII letter (`[a-z]`) and zero or more additional ASCII
 characters that are either lower-case letters, digits, or hyphens (`[a-z0-9-]`).
 »false«, »true«, »null«, and »undefined« cannot be used as such
 identifiers and are reserved.
 
-Application-extension identifiers are registered in a registry
+Application-extension identifiers are registered in the "Application-Extension Identifiers" registry
 ({{appext-iana}}).
 
 An application-extension (such as `dt`) MAY also define the meaning of
-a variant prefix derived from its application-extension identifier by
+one additional prefix derived from its application-extension identifier by
 replacing each lower-case character by its upper-case counterpart (such
 as `DT`).
-As a convention for such definitions, using the all-uppercase variant
-implies making use of a tag appropriate for this application-oriented
-extension (such as tag number 1 for `DT`, where `dt` stands for the
-unwrapped number).
+As a convention, using the all-uppercase variant implies making use of
+a CBOR tag appropriate for this application-oriented extension (such
+as tag number 1 for `DT`, where in contrast the prefix `dt` stands for
+the unwrapped tag content).
+
+In summary, an application-extension identifier gives rise to one or two
+application-extension prefixes, one that is lexically identical to the
+identifier (i.e., all lowercase), and potentially another one that is an
+all-uppercase variation of it.
+In addition to specifying which of these two variations exhibits which
+specific semantics, the application extension specifies what input the
+extension takes.
+
+When the prefix is used immediately in front of a single-quoted or a raw
+string, the input takes the form of a single text string CBOR data
+item.
+When used immediately in front of a sequence literal, the input is a
+CBOR sequence of elements of the sequence literal as input.
+The application extension can provide behavior that depends on the
+number of items supplied as input to it and their data types; it
+cannot distinguish between its prefix being used with a single-quoted
+string, a raw string, or a CBOR sequence composed of a single text
+string data item (as illustrated for instance in Tables {{<tab-equiv-dt}},
+{{<tab-equiv-ip}}, and {{<tab-equiv-hash}}).
 
 This specification defines a number of generally applicable
 application-oriented extensions ({{app-ext}}), both to motivate
@@ -477,8 +523,8 @@ concept.
 Of these, the application-oriented extensions `h`, `b64`, `dt` and `ip` are
 intended to be mandatory to implement.
 (As mentioned, for simplicity we use the term "application-oriented
-extensions" for that specific mechanism even if it is used to describe
-a part of base EDN.)
+extensions" for the mechanism discussed in this section even if it is
+used to describe a part of base EDN.)
 
 ## Comments {#comments}
 
@@ -490,12 +536,11 @@ EDN now provides two comment syntaxes, which can be used where the
 syntax allows blank space (outside of constructs such as numbers,
 string literals, etc.):
 
-
 * inline comments, delimited by slashes ("`/`") or by C-style "`/*`"
   and "`*/`":
 
   In a position that allows blank space, each of the following is
-  considered blank space (and thus effectively a comment:
+  considered blank space (and thus effectively a comment):
 
     * any text that starts with a slash followed by a character that is not a
       star or a slash, up to another slash, or
@@ -530,7 +575,22 @@ the use of inline and end-of-line comments:
 }
 ~~~
 
-This reduces to `{1: 4, 3: 5, -1: h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}`.
+This reduces to `{1: 4, 3: 5, -1:
+h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}`.
+
+{:aside}
+>
+Note that application-oriented extensions can define their own
+internal comment syntaxes for text inside strings, which may or may
+not mimic the overall comment syntax of EDN.
+The h'' syntax ({{h-grammar}}), which the framework for application-oriented
+extensions was designed to include as an instance, provides an
+equivalent to the overall comment syntax inside its text strings.
+Similarly, b64'' ({{b64-grammar}}) provides a subset of that limited to
+"`#`" end-of-line comments (the slash character "`/`" is used in the
+alphabet in classic base64 encoding).
+None of the other application-oriented extensions supplied in this
+specification provides for such a kind of internal comment syntax.
 
 ### Discussion
 
@@ -543,11 +603,11 @@ restricts slash-delimited comments that were allowed in {{Section G.6 of RFC8610
   (Note that "`//`" still can be used in what is visually "within" a
   slash-delimited comment; its first slash actually ends the current comment and
   the second slash starts a new one.)
-* EDN now enables the use of C-style inline comments; e.g., "`/*foo/`"
+* EDN now enables the use of C-style inline comments: for instance, "`/*foo/`"
   was a complete comment in {{Section G.6 of RFC8610}} and now is the beginning of a
   C-style comment that goes on up to a "`*/`".
 
-The introduction of C-style inline comments for instance enables a
+As an example, the introduction of C-style inline comments enables a
 comment explaining a COSE algorithm identifier, as in
 
 ~~~ cbor-diag
@@ -567,11 +627,6 @@ several alternative representations were actually used; for example, a
 data item written »1.5« by a diagnostic decoder might have been
 encoded as a half-, single-, or double-precision float.
 
-The convention for encoding indicators is that anything starting with
-an underscore and all immediately following characters that are alphanumeric or
-underscore is an encoding indicator, and can be ignored by anyone not
-interested in this information.  For example, `_` or `_3`.
-
 Encoding indicators are always optional:
 EDN is usually used to describe CBOR data items at the data model
 level.
@@ -581,17 +636,41 @@ Implementations of EDN generally do not need to provide this
 functionality in full; if they do, they can be called "diagnostic
 implementations".
 To be able to process EDN that contains encoding indicators,
-EDN-consuming implementation MUST accept them (i.e., process or
-ignore the presence of each encoding indicator).
+an EDN-consuming implementation MUST accept them (i.e., process or
+ignore the presence or absence of each encoding indicator).
 (Ignoring them could be compared to a generic CBOR decoder ignoring
 the presence of the serialization variants it encounters.)
 It is RECOMMENDED to by default provide a warning for each encoding
 indicator value that is encountered but not further processed.
 
+When creating EDN as input for a diagnostic CBOR encoder in order to
+obtain specific encoding choices, encoding indicators may be placed
+manually or by the software generating the EDN.
+Where no encoding indicator is placed, a diagnostic CBOR encoder is expected to
+generate Preferred Serialization ({{Section 4.1 of RFC8949@-cbor}}) with
+definite length encoding only.
+Similarly, when using EDN as output for a diagnostic CBOR decoder, a
+basic diagnostic configuration of the tool is expected to provide
+encoding indicators only in places where the CBOR input did not use
+Preferred Serialization with definite length encoding (see also
+{{basic}}).
+Diagnostic implementations of EDN that process encoding indicators as
+discussed here are expected to document their diagnostic behavior and
+the processing options that can be selected.
+
+### Syntax, Semantics, Examples
+
+Encoding indicators start with
+an underscore and comprise all immediately following characters that are alphanumeric or
+underscore.
+For example, `_` or `_3`.
+Encoding indicators can be ignored by anyone not
+interested in this information.
+
 Encoding indicators are placed immediately to the right of the data
 item or of a syntactic feature that can stand for the data item the
 encoding of which the encoding indicator is controlling.
-{{tab-ei}} provides examples for encoding indicators used with various
+{{tab-ei}} provides examples for data items with encoding indicators used with various
 kinds of data items.
 
 | mt | examples                |
@@ -618,37 +697,45 @@ encoding is used.)
 
 An underscore followed by a decimal digit `n` indicates that the
 preceding item (or, for arrays and maps, the item starting with the
-preceding bracket or brace) was encoded with an additional information
+preceding bracket or brace) was or is to be encoded with an additional information
 value of `ai=`24+`n`.  For example, `1.5_1` is a half-precision floating-point
 number (2<sup>1</sup> = 2 additional bytes or 16 bits), while `1.5_3` is encoded as
 double precision (2<sup>3</sup> = 8 additional bytes or 64 bits).
-<!--
-This encoding
-indicator is not shown in {{examples}}.
- -->
+For a tool consuming EDN in a diagnostic mode, encountering an
+encoding indicator that does not provide enough space to correctly
+encode the unchanged data item given is an error; there is no
+truncation or rounding that would change the data item encoded.
 
-The encoding indicator `_` is an abbreviation of what would in full
-form be `_7`, which is not used.
-Therefore, an underscore `_` on its own stands for indefinite length
-encoding (`ai=31`).
-(Note that this encoding indicator is only available behind the opening
+{:aside}
+>
+Truncation or rounding semantics imply performing changes at the data
+model level, which is outside the scope of encoding indicators.
+Such operations can be provided by application extensions.
+
+The encoding indicator `_` (an underscore on its own) is used to
+indicate indefinite length encoding.
+Indefinite length encoding uses `ai=31`, which could have been
+indicated by `_7`, which is therefore not used and marked as reserved
+(as are `_4`, `_5`, and `_6`, which would stand for `ai=28` to
+`ai=30`, values currently not in use in CBOR; these encoding
+indicators will be available if and when CBOR is extended to make use
+of them).
+
+Note that the encoding indicator `_` is only available behind the opening
 brace/bracket for `map` and `array` ({{ei-container}}): strings have a special syntax
 `streamstring` for indefinite length encoding except for the special
-cases `''_` and `""_` ({{ei-string}}).)
+cases `''_` and `""_` ({{ei-string}}).
 
 The encoding indicators `_0` to `_3` can be used to indicate `ai=24`
 to `ai=27`, respectively; they therefore stand for 1, 2, 4, and 8
 bytes of additional information (ai) following the initial byte in the
 head of the data item.
-(The abbreviation of `_7` into `_` was discussed above.
-`_4` to `_6` are not currently used in CBOR, but will be available if
-and when CBOR is extended to make use of `ai=28` to `ai=30`.)
 
 Surprisingly, {{Section 8.1 of RFC8949@-cbor}} does not address `ai=0` to
-`ai=23` — the assumption seems to have been that preferred serialization
+`ai=23` — the assumption seems to have been that Preferred Serialization
 ({{Section 4.1 of RFC8949@-cbor}}) will be used when converting CBOR
 diagnostic notation to an encoded CBOR data item, so leaving out the
-encoding indicator for a data item with a preferred serialization
+encoding indicator for a data item with a Preferred Serialization
 will implicitly use `ai=0` to `ai=23` if that is possible.
 The present specification allows making this explicit:
 
@@ -656,12 +743,12 @@ The present specification allows making this explicit:
 it indicates that the argument is encoded directly in the initial byte
 of the CBOR item.
 
-While no pressing use for further values for encoding indicators
-comes to mind, this is an extension point for EDN; {{reg-ei}} defines
+Encoding indicators are an extension point for EDN; {{reg-ei}} defines
 a registry for additional values.
 
-Encoding Indicators are discussed in further detail in {{ei-string}} for
-indefinite length strings and in {{ei-container}} for arrays and maps.
+Specific forms of encoding indicators are discussed in further detail
+in {{ei-string}} for indefinite length strings and in {{ei-container}} for
+arrays and maps.
 
 ## Numbers
 
@@ -711,7 +798,7 @@ written exactly as in this sentence (this is also a way they can be
 written in JavaScript, although JSON does not allow them).
 `NaN` in EDN stands for the NaN value with a zero sign bit and an all-zero
 significand except for a set quiet bit; this is represented as
-0xF97E00 in CBOR preferred serialization.
+0xF97E00 in CBOR Preferred Serialization.
 {{tab-non-finite-encoding}} shows how the floating point numbers 1.1, 1.5 and
 these three values are encoded in preferred serialization and when
 encoding indicators are given.
@@ -739,7 +826,6 @@ encoding indicators are given.
 {: #tab-non-finite-encoding title="Encoding indicators on floating
 point values" }
 
-
 See {{decnumber}} for additional details of the EDN number syntax.
 
 (Note that literals for further number formats, e.g., for representing
@@ -756,7 +842,7 @@ the string constitute UTF-8 {{-utf8}} text, major type 3), and byte strings
 (CBOR does not further characterize the bytes that constitute the
 string, major type 2).
 
-EDN has three direct notations for strings: double-quoted and raw
+EDN has three direct (unprefixed) notations for strings: double-quoted and raw
 strings for (UTF-8) text strings, and single-quoted strings for byte strings.
 The latter are useful for byte strings carrying bytes that can be meaningfully
 notated as UTF-8 text ({{sq-lit}}).
@@ -764,8 +850,8 @@ notated as UTF-8 text ({{sq-lit}}).
 Many strings are best notated as extension literals, which may
 provide detailed access to the bits within those bytes (see
 {{encoded-byte-strings}}).
-Extension literals can be constructed out of single-quoted strings,
-raw strings, and sequence literals.
+Extension literals can be constructed out of single-quoted strings and
+raw strings, as well as sequence literals.
 
 ### Double-Quoted String Literals {#dq-lit}
 
@@ -1190,7 +1276,7 @@ encoding of the tag head.  For example:
 {: indent='5'}
 1_1(1363896240)
 
-(assuming preferred serialization for the tag content) is encoded as
+(assuming Preferred Serialization for the tag content) is encoded as
 
 ~~~ cbor-pretty
 d9 0001        # tag(1)
@@ -1205,9 +1291,9 @@ EDN uses JSON syntax for the simple values True (»`true`«), False
 Undefined is written »`undefined`« as in JavaScript.
 
 These and all other simple values can be given as "simple()" with the
-appropriate integer in the parentheses.  For example, »`simple(42)`«
-indicates major type 7, value 42, and »`simple(0x14)`« indicates
-»`false`«, as does »`simple(20)`« or »`simple(0b10100)`«.
+appropriate unsigned integer in the parentheses.  For example, »`simple(42)`«
+indicates major type 7, value 42, and »`simple(20)`« indicates
+»`false`«.
 
 
 
@@ -1246,12 +1332,14 @@ equivalent notation not using an application-extension identifier.
 | `dt'1969-07-21T02:56:16Z'`   | `-14159024`    |
 | `dt'1969-07-21T02:56:16.0Z'` | `-14159024.0`  |
 | `dt'1969-07-21T02:56:16.5Z'` | `-14159023.5`  |
+| ``dt`1969-07-21T02:56:16.5Z` `` | `-14159023.5`  |
 | `dt<<'1969-07-21T02:56:16.5Z'>>` | `-14159023.5`  |
 | `dt<<"1969-07-21T02:56:16.5Z">>` | `-14159023.5`  |
+| ``dt<<`1969-07-21T02:56:16.5Z`>>`` | `-14159023.5`  |
 | `DT'1969-07-21T02:56:16Z'`   | `1(-14159024)` |
 {: #tab-equiv-dt title="dt and DT literals vs. plain EDN"}
 
-See {{dt-grammar}} for an ABNF definition for the content of `dt` literals.
+See {{dt-grammar}} for an ABNF definition for the text string input of `dt` literals.
 
 
 The "ip" Extension {#ip}
@@ -1261,8 +1349,8 @@ The application-extension identifier "ip" is used to notate an IP
 address literal that can be used as an IP address as per {{Section 3 of
 -iptag}}.
 
-The content of the literal is a single IPv4address or IPv6address as per
-{{Section 3.2.2 of -uri}}, as a text or byte string.
+The input of the literal is a single text string representing an IPv4address or IPv6address as per
+{{Section 3.2.2 of -uri}}.
 
 With the lower-case app-string prefix `ip`, the value of the literal is a
 byte string representing the binary IP address.
@@ -1315,7 +1403,7 @@ input to a cryptographic hash function as well as identify such a hash
 function to obtain a byte string that represents the output of that
 hash function.
 
-The content of the literal is a string, optionally followed by either
+The input of the literal is a (text or byte) string, optionally followed by either
 an integer or a text string that identifies the hash function in the
 COSE Algorithms registry of the CBOR Object Signing and Encryption
 (COSE) registry group {{IANA.cose}}, either by the identifier (value:
@@ -1345,7 +1433,7 @@ The
 application-extension identifier "`cri`" is used to notate
 an EDN literal for a CRI reference as defined in {{-cri}}.
 
-The text of the literal is a URI Reference as per {{-uri}} or an IRI
+The input of the literal is a URI Reference as per {{-uri}} or an IRI
 Reference as per {{-iri}}.
 
 The value of the literal is a CRI reference that can be converted to
@@ -1665,7 +1753,7 @@ The following additional items should help in the interpretation:
   If fine control over encoding is desired, this can be expressed by
   being explicit about the representation as a tag:
   E.g., `987654321098765432310`, which is equivalent to `2(h'35 8a 75
-  04 38 f3 80 f5 f6')` in its preferred serialization, might be
+  04 38 f3 80 f5 f6')` in its Preferred Serialization, might be
   written as `2_3(h'00 00 00 35 8a 75 04 38 f3 80 f5 f6'_1)` if
   leading zeros need to be added during serialization to obtain
   specific sizes for tag head, byte string head, and the overall byte
@@ -1673,11 +1761,11 @@ The following additional items should help in the interpretation:
 
    When `decnumber` stands for a floating point value, and for
    `hexfloat` and `nonfin`, a floating point data item with major
-   type 7 is used in preferred serialization (unless modified by an
+   type 7 is used in Preferred Serialization (unless modified by an
    encoding indicator, which then needs to be `_1`, `_2`, or `_3`).
    For this, the number range needs to fit into an {{IEEE754}} binary64 (or the size
    corresponding to the encoding indicator), and the precision will be
-   adjusted to binary64 before further applying preferred serialization
+   adjusted to binary64 before further applying Preferred Serialization
    (or to the size corresponding to the encoding indicator).
    Tag 4/5 representations are not generated in these cases.
    Future app-prefixes could be defined to allow more control for
@@ -1863,6 +1951,23 @@ comment         = "/" non-slash-star *non-slash "/"
 title="ABNF Definition of Hexadecimal Representation of a Byte String"
 }
 
+{:aside}
+>
+> The comment syntax provided inside the hex string is intended to
+> mimic the overall syntax for comments in EDN ({{comments}}).\\
+> Implementation note: Comments and blank space are also described by
+> the following search regexp, which can be used to remove them.
+> For display, the regexp is split along the outer
+> alternative into four lines, which need to be combined before use;
+> `\z` stands for the end of the string and is notated `$` in some
+> regexp dialects.
+>
+> ~~~
+  \s|
+  /\*(?:[^*]*\*+)(?:[^/*][^*]*\*+)*/|
+  /[^/*][^/]*/|
+  (?:#|//)[^\n]*(?:\n|\z)
+> ~~~
 
 ### b64: ABNF Definition of Base64 representation of a byte string {#b64-grammar}
 
@@ -1874,7 +1979,7 @@ This syntax allows both the classic ({{Section 4 of RFC4648}}) and the
 URL-safe ({{Section 5 of RFC4648}}) alphabet to be used.
 It accommodates, but does not require base64 padding.
 Note that inclusion of classic base64 makes it impossible to have
-in-line comments in b64, as "/" is valid base64-classic.
+comments based on slash characters in b64, as "`/`" is valid base64-classic.
 
 ~~~ abnf
 app-string-b64  = B *(4(b64dig B))
