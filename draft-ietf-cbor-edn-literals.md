@@ -263,7 +263,7 @@ and References ({{<sec-normative-references}}, {{<sec-informative-references}}).
 An informational comparison of EDN with CDDL follows in
 {{edn-and-cddl}}.
 
-## Terminology
+## Terminology and Conventions {#terminology}
 
 {{Section 8 of RFC8949@-cbor}} defines the original CBOR diagnostic notation,
 and {{Appendix G of -cddl}} supplies a number of extensions to the
@@ -300,6 +300,23 @@ definition language defined in
 {{-controls}} and {{-cddlupd}}).
 Additional information about the relationship between the two
 languages EDN and CDDL is captured in {{edn-and-cddl}}.
+
+Examples sometimes need to be quoted in the text, in particular in
+cases where the typewriter font used for example text cannot be
+distinguished in the plaintext rendition of this document.
+ASCII quotes, however, are already taken: `true`, `"true"`, `'true'`,
+and `` `true` `` are all different literals in EDN and should not be
+confused.
+Therefore, a different quoting convention as in »`true`« or »`"true"`«
+is used for examples in the text where this is needed to remain
+unambiguous.
+
+<!-- text adapted from RFC 9581 -->
+Superscript notation denotes exponentiation.
+For example, 2 to the power of 64+1 is notated: 2<sup>64+1</sup>.
+In the plain-text rendition of this specification, superscript
+notation is not available and exponentiation is therefore rendered by
+the surrogate notation seen here in the plain-text rendition.
 
 {::boilerplate bcp14-tagged-bcp14}
 
@@ -1274,9 +1291,9 @@ EDN uses JSON syntax for the simple values True (»`true`«), False
 Undefined is written »`undefined`« as in JavaScript.
 
 These and all other simple values can be given as "simple()" with the
-appropriate integer in the parentheses.  For example, »`simple(42)`«
-indicates major type 7, value 42, and »`simple(0x14)`« indicates
-»`false`«, as does »`simple(20)`« or »`simple(0b10100)`«.
+appropriate unsigned integer in the parentheses.  For example, »`simple(42)`«
+indicates major type 7, value 42, and »`simple(20)`« indicates
+»`false`«.
 
 
 
