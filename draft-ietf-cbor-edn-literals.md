@@ -138,10 +138,11 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present `-24` is intended as reference material during the
+    The present `-25` is intended as reference material during the
     2026-05-13 CBOR interim.
-    It completes the work started in PR #102 and adds a couple of
-    paragraphs on editorial conventions.
+    It corrects a clerical error in `-24`, which completes the work
+    started in PR #102 and adds a couple of paragraphs on editorial
+    conventions.
     It does not yet consider the various proposals about updating the names
     given for this specification and its instances.
 
