@@ -1065,7 +1065,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 17 November 2026</td>
+<td class="center">Expires 18 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1081,12 +1081,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a>, <a href="https://www.rfc-editor.org/rfc/rfc8949" class="eref">8949</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-16" class="published">16 May 2026</time>
+<time datetime="2026-05-17" class="published">17 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-17">17 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-18">18 November 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1152,7 +1152,7 @@ discussed at the 2026-05-13 CBOR interim WG meeting.</span><a href="#section-abs
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2201,10 +2201,10 @@ written in JavaScript, although JSON does not allow them).
 <code>NaN</code> in CDN stands for the NaN value with a zero sign bit and an all-zero
 significand except for a set quiet bit; this is represented as
 <code>F9 7E 00</code> in CBOR Preferred Serialization.
-<a href="#tab-non-finite-encoding" class="auto internal xref">Table 3</a> shows how the floating point numbers 1.1, 1.5 and
+<a href="#tab-float-encoding" class="auto internal xref">Table 3</a> shows how the floating point numbers 1.1, 1.5 and
 these three values are encoded in preferred serialization and when
 encoding indicators are given.<a href="#section-2.4-6" class="pilcrow">¶</a></p>
-<span id="name-encoding-indicators-on-floa"></span><div id="tab-non-finite-encoding">
+<span id="name-encoding-indicators-on-floa"></span><div id="tab-float-encoding">
 <table class="center" id="table-3">
           <caption>
 <a href="#table-3" class="selfRef">Table 3</a>:
@@ -2408,7 +2408,7 @@ This means the following are equivalent (the first <code>o</code> is escaped as
 allows the use of single quotes (without a prefix) to express byte
 string literals with UTF-8 text; for instance, the following are
 equivalent:<a href="#section-2.5.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.5.2-2">
+<div class="lang-cbor-diag sourcecode" id="section-2.5.2-2">
 <pre>
 'hello world'
 h'68656c6c6f20776f726c64'
@@ -5237,7 +5237,6 @@ that start with <code>#</code> or <code>//</code>.<a href="#appendix-A-7.1.1" cl
               <div class="lang-cbor-diag sourcecode" id="appendix-A-7.1.2.2.1">
 <pre>
 { / alg / 1: -7 / ECDSA 256 / }
-,
 { 1:   # alg
     -7 # ECDSA 256
 }
@@ -5261,7 +5260,7 @@ pair of parentheses.<a href="#appendix-A-7.2.1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="appendix-A-7.2.2">
             <dt id="appendix-A-7.2.2.1">CDN:</dt>
             <dd style="margin-left: 1.5em" id="appendix-A-7.2.2.2">
-              <div class="alignLeft art-text artwork" id="appendix-A-7.2.2.2.1">
+              <div class="lang-cbor-diag sourcecode" id="appendix-A-7.2.2.2.1">
 <pre>
 98([h'', # empty encoded protected header
     {},  # empty unprotected header
@@ -5285,7 +5284,7 @@ these with a control operator, which looks very different.<a href="#appendix-A-7
 <span class="break"></span><dl class="dlParallel" id="appendix-A-7.3.2">
             <dt id="appendix-A-7.3.2.1">CDN:</dt>
             <dd style="margin-left: 1.5em" id="appendix-A-7.3.2.2">
-              <div class="alignLeft art-text artwork" id="appendix-A-7.3.2.2.1">
+              <div class="lang-cbor-diag sourcecode" id="appendix-A-7.3.2.2.1">
 <pre>
 98([&lt;&lt; {/alg/ 1: -7 /ECDSA 256/} &gt;&gt;, # == h'a10126'
     ...                              # rest elided here
@@ -5416,57 +5415,63 @@ these with a control operator, which looks very different.<a href="#appendix-A-7
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.5">
-<a href="#tab-equiv-dt" class="auto internal xref">Table 4</a>:</dt>
+<a href="#tab-float-encoding" class="auto internal xref">Table 3</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.6">
-          <p id="appendix-C-1.6.1"><a href="#tab-equiv-dt" class="internal xref">dt and DT literals vs. plain CDN</a><a href="#appendix-C-1.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.6.1"><a href="#tab-float-encoding" class="internal xref">Encoding indicators on floating point values</a><a href="#appendix-C-1.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.7">
-<a href="#tab-equiv-ip" class="auto internal xref">Table 5</a>:</dt>
+<a href="#tab-equiv-dt" class="auto internal xref">Table 4</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.8">
-          <p id="appendix-C-1.8.1"><a href="#tab-equiv-ip" class="internal xref">ip and IP literals vs. plain CDN</a><a href="#appendix-C-1.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.8.1"><a href="#tab-equiv-dt" class="internal xref">dt and DT literals vs. plain CDN</a><a href="#appendix-C-1.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.9">
-<a href="#tab-equiv-hash" class="auto internal xref">Table 6</a>:</dt>
+<a href="#tab-equiv-ip" class="auto internal xref">Table 5</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.10">
-          <p id="appendix-C-1.10.1"><a href="#tab-equiv-hash" class="internal xref">hash literals vs. plain CDN</a><a href="#appendix-C-1.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.10.1"><a href="#tab-equiv-ip" class="internal xref">ip and IP literals vs. plain CDN</a><a href="#appendix-C-1.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.11">
-<a href="#tab-prefixes" class="auto internal xref">Table 7</a>:</dt>
+<a href="#tab-equiv-hash" class="auto internal xref">Table 6</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.12">
-          <p id="appendix-C-1.12.1"><a href="#tab-prefixes" class="internal xref">App-prefix Values Defined in this Document</a><a href="#appendix-C-1.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.12.1"><a href="#tab-equiv-hash" class="internal xref">hash literals vs. plain CDN</a><a href="#appendix-C-1.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.13">
-<a href="#tab-iana" class="auto internal xref">Table 8</a>:</dt>
+<a href="#tab-prefixes" class="auto internal xref">Table 7</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.14">
-          <p id="appendix-C-1.14.1"><a href="#tab-iana" class="internal xref">Initial Content of Application-extension Identifier Registry</a><a href="#appendix-C-1.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.14.1"><a href="#tab-prefixes" class="internal xref">App-prefix Values Defined in this Document</a><a href="#appendix-C-1.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.15">
-<a href="#tab-iana-ei" class="auto internal xref">Table 9</a>:</dt>
+<a href="#tab-iana" class="auto internal xref">Table 8</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.16">
-          <p id="appendix-C-1.16.1"><a href="#tab-iana-ei" class="internal xref">Initial Content of Encoding Indicator Registry</a><a href="#appendix-C-1.16.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.16.1"><a href="#tab-iana" class="internal xref">Initial Content of Application-extension Identifier Registry</a><a href="#appendix-C-1.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.17">
-<a href="#new-media-type" class="auto internal xref">Table 10</a>:</dt>
+<a href="#tab-iana-ei" class="auto internal xref">Table 9</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.18">
-          <p id="appendix-C-1.18.1"><a href="#new-media-type" class="internal xref">New Media Type application/cdn</a><a href="#appendix-C-1.18.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.18.1"><a href="#tab-iana-ei" class="internal xref">Initial Content of Encoding Indicator Registry</a><a href="#appendix-C-1.18.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.19">
-<a href="#tab-content-format" class="auto internal xref">Table 11</a>:</dt>
+<a href="#new-media-type" class="auto internal xref">Table 10</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.20">
-          <p id="appendix-C-1.20.1"><a href="#tab-content-format" class="internal xref">New Content-Format for application/cdn</a><a href="#appendix-C-1.20.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.20.1"><a href="#new-media-type" class="internal xref">New Media Type application/cdn</a><a href="#appendix-C-1.20.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-1.21">
-<a href="#tab-tag-values" class="auto internal xref">Table 12</a>:</dt>
+<a href="#tab-content-format" class="auto internal xref">Table 11</a>:</dt>
         <dd style="margin-left: 5.5em" id="appendix-C-1.22">
-          <p id="appendix-C-1.22.1"><a href="#tab-tag-values" class="internal xref">Values for Tags</a><a href="#appendix-C-1.22.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.22.1"><a href="#tab-content-format" class="internal xref">New Content-Format for application/cdn</a><a href="#appendix-C-1.22.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-1.23">
+<a href="#tab-tag-values" class="auto internal xref">Table 12</a>:</dt>
+        <dd style="margin-left: 5.5em" id="appendix-C-1.24">
+          <p id="appendix-C-1.24.1"><a href="#tab-tag-values" class="internal xref">Values for Tags</a><a href="#appendix-C-1.24.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
