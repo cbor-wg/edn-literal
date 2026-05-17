@@ -20,3 +20,10 @@ prep: lists.md
 lists.md: draft-ietf-cbor-edn-literals.xml
 	kramdown-rfc-extract-figures-tables -trfc $< >$@.new
 	mv $@.new $@
+
+# gem install edn-abnf cbor-cri
+check-cdn: sou
+	for i in sou/cbor-diag/*.cbor-diag; do echo; echo $$i:; edn-abnf -Tw30 -acri $$i; done
+
+sou: draft-ietf-cbor-edn-literals.xml
+	kramdown-rfc-extract-sourcecode -dsou $<
