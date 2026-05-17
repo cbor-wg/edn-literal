@@ -802,7 +802,7 @@ written in JavaScript, although JSON does not allow them).
 `NaN` in CDN stands for the NaN value with a zero sign bit and an all-zero
 significand except for a set quiet bit; this is represented as
 `F9 7E 00` in CBOR Preferred Serialization.
-{{tab-non-finite-encoding}} shows how the floating point numbers 1.1, 1.5 and
+{{tab-float-encoding}} shows how the floating point numbers 1.1, 1.5 and
 these three values are encoded in preferred serialization and when
 encoding indicators are given.
 
@@ -826,7 +826,7 @@ encoding indicators are given.
 | `NaN`, `NaN_1`             | `f9 7e00`             |
 | `NaN_2`                    | `fa 7fc00000`         |
 | `NaN_3`                    | `fb 7ff8000000000000` |
-{: #tab-non-finite-encoding title="Encoding indicators on floating
+{: #tab-float-encoding title="Encoding indicators on floating
 point values" }
 
 See {{decnumber}} for additional details of the CDN number syntax.
@@ -893,7 +893,7 @@ allows the use of single quotes (without a prefix) to express byte
 string literals with UTF-8 text; for instance, the following are
 equivalent:
 
-~~~~
+~~~~ cbor-diag
 'hello world'
 h'68656c6c6f20776f726c64'
 ~~~~
@@ -2686,7 +2686,6 @@ Important differences include:
   CDN:
   : ~~~ cbor-diag
     { / alg / 1: -7 / ECDSA 256 / }
-    ,
     { 1:   # alg
         -7 # ECDSA 256
     }
@@ -2702,7 +2701,7 @@ Important differences include:
   pair of parentheses.
 
   CDN:
-  : ~~~
+  : ~~~ cbor-diag
     98([h'', # empty encoded protected header
         {},  # empty unprotected header
         ...  # rest elided here
@@ -2717,7 +2716,7 @@ Important differences include:
   these with a control operator, which looks very different.
 
   CDN:
-  : ~~~
+  : ~~~ cbor-diag
     98([<< {/alg/ 1: -7 /ECDSA 256/} >>, # == h'a10126'
         ...                              # rest elided here
        ])

@@ -56,6 +56,9 @@
 {{tab-numbers}}:
 : {{<<tab-numbers}}
 
+{{tab-float-encoding}}:
+: {{<<tab-float-encoding}}
+
 {{tab-equiv-dt}}:
 : {{<<tab-equiv-dt}}
 
