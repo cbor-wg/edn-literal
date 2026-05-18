@@ -4,17 +4,17 @@
 
 This is the working area for the IETF [CBOR Working Group](https://datatracker.ietf.org/group/cbor/documents/) Internet-Draft, "CBOR Extended Diagnostic Notation (EDN)".
 
-* [Editor's Copy](https://cbor-wg.github.io/edn-literal/#go.draft-ietf-cbor-edn-literals.html)
+* [Editor's Copy](https://cbor-wg.github.io/edn/#go.draft-ietf-cbor-edn-literals.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-cbor-edn-literals)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals)
-* [Compare Editor's Copy to Working Group Draft](https://cbor-wg.github.io/edn-literal/#go.draft-ietf-cbor-edn-literals.diff)
+* [Compare Editor's Copy to Working Group Draft](https://cbor-wg.github.io/edn/#go.draft-ietf-cbor-edn-literals.diff)
 
-[Access to all branches](https://cbor-wg.github.io/edn-literal/)
+[Access to all branches](https://cbor-wg.github.io/edn/)
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/cbor-wg/edn-literal/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/cbor-wg/edn/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
