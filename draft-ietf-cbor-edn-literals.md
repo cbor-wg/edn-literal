@@ -2,7 +2,7 @@
 v: 3
 
 title: >
-  CBOR Extended Diagnostic Notation (EDN)
+  Concise Diagnostic Notation (CDN)
 docname: draft-ietf-cbor-edn-literals-latest
 # date: 2026-04-06
 
@@ -99,6 +99,7 @@ informative:
   RFC7493: i-json
   I-D.bormann-cbor-numbers: numbers
   RFC9165: controls
+  RFC9741: control2
   RFC9682: cddlupd
   I-D.ietf-cbor-edn-e-ref: eref
   I-D.bormann-t2trg-deref-id: deref
@@ -116,17 +117,17 @@ informative:
   ABNFROB:
     target: https://github.com/cabo/abnftt
     title: PEG-parsing using ABNF grammars (via treetop)
-  EDN-WIKI:
+  CDN-WIKI:
     target: https://github.com/cbor-wg/edn/wiki
-    title: EDN Wiki
+    title: CDN Wiki
 
 --- abstract
 
-This document formalizes and consolidates the definition of the Extended
-Diagnostic Notation (EDN) of the Concise Binary Object Representation
+This document formalizes and consolidates the definition of the Concise
+Diagnostic Notation (CDN) of the Concise Binary Object Representation
 (CBOR), addressing implementer experience.
 
-Replacing EDN's previous informal descriptions, it updates
+Replacing CDN's previous informal descriptions, it updates
 RFC 8949, obsoleting its Section 8, and RFC 8610, obsoleting its
 Appendix G.
 
@@ -138,13 +139,13 @@ addresses and prefixes.
 
 [^status]:
     (This cref will be removed by the RFC editor:)\\
-    The present `-25` is intended as reference material during the
-    2026-05-13 CBOR interim.
+    The present `-25` is intended for the May 2026 Working Group Last Call.
     It corrects a clerical error in `-24`, which completes the work
     started in PR #102 and adds a couple of paragraphs on editorial
     conventions.
-    It does not yet consider the various proposals about updating the names
-    given for this specification and its instances.
+    It also makes a leap ahead beyond `-24` by adopting and making a
+    detailed proposal (PR #105) for a renaming choice that was
+    discussed at the 2026-05-13 CBOR interim WG meeting.
 
 --- middle
 
@@ -160,32 +161,35 @@ In addition to the binary interchange format, the original CBOR specification
     RFC7049}}, now {{Section 8 of RFC8949@-cbor}}), in
     order to be able to converse about CBOR data items without having
     to resort to binary data.
-{{Appendix G of -cddl}} extended this into what is also known as
-Extended Diagnostic Notation (EDN).
+{{Appendix G of -cddl}} extended this into what also became known as
+Extended Diagnostic Notation (EDN), often including {{Section 4.2 of
+-seq}} and draft revisions of the present document.
+Diagnostic notation is now specified by this document, obsoleting all these
+previous descriptions, and is known as Concise Diagnostic Notation (CDN).
 
 Diagnostic notation syntax is based on JSON, with extensions
 for representing CBOR constructs such as binary data and tags.
 
-Standardizing EDN in addition to the actual binary interchange format CBOR does
+Standardizing CDN in addition to the actual binary interchange format CBOR does
 not serve to create a competing interchange format, but enables the use of
 a shared diagnostic notation in tools for and in documents about CBOR.
 Still, between tools for CBOR development and diagnosis, document
 generation systems, continuous integration (CI)
 environments, configuration files, and user interfaces for viewing and
-editing for all these, EDN is often "interchanged" and therefore
+editing for all these, CDN is often "interchanged" and therefore
 merits a specification that facilitates interoperability within this
 domain as well as reliable translation to and from CBOR.
-EDN is not designed or intended for general-purpose use in protocol
+CDN is not designed or intended for general-purpose use in protocol
 elements exchanged between systems engaged in processes outside those
 listed here.
 
-​This document consolidates and formalizes the definition of EDN,
+​This document consolidates and formalizes the definition of CDN,
 providing a formal grammar (see {{grammar}} and {{app-grammars}}), and
 incorporating small changes based on implementation experience.
-It updates {{RFC8949}}, obsoleting {{Section 8 of RFC8949@-cbor}}, and
-{{-cddl}}, obsoleting {{Appendix G of -cddl}}.
-It is intended to serve as a single reference target that can be used
-in specifications that use EDN.
+It updates {{RFC8949}} by obsoleting {{Section 8 of RFC8949@-cbor}}, and
+{{-cddl}} by obsoleting {{Appendix G of -cddl}}.
+It is intended to serve as the single reference target that can be used
+in specifications that use CDN.
 
 It also specifies two registry-based extension points for the
 diagnostic notation:
@@ -193,14 +197,14 @@ one for additional encoding indicators, and
 one for adding application-oriented literal forms.
 It uses these registries to add encoding indicators for a more
 complete coverage of encoding variation,
-and to add application-oriented literal forms that enhance EDN with text
+and to add application-oriented literal forms that enhance CDN with text
 representations of epoch-based date/times, of IP addresses
 and prefixes {{-iptag}}, and of Concise Resource Identifiers (CRI
 {{-cri}}), as well as an application-oriented literal that
 represents cryptographic hash values computed from byte strings.
 
 In addition, this document registers a media type identifier
-and a content-format for CBOR diagnostic notation.  This does not
+and a content-format for CDN.  This does not
 elevate its status as an interchange format, but recognizes that
 interaction between tools is often smoother if media types can be used.
 
@@ -215,7 +219,7 @@ interaction between tools is often smoother if media types can be used.
 >
 > * `cbor` (which is actually not useful, as CBOR is a binary format
 >   and cannot be used in textual examples in an RFC),
-> * `cbor-diag` (which is another name for EDN, as defined in the
+> * `cbor-diag` (which is another name for CDN, as defined in the
 >   present document),
 > * `cbor-pretty` (which is a possibly annotated and pretty-printed
 >   hexdump of an encoded CBOR data item, along the lines of the
@@ -224,14 +228,14 @@ interaction between tools is often smoother if media types can be used.
 > * `cddl` (which is used for the Concise Data Definition Language,
 >   CDDL, see {{terminology}} below).
 
-Note that EDN is not meant to be the only text-based representation of
+Note that CDN is not meant to be the only text-based representation of
 CBOR data items.
 For instance, {{YAML}} {{-yaml-media-type}} is able to represent most CBOR
 data items, possibly requiring use of YAML's extension points.
 YAML does not provide certain features that can be useful with tools
 and documents needing text-based representations of CBOR data items
 (such as embedded CBOR or encoding indicators),
-but it does provide a host of other features that EDN does not provide
+but it does provide a host of other features that CDN does not provide
 such as anchor/alias data sharing, at a cost of higher implementation
 and learning complexity.
 
@@ -242,7 +246,8 @@ of RFC8949@-cbor}} and {{Section G of RFC8610}}.
 The latter provided a number of useful extensions to the initial
 diagnostic notation that was originally defined in {{Section 6 of -old-cbor}}.
 {{Section 8 of RFC8949@-cbor}} and {{Section G of RFC8610}} have
-collectively been called "Extended Diagnostic Notation" (EDN), giving
+collectively been called "Extended Diagnostic Notation" (EDN),
+now simplified as "Concise Diagnostic Notation" (CDN) giving
 the present document its name.
 
 After introductory material, {{app-ext}}
@@ -251,7 +256,7 @@ defining the "dt", "ip", "hash", and "cri" extensions.
 {{stand-in}} defines mechanisms
 for dealing with unknown application-oriented literals and
 deliberately elided information.
-{{grammars}} gives the formal syntax of EDN in ABNF, with
+{{grammars}} gives the formal syntax of CDN in ABNF, with
 explanations for some features of and additions to this syntax, as an
 overall grammar ({{grammar}}) and specific grammars for the content of
 app-string and byte-string literals ({{app-grammars}}).
@@ -260,15 +265,15 @@ for
 {{<<sec-iana}} ({{<sec-iana}}),
 {{<<seccons}} ({{<seccons}}),
 and References ({{<sec-normative-references}}, {{<sec-informative-references}}).
-An informational comparison of EDN with CDDL follows in
-{{edn-and-cddl}}.
+An informational comparison of CDN with CDDL follows in
+{{cdn-and-cddl}}.
 
 ## Terminology and Conventions {#terminology}
 
 {{Section 8 of RFC8949@-cbor}} defines the original CBOR diagnostic notation,
 and {{Appendix G of -cddl}} supplies a number of extensions to the
-diagnostic notation that result in the Extended Diagnostic Notation
-(EDN).
+diagnostic notation that form the basis for what is now the Concise Diagnostic Notation
+(CDN).
 The diagnostic notation extensions include popular features such as
 embedded CBOR (encoded CBOR data items in byte strings) and comments.
 A simple diagnostic notation extension that enables representing CBOR
@@ -277,35 +282,33 @@ As diagnostic notation is not used in the kind of interchange
 situations where backward compatibility would pose a significant
 obstacle, there is little point in not using these extensions; as at
 least some elements of the extended form are now near-universally
-used, the terms "diagnostic notation" and "EDN" have become
-synonyms in the context of CBOR.
-
-Therefore, references to "_diagnostic notation_" generally mean to
-include the original notation from {{Section 8 of RFC8949@-cbor}} as well as the
-extensions from {{Appendix G of -cddl}}, {{Section 4.2 of -seq}}, and the
-present document.
-However, this document sticks to the abbreviation "_EDN_" as it has become quite
-popular and is more sharply distinguishable from other meanings than
-"DN" would be.
+used, the terms "diagnostic notation" and "extended diagnostic
+notation" have become synonyms in the context of CBOR, with "concise
+diagnostic notation" (CDN) now the preferred synonym, hinting at
+knowledge of this updated specification.
 
 In a similar vein, the term "ABNF" in this document refers to the
 language defined in {{-abnf}} as extended in {{-abnfcs}}, where the
-"characters" of {{Section 2.3 of RFC5234@-abnf}} are Unicode scalar values.
-Brief snippets of grammar may be given in the text as I-Regexp regular
+"characters" of {{Section 2.3 of RFC5234@-abnf}} are Unicode scalar
+values.
+Where names for ABNF rules are used in the text, they are shown in
+`typewriter` font (not distinguishable in the plaintext rendition of
+this document).
+Brief snippets of grammar may also be given in the text as I-Regexp regular
 expressions {{-iregexp}}.
 
 The term "CDDL" (Concise Data Definition Language) refers to the data
 definition language defined in
 {{-cddl}} and its registered extensions (such as those documented in
-{{-controls}} and {{-cddlupd}}).
+{{-controls}}, {{-control2}}, and {{-cddlupd}}).
 Additional information about the relationship between the two
-languages EDN and CDDL is captured in {{edn-and-cddl}}.
+languages CDN and CDDL is captured in {{cdn-and-cddl}}.
 
 Examples sometimes need to be quoted in the text, in particular in
 cases where the typewriter font used for example text cannot be
 distinguished in the plaintext rendition of this document.
 ASCII quotes, however, are already taken: `true`, `"true"`, `'true'`,
-and `` `true` `` are all different literals in EDN and should not be
+and `` `true` `` are all different literals in CDN and should not be
 confused.
 Therefore, a different quoting convention as in »`true`« or »`"true"`«
 is used for examples in the text where this is needed to remain
@@ -331,11 +334,11 @@ In particular, it states:
 
 ### For Humans
 
-One important application of EDN is the notation of CBOR data for
+One important application of CDN is the notation of CBOR data for
 humans: in specifications, on whiteboards, and for entering test data.
 A number of features, such as comments inside prefixed string literals, are mainly
-useful for people-to-people communication via EDN.
-Programs also often output EDN for diagnostic purposes, such as in
+useful for people-to-people communication via CDN.
+Programs also often output CDN for diagnostic purposes, such as in
 error messages or to enable comparison (including generation of diffs
 via tools) with test data.
 
@@ -346,28 +349,28 @@ implementations generate the same (or similar) output for the same
 CBOR data items.
 This is comparable to the objectives of deterministic serialization
 for CBOR data items themselves ({{Section 4.2 of RFC8949@-cbor}}).
-However, there are even more representation variants in EDN than in
+However, there are even more representation variants in CDN than in
 binary CBOR, and there is little point in specifically endorsing a
 single variant as "deterministic" when other variants may be more
 useful for human understanding, e.g., the `<< >>` notation as
-opposed to `h''`; an EDN generator may have quite a few options
+opposed to `h''`; a CDN generator may have quite a few options
 that control what presentation variant is most desirable for the
 application that it is being used for.
 
 Because of this, a deterministic representation is not defined for
-EDN, and there is no expectation for "roundtripping" from EDN to
+CDN, and there is no expectation for "roundtripping" from CDN to
 CBOR and back, i.e., for an ability
-to convert EDN to binary CBOR and back to EDN while achieving exactly
-the same result as the original input EDN — the original EDN possibly
-was created by humans or by a different EDN generator.
+to convert CDN to binary CBOR and back to CDN while achieving exactly
+the same result as the original input CDN — the original CDN possibly
+was created by humans or by a different CDN generator.
 
 ### Basic Output Format {#basic}
 
-However, there is a certain expectation that EDN generators can be
+However, there is a certain expectation that CDN generators can be
 configured to some basic output format, which:
 
 * looks like JSON where that is possible;
-* inserts encoding indicators only where the binary form differs from
+* inserts encoding indicators, if any, only where the binary form differs from
   Preferred Serialization ({{Section 4.1 of RFC8949@-cbor}});
 * uses hexadecimal representation (`h''`) for byte strings, not
   `b64''` or embedded CBOR (`<<>>`);
@@ -375,14 +378,14 @@ configured to some basic output format, which:
   pretty-printing, but does use common blank spaces such as after `,`
   and `:`.
 
-EDN generators may provide configuration to consistently select either
+CDN generators may provide configuration to consistently select either
 the unescaped (directly readable) or an escaped (ASCII equivalent) form of
-characters in string literals; the latter allows EDN to be used when the
+characters in string literals; the latter allows CDN to be used when the
 diagnostic value of fully escaped characters may be desired or in
 environments where non-ASCII characters may not enjoy full data
 transparency.
-Similar to JSON, EDN is designed to allow a simple tool to convert any
-EDN (including EDN with application extensions unknown to the tool)
+Similar to JSON, CDN is designed to allow a simple tool to convert any
+CDN (including CDN with application extensions unknown to the tool)
 into fully escaped (printable ASCII and newlines only) form, as well
 as to inversely recover unescaped characters for all escapes where
 this is possible or for certain subsets of the characters (such as
@@ -397,7 +400,7 @@ Information obtained from a CDDL model can help in choosing
 application-oriented literals or specific string representations such
 as embedded CBOR or `b64''` in the appropriate places.
 
-Overview over CBOR Extended Diagnostic Notation (EDN) {#diagnostic-notation}
+Overview over Concise Diagnostic Notation (CDN) {#diagnostic-notation}
 =====================================================
 
 CBOR is a binary interchange format.  To facilitate documentation and
@@ -411,23 +414,23 @@ format; it originally was not meant to be parsed.
 Therefore, no formal definition (as in ABNF) was given in the original
 documents.
 Recognizing that formal grammars can aid interoperation of tools and
-usability of documents that employ EDN, {{grammars}} now provides ABNF
+usability of documents that employ CDN, {{grammars}} now provides ABNF
 definitions.
 
-EDN is a true superset of JSON as it is defined in {{STD90}} in
+CDN is a true superset of JSON as it is defined in {{STD90}} in
 conjunction with {{-i-json}} (that is, any interoperable {{-i-json}} JSON
-text also is an EDN text), extending it both to cover the greater
+text also is a CDN text), extending it both to cover the greater
 expressiveness of CBOR and to increase its usability.
 
-EDN borrows the JSON syntax for numbers (integer and
+CDN borrows the JSON syntax for numbers (integer and
 floating-point, {{numbers}}), certain simple values ({{simple-values}}),
 UTF-8 {{-utf8}} text
 strings, arrays, and maps (maps are called objects in JSON; the
 diagnostic notation extends JSON here by allowing any data item in the
 map key position).
 
-As EDN is used for truly diagnostic purposes, its implementations MAY
-support generation and possibly ingestion of EDN for CBOR data items
+As CDN is used for truly diagnostic purposes, its implementations MAY
+support generation and possibly ingestion of CDN for CBOR data items
 that are well-formed but not valid.
 It is RECOMMENDED that an implementation enables such usage only
 explicitly by configuration (such as an API or CLI flag).
@@ -441,18 +444,18 @@ application-oriented extensions, while the two cases of basic validity
 of *validity*.
 
 The rest of this section provides an overview over specific features
-of EDN, starting with certain common syntactical features and then
+of CDN, starting with certain common syntactical features and then
 going through kinds of CBOR data items roughly in the order of CBOR major
 types.
 Any additional detailed syntax discussion needed has been deferred to
 {{grammar}}.
 
-Additional information about implementation and use of EDN is
-continuously being collected by the community in {{EDN-WIKI}}.
+Additional information about implementation and use of CDN is
+continuously being collected by the community in {{CDN-WIKI}}.
 
 ## Application-Oriented Extension Literals {#app-lit}
 
-EDN provides _literals_ that represent CBOR data items textually.
+CDN provides _literals_ that represent CBOR data items textually.
 Many of the forms of literals provided are predefined by this
 document, but it also defines an extension point that enables defining additional
 _application-oriented extension literals_, or _extension literals_ for short.
@@ -478,8 +481,8 @@ The present specification allows registering additional names for this namespace
 which it calls *application-extension identifiers*.
 
 More precisely, an *application-extension identifier* is a registered name consisting of a
-lower-case ASCII letter (`[a-z]`) and zero or more additional ASCII
-characters that are either lower-case letters, digits, or hyphens (`[a-z0-9-]`).
+lowercase ASCII letter (`[a-z]`) and zero or more additional ASCII
+characters that are either lowercase letters, digits, or hyphens (`[a-z0-9-]`).
 »false«, »true«, »null«, and »undefined« cannot be used as such
 identifiers and are reserved.
 
@@ -488,7 +491,7 @@ Application-extension identifiers are registered in the "Application-Extension I
 
 An application-extension (such as `dt`) MAY also define the meaning of
 one additional prefix derived from its application-extension identifier by
-replacing each lower-case character by its upper-case counterpart (such
+replacing each lowercase character by its uppercase counterpart (such
 as `DT`).
 As a convention, using the all-uppercase variant implies making use of
 a CBOR tag appropriate for this application-oriented extension (such
@@ -524,15 +527,15 @@ Of these, the application-oriented extensions `h`, `b64`, `dt` and `ip` are
 intended to be mandatory to implement.
 (As mentioned, for simplicity we use the term "application-oriented
 extensions" for the mechanism discussed in this section even if it is
-used to describe a part of base EDN.)
+used to describe a part of base CDN.)
 
 ## Comments {#comments}
 
-For presentation to humans, EDN text may benefit from comments.
+For presentation to humans, CDN text may benefit from comments.
 JSON famously does not provide for comments, and the original
 diagnostic notation in {{Section 6 of -old-cbor}} inherited this property.
 
-EDN now provides two comment syntaxes, which can be used where the
+CDN now provides two comment syntaxes, which can be used where the
 syntax allows blank space (outside of constructs such as numbers,
 string literals, etc.):
 
@@ -582,7 +585,7 @@ h'6684523AB17337F173500E5728C628547CB37DFE68449C65F885D1B73B49EAE1'}`.
 >
 Note that application-oriented extensions can define their own
 internal comment syntaxes for text inside strings, which may or may
-not mimic the overall comment syntax of EDN.
+not mimic the overall comment syntax of CDN.
 The h'' syntax ({{h-grammar}}), which the framework for application-oriented
 extensions was designed to include as an instance, provides an
 equivalent to the overall comment syntax inside its text strings.
@@ -603,7 +606,7 @@ restricts slash-delimited comments that were allowed in {{Section G.6 of RFC8610
   (Note that "`//`" still can be used in what is visually "within" a
   slash-delimited comment; its first slash actually ends the current comment and
   the second slash starts a new one.)
-* EDN now enables the use of C-style inline comments: for instance, "`/*foo/`"
+* CDN now enables the use of C-style inline comments: for instance, "`/*foo/`"
   was a complete comment in {{Section G.6 of RFC8610}} and now is the beginning of a
   C-style comment that goes on up to a "`*/`".
 
@@ -628,33 +631,33 @@ data item written »1.5« by a diagnostic decoder might have been
 encoded as a half-, single-, or double-precision float.
 
 Encoding indicators are always optional:
-EDN is usually used to describe CBOR data items at the data model
+CDN is usually used to describe CBOR data items at the data model
 level.
 For some diagnostic purposes, it is useful to represent the choice of
 a serialization variation by including encoding indicators.
-Implementations of EDN generally do not need to provide this
+Implementations of CDN generally do not need to provide this
 functionality in full; if they do, they can be called "diagnostic
 implementations".
-To be able to process EDN that contains encoding indicators,
-an EDN-consuming implementation MUST accept them (i.e., process or
+To be able to process CDN that contains encoding indicators,
+a CDN-consuming implementation MUST accept them (i.e., process or
 ignore the presence or absence of each encoding indicator).
 (Ignoring them could be compared to a generic CBOR decoder ignoring
 the presence of the serialization variants it encounters.)
 It is RECOMMENDED to by default provide a warning for each encoding
 indicator value that is encountered but not further processed.
 
-When creating EDN as input for a diagnostic CBOR encoder in order to
+When creating CDN as input for a diagnostic CBOR encoder in order to
 obtain specific encoding choices, encoding indicators may be placed
-manually or by the software generating the EDN.
+manually or by the software generating the CDN.
 Where no encoding indicator is placed, a diagnostic CBOR encoder is expected to
 generate Preferred Serialization ({{Section 4.1 of RFC8949@-cbor}}) with
 definite length encoding only.
-Similarly, when using EDN as output for a diagnostic CBOR decoder, a
+Similarly, when using CDN as output for a diagnostic CBOR decoder, a
 basic diagnostic configuration of the tool is expected to provide
 encoding indicators only in places where the CBOR input did not use
 Preferred Serialization with definite length encoding (see also
 {{basic}}).
-Diagnostic implementations of EDN that process encoding indicators as
+Diagnostic implementations of CDN that process encoding indicators as
 discussed here are expected to document their diagnostic behavior and
 the processing options that can be selected.
 
@@ -701,7 +704,7 @@ preceding bracket or brace) was or is to be encoded with an additional informati
 value of `ai=`24+`n`.  For example, `1.5_1` is a half-precision floating-point
 number (2<sup>1</sup> = 2 additional bytes or 16 bits), while `1.5_3` is encoded as
 double precision (2<sup>3</sup> = 8 additional bytes or 64 bits).
-For a tool consuming EDN in a diagnostic mode, encountering an
+For a tool consuming CDN in a diagnostic mode, encountering an
 encoding indicator that does not provide enough space to correctly
 encode the unchanged data item given is an error; there is no
 truncation or rounding that would change the data item encoded.
@@ -743,7 +746,7 @@ The present specification allows making this explicit:
 it indicates that the argument is encoded directly in the initial byte
 of the CBOR item.
 
-Encoding indicators are an extension point for EDN; {{reg-ei}} defines
+Encoding indicators are an extension point for CDN; {{reg-ei}} defines
 a registry for additional values.
 
 Specific forms of encoding indicators are discussed in further detail
@@ -756,7 +759,7 @@ arrays and maps.
 ## Hexadecimal, Octal, and Binary Numbers {#hexadecimal-octal-and-binary-numbers}
  -->
 
-In addition to JSON's decimal number literals, EDN provides hexadecimal, octal,
+In addition to JSON's decimal number literals, CDN provides hexadecimal, octal,
 and binary number literals in the usual C-language notation (octal with `0o`
 prefix present only).
 
@@ -781,7 +784,7 @@ In {{tab-numbers}}, all the items on a row are the same number (also
 shown in CBOR, hexadecimally), but they are distinct from items in a
 different row.
 
-| EDN                                            | CBOR hex            |
+| CDN                                            | CBOR hex            |
 |------------------------------------------------|---------------------|
 | `4711`, `0x1267`, `0o11147`, `0b1001001100111` | `19 1267` # uint    |
 | `1.5`, `0.15e1`, `15e-1`, `0x1.8p0`, `0x18p-4` | `F9 3E00` # float16 |
@@ -796,17 +799,17 @@ different row.
 The non-finite floating-point values `Infinity`, `-Infinity`, and `NaN` are
 written exactly as in this sentence (this is also a way they can be
 written in JavaScript, although JSON does not allow them).
-`NaN` in EDN stands for the NaN value with a zero sign bit and an all-zero
+`NaN` in CDN stands for the NaN value with a zero sign bit and an all-zero
 significand except for a set quiet bit; this is represented as
-0xF97E00 in CBOR Preferred Serialization.
-{{tab-non-finite-encoding}} shows how the floating point numbers 1.1, 1.5 and
+`F9 7E 00` in CBOR Preferred Serialization.
+{{tab-float-encoding}} shows how the floating point numbers 1.1, 1.5 and
 these three values are encoded in preferred serialization and when
 encoding indicators are given.
 
 <!-- $ edn-abnf -e '1.5, 1.5_1, 1.5_2, 1.5_3' -tcbor | cborseq2pretty.rb
  -->
 
-| EDN                        | CBOR hex              |
+| CDN                        | CBOR hex              |
 |----------------------------|-----------------------|
 | `1.1`                      | `fb 3ff199999999999a` |
 | `1.1_1`, `1.1_2`           | (error)               |
@@ -823,10 +826,10 @@ encoding indicators are given.
 | `NaN`, `NaN_1`             | `f9 7e00`             |
 | `NaN_2`                    | `fa 7fc00000`         |
 | `NaN_3`                    | `fb 7ff8000000000000` |
-{: #tab-non-finite-encoding title="Encoding indicators on floating
+{: #tab-float-encoding title="Encoding indicators on floating
 point values" }
 
-See {{decnumber}} for additional details of the EDN number syntax.
+See {{decnumber}} for additional details of the CDN number syntax.
 
 (Note that literals for further number formats, e.g., for representing
 rational numbers as fractions, or for other NaN values than the one called `NaN`, can
@@ -842,7 +845,7 @@ the string constitute UTF-8 {{-utf8}} text, major type 3), and byte strings
 (CBOR does not further characterize the bytes that constitute the
 string, major type 2).
 
-EDN has three direct (unprefixed) notations for strings: double-quoted and raw
+CDN has three direct (unprefixed) notations for strings: double-quoted and raw
 strings for (UTF-8) text strings, and single-quoted strings for byte strings.
 The latter are useful for byte strings carrying bytes that can be meaningfully
 notated as UTF-8 text ({{sq-lit}}).
@@ -850,29 +853,29 @@ notated as UTF-8 text ({{sq-lit}}).
 Many strings are best notated as extension literals, which may
 provide detailed access to the bits within those bytes (see
 {{encoded-byte-strings}}).
-Extension literals can be constructed out of single-quoted strings and
-raw strings, as well as sequence literals.
+An extension literal can be constructed out of an application-extension
+prefix and a single-quoted string, a raw string, or a sequence literal.
 
 ### Double-Quoted String Literals {#dq-lit}
 
-EDN enables notating text strings in a form compatible to that of notating text
+CDN enables notating text strings in a form compatible to that of notating text
 strings in JSON (i.e., as a double-quoted string literal), with a
 number of usability extensions.
 In JSON, no control characters are allowed to occur
 directly in text string literals; if needed, they can be specified using
 escapes such as `\t` or `\r`.
-In EDN, string literals additionally can contain newlines (LINEFEED
+In CDN, string literals additionally can contain newlines (LINEFEED
 U+000A), which are copied into the resulting string like other
 characters in the string literal.
 To deal with variability in platform presentation of newlines, any
-carriage return characters (U+000D) that may be present in the EDN
+carriage return characters (U+000D) that may be present in the CDN
 string literal are not copied into the resulting string (see {{cr}}).
 No other control characters can occur directly in a string literal,
 and the handling of escaped characters (`\r` etc.) is as in JSON.
 
 JSON's escape scheme for characters that are not on Unicode's basic
 multilingual plane (BMP) is cumbersome (see {{Section 7 of RFC8259@-json}}).
-EDN keeps it, but also adds the syntax `\u{NNN}` where NNN is the
+CDN keeps it, but also adds the syntax `\u{NNN}` where NNN is the
 Unicode scalar value as a hexadecimal number.
 This means the following are equivalent (the first `o` is escaped as
 `\u{6f}` for no particular reason):
@@ -885,12 +888,12 @@ This means the following are equivalent (the first `o` is escaped as
 
 ### Single-Quoted String Literals {#sq-lit}
 
-Analogously to text string literals delimited by double quotes, EDN
+Analogously to text string literals delimited by double quotes, CDN
 allows the use of single quotes (without a prefix) to express byte
 string literals with UTF-8 text; for instance, the following are
 equivalent:
 
-~~~~
+~~~~ cbor-diag
 'hello world'
 h'68656c6c6f20776f726c64'
 ~~~~
@@ -898,15 +901,16 @@ h'68656c6c6f20776f726c64'
 The escaping rules of JSON strings are applied equivalently for
 text-based byte string literals, e.g., `\\` stands for a single
 backslash and `\'` stands for a single quote.
-However, to facilitate parsing, in single-quoted strings EDN excludes
+However, to facilitate parsing, in single-quoted strings CDN excludes
 certain escaping mechanisms available for double-quoted strings:
 
-* `\/` is an escape in JSON that is available for EDN text strings as
-  well to ensure all JSON texts are EDN literals.
-  Since EDN's single-quoted strings do not occur in JSON, this legacy
+* `\/` is an escape in JSON that is available for double-quoted CDN
+  text strings as
+  well to ensure all JSON texts are CDN literals.
+  Since CDN's single-quoted strings do not occur in JSON, this legacy
   compatibility feature is not available for them.
 * `\u`-based escapes are not available for characters in the range
-  from U+0020 to U+007E (essentially, printable ASCII).
+  from U+0020 through U+007E (essentially, printable ASCII).
 
 Single-quoted string literals can occur unprefixed and stand for the
 byte string that encodes its text string value (the "content"), or be
@@ -938,7 +942,7 @@ of processing giving this "escaping" mechanism specific application semantics, t
 lead to an exponential duplication of backslashes that has informally
 been described as "quoting hell".
 
-EDN therefore also allows text strings to be notated as raw string
+CDN therefore also allows text strings to be notated as raw string
 literals, which do not perform backslash processing.
 Instead, data transparency is provided by enclosing them in starting
 and ending delimiters built as a sequence of one or more backquote
@@ -1027,8 +1031,8 @@ provided by the types of the individual chunks, which all need to be
 of the same type ({{Section 3.2.3 of RFC8949@-cbor}}).
 
 For an indefinite-length string with no chunks inside, `(_ )`
-would be ambiguous as to whether a byte string (encoded 0x5fff) or a text string
-(encoded 0x7fff) is meant and is therefore not used.
+would be ambiguous as to whether a byte string (encoded `5f ff`) or a text string
+(encoded `7f ff`) is meant and is therefore not used.
 The basic forms `''_` and `""_` can be used instead and are reserved for
 the case of no chunks only — not as short forms for the (permitted,
 but not really useful) encodings with only empty chunks, which
@@ -1039,7 +1043,7 @@ when it is desired to preserve the chunk structure.
 ### Base-Encoded Byte String Literals {#encoded-byte-strings}
 
 Besides the unprefixed byte string literals that are analogous to JSON text
-string literals, EDN provides extension literals that can represent
+string literals, CDN provides extension literals that can represent
 byte strings by base-encoding them, typically notated as prefixed
 string literals.
 The application-extension identifier selects one of the base encodings
@@ -1064,7 +1068,7 @@ application-oriented extension literals.)
 
 Examples often benefit from some blank space (spaces, line breaks) in
 byte strings literals.
-In certain EDN prefixed byte string literals, blank space is ignored; for
+In certain CDN prefixed byte string literals, blank space is ignored; for
 instance, the following are equivalent:
 
 ~~~~ cbor-diag
@@ -1106,7 +1110,7 @@ which is the same as `h'968C2C'`.
 In diagnostic notation, a sequence of zero or more CBOR data item literals can
 be enclosed in `<<` and `>>`, optionally prefixed by an
 application-extension prefix; this specification speaks of *sequence literals*.
-EDN mainly deals with individual data items, not with CBOR sequences
+CDN mainly deals with individual data items, not with CBOR sequences
 {{-seq}}, so the CBOR sequence represented by the sequence literal needs
 to be further processed to obtain the value of the literal.
 
@@ -1135,7 +1139,7 @@ For instance, each pair of columns in the following are equivalent:
 
 To be valid CBOR, {{Section 5.3.1 of RFC8949@-cbor}} requires that text
 strings are byte sequences in UTF-8 {{-utf8}} form.
-EDN provides several ways to construct such byte strings (see {{concat}}
+CDN provides several ways to construct such byte strings (see {{concat}}
 for details).
 These mechanisms might operate on subsequences that do not themselves
 constitute UTF-8, e.g., by building larger sequences out of
@@ -1144,52 +1148,52 @@ resulting from these mechanisms it is only of importance that the
 result is UTF-8.
 Double-quoted, single-quoted, and raw string literals have been defined
 such that they lead to byte sequences that are UTF-8: the source
-language of EDN is UTF-8, and all escaping mechanisms lead only to
+language of CDN is UTF-8, and all escaping mechanisms lead only to
 adding further UTF-8 characters.
 Only prefixed string literals, other application-extensions, or
 in certain cases concatenation ({{concat}}) can generate non-UTF-8 byte
 sequences.
 
-As discussed at the start of {{diagnostic-notation}}, EDN
-implementations MAY support generation and possibly ingestion of EDN
+As discussed at the start of {{diagnostic-notation}}, CDN
+implementations MAY support generation and possibly ingestion of CDN
 for CBOR data items that are well-formed but not valid; when this is
 enabled, such implementations MAY relax the requirement on text
 strings to be valid UTF-8.
 
-Note that neither CBOR about its text strings nor EDN about its source
+Note that neither CBOR about its text strings nor CDN about its source
 language make any requirements except for conformance to {{-utf8}}.
 No additional Unicode processing or validation such as normalization
 or checking whether a scalar value is actually assigned is foreseen by
-EDN, particularly not any processing that is dependent on a specific
+CDN, particularly not any processing that is dependent on a specific
 Unicode version.
 Such processing, if offered, MUST NOT get in the way of processing the
-data item represented in EDN (i.e., it may be appropriate to issue
+data item represented in CDN (i.e., it may be appropriate to issue
 warnings but not to error out or to generate output that does not match
 the input at the UTF-8 level).
 
 ## Arrays and Maps
 
-EDN borrows the JSON syntax for arrays and maps.
+CDN borrows the JSON syntax for arrays and maps.
 (Maps are called objects in JSON.)
 
-### Mandatory Separators, Optional Terminators
-
-For maps, EDN extends the JSON syntax by allowing any data item in the
+For maps, CDN extends the JSON syntax by allowing any data item in the
 map key position (before the colon).
+
+### Mandatory Separators, Optional Terminators
 
 JSON requires the use of a comma as a separator character between
 the elements of an array as well as between the members (key/value
 pairs) of a map.
 (These commas also were required in the original diagnostic
 notation defined in {{-cbor}} and {{-cddl}}.)
-The separator commas are now optional in the places where EDN syntax
+The separator commas are now optional in the places where CDN syntax
 allows commas; however, where no comma is used in a separator
 position, there must be blank space (composed of at least one space, newline, and/or
 comment) instead.
 (Stylistically, leaving out the commas is more idiomatic when they
 occur at line breaks, which provide the blank space.)
 
-In addition, EDN also allows, but does not require, a trailing comma before the closing bracket/brace,
+In addition, CDN also allows, but does not require, a trailing comma before the closing bracket/brace,
 enabling an easier to maintain "terminator" style of their use.
 
 In summary, the following eight examples are all equivalent:
@@ -1218,14 +1222,14 @@ As a comma and/or blank/comment is mandatory in a separator position,
 »`[11]`« is unambiguously an array with a single element (the
 integer 11), different from »`[1 1]`« or »`[1,1]`«.
 As this is a general rule, »`[[] []]`« or »`[[],[]]`« are well-formed
-EDN, while »`[[][]]`« is not.
+CDN, while »`[[][]]`« is not.
 
 {:aside}
 > CDDL's comma separators in the equivalent contexts (CDDL groups) are
   entirely optional
   (and actually are terminators, which together with their optionality
   allows them to be used like separators as well, or even not at all).
-  In summary, comma use is now aligned between EDN and CDDL, in a
+  In summary, comma use is now aligned between CDN and CDDL, in a
   fully backward compatible way.
   (CDDL does allow the stylistically questionable »`a = [[][]]`«, though.)
 
@@ -1239,16 +1243,17 @@ used to represent the data item `[1, 2]`.
 
 At the same position, encoding indicators for specifying the size of
 the array or map head for definite-length format can be used instead,
-specifically `_i` or `_0` to `_3`.  For example `[_0 false, true]` can be
+specifically `_i` or `_0` to `_3`.  For example, `[_0 false, true]` can be
 used to specify the encoding of the array `[false, true]` as `98 02 f4 f5`.
 
 ### Validity of Maps {#map-validity}
 
-As discussed at the start of {{diagnostic-notation}}, EDN implementations MAY support
-generation and possibly ingestion of EDN for CBOR data items that are
+As discussed at the start of {{diagnostic-notation}}, CDN implementations MAY support
+generation and possibly ingestion of CDN for CBOR data items that are
 well-formed but not valid ({{Section 5.3 of RFC8949@-cbor}}).
 
-For maps, this is relevant for map keys that occur more than once, as in:
+For maps, this is relevant for map keys that occur more than once, as
+in this CDN that is not representing a valid CBOR data item:
 
 ~~~ cbor-diag
 {1: "to", 1: "fro"}
@@ -1257,7 +1262,8 @@ For maps, this is relevant for map keys that occur more than once, as in:
 ## Tags
 
 A tag is
-written as a decimal unsigned integer for the tag number, followed by the tag content
+written as a decimal unsigned integer (no leading zeros except for the
+actual number zero, i.e., `0|[1-9][0-9]*`) for the tag number, followed by the tag content
 in parentheses; for instance, a date in the format specified by RFC 3339
 (ISO 8601) could be
 notated as:
@@ -1271,12 +1277,12 @@ or the equivalent epoch-based time as the following:
 1(1363896240)
 
 The tag number can be followed by an encoding indicator giving the
-encoding of the tag head.  For example:
+encoding of the tag head.  For example, a diagnostic implementation encodes:
 
 {: indent='5'}
 1_1(1363896240)
 
-(assuming Preferred Serialization for the tag content) is encoded as
+...(assuming Preferred Serialization for the tag content) as:
 
 ~~~ cbor-pretty
 d9 0001        # tag(1)
@@ -1286,12 +1292,13 @@ d9 0001        # tag(1)
 
 ## Simple values
 
-EDN uses JSON syntax for the simple values True (»`true`«), False
+CDN uses JSON syntax for the simple values True (»`true`«), False
 (»`false`«), and Null (»`null`«).
 Undefined is written »`undefined`« as in JavaScript.
 
 These and all other simple values can be given as "simple()" with the
-appropriate unsigned integer in the parentheses.  For example, »`simple(42)`«
+appropriate decimal unsigned integer (`0|[1-9][0-9]*`) in the parentheses.
+For example, »`simple(42)`«
 indicates major type 7, value 42, and »`simple(20)`« indicates
 »`false`«.
 
@@ -1321,13 +1328,13 @@ Date/Time.
 If fractional seconds are given in the text (production
 `time-secfrac` in {{abnf-grammar-dt}}), the value is a
 floating-point number; the value is an integer number otherwise.
-In the all-upper-case variant of the app-prefix, the value is enclosed
+In the all-uppercase variant of the app-prefix, the value is enclosed
 in a tag number 1.
 
 Each row of {{tab-equiv-dt}} shows an example of "dt" notation and
 equivalent notation not using an application-extension identifier.
 
-| dt literal                   | plain EDN      |
+| dt literal                   | plain CDN      |
 |------------------------------|----------------|
 | `dt'1969-07-21T02:56:16Z'`   | `-14159024`    |
 | `dt'1969-07-21T02:56:16.0Z'` | `-14159024.0`  |
@@ -1337,7 +1344,7 @@ equivalent notation not using an application-extension identifier.
 | `dt<<"1969-07-21T02:56:16.5Z">>` | `-14159023.5`  |
 | ``dt<<`1969-07-21T02:56:16.5Z`>>`` | `-14159023.5`  |
 | `DT'1969-07-21T02:56:16Z'`   | `1(-14159024)` |
-{: #tab-equiv-dt title="dt and DT literals vs. plain EDN"}
+{: #tab-equiv-dt title="dt and DT literals vs. plain CDN"}
 
 See {{dt-grammar}} for an ABNF definition for the text string input of `dt` literals.
 
@@ -1352,18 +1359,18 @@ address literal that can be used as an IP address as per {{Section 3 of
 The input of the literal is a single text string representing an IPv4address or IPv6address as per
 {{Section 3.2.2 of -uri}}.
 
-With the lower-case app-string prefix `ip`, the value of the literal is a
+With the lowercase app-string prefix `ip`, the value of the literal is a
 byte string representing the binary IP address.
-With the upper-case app-string prefix `IP`, the literal is such a byte string
+With the uppercase app-string prefix `IP`, the literal is such a byte string
 tagged with tag number 54, if an IPv6address is used, or tag number
 52, if an IPv4address is used.
 
-As an additional case, the upper-case app-string prefix `IP''` can be used
+As an additional case, the uppercase app-string prefix `IP` can be used
 with an IP address prefix such as `2001:db8::/56` or `192.0.2.0/24`, with the equivalent tag as its value.
 (Note that {{-iptag}} representations of address prefixes need to
 implement the truncation of the address byte string as described in
 {{Section 4.2 of -iptag}}; see example below.)
-For completeness, the lower-case variant `ip'2001:db8::/56'` or  `ip'192.0.2.0/24'` stands for
+For completeness, the lowercase variant `ip'2001:db8::/56'` or  `ip'192.0.2.0/24'` stands for
 an unwrapped `[56,h'20010db8']` or `[24,h'c00002']`; however, in this case the information
 on whether an address is IPv4 or IPv6 often needs to come from the context.
 
@@ -1381,7 +1388,7 @@ interface format with zone identifier 42 as in
 Each row of {{tab-equiv-ip}} shows an example of "ip" notation and
 equivalent notation not using an application-extension identifier.
 
-| ip literal          | plain EDN                                 |
+| ip literal          | plain CDN                                 |
 |---------------------|-------------------------------------------|
 | `ip'192.0.2.42'`    | `h'c000022a'`                             |
 | `ip<<'192.0.2.42'>>` | `h'c000022a'`                             |
@@ -1390,7 +1397,7 @@ equivalent notation not using an application-extension identifier.
 | `ip'2001:db8::42'`  | `h'20010db8000000000000000000000042'`     |
 | `IP'2001:db8::42'`  | `54(h'20010db8000000000000000000000042')` |
 | `IP'2001:db8::/64'` | `54([64,h'20010db8'])`                    |
-{: #tab-equiv-ip title="ip and IP literals vs. plain EDN"}
+{: #tab-equiv-ip title="ip and IP literals vs. plain CDN"}
 
 See {{ip-grammar}} for an ABNF definition for the content of `ip` literals.
 
@@ -1400,7 +1407,8 @@ The "hash" Extension {#hash}
 
 The application-extension identifier "hash" is used to notate the
 input to a cryptographic hash function as well as identify such a hash
-function to obtain a byte string that represents the output of that
+function.
+The result is a byte string that represents the output of that
 hash function.
 
 The input of the literal is a (text or byte) string, optionally followed by either
@@ -1415,7 +1423,7 @@ If the second item is not given, the default algorithm used is -16
 No uppercase variant prefix is defined for the application-extension
 identifier "hash".
 
-| hash literal               | plain EDN                                                                                                                              |
+| hash literal               | plain CDN                                                                                                                              |
 |----------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `hash<<'foo'>>`            | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
 | `hash'foo'`                | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
@@ -1423,7 +1431,7 @@ identifier "hash".
 | `hash<<'foo', "SHA-256">>` | h'2C26B46B68FFC68FF99B453C1D304134<br>13422D706483BFA0F98A5E886266E7AE'                                                                   |
 | `hash<<'foo', -44>>`       | h'F7FBBA6E0636F890E56FBBF3283E524C<br>6FA3204AE298382D624741D0DC663832<br>6E282C41BE5E4254D8820772C5518A2C<br>5A8C0C7F7EDA19594A7EB539453E1ED7' |
 | `hash<<'foo', "SHA-512">>` | h'F7FBBA6E0636F890E56FBBF3283E524C<br>6FA3204AE298382D624741D0DC663832<br>6E282C41BE5E4254D8820772C5518A2C<br>5A8C0C7F7EDA19594A7EB539453E1ED7' |
-{: #tab-equiv-hash title="hash literals vs. plain EDN"}
+{: #tab-equiv-hash title="hash literals vs. plain CDN"}
 
 
 The "cri" Extension {#cri}
@@ -1431,7 +1439,7 @@ The "cri" Extension {#cri}
 
 The
 application-extension identifier "`cri`" is used to notate
-an EDN literal for a CRI reference as defined in {{-cri}}.
+a CDN literal for a CRI reference as defined in {{-cri}}.
 
 The input of the literal is a URI Reference as per {{-uri}} or an IRI
 Reference as per {{-iri}}.
@@ -1442,10 +1450,10 @@ Note that there may be more than one CRI reference that can be
 converted to the URI/IRI reference given; implementations are expected
 to favor the simplest variant available and make non-surprising
 choices otherwise.
-In the all-upper-case variant of the app-prefix, the value is enclosed
+In the all-uppercase variant of the app-prefix, the value is enclosed
 in a tag number 99.
 
-As an example, the CBOR diagnostic notation
+As an example, the CDN
 
 ~~~ cbor-diag
 cri'https://example.com/bottarga/shaved'
@@ -1465,16 +1473,16 @@ See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
 Stand-in Representations in Binary CBOR {#stand-in}
 =======================================
 
-In some cases, an EDN consumer cannot construct actual CBOR items that
+In some cases, a CDN consumer cannot construct actual CBOR items that
 represent the CBOR data intended for eventual interchange.
-This document defines stand-in representation for two such cases:
+This document defines a stand-in representation for two such cases:
 
-* The EDN consumer does not know (or does not implement) an
-  application-extension identifier used in the EDN document
+* The CDN consumer does not know (or does not implement) an
+  application-extension identifier used in the CDN document
   ({{unknown}}) but wants to preserve the information for a later
   processor.
 
-* The generator of some EDN intended for human consumption (such as in
+* The generator of some CDN intended for human consumption (such as in
   a specification document) may not want to include parts of the final
   data item, destructively replacing complete subtrees or possibly
   just parts of a lengthy string by _elisions_ ({{elision}}).
@@ -1484,7 +1492,7 @@ This document defines stand-in representation for two such cases:
 Implementation note:
 Typically, the ultimate applications will fail if they encounter tags
 unknown to them, which the ones defined in this section likely are.
-Where chains of tools are involved in processing EDN, it may be useful
+Where chains of tools are involved in processing CDN, it may be useful
 to fail earlier than at the ultimate receiver in the chain unless
 specific processing options (e.g., command line flags) are given that
 indicate which of these stand-ins are expected at this stage in the
@@ -1493,7 +1501,7 @@ chain.
 Handling unknown application-extension identifiers {#unknown}
 --------------------------------------------------
 
-When ingesting CBOR diagnostic notation, any
+When ingesting CDN, any
 application-oriented extension literals are usually decoded and
 transformed into the corresponding data item during ingestion.
 If an application-extension is not known or not implemented by the
@@ -1509,7 +1517,7 @@ This specification defines a CBOR Tag for this purpose:
 The Diagnostic Notation Unresolved Application-Extension Tag, tag
 number CPA999 ({{iana-standin}}).
 The content of this tag is an array of a text string for the
-application-extension identifier, and another array:
+application-extension prefix, and another array:
 
 * For app-strings, the second array contains a single item, a text
 string containing the text notated by the single-quoted string in the
@@ -1540,23 +1548,23 @@ application-extension literal itself.
       occurrences of the prefix "CPA" in the document.  Finally,
       please remove this note.
 
-Handling information deliberately elided from an EDN document {#elision}
+Handling information deliberately elided from a CDN document {#elision}
 -------------------------------------------------------------
 
-When using EDN for exposition in a document or on a whiteboard, it is
-often useful to be able to leave out parts of an EDN document that are
+When using CDN for exposition in a document or on a whiteboard, it is
+often useful to be able to leave out parts of a CDN document that are
 not of interest at that point of the exposition.
 
 To facilitate this, this specification
 supports the use of an _ellipsis_ (notated as three or more dots
-in a row, as in `...`) to indicate parts of an EDN document that have
+in a row, as in `...`) to indicate parts of a CDN document that have
 been elided (and therefore cannot be reconstructed).
 
-Upon ingesting EDN as a representation of a CBOR data item for further
+Upon ingesting CDN as a representation of a CBOR data item for further
 processing, the occurrence of an ellipsis usually is an error and
 processing has to stop.
 
-However, it is useful to be able to process EDN documents with
+However, it is useful to be able to process CDN documents with
 ellipses in the automation scripts for the documents using them.
 This specification defines a CBOR Tag that can be used in the ingestion
 for this purpose:
@@ -1626,7 +1634,7 @@ indicators:
 }
 ~~~
 
-Note that the use of elisions is different from "commenting out" EDN
+Note that the use of elisions is different from "commenting out" CDN
 text, e.g.:
 
 
@@ -1636,7 +1644,7 @@ text, e.g.:
 }
 ~~~
 
-The consumer of this EDN will ignore the comments and therefore will
+The consumer of this CDN will ignore the comments and therefore will
 have no idea after ingestion that some information has been elided;
 validation steps may then simply fail instead of being informed about
 the elisions.
@@ -1646,7 +1654,7 @@ ABNF Definitions {#grammars}
 ================
 
 This section collects grammars in ABNF form ({{-abnf}} as extended in
-{{-abnfcs}}) that serve to define the syntax of EDN and some
+{{-abnfcs}}) that serve to define the syntax of CDN and some
 application-oriented literals.
 
 {:aside}
@@ -1656,11 +1664,11 @@ intended to be useful in a Parsing Expression Grammar (PEG) parser
 interpretation (see {{Appendix A
 of -cddl}} for an introduction into PEG).
 
-Overall ABNF Definition for Extended Diagnostic Notation {#grammar}
+Overall ABNF Definition for Concise Diagnostic Notation {#grammar}
 --------------------------------------------------------
 
 This subsection provides an overall ABNF definition for the syntax of
-CBOR extended diagnostic notation.
+concise diagnostic notation.
 
 <aside markdown="1">
 
@@ -1680,22 +1688,19 @@ Example grammars for such integrated parsers are provided with this
 specification in {{integrated-grammars}}.
 </aside>
 
-For simplicity, the internal parsing for the built-in EDN prefixes is
+For simplicity, the internal parsing for the built-in CDN prefixes is
 specified in the same way.
 ABNF definitions for `h''`/``` h`` ``` and `b64''`/```b64`` ``` are
 provided in {{h-grammar}} and {{b64-grammar}}.
-However, the prefixes `b32''` and `h32''` are not in wide use and an
-ABNF definition in this document would therefore not have been based on
-implementation experience.
 
 ~~~ abnf
-{::include cbor-diag-parser.abnf}
+{::include cdn-parser.abnf}
 ~~~
-{: #abnf-grammar title="Overall ABNF Definition of CBOR EDN"
-   sourcecode-name="cbor-edn.abnf"}
+{: #abnf-grammar title="Overall ABNF Definition of CDN"
+   sourcecode-name="cdn.abnf"}
 
 While an ABNF grammar defines the set of character strings that are
-considered to be valid EDN by this ABNF, the mapping of these
+considered to be valid CDN by this ABNF, the mapping of these
 character strings into the generic data model of CBOR is not always
 obvious.
 
@@ -1761,8 +1766,9 @@ The following additional items should help in the interpretation:
 
    When `decnumber` stands for a floating point value, and for
    `hexfloat` and `nonfin`, a floating point data item with major
-   type 7 is used in Preferred Serialization (unless modified by an
-   encoding indicator, which then needs to be `_1`, `_2`, or `_3`).
+   type 7 is used; diagnostic implementations employ Preferred
+   Serialization unless the item was modified by an
+   encoding indicator, which then needs to be `_1`, `_2`, or `_3`.
    For this, the number range needs to fit into an {{IEEE754}} binary64 (or the size
    corresponding to the encoding indicator), and the precision will be
    adjusted to binary64 before further applying Preferred Serialization
@@ -1795,7 +1801,7 @@ The following additional items should help in the interpretation:
   >      matchrawdelim = rawdelim&{|(rd)|rd.text_value.length >= @rdlen}
 
 8. {: #concat}
-  Extended diagnostic notation allows a (text or byte) string to be
+  Concise diagnostic notation allows a (text or byte) string to be
   built up from multiple (text or byte) string literals, separated by
   a `+` operator; these are then concatenated into a single string.
 
@@ -1843,7 +1849,7 @@ The following additional items should help in the interpretation:
       If the left hand side of a concatenation is a text string, the
       joining operation results in a text string, and that
       result needs to be valid UTF-8 except for implementations that
-      support and are enabled for generation/ingestion of EDN for CBOR
+      support and are enabled for generation/ingestion of CDN for CBOR
       data items that are well-formed but not valid.
       If the left hand side is a byte string, the right hand side also
       needs to be a byte string.
@@ -1867,7 +1873,7 @@ concatenated.
 > This is not entirely backward compatible to {{Section G.4 of -cddl}},
 > which used simple juxtaposition to indicate concatenation of strings.
 > This was not widely implemented and got in the way of making the use
-> of commas optional in other places via the rule `OC`.
+> of commas optional in other places via the rule `SOC`.
 
 ABNF Definitions for Application Extension Content {#app-grammars}
 ---------------------------------------
@@ -1875,7 +1881,8 @@ ABNF Definitions for Application Extension Content {#app-grammars}
 This subsection provides ABNF definitions for the content of
 application-oriented extension literals defined in {{-cbor}} and in this
 specification, where applicable.
-These grammars describe the *decoded* content of the `sqstr` components that
+These grammars describe the *decoded* content of the single-quoted or
+raw string components that
 combine with the application-extension identifiers used as prefixes to form
 application-oriented extension literals.
 Each of these may integrate ABNF rules defined in {{abnf-grammar}},
@@ -1883,7 +1890,7 @@ which are not always repeated here.
 
 {{tab-prefixes}} summarizes the app-prefix values defined in this document.
 
-| app-prefix | content of single-quoted string                    | result type                                       |
+| app-prefix | content of single-quoted or raw string             | result type                                       |
 |------------|----------------------------------------------------|---------------------------------------------------|
 | h          | hexadecimal form of binary data                    | byte string                                       |
 | H          | (not used)                                         |                                                   |
@@ -1894,6 +1901,7 @@ which are not always repeated here.
 | ip         | IP address or prefix                               | byte string, <br/>array of length and byte string |
 | IP         | "                                                  | Tag 54 (IPv6) or 52 (IPv4) on the above           |
 | hash       | string (usually used with sequences)               | byte string                                       |
+| HASH       | (not used)                                         |                                                   |
 | cri        | RFC 3986 URI or URI reference                      | CBOR structure representing equivalent CRI        |
 | CRI        | "                                                  | Tag 99 on the above                               |
 {: #tab-prefixes title="App-prefix Values Defined in this Document"}
@@ -1901,7 +1909,7 @@ which are not always repeated here.
 Note that implementation platforms may already provide implementations
 of grammars used in application-extensions, such as of RFC 3339 for
 `dt''` and of IP address syntax for `ip''`.
-EDN-based tools may want to use these implementation libraries instead
+CDN-based tools may want to use these implementation libraries instead
 of using the grammars that are provided here as a reference.
 
 For convenience, the common definitions in {{abnf-grammar-ext-common}}
@@ -1917,7 +1925,7 @@ lblank          = %x0A / %x20  ; Not HT or CR (gone)
 non-lf          = %x20-7f / NONASCII
 NONASCII        = %x80-D7FF / %xE000-10FFFF
 ~~~
-{: #abnf-grammar-ext-common sourcecode-name="cbor-edn-extcommon.abnf"
+{: #abnf-grammar-ext-common sourcecode-name="cdn-extcommon.abnf"
    title="Common Rules Used in app-extension ABNF grammars"
 }
 
@@ -1928,7 +1936,7 @@ NONASCII        = %x80-D7FF / %xE000-10FFFF
 The syntax of the content of byte strings represented in hex,
 such as `h''`, `h'0815'`, or `h'/head/ 63 /contents/ 66 6f 6f'`
 (another representation of `<< "foo" >>`), is described by the ABNF in {{abnf-grammar-h}}.
-This syntax accommodates both lower case and upper case hex digits, as
+This syntax accommodates both lowercase and uppercase hex digits, as
 well as blank space (including comments) around each hex digit.
 
 ~~~ abnf
@@ -1947,14 +1955,14 @@ comment         = "/" non-slash-star *non-slash "/"
                        *(non-slash-star ends-in-star) "/"
                 / eol-comment *non-lf %x0A
 ~~~
-{: #abnf-grammar-h sourcecode-name="cbor-edn-ext-h.abnf"
+{: #abnf-grammar-h sourcecode-name="cdn-ext-h.abnf"
 title="ABNF Definition of Hexadecimal Representation of a Byte String"
 }
 
 {:aside}
 >
 > The comment syntax provided inside the hex string is intended to
-> mimic the overall syntax for comments in EDN ({{comments}}).\\
+> mimic the overall syntax for comments in CDN ({{comments}}).\\
 > Implementation note: Comments and blank space are also described by
 > the following search regexp, which can be used to remove them.
 > For display, the regexp is split along the outer
@@ -1989,7 +1997,7 @@ b64dig          = ALPHA / DIGIT / "-" / "_" / "+" / "/"
 B               = *lblank *(comment *lblank)
 comment         = "#" *non-lf %x0A
 ~~~
-{: #abnf-grammar-b64 sourcecode-name="cbor-edn-ext-b64.abnf"
+{: #abnf-grammar-b64 sourcecode-name="cdn-ext-b64.abnf"
 title="ABNF definition of Base64 Representation of a Byte String"
 }
 
@@ -2021,7 +2029,7 @@ full-time       = partial-time time-offset
 
 date-time       = full-date "T" full-time
 ~~~
-{: #abnf-grammar-dt sourcecode-name="cbor-edn-ext-dt.abnf"
+{: #abnf-grammar-dt sourcecode-name="cdn-ext-dt.abnf"
 title="ABNF Definition of RFC3339 Representation of a Date/Time"
 }
 
@@ -2062,7 +2070,7 @@ dec-octet     = "25" %x30-35         ; 250-255
 DIGIT1        = %x31-39 ; 1-9
 uint          = "0" / DIGIT1 *DIGIT
 ~~~
-{: #abnf-grammar-ip sourcecode-name="cbor-edn-ext-ip.abnf"
+{: #abnf-grammar-ip sourcecode-name="cdn-ext-ip.abnf"
 title="ABNF Definition of Textual Representation of an IP Address"}
 
 
@@ -2169,7 +2177,7 @@ gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
 sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
                  / "*" / "+" / "," / ";" / "="
 ~~~
-{: #abnf-grammar-cri sourcecode-name="cbor-edn-ext-cri.abnf"
+{: #abnf-grammar-cri sourcecode-name="cdn-ext-cri.abnf"
 title="ABNF Definition of URI Representation of a CRI"
 }
 
@@ -2178,8 +2186,8 @@ title="ABNF Definition of URI Representation of a CRI"
 ABNF Definitions for Integrated Extension Parsers {#integrated-grammars}
 -------------------------------------------------
 
-For some applications of EDN, it is an optimization to integrate
-parsers for the content of some prefixed single-quoted string literals into
+For some applications of CDN, it is an optimization to integrate
+parsers for the content of some prefixed string literals into
 the main parser, handling both the string literal syntax (e.g., escapes such
 as `\'` and `\\`) and the syntax of the extension content in one go.
 
@@ -2195,7 +2203,7 @@ bstr            = sq-app-string-dt /
                   app-string / sqstr / app-sequence / embedded
 sq-app-string-dt = (%s"dt'"/%s"DT'") app-string-dt "'"
 ~~~
-{: #abnf-grammar-sq-glue sourcecode-name="cbor-edn-glue.abnf"
+{: #abnf-grammar-sq-glue sourcecode-name="cdn-glue.abnf"
 title="Glue ABNF for Integrated DT Parser"
 }
 
@@ -2229,7 +2237,7 @@ FOURHEX1 = (DIGIT1 / "A"/"B"/"C" / "E"/"F") 3HEXDIG
 ; 00xx - ASCII + 007F
 TWOHEX1  = ("8"/"9" / HEXDIGA) HEXDIG / "7F"
 ~~~
-{: #abnf-grammar-sq sourcecode-name="cbor-edn-intcommon.abnf"
+{: #abnf-grammar-sq sourcecode-name="cdn-intcommon.abnf"
 title="ABNF Definitions Useful for Integrated Extension Parsers"}
 
 Similarly, for integrated parsers for extension literals built from raw strings, the ABNF
@@ -2241,7 +2249,7 @@ long as a previous `startrawdelim`.
 fitrawdelim  = rawdelim ; width == previous startrawdelim
 r-non-lf = %x0D / %x20-5f / %x61-7f / NONASCII / shortrawdelim
 ~~~
-{: #abnf-grammar-rs sourcecode-name="cbor-edn-raw-intcommon.abnf"
+{: #abnf-grammar-rs sourcecode-name="cdn-raw-intcommon.abnf"
 title="ABNF Definitions Useful for Raw String Integrated Extension Parsers"}
 
 
@@ -2288,7 +2296,7 @@ h-comment = "/" h-non-slash-star *h-non-slash "/"
                  *(h-non-slash-star h-ends-in-star) "/"
           / eol-comment *i-non-lf i-LF
 ~~~
-{: #abnf-grammar-sq-h sourcecode-name="cbor-edn-int-hsq.abnf"
+{: #abnf-grammar-sq-h sourcecode-name="cdn-int-hsq.abnf"
 title="ABNF Definition for Integrated Hex Parser"
 }
 
@@ -2310,7 +2318,7 @@ b64dig          = ALPHA / DIGIT / "-" / "_" / "+" / "/"
 b64-S           = *i-blank *(b64-comment *i-blank)
 b64-comment     = "#" *i-non-lf %x0A
 ~~~
-{: #abnf-grammar-sq-b64 sourcecode-name="cbor-edn-int-b64sq.abnf"
+{: #abnf-grammar-sq-b64 sourcecode-name="cdn-int-b64sq.abnf"
 title="ABNF Definition for Integrated Base64 Parser"
 }
 
@@ -2338,7 +2346,7 @@ rh-comment = "/" rh-non-slash-star *rh-non-slash "/"
                   *(rh-non-slash-star rh-ends-in-star) "/"
            / eol-comment *r-non-lf %x0A
 ~~~
-{: #abnf-grammar-rs-h sourcecode-name="cbor-edn-int-hraw.abnf"
+{: #abnf-grammar-rs-h sourcecode-name="cdn-int-hraw.abnf"
 title="ABNF Definition for Integrated Raw String Hex Parser"
 }
 
@@ -2362,7 +2370,7 @@ r-app-string-b64  = rb64-S *(4(b64dig rb64-S))
 rb64-S           = *lblank *(rb64-comment *lblank)
 rb64-comment     = "#" *r-non-lf %x0A
 ~~~
-{: #abnf-grammar-rs-b64 sourcecode-name="cbor-edn-int-b64raw.abnf"
+{: #abnf-grammar-rs-b64 sourcecode-name="cdn-int-b64raw.abnf"
 title="ABNF Definition for Integrated Raw String Base64 Parser"
 }
 
@@ -2374,15 +2382,15 @@ IANA Considerations {#sec-iana}
 [^to-be-removed]
 
 [^to-be-removed]: RFC Editor: please replace RFC-XXXX with the RFC
-    number of this RFC, \[IANA.cbor-diagnostic-notation] with a
+    number of this RFC, \[IANA.concise-diagnostic-notation] with a
     reference to the new registry group, and remove this note.
 
 
-## CBOR Diagnostic Notation Application-extension Identifiers Registry {#appext-iana}
+## Concise Diagnostic Notation Application-extension Identifiers Registry {#appext-iana}
 
 IANA is requested to create an "Application-Extension Identifiers"
-registry in a new "CBOR Diagnostic Notation" registry group
-\[IANA.cbor-diagnostic-notation], with the policy "expert review"
+registry in a new "Concise Diagnostic Notation" registry group
+\[IANA.concise-diagnostic-notation], with the policy "expert review"
 ({{Section 4.5 of RFC8126@-ianacons}}).
 
 The experts are instructed to be frugal in the allocation of
@@ -2402,7 +2410,7 @@ Each entry in the registry must include:
 
 {:vspace}
 Application-Extension Identifier:
-: a lower case ASCII {{-ascii}} string that starts with a letter and can
+: a lowercase ASCII {{-ascii}} string that starts with a letter and can
   contain letters, digits, and hyphens after that (`[a-z][a-z0-9-]*`).
   No other entry in the registry can have the same
   application-extension identifier.
@@ -2443,8 +2451,8 @@ Identifier Registry"}
 ## Encoding Indicators {#reg-ei}
 
 IANA is requested to create an "Encoding Indicators"
-registry in the newly created "CBOR Diagnostic Notation" registry group
-\[IANA.cbor-diagnostic-notation], with the policy "specification required"
+registry in the newly created "Concise Diagnostic Notation" registry group
+\[IANA.concise-diagnostic-notation], with the policy "specification required"
 ({{Section 4.6 of RFC8126@-ianacons}}).
 
 The experts are instructed to be frugal in the allocation of
@@ -2511,15 +2519,15 @@ IANA is requested to add the following Media-Type to the "Media Types"
 registry {{IANA.media-types}}.
 
 | Name            | Template                    | Reference              |
-| cbor-diagnostic | application/cbor-diagnostic | RFC-XXXX, {{media-type}} |
-{: #new-media-type title="New Media Type application/cbor-diagnostic"}
+| cdn | application/cdn | RFC-XXXX, {{media-type}} |
+{: #new-media-type title="New Media Type application/cdn"}
 
 {:compact}
 Type name:
 : application
 
 Subtype name:
-: cbor-diagnostic
+: cdn
 
 Required parameters:
 : N/A
@@ -2557,7 +2565,7 @@ Additional information:
   : N/A
 
   File extension(s):
-  : .diag
+  : .cdn
 
   Macintosh file type code(s):
   : N/A
@@ -2570,9 +2578,9 @@ Intended usage:
 : LIMITED USE
 
 Restrictions on usage:
-: CBOR diagnostic notation represents CBOR data items, which are the
+: Concise diagnostic notation represents CBOR data items, which are the
   format intended for actual interchange.
-  The media type application/cbor-diagnostic is intended to be used
+  The media type application/cdn is intended to be used
   within documents about CBOR data items, in diagnostics for human
   consumption, and in other representations of CBOR data items that
   are necessarily text-based such as in configuration files or other
@@ -2592,8 +2600,8 @@ sub-registry, within the "Constrained RESTful Environments (CoRE)
 Parameters" Registry {{IANA.core-parameters}}, as follows:
 
 | Content-Type                | Content Coding | ID   | Reference |
-| application/cbor-diagnostic | -              | TBD1 | RFC-XXXX  |
-{: #tab-content-format title="New Content-Format for application/cbor-diagnostic"}
+| application/cdn | -              | TBD1 | RFC-XXXX  |
+{: #tab-content-format title="New Content-Format for application/cdn"}
 
 TBD1 is to be assigned from the space 256..9999, according to the
 procedure "IETF Review or IESG Approval", preferably a number less
@@ -2619,12 +2627,12 @@ Security considerations {#seccons}
 
 The security considerations of {{-cbor}} and {{-cddl}} apply.
 
-The EDN specification provides two explicit extension points,
+The CDN specification provides two explicit extension points,
 application-extension identifiers ({{appext-iana}}) and encoding
 indicators ({{reg-ei}}).
 Extensions introduced this way can have their own security
 considerations (see, e.g., {{Section 5 of -eref}}).
-When implementing tools that support the use of EDN extensions, the
+When implementing tools that support the use of CDN extensions, the
 implementer needs to be careful not to inadvertently introduce a
 vector for an attacker to invoke extensions not planned for by the
 tool operator, who might not have considered security considerations
@@ -2638,12 +2646,12 @@ parameters controlling such an extension.
 
 --- back
 
-EDN and CDDL
+CDN and CDDL
 ============
 
 This appendix is for information.
 
-EDN was designed as a language to provide a human-readable
+CDN was designed as a language to provide a human-readable
 representation of an instance, i.e., a single CBOR data item or CBOR
 sequence.
 CDDL was designed as a language to describe an (often large) set of
@@ -2654,12 +2662,12 @@ The two languages share some similarities, not the least because they
 have mutually inspired each other.
 But they have very different roots:
 
-* EDN syntax is an extension to JSON syntax {{-json}}.
-  (Any (interoperable) JSON text is also valid EDN.)
+* CDN syntax is an extension to JSON syntax {{-json}}.<br>
+  (Any (interoperable) JSON text is also valid CDN.)
 * CDDL syntax is inspired by ABNF's syntax {{-abnf}}.
 
-For engineers that are using both EDN and CDDL, it is easy to write
-"CDDLisms" or "EDNisms" into their drafts that are meant to be in the
+For engineers that are using both CDN and CDDL, it is easy to write
+"CDDLisms" or "CDNisms" into their drafts that are meant to be in the
 other language.
 (This is one more of the many motivations to always validate formal
 language instances with tools.)
@@ -2667,18 +2675,17 @@ language instances with tools.)
 Important differences include:
 
 * Comment syntax.  CDDL inherits ABNF's semicolon-delimited end of
-  line characters, while EDN finds nothing in JSON that could be inherited here.
-  Inspired by JavaScript, EDN simplifies JavaScript's copy of the
+  line characters, while CDN finds nothing in JSON that could be inherited here.
+  Inspired by JavaScript, CDN simplifies JavaScript's copy of the
   original C comment syntax to be delimited by single slashes (where
   line breaks are not of interest); it also adds traditional C-style
   inline comments (`/*` ... `*/`) and end-of-line comments
   that start with `#` or `//`.
 
   {:compact}
-  EDN:
+  CDN:
   : ~~~ cbor-diag
     { / alg / 1: -7 / ECDSA 256 / }
-    ,
     { 1:   # alg
         -7 # ECDSA 256
     }
@@ -2690,11 +2697,11 @@ Important differences include:
 * Syntax for tags.  CDDL's tag syntax is part of the system for
   referring to CBOR's fundamentals (the major type 6, in this case)
   and (with {{-cddlupd}}) allows specifying the actual tag number
-  separately, while EDN's tag syntax is a simple decimal number and a
+  separately, while CDN's tag syntax is a simple decimal number and a
   pair of parentheses.
 
-  EDN:
-  : ~~~
+  CDN:
+  : ~~~ cbor-diag
     98([h'', # empty encoded protected header
         {},  # empty unprotected header
         ...  # rest elided here
@@ -2704,12 +2711,12 @@ Important differences include:
   CDDL:
   : `COSE_Sign_Tagged = #6.98(COSE_Sign)`
 
-* Embedded CBOR.  EDN has a special syntax to describe the content of
+* Embedded CBOR.  CDN has a special syntax to describe the content of
   byte strings that are encoded CBOR data items.  CDDL can specify
   these with a control operator, which looks very different.
 
-  EDN:
-  : ~~~
+  CDN:
+  : ~~~ cbor-diag
     98([<< {/alg/ 1: -7 /ECDSA 256/} >>, # == h'a10126'
         ...                              # rest elided here
        ])
