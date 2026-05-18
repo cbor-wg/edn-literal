@@ -144,7 +144,7 @@ addresses and prefixes.
     started in PR #102 and adds a couple of paragraphs on editorial
     conventions.
     It also makes a leap ahead beyond `-24` by adopting and making a
-    detailed proposal for a renaming choice that was
+    detailed proposal (PR #105) for a renaming choice that was
     discussed at the 2026-05-13 CBOR interim WG meeting.
 
 --- middle
